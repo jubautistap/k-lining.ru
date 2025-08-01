@@ -7,7 +7,12 @@ import AmoCRMModal from '@/components/modals/AmoCRMModal';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'arial']
+});
 
 export const metadata: Metadata = {
   title: {
@@ -110,6 +115,14 @@ export default function RootLayout({
         {/* Preconnect для ускорения загрузки */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* Preload критических ресурсов */}
+        <link rel="preload" href="/favicon.ico" as="image" />
+        <link rel="preload" href="/apple-touch-icon.png" as="image" />
+        
+        {/* DNS prefetch для внешних ресурсов */}
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
         
         {/* Structured Data */}
         <script
