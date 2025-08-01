@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { Menu, X, Phone, MapPin, Clock, ChevronDown } from 'lucide-react';
 import { useAmoCRM } from '../providers/AmoCRMProvider';
+import { useThrottle } from '../../hooks/usePerformance';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -11,25 +12,27 @@ export default function Header() {
   const [isCorporateMenuOpen, setIsCorporateMenuOpen] = useState(false);
   const { openModal } = useAmoCRM();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+  const handleScroll = useCallback(() => {
+    setIsScrolled(window.scrollY > 10);
   }, []);
 
-  const navigation = [
+  const throttledHandleScroll = useThrottle(handleScroll, 100);
+
+  useEffect(() => {
+    window.addEventListener('scroll', throttledHandleScroll);
+    return () => window.removeEventListener('scroll', throttledHandleScroll);
+  }, [throttledHandleScroll]);
+
+  const navigation = useMemo(() => [
     { name: 'Услуги', href: '/services' },
     { name: 'Цены', href: '/prices' },
     { name: 'Калькулятор', href: '/calculator' },
     { name: 'Блог', href: '/blog' },
     { name: 'О нас', href: '/about' },
     { name: 'Контакты', href: '/contacts' },
-  ];
+  ], []);
 
-  const corporateServices = [
+  const corporateServices = useMemo(() => [
     {
       title: 'Уборка офисов',
       services: [
@@ -94,10 +97,23 @@ export default function Header() {
         'Химчистка автомобилей'
       ]
     }
-  ];
+  ], []);
+
+  const handleMobileMenuToggle = useCallback(() => {
+    setIsMobileMenuOpen(prev => !prev);
+  }, []);
+
+  const handleCorporateMenuToggle = useCallback((isOpen: boolean) => {
+    setIsCorporateMenuOpen(isOpen);
+  }, []);
+
+  const handleModalOpen = useCallback(() => {
+    openModal();
+    setIsMobileMenuOpen(false);
+  }, [openModal]);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-200 ${
       isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white'
     }`}>
       <div className="container-custom">
@@ -127,8 +143,8 @@ export default function Header() {
             {/* Corporate Menu */}
             <div className="relative">
               <button
-                onMouseEnter={() => setIsCorporateMenuOpen(true)}
-                onMouseLeave={() => setIsCorporateMenuOpen(false)}
+                onMouseEnter={() => handleCorporateMenuToggle(true)}
+                onMouseLeave={() => handleCorporateMenuToggle(false)}
                 className="flex items-center space-x-1 text-primary-600 hover:text-primary-700 font-semibold transition-colors duration-200"
               >
                 <span>Юрлицам</span>
@@ -140,8 +156,8 @@ export default function Header() {
               {/* Mega Menu */}
               {isCorporateMenuOpen && (
                 <div
-                  onMouseEnter={() => setIsCorporateMenuOpen(true)}
-                  onMouseLeave={() => setIsCorporateMenuOpen(false)}
+                  onMouseEnter={() => handleCorporateMenuToggle(true)}
+                  onMouseLeave={() => handleCorporateMenuToggle(false)}
                   className="absolute top-full left-0 mt-2 w-screen max-w-6xl bg-white border border-gray-200 rounded-lg shadow-xl"
                   style={{ left: '50%', transform: 'translateX(-50%)' }}
                 >
@@ -209,7 +225,7 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            onClick={handleMobileMenuToggle}
             className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
           >
             {isMobileMenuOpen ? (
@@ -277,10 +293,7 @@ export default function Header() {
                 <span>Работаем 24/7</span>
               </div>
               <button
-                onClick={() => {
-                  openModal();
-                  setIsMobileMenuOpen(false);
-                }}
+                onClick={handleModalOpen}
                 className="btn-primary w-full"
               >
                 Заказать уборку

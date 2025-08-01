@@ -1,12 +1,33 @@
 import { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import HeroSection from '@/components/sections/HeroSection';
 import ServicesSection from '@/components/sections/ServicesSection';
 import WhyChooseUsSection from '@/components/sections/WhyChooseUsSection';
-import ProcessSection from '@/components/sections/ProcessSection';
-import PricingSection from '@/components/sections/PricingSection';
-import ContactSection from '@/components/sections/ContactSection';
-import CleaningCalculator from '@/components/calculators/CleaningCalculator';
-import AmoCRMModal from '@/components/modals/AmoCRMModal';
+
+// Динамические импорты для ленивой загрузки
+const ProcessSection = dynamic(() => import('@/components/sections/ProcessSection'), {
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
+  ssr: true,
+});
+
+const PricingSection = dynamic(() => import('@/components/sections/PricingSection'), {
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
+  ssr: true,
+});
+
+const CleaningCalculator = dynamic(() => import('@/components/calculators/CleaningCalculator'), {
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
+  ssr: false, // Отключаем SSR для калькулятора
+});
+
+const ContactSection = dynamic(() => import('@/components/sections/ContactSection'), {
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
+  ssr: true,
+});
+
+const AmoCRMModal = dynamic(() => import('@/components/modals/AmoCRMModal'), {
+  ssr: false, // Отключаем SSR для модального окна
+});
 
 export const metadata: Metadata = {
   title: 'KliningPro - Профессиональная уборка в Москве | Быстро, качественно, честно',

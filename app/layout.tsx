@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import './critical.css';
 import { Toaster } from 'react-hot-toast';
 import AmoCRMProvider from '@/components/providers/AmoCRMProvider';
 import AmoCRMModal from '@/components/modals/AmoCRMModal';
@@ -10,7 +11,7 @@ import Footer from '@/components/layout/Footer';
 const inter = Inter({ 
   subsets: ['latin'],
   display: 'swap',
-  preload: true,
+  preload: false, // Отключаем preload для оптимизации
   fallback: ['system-ui', 'arial']
 });
 
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'KliningPro - Профессиональная уборка в Москве',
     description: 'Профессиональная клининговая компания в Москве. Уборка квартир, домов, офисов. Быстро, качественно, честно. Химчистка, мытье окон, генеральная уборка.',
-            url: 'https://k-lining.ru',
+    url: 'https://k-lining.ru',
     siteName: 'KliningPro',
     images: [
       {
@@ -88,7 +89,7 @@ export const metadata: Metadata = {
     'DC.coverage': 'Москва',
     'DC.type': 'Service',
     'DC.format': 'text/html',
-            'DC.identifier': 'https://k-lining.ru',
+    'DC.identifier': 'https://k-lining.ru',
   },
 };
 
@@ -112,19 +113,15 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#2563eb" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         
-        {/* Preconnect для ускорения загрузки */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        {/* Оптимизированные preconnect */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
-        {/* Preload критических ресурсов */}
-        <link rel="preload" href="/favicon.ico" as="image" />
-        <link rel="preload" href="/apple-touch-icon.png" as="image" />
         
         {/* DNS prefetch для внешних ресурсов */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
         
-        {/* Structured Data */}
+        {/* Structured Data - загружаем асинхронно */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -188,8 +185,30 @@ export default function RootLayout({
             })
           }}
         />
+      </head>
+      <body className={inter.className}>
+        <AmoCRMProvider>
+          <div className="min-h-screen flex flex-col">
+            <Header />
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+          </div>
+          <AmoCRMModal />
+          <Toaster 
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: '#363636',
+                color: '#fff',
+              },
+            }}
+          />
+        </AmoCRMProvider>
         
-        {/* Organization Schema */}
+        {/* Загружаем остальные схемы асинхронно */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -244,7 +263,6 @@ export default function RootLayout({
           }}
         />
 
-        {/* WebSite Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -262,28 +280,6 @@ export default function RootLayout({
             })
           }}
         />
-      </head>
-      <body className={inter.className}>
-        <AmoCRMProvider>
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-          </div>
-          <AmoCRMModal />
-          <Toaster 
-            position="top-right"
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: '#363636',
-                color: '#fff',
-              },
-            }}
-          />
-        </AmoCRMProvider>
       </body>
     </html>
   );

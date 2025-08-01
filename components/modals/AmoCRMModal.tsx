@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Phone, Mail, User, MessageSquare, Sparkles, CheckCircle, Shield, Clock, FileText } from 'lucide-react';
-import { useAmoCRM } from '@/components/providers/AmoCRMProvider';
+import { useAmoCRM } from '../providers/AmoCRMProvider';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -67,14 +67,15 @@ export default function AmoCRMModal() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
           className="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-4"
           onClick={closeModal}
         >
           <motion.div
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className="bg-white rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
@@ -82,7 +83,7 @@ export default function AmoCRMModal() {
             <div className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white p-6">
               <button
                 onClick={closeModal}
-                className="absolute top-4 right-4 p-2 hover:bg-white/20 rounded-full transition-all duration-200"
+                className="absolute top-4 right-4 p-2 hover:bg-white/20 rounded-full transition-colors duration-200"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -95,6 +96,7 @@ export default function AmoCRMModal() {
                     width={48}
                     height={48}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 </div>
                 <div>
@@ -145,7 +147,7 @@ export default function AmoCRMModal() {
                   {/* WhatsApp Button */}
                   <button
                     onClick={handleWhatsApp}
-                    className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-2xl p-4 flex items-center justify-center space-x-3 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                    className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-2xl p-4 flex items-center justify-center space-x-3 transition-colors duration-200 shadow-lg"
                   >
                     <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -158,7 +160,7 @@ export default function AmoCRMModal() {
                   {/* Telegram Button */}
                   <button
                     onClick={handleTelegram}
-                    className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-2xl p-4 flex items-center justify-center space-x-3 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                    className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-2xl p-4 flex items-center justify-center space-x-3 transition-colors duration-200 shadow-lg"
                   >
                     <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -185,7 +187,7 @@ export default function AmoCRMModal() {
                     <input
                       {...register('phone')}
                       type="tel"
-                      className="w-full px-4 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 text-lg"
+                      className="w-full px-4 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors duration-200 text-lg"
                       placeholder="+7 (999) 123-45-67"
                     />
                     {errors.phone && (
@@ -206,7 +208,7 @@ export default function AmoCRMModal() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white rounded-2xl py-4 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 shadow-lg"
+                    className="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white rounded-2xl py-4 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 shadow-lg"
                   >
                     {isSubmitting ? (
                       <div className="flex items-center justify-center space-x-2">

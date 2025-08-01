@@ -11,6 +11,9 @@
     font-family: 'Inter', system-ui, sans-serif;
     line-height: 1.6;
     color: #1e293b;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -21,19 +24,19 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl;
   }
   
   .btn-secondary {
-    @apply bg-white hover:bg-gray-50 text-primary-600 border-2 border-primary-600 font-medium py-3 px-6 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+    @apply bg-white hover:bg-gray-50 text-primary-600 border-2 border-primary-600 font-medium py-3 px-6 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl;
   }
   
   .btn-outline {
-    @apply bg-transparent hover:bg-primary-600 text-primary-600 hover:text-white border-2 border-primary-600 font-medium py-3 px-6 rounded-lg transition-all duration-200;
+    @apply bg-transparent hover:bg-primary-600 text-primary-600 hover:text-white border-2 border-primary-600 font-medium py-3 px-6 rounded-lg transition-colors duration-200;
   }
   
   .card {
-    @apply bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100;
+    @apply bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100;
   }
   
   .section-padding {
@@ -66,23 +69,11 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
-  
-  .animation-delay-200 {
-    animation-delay: 200ms;
-  }
-  
-  .animation-delay-400 {
-    animation-delay: 400ms;
-  }
-  
-  .animation-delay-600 {
-    animation-delay: 600ms;
-  }
 }
 
-/* Custom scrollbar */
+/* Оптимизированный скроллбар */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -91,26 +82,26 @@
 
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
 
-/* Focus styles */
+/* Фокус стили */
 *:focus {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
 
-/* Selection */
+/* Выделение */
 ::selection {
   background: #dbeafe;
   color: #1e40af;
 }
 
-/* Loading animation */
+/* Упрощенная анимация загрузки */
 @keyframes pulse {
   0%, 100% {
     opacity: 1;
@@ -124,7 +115,7 @@
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Mobile menu animation */
+/* Оптимизированная анимация мобильного меню */
 .mobile-menu-enter {
   transform: translateX(-100%);
   opacity: 0;
@@ -133,7 +124,7 @@
 .mobile-menu-enter-active {
   transform: translateX(0);
   opacity: 1;
-  transition: transform 300ms ease-out, opacity 300ms ease-out;
+  transition: transform 200ms ease-out, opacity 200ms ease-out;
 }
 
 .mobile-menu-exit {
@@ -144,5 +135,5 @@
 .mobile-menu-exit-active {
   transform: translateX(-100%);
   opacity: 0;
-  transition: transform 300ms ease-in, opacity 300ms ease-in;
+  transition: transform 200ms ease-in, opacity 200ms ease-in;
 } 
