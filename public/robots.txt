@@ -1,0 +1,13 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /admin/*
+Disallow: /api/*
+Disallow: /_next/*
+Disallow: /static/*
+
+# Host
+Host: https://k-lining.ru
+
+# Sitemaps
+Sitemap: https://k-lining.ru/sitemap.xml
