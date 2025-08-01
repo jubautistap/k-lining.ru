@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calculator, Home, Building, Sparkles, Sun, Shield, CheckCircle, Car, Hotel, School, Store, Factory, Star } from 'lucide-react';
+import { useAmoCRM } from '../providers/AmoCRMProvider';
 
 interface CalculationResult {
   basePrice: number;
@@ -13,6 +14,7 @@ interface CalculationResult {
 }
 
 export default function CleaningCalculator() {
+  const { openModal } = useAmoCRM();
   const [propertyType, setPropertyType] = useState<'apartment' | 'house' | 'office' | 'commercial'>('apartment');
   const [area, setArea] = useState<number>(50);
   const [customArea, setCustomArea] = useState<string>('');
@@ -391,7 +393,10 @@ export default function CleaningCalculator() {
               </div>
 
               {/* Кнопка заказа */}
-              <button className="w-full btn-primary py-4 text-lg font-semibold">
+              <button 
+                onClick={openModal}
+                className="w-full btn-primary py-4 text-lg font-semibold"
+              >
                 Заказать уборку
               </button>
 
