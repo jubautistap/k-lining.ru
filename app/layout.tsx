@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'your-google-verification-code',
-    yandex: 'your-yandex-verification-code',
+    yandex: '2d079be8c95113d8',
   },
   category: 'business',
   classification: 'cleaning services',
