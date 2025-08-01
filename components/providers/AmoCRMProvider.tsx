@@ -31,12 +31,17 @@ export default function AmoCRMProvider({ children }: { children: React.ReactNode
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Показываем модальное окно через 5 секунд после загрузки
-    const timer = setTimeout(() => {
-      setIsModalOpen(true);
-    }, 5000);
+    // Проверяем, находимся ли мы на админ-странице
+    const isAdminPage = window.location.pathname.startsWith('/admin');
+    
+    // Показываем модальное окно через 5 секунд после загрузки, но только не на админ-страницах
+    if (!isAdminPage) {
+      const timer = setTimeout(() => {
+        setIsModalOpen(true);
+      }, 5000);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   const openModal = () => setIsModalOpen(true);
