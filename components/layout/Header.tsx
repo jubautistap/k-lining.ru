@@ -229,13 +229,13 @@ export default function Header() {
           </div>
 
           {/* Mobile Contact & Menu */}
-          <div className="md:hidden flex items-center justify-between w-full">
+          <div className="md:hidden flex items-center space-x-2">
             <a 
               href="tel:+79255551833" 
               className="flex items-center space-x-1 text-sm text-gray-600 hover:text-primary-600 transition-colors duration-200"
             >
               <Phone className="w-4 h-4" />
-              <span>+7 (925) 555-18-33</span>
+              <span className="hidden xs:inline">+7 (925) 555-18-33</span>
             </a>
             <button
               onClick={handleMobileMenuToggle}
