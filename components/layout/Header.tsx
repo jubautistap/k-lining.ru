@@ -213,7 +213,7 @@ export default function Header() {
           <div className="hidden md:flex items-center space-x-4">
             <div className="flex items-center space-x-2 text-sm text-gray-600">
               <Phone className="w-4 h-4" />
-              <span>+7 (495) 123-45-67</span>
+              <span>+7 (925) 555-18-33</span>
             </div>
             <button
               onClick={openModal}
@@ -282,7 +282,7 @@ export default function Header() {
             <div className="mt-6 pt-6 border-t border-gray-200">
               <div className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
                 <Phone className="w-4 h-4" />
-                <span>+7 (495) 123-45-67</span>
+                <span>+7 (925) 555-18-33</span>
               </div>
               <div className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
                 <MapPin className="w-4 h-4" />

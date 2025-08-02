@@ -58,7 +58,7 @@ export default function ContactSection() {
     {
       icon: Phone,
       title: 'Телефон',
-      value: '+7 (495) 123-45-67',
+      value: '+7 (925) 555-18-33',
       description: '24/7 поддержка'
     },
     {

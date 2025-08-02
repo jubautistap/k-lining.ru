@@ -107,7 +107,7 @@ export default function TermsPage() {
             <div className="bg-gray-50 rounded-lg p-6 mt-8">
               <h3 className="text-lg font-semibold mb-4">Контактная информация</h3>
               <p className="text-gray-600">
-                <strong>Телефон:</strong> +7-495-123-45-67<br/>
+                <strong>Телефон:</strong> +7-925-555-18-33<br/>
                 <strong>Email:</strong> info@k-lining.ru<br/>
                 <strong>Адрес:</strong> Москва, Россия<br/>
                 <strong>Режим работы:</strong> 24/7
