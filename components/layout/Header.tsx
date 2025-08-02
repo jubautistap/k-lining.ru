@@ -231,7 +231,7 @@ export default function Header() {
 
 
           {/* Mobile Contact & Menu */}
-          <div className="md:hidden flex items-center flex-1 justify-end space-x-1 sm:space-x-2">
+          <div className="md:hidden flex items-center space-x-1 sm:space-x-2">
             <a 
               href="tel:+79255551833" 
               className="flex items-center space-x-1 text-xs sm:text-sm text-gray-600 hover:text-primary-600 transition-colors duration-200"
