@@ -117,19 +117,19 @@ export default function Header() {
       isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white'
     }`}>
       <div className="container-custom">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-16 md:h-20 min-h-[64px]">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center">
-              <img src="/logo.png" alt="KliningPro" className="w-8 h-8 object-contain" />
+            <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center">
+              <img src="/logo.png" alt="KliningPro" className="w-6 h-6 md:w-8 md:h-8 object-contain" />
             </div>
-            <span className="text-xl md:text-2xl font-bold text-primary-600">
+            <span className="text-lg md:text-xl lg:text-2xl font-bold text-primary-600">
               KliningPro
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden lg:flex items-center space-x-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -210,7 +210,7 @@ export default function Header() {
           </nav>
 
           {/* Contact Info & CTA */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-4">
             <div className="flex items-center space-x-2 text-sm text-gray-600">
               <Phone className="w-4 h-4" />
               <a 
@@ -228,18 +228,19 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Mobile Contact & Menu */}
-          <div className="md:hidden flex items-center space-x-2">
+          {/* Tablet Contact & Menu */}
+          <div className="hidden md:flex lg:hidden items-center space-x-3">
             <a 
               href="tel:+79255551833" 
               className="flex items-center space-x-1 text-sm text-gray-600 hover:text-primary-600 transition-colors duration-200"
             >
               <Phone className="w-4 h-4" />
-              <span className="hidden sm:inline">+7 (925) 555-18-33</span>
+              <span>+7 (925) 555-18-33</span>
             </a>
             <button
               onClick={handleMobileMenuToggle}
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+              aria-label="Открыть меню"
             >
               {isMobileMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -248,12 +249,34 @@ export default function Header() {
               )}
             </button>
           </div>
+
+          {/* Mobile Contact & Menu */}
+          <div className="lg:hidden flex items-center space-x-1 sm:space-x-2">
+            <a 
+              href="tel:+79255551833" 
+              className="flex items-center space-x-1 text-xs sm:text-sm text-gray-600 hover:text-primary-600 transition-colors duration-200"
+            >
+              <Phone className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">+7 (925) 555-18-33</span>
+            </a>
+            <button
+              onClick={handleMobileMenuToggle}
+              className="p-1 sm:p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+              aria-label="Открыть меню"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-5 h-5 sm:w-6 sm:h-6" />
+              ) : (
+                <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200">
+        <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
           <div className="container-custom py-4">
             <nav className="flex flex-col space-y-4">
               {navigation.map((item) => (
@@ -317,6 +340,84 @@ export default function Header() {
               >
                 Заказать уборку
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tablet Menu */}
+      {isMobileMenuOpen && (
+        <div className="hidden md:block lg:hidden bg-white border-t border-gray-200 shadow-lg">
+          <div className="container-custom py-6">
+            <nav className="grid grid-cols-2 gap-8">
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-4">Навигация</h3>
+                <div className="space-y-2">
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="text-gray-700 hover:text-primary-600 font-medium block py-1 transition-colors duration-200"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-4">Корпоративным клиентам</h3>
+                <div className="space-y-2">
+                  <Link
+                    href="/corporate"
+                    className="text-gray-700 hover:text-primary-600 font-medium block py-1 transition-colors duration-200"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Уборка офисов
+                  </Link>
+                  <Link
+                    href="/corporate"
+                    className="text-gray-700 hover:text-primary-600 font-medium block py-1 transition-colors duration-200"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Уборка помещений
+                  </Link>
+                  <Link
+                    href="/corporate"
+                    className="text-gray-700 hover:text-primary-600 font-medium block py-1 transition-colors duration-200"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Специализированные услуги
+                  </Link>
+                </div>
+              </div>
+            </nav>
+            
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4 text-sm text-gray-600">
+                  <div className="flex items-center space-x-2">
+                    <Phone className="w-4 h-4" />
+                    <a 
+                      href="tel:+79255551833" 
+                      className="hover:text-primary-600 transition-colors duration-200"
+                    >
+                      +7 (925) 555-18-33
+                    </a>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <MapPin className="w-4 h-4" />
+                    <span>Москва и МО</span>
+                  </div>
+                </div>
+                <button
+                  onClick={handleModalOpen}
+                  className="btn-primary text-sm"
+                >
+                  Заказать уборку
+                </button>
+              </div>
             </div>
           </div>
         </div>
