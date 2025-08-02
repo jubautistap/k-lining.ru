@@ -213,7 +213,12 @@ export default function Header() {
           <div className="hidden md:flex items-center space-x-4">
             <div className="flex items-center space-x-2 text-sm text-gray-600">
               <Phone className="w-4 h-4" />
-              <span>+7 (925) 555-18-33</span>
+              <a 
+                href="tel:+79255551833" 
+                className="hover:text-primary-600 transition-colors duration-200"
+              >
+                +7 (925) 555-18-33
+              </a>
             </div>
             <button
               onClick={openModal}
@@ -282,7 +287,12 @@ export default function Header() {
             <div className="mt-6 pt-6 border-t border-gray-200">
               <div className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
                 <Phone className="w-4 h-4" />
-                <span>+7 (925) 555-18-33</span>
+                <a 
+                  href="tel:+79255551833" 
+                  className="hover:text-primary-600 transition-colors duration-200"
+                >
+                  +7 (925) 555-18-33
+                </a>
               </div>
               <div className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
                 <MapPin className="w-4 h-4" />
