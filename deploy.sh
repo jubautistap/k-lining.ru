@@ -30,10 +30,16 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+# Запускаем SSH агент если не запущен
+print_status "Настраиваем SSH агент..."
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/id_rsa 2>/dev/null
+
 # Проверяем подключение к серверу
 print_status "Проверяем подключение к серверу..."
 if ! ssh -o ConnectTimeout=10 $SERVER_USER@$SERVER_HOST "echo 'Подключение успешно'" 2>/dev/null; then
     print_error "Не удается подключиться к серверу $SERVER_HOST"
+    print_warning "Запустите ./setup-ssh.sh для настройки SSH ключей"
     exit 1
 fi
 
