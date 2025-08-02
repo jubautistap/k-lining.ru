@@ -121,7 +121,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">K</span>
+              <img src="/logo.png" alt="KliningPro" className="w-8 h-8" />
             </div>
             <span className="text-xl md:text-2xl font-bold text-primary-600">
               KliningPro
@@ -228,17 +228,26 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={handleMobileMenuToggle}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
+          {/* Mobile Contact & Menu */}
+          <div className="md:hidden flex items-center space-x-2">
+            <a 
+              href="tel:+79255551833" 
+              className="flex items-center space-x-1 text-sm text-gray-600 hover:text-primary-600 transition-colors duration-200"
+            >
+              <Phone className="w-4 h-4" />
+              <span className="hidden sm:inline">+7 (925) 555-18-33</span>
+            </a>
+            <button
+              onClick={handleMobileMenuToggle}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
