@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import './critical.css';
 import { Toaster } from 'react-hot-toast';
 import AmoCRMProvider from '@/components/providers/AmoCRMProvider';
 import AmoCRMModal from '@/components/modals/AmoCRMModal';
@@ -11,8 +10,9 @@ import Footer from '@/components/layout/Footer';
 const inter = Inter({ 
   subsets: ['latin'],
   display: 'swap',
-  preload: false, // Отключаем preload для оптимизации
-  fallback: ['system-ui', 'arial']
+  preload: true, // Включаем preload для критического шрифта
+  fallback: ['system-ui', 'arial'],
+  variable: '--font-inter'
 });
 
 export const metadata: Metadata = {
@@ -113,6 +113,25 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#2563eb" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         
+        {/* Критический CSS инлайн для устранения блокирующих запросов */}
+        <style>{`
+          body{font-family:'Inter',system-ui,sans-serif;line-height:1.6;color:#1e293b;margin:0;padding:0}
+          .fixed{position:fixed}.top-0{top:0}.left-0{left:0}.right-0{right:0}.z-50{z-index:50}
+          .bg-white{background-color:#ffffff}.bg-white\\/95{background-color:rgba(255,255,255,0.95)}
+          .backdrop-blur-md{backdrop-filter:blur(12px)}.shadow-lg{box-shadow:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05)}
+          .transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke}
+          .duration-200{transition-duration:200ms}.max-w-7xl{max-width:80rem}.mx-auto{margin-left:auto;margin-right:auto}
+          .px-4{padding-left:1rem;padding-right:1rem}.flex{display:flex}.items-center{align-items:center}
+          .justify-between{justify-content:space-between}.h-16{height:4rem}.text-primary-600{color:#2563eb}
+          .font-bold{font-weight:700}.text-lg{font-size:1.125rem;line-height:1.75rem}
+          .text-xl{font-size:1.25rem;line-height:1.75rem}.btn-primary{background-color:#2563eb;color:#ffffff;font-weight:500;padding:0.75rem 1.5rem;border-radius:0.5rem;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-duration:200ms;box-shadow:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05)}
+          .btn-primary:hover{background-color:#1d4ed8;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04)}
+          .min-h-screen{min-height:100vh}.flex-grow{flex-grow:1}.w-10{width:2.5rem}.h-10{height:2.5rem}
+          .bg-primary-600{background-color:#2563eb}.rounded-lg{border-radius:0.5rem}.hidden{display:none}
+          .md\\:hidden{display:block}@media (min-width:768px){.md\\:hidden{display:none!important}.md\\:flex{display:flex}.md\\:h-20{height:5rem}.md\\:text-2xl{font-size:1.5rem;line-height:2rem}}
+        `}</style>
+        
+        
         {/* Оптимизированные preconnect */}
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -188,7 +207,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} ${inter.variable}`}>
         <AmoCRMProvider>
           <div className="min-h-screen flex flex-col">
             <Header />
