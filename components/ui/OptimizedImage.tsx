@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 
 interface OptimizedImageProps {
   src: string;
@@ -10,10 +10,11 @@ interface OptimizedImageProps {
   height?: number;
   className?: string;
   priority?: boolean;
-  placeholder?: 'blur' | 'empty';
-  blurDataURL?: string;
+  fill?: boolean;
   sizes?: string;
   quality?: number;
+  placeholder?: 'blur' | 'empty';
+  blurDataURL?: string;
 }
 
 export default function OptimizedImage({
@@ -21,71 +22,50 @@ export default function OptimizedImage({
   alt,
   width,
   height,
-  className,
+  className = "",
   priority = false,
+  fill = false,
+  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
+  quality = 85,
   placeholder = 'empty',
-  blurDataURL,
-  sizes = '100vw',
-  quality = 75,
+  blurDataURL
 }: OptimizedImageProps) {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(priority);
-  const imageRef = useRef<HTMLDivElement>(null);
+  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
 
-  useEffect(() => {
-    if (priority) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
-      },
-      {
-        rootMargin: '50px',
-        threshold: 0.1,
-      }
-    );
-
-    if (imageRef.current) {
-      observer.observe(imageRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [priority]);
-
-  if (!isInView) {
+  if (imageError) {
     return (
-      <div
-        ref={imageRef}
-        className={`bg-gray-200 animate-pulse ${className || ''}`}
-        style={{
-          width: width ? `${width}px` : '100%',
-          height: height ? `${height}px` : '200px',
-        }}
-      />
+      <div className={`${className} bg-gray-200 flex items-center justify-center text-gray-500`}>
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      </div>
     );
   }
 
   return (
-    <div className={className}>
+    <div className={`relative ${className}`}>
+      {imageLoading && (
+        <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-lg" />
+      )}
       <Image
         src={src}
         alt={alt}
-        width={width}
-        height={height}
-        className={`transition-opacity duration-300 ${
-          isLoaded ? 'opacity-100' : 'opacity-0'
-        }`}
+        width={fill ? undefined : width}
+        height={fill ? undefined : height}
+        fill={fill}
+        className={`${imageLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300 rounded-lg`}
         priority={priority}
+        quality={quality}
+        sizes={sizes}
         placeholder={placeholder}
         blurDataURL={blurDataURL}
-        onLoad={() => setIsLoaded(true)}
-        loading={priority ? 'eager' : 'lazy'}
-        sizes={sizes}
-        quality={quality}
+        onLoad={() => setImageLoading(false)}
+        onError={() => {
+          setImageError(true);
+          setImageLoading(false);
+        }}
       />
     </div>
   );
-} 
+}
