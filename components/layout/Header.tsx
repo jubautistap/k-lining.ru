@@ -129,7 +129,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -210,7 +210,7 @@ export default function Header() {
           </nav>
 
           {/* Contact Info & CTA */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-4">
             <div className="flex items-center space-x-2 text-sm text-gray-600">
               <Phone className="w-4 h-4" />
               <a 
@@ -228,30 +228,10 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Tablet Contact & Menu */}
-          <div className="hidden md:flex lg:hidden items-center space-x-3">
-            <a 
-              href="tel:+79255551833" 
-              className="flex items-center space-x-1 text-sm text-gray-600 hover:text-primary-600 transition-colors duration-200"
-            >
-              <Phone className="w-4 h-4" />
-              <span>+7 (925) 555-18-33</span>
-            </a>
-            <button
-              onClick={handleMobileMenuToggle}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-              aria-label="Открыть меню"
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
-          </div>
+
 
           {/* Mobile Contact & Menu */}
-          <div className="lg:hidden flex items-center space-x-1 sm:space-x-2">
+          <div className="md:hidden flex items-center space-x-1 sm:space-x-2">
             <a 
               href="tel:+79255551833" 
               className="flex items-center space-x-1 text-xs sm:text-sm text-gray-600 hover:text-primary-600 transition-colors duration-200"
@@ -345,83 +325,7 @@ export default function Header() {
         </div>
       )}
 
-      {/* Tablet Menu */}
-      {isMobileMenuOpen && (
-        <div className="hidden md:block lg:hidden bg-white border-t border-gray-200 shadow-lg">
-          <div className="container-custom py-6">
-            <nav className="grid grid-cols-2 gap-8">
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-4">Навигация</h3>
-                <div className="space-y-2">
-                  {navigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="text-gray-700 hover:text-primary-600 font-medium block py-1 transition-colors duration-200"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-              
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-4">Корпоративным клиентам</h3>
-                <div className="space-y-2">
-                  <Link
-                    href="/corporate"
-                    className="text-gray-700 hover:text-primary-600 font-medium block py-1 transition-colors duration-200"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Уборка офисов
-                  </Link>
-                  <Link
-                    href="/corporate"
-                    className="text-gray-700 hover:text-primary-600 font-medium block py-1 transition-colors duration-200"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Уборка помещений
-                  </Link>
-                  <Link
-                    href="/corporate"
-                    className="text-gray-700 hover:text-primary-600 font-medium block py-1 transition-colors duration-200"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Специализированные услуги
-                  </Link>
-                </div>
-              </div>
-            </nav>
-            
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4 text-sm text-gray-600">
-                  <div className="flex items-center space-x-2">
-                    <Phone className="w-4 h-4" />
-                    <a 
-                      href="tel:+79255551833" 
-                      className="hover:text-primary-600 transition-colors duration-200"
-                    >
-                      +7 (925) 555-18-33
-                    </a>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="w-4 h-4" />
-                    <span>Москва и МО</span>
-                  </div>
-                </div>
-                <button
-                  onClick={handleModalOpen}
-                  className="btn-primary text-sm"
-                >
-                  Заказать уборку
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+
     </header>
   );
 } 
