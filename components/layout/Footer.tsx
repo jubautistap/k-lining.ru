@@ -97,7 +97,7 @@ export default function Footer() {
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-primary-400" />
                 <div>
-                  <p className="text-white font-medium">+7 (495) 123-45-67</p>
+                  <p className="text-white font-medium">+7 (925) 555-18-33</p>
                   <p className="text-gray-400 text-sm">24/7 поддержка</p>
                 </div>
               </div>

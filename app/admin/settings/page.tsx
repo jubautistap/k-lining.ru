@@ -64,7 +64,7 @@ export default function AdminSettingsPage() {
     showCalculator: true,
     showModal: true,
     telegram: 'https://t.me/kliningpro',
-    whatsapp: 'https://wa.me/74951234567',
+    whatsapp: 'https://wa.me/79255551833',
     vk: 'https://vk.com/kliningpro'
   });
 
