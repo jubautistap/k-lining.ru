@@ -259,7 +259,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
+        <div className="block md:hidden bg-white border-t border-gray-200 shadow-lg">
           <div className="container-custom py-4">
             <nav className="flex flex-col space-y-4">
               {navigation.map((item) => (

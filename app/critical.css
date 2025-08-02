@@ -155,12 +155,12 @@ body {
 
 /* Критические стили для мобильного меню */
 .md\:hidden {
-  display: none;
+  display: block;
 }
 
 @media (min-width: 768px) {
   .md\:hidden {
-    display: block;
+    display: none !important;
   }
   
   .md\:flex {
