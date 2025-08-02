@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Временное хранилище цен (в реальном проекте - база данных)
-let prices = [
+const prices = [
   {
     id: '1',
     service: 'Уборка квартиры',

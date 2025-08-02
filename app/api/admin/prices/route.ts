@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 
 // Временное хранилище цен (в реальном проекте - база данных)
-let prices = [
+const prices = [
   {
     id: '1',
     service: 'Уборка квартиры',

@@ -61,22 +61,21 @@ export default function AdminAnalyticsPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const loadAnalytics = async () => {
+      try {
+        const response = await fetch(`/api/admin/analytics?range=${dateRange}`);
+        if (response.ok) {
+          const data = await response.json();
+          setAnalytics(data);
+        }
+      } catch (error) {
+        console.error('Error loading analytics:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
     loadAnalytics();
   }, [dateRange]);
-
-  const loadAnalytics = async () => {
-    try {
-      const response = await fetch(`/api/admin/analytics?range=${dateRange}`);
-      if (response.ok) {
-        const data = await response.json();
-        setAnalytics(data);
-      }
-    } catch (error) {
-      console.error('Error loading analytics:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const exportData = () => {
     const dataStr = JSON.stringify(analytics, null, 2);

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Calculator, 
@@ -285,7 +285,7 @@ export default function AdminCalculator() {
   };
 
   // Расчет затрат с учетом команды
-  const calculateCosts = (area: number, teamData: any, employee: Employee, additionalServices: string[]) => {
+  const calculateCosts = useCallback((area: number, teamData: any, employee: Employee, additionalServices: string[]) => {
     const { totalHours, employeesCount, regularHours, overtimeHours } = teamData;
     
     // Трудозатраты с учетом сверхурочных
@@ -329,7 +329,7 @@ export default function AdminCalculator() {
       overhead,
       totalCost
     };
-  };
+  }, [distance, additionalServicesList]);
 
   // Расчет прибыли и наценки
   const calculatePricing = (totalPrice: number, totalCost: number) => {
@@ -345,6 +345,15 @@ export default function AdminCalculator() {
       marginPercentage
     };
   };
+
+  // Названия услуг
+  const serviceNames = useMemo(() => ({
+    maintenance: 'Поддерживающая уборка',
+    general: 'Генеральная уборка',
+    postRenovation: 'После ремонта',
+    eco: 'Эко уборка',
+    vip: 'VIP уборка'
+  }), []);
 
   // Обработка ввода площади
   const handleAreaChange = (value: string) => {
@@ -414,15 +423,7 @@ export default function AdminCalculator() {
       margins,
       pricing
     });
-  }, [propertyType, area, cleaningType, additionalServices, distance, selectedEmployee, employees]);
-
-  const serviceNames = {
-    maintenance: 'Поддерживающая уборка',
-    general: 'Генеральная уборка',
-    postRenovation: 'После ремонта',
-    eco: 'Эко уборка',
-    vip: 'VIP уборка'
-  };
+  }, [propertyType, area, cleaningType, additionalServices, distance, selectedEmployee, employees, additionalServicesList, basePrices, serviceNames, calculateCosts]);
 
   const handleServiceToggle = (serviceId: string) => {
     setAdditionalServices(prev => 

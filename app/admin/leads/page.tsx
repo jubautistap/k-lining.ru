@@ -37,15 +37,8 @@ export default function AdminLeadsPage() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    loadLeads();
-  }, []);
-
-  useEffect(() => {
-    filterLeads();
-  }, [leads, searchTerm, statusFilter]);
-
-  const loadLeads = async () => {
+  const loadLeads = React.useCallback(async () => {
+    setIsLoading(true);
     try {
       const response = await fetch('/api/admin/leads');
       if (response.ok) {
@@ -57,17 +50,19 @@ export default function AdminLeadsPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const filterLeads = () => {
+  useEffect(() => {
+    loadLeads();
+  }, [loadLeads]);
+
+  const filterLeads = React.useCallback(() => {
     let filtered = leads;
 
-    // Фильтр по статусу
     if (statusFilter !== 'all') {
       filtered = filtered.filter(lead => lead.status === statusFilter);
     }
 
-    // Поиск по тексту
     if (searchTerm) {
       filtered = filtered.filter(lead =>
         lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -78,7 +73,11 @@ export default function AdminLeadsPage() {
     }
 
     setFilteredLeads(filtered);
-  };
+  }, [leads, statusFilter, searchTerm]);
+
+  useEffect(() => {
+    filterLeads();
+  }, [filterLeads]);
 
   const updateLeadStatus = async (leadId: string, status: Lead['status']) => {
     try {

@@ -159,7 +159,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Качество</h3>
               <p className="text-gray-600">
-                Каждый клиент заслуживает лучшего результата. Не останавливаемся на "достаточно хорошо".
+                Каждый клиент заслуживает лучшего результата. Не останавливаемся на &quot;достаточно хорошо&quot;.
               </p>
             </div>
           </div>

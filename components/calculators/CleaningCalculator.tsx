@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Calculator, Home, Building, Sparkles, Sun, Shield, CheckCircle, Car, Hotel, School, Store, Factory, Star } from 'lucide-react';
 import { useAmoCRM } from '../providers/AmoCRMProvider';
@@ -23,7 +23,7 @@ export default function CleaningCalculator() {
   const [result, setResult] = useState<CalculationResult | null>(null);
 
   // Базовые цены за м² (обновленные с учетом минимального заказа 6000 руб)
-  const basePrices = {
+  const basePrices = useMemo(() => ({
     apartment: {
       maintenance: 60, // 3,000 / 50 м²
       general: 100, // 5,000 / 50 м²
@@ -52,10 +52,10 @@ export default function CleaningCalculator() {
       eco: 140, // 7,000 / 50 м²
       vip: 250 // 12,500 / 50 м²
     }
-  };
+  }), []);
 
   // Расширенный список дополнительных услуг
-  const additionalServicesList = [
+  const additionalServicesList = useMemo(() => [
     { id: 'windows', name: 'Мытье окон', price: 600, icon: Sun },
     { id: 'sofa', name: 'Химчистка дивана', price: 3000, icon: Sparkles },
     { id: 'carpet', name: 'Химчистка ковра', price: 1800, icon: Sparkles },
@@ -71,7 +71,7 @@ export default function CleaningCalculator() {
     { id: 'disinfection', name: 'Дезинфекция', price: 2500, icon: Shield },
     { id: 'night', name: 'Ночная уборка', price: 3000, icon: Sun },
     { id: 'express', name: 'Срочная уборка', price: 2000, icon: Sparkles }
-  ];
+  ], []);
 
   // Расчет времени работы (реалистичный)
   const calculateDuration = (area: number, cleaningType: string, propertyType: string) => {
@@ -122,13 +122,13 @@ export default function CleaningCalculator() {
   };
 
   // Названия услуг
-  const serviceNames = {
+  const serviceNames = useMemo(() => ({
     maintenance: 'Поддерживающая уборка',
     general: 'Генеральная уборка',
     postRenovation: 'После ремонта',
     eco: 'Эко уборка',
     vip: 'VIP уборка'
-  };
+  }), []);
 
   // Обработка ввода площади
   const handleAreaChange = (value: string) => {
@@ -168,7 +168,7 @@ export default function CleaningCalculator() {
         ).filter(Boolean)
       ]
     });
-  }, [propertyType, area, cleaningType, additionalServices]);
+  }, [propertyType, area, cleaningType, additionalServices, additionalServicesList, basePrices, serviceNames]);
 
   const handleServiceToggle = (serviceId: string) => {
     setAdditionalServices(prev => 

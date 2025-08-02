@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
 
 // Временное хранилище статей (в реальном проекте - база данных)
-let blogPosts = [
+const blogPosts = [
   {
     id: '1',
     title: 'Лучшие средства для уборки квартиры',
