@@ -262,7 +262,7 @@ export default function RootLayout({
               },
               "sameAs": [
                 "https://t.me/kliningpro",
-                "https://wa.me/74951234567"
+                "https://wa.me/79255551833"
               ],
               "serviceArea": {
                 "@type": "GeoCircle",

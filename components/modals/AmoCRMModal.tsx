@@ -50,7 +50,7 @@ export default function AmoCRMModal() {
 
   const handleWhatsApp = () => {
     const message = encodeURIComponent('Здравствуйте! Хочу получить консультацию по услугам клининга.');
-    window.open(`https://wa.me/74951234567?text=${message}`, '_blank');
+    window.open(`https://wa.me/79255551833?text=${message}`, '_blank');
     closeModal();
   };
 
