@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Menu, X, Phone, MapPin, Clock, ChevronDown } from 'lucide-react';
 import { useAmoCRM } from '../providers/AmoCRMProvider';
 import { useThrottle } from '../../hooks/usePerformance';
+import OptimizedLogo from '../ui/OptimizedLogo';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -120,9 +121,11 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 md:h-20 min-h-[64px]">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center">
-              <img src="/logo.png" alt="KliningPro" className="w-6 h-6 md:w-8 md:h-8 object-contain" />
-            </div>
+            <OptimizedLogo 
+              className="w-6 h-6 md:w-8 md:h-8 object-contain" 
+              width={32}
+              height={32}
+            />
             <span className="text-lg md:text-xl lg:text-2xl font-bold text-primary-600">
               KliningPro
             </span>

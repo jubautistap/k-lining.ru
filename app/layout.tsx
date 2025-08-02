@@ -116,6 +116,8 @@ export default function RootLayout({
         {/* Оптимизированные preconnect */}
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://mc.yandex.ru" />
+        <link rel="preconnect" href="https://mc.yandex.com" />
         
         {/* DNS prefetch для внешних ресурсов */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
