@@ -129,7 +129,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden lg:flex items-center space-x-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -210,7 +210,7 @@ export default function Header() {
           </nav>
 
           {/* Contact Info & CTA */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-4">
             <div className="flex items-center space-x-2 text-sm text-gray-600">
               <Phone className="w-4 h-4" />
               <a 
@@ -229,13 +229,13 @@ export default function Header() {
           </div>
 
           {/* Mobile Contact & Menu */}
-          <div className="md:hidden flex items-center space-x-2">
+          <div className="lg:hidden flex items-center space-x-2">
             <a 
               href="tel:+79255551833" 
               className="flex items-center space-x-1 text-sm text-gray-600 hover:text-primary-600 transition-colors duration-200"
             >
               <Phone className="w-4 h-4" />
-              <span className="hidden xs:inline">+7 (925) 555-18-33</span>
+              <span className="hidden sm:inline">+7 (925) 555-18-33</span>
             </a>
             <button
               onClick={handleMobileMenuToggle}
@@ -253,7 +253,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200">
+        <div className="lg:hidden bg-white border-t border-gray-200">
           <div className="container-custom py-4">
             <nav className="flex flex-col space-y-4">
               {navigation.map((item) => (
