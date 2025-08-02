@@ -120,7 +120,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center">
               <img src="/logo.png" alt="KliningPro" className="w-8 h-8 object-contain" />
             </div>
             <span className="text-xl md:text-2xl font-bold text-primary-600">

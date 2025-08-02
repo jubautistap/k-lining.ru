@@ -88,13 +88,13 @@ export default function AmoCRMModal() {
               </button>
               
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm overflow-hidden">
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg overflow-hidden">
                   <Image
                     src="/logo.png"
                     alt="KliningPro"
-                    width={48}
-                    height={48}
-                    className="w-full h-full object-cover"
+                    width={40}
+                    height={40}
+                    className="w-10 h-10 object-contain"
                     loading="lazy"
                   />
                 </div>
