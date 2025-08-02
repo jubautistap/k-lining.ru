@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // Временное хранилище настроек (в реальном проекте - база данных)
 let siteSettings = {
   // Контактная информация
-  phone: '+7-495-123-45-67',
+  phone: '+7-925-555-18-33',
         email: 'info@k-lining.ru',
   address: 'Москва, ул. Примерная, д. 1',
   

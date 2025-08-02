@@ -131,7 +131,7 @@ export default function RootLayout({
               "name": "KliningPro",
               "description": "Профессиональная клининговая компания в Москве. Уборка квартир, домов, офисов, химчистка, мытье окон.",
               "url": "https://k-lining.ru",
-              "telephone": "+7-495-123-45-67",
+              "telephone": "+7-925-555-18-33",
               "email": "info@k-lining.ru",
               "address": {
                 "@type": "PostalAddress",
@@ -250,7 +250,7 @@ export default function RootLayout({
               },
               "contactPoint": {
                 "@type": "ContactPoint",
-                "telephone": "+7-495-123-45-67",
+                "telephone": "+7-925-555-18-33",
                 "contactType": "customer service",
                 "availableLanguage": "Russian",
                 "hoursAvailable": {
