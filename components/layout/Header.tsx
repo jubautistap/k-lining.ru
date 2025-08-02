@@ -129,7 +129,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -210,7 +210,7 @@ export default function Header() {
           </nav>
 
           {/* Contact Info & CTA */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-4">
             <div className="flex items-center space-x-2 text-sm text-gray-600">
               <Phone className="w-4 h-4" />
               <a 
@@ -231,7 +231,7 @@ export default function Header() {
 
 
           {/* Mobile Contact & Menu */}
-          <div className="lg:hidden flex items-center flex-1 justify-end space-x-1 sm:space-x-2">
+          <div className="md:hidden flex items-center flex-1 justify-end space-x-1 sm:space-x-2">
             <a 
               href="tel:+79255551833" 
               className="flex items-center space-x-1 text-xs sm:text-sm text-gray-600 hover:text-primary-600 transition-colors duration-200"
@@ -256,7 +256,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-200 shadow-lg">
+        <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
           <div className="container-custom py-4">
             <nav className="flex flex-col space-y-4">
               {navigation.map((item) => (
