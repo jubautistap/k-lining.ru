@@ -122,9 +122,9 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <OptimizedLogo 
-              className="w-6 h-6 md:w-8 md:h-8 object-contain" 
-              width={32}
-              height={32}
+              className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-contain" 
+              width={48}
+              height={48}
             />
             <span className="text-lg md:text-xl lg:text-2xl font-bold text-primary-600">
               KliningPro
