@@ -105,7 +105,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#2563eb" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="application-name" content="KliningPro" />
         <meta name="apple-mobile-web-app-title" content="KliningPro" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -113,9 +113,10 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#2563eb" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         
-        {/* Критический CSS инлайн для устранения блокирующих запросов */}
+        {/* Критический CSS инлайн для устранения блокирующих запросов (web.dev optimized) */}
         <style>{`
-          body{font-family:'Inter',system-ui,sans-serif;line-height:1.6;color:#1e293b;margin:0;padding:0}
+          *{box-sizing:border-box}
+          body{font-family:'Inter',system-ui,sans-serif;line-height:1.6;color:#1e293b;margin:0;padding:0;background-color:#ffffff}
           .fixed{position:fixed}.top-0{top:0}.left-0{left:0}.right-0{right:0}.z-50{z-index:50}
           .bg-white{background-color:#ffffff}.bg-white\\/95{background-color:rgba(255,255,255,0.95)}
           .backdrop-blur-md{backdrop-filter:blur(12px)}.shadow-lg{box-shadow:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05)}
@@ -129,6 +130,9 @@ export default function RootLayout({
           .min-h-screen{min-height:100vh}.flex-grow{flex-grow:1}.w-10{width:2.5rem}.h-10{height:2.5rem}
           .bg-primary-600{background-color:#2563eb}.rounded-lg{border-radius:0.5rem}.hidden{display:none}
           .md\\:hidden{display:block}@media (min-width:768px){.md\\:hidden{display:none!important}.md\\:flex{display:flex}.md\\:h-20{height:5rem}.md\\:text-2xl{font-size:1.5rem;line-height:2rem}}
+          .container-custom{max-width:80rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem}
+          @media (min-width:640px){.container-custom{padding-left:1.5rem;padding-right:1.5rem}}
+          @media (min-width:1024px){.container-custom{padding-left:2rem;padding-right:2rem}}
         `}</style>
         
         
@@ -138,9 +142,14 @@ export default function RootLayout({
         <link rel="preconnect" href="https://mc.yandex.ru" />
         <link rel="preconnect" href="https://mc.yandex.com" />
         
-        {/* DNS prefetch для внешних ресурсов */}
+        {/* Resource hints согласно web.dev рекомендациям */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+        <link rel="dns-prefetch" href="//mc.yandex.ru" />
+        <link rel="dns-prefetch" href="//mc.yandex.com" />
+        
+        {/* Preload критически важного LCP изображения */}
+        <link rel="preload" href="/logo.png" as="image" type="image/png" />
         
         {/* Structured Data - загружаем асинхронно */}
         <script
@@ -229,19 +238,22 @@ export default function RootLayout({
           />
         </AmoCRMProvider>
         
-        {/* Yandex.Metrika counter */}
+        {/* Yandex.Metrika counter - асинхронная загрузка для оптимизации критического пути */}
         <script
           type="text/javascript"
+          async
           dangerouslySetInnerHTML={{
             __html: `
-              (function(m,e,t,r,i,k,a){
-                  m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                  m[i].l=1*new Date();
-                  for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-                  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-              })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103567092', 'ym');
+              window.addEventListener('load', function() {
+                (function(m,e,t,r,i,k,a){
+                    m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                    m[i].l=1*new Date();
+                    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+                    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+                })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103567092', 'ym');
 
-              ym(103567092, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+                ym(103567092, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+              });
             `
           }}
         />
