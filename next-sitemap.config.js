@@ -53,7 +53,7 @@ module.exports = {
       loc: path,
       changefreq,
       priority,
-      lastmod: '2025-01-15T10:00:00.000Z', // Правильная дата для SEO
+      lastmod: new Date().toISOString(), // Актуальная дата
     };
   },
 }; 
