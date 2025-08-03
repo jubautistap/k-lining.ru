@@ -1,7 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl: process.env.SITE_URL || 'https://k-lining.ru',
-  generateRobotsTxt: true,
+  generateRobotsTxt: false, // Используем кастомный robots.txt
   generateIndexSitemap: false,
   robotsTxtOptions: {
     policies: [
@@ -53,7 +53,7 @@ module.exports = {
       loc: path,
       changefreq,
       priority,
-      lastmod: new Date().toISOString(),
+      lastmod: '2025-01-15T10:00:00.000Z', // Правильная дата для SEO
     };
   },
 }; 
