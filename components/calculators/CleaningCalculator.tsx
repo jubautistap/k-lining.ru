@@ -20,6 +20,7 @@ export default function CleaningCalculator() {
   const [customArea, setCustomArea] = useState<string>('');
   const [cleaningType, setCleaningType] = useState<'maintenance' | 'general' | 'postRenovation' | 'eco' | 'vip'>('maintenance');
   const [additionalServices, setAdditionalServices] = useState<string[]>([]);
+  const [specialModes, setSpecialModes] = useState<string[]>([]);
   const [result, setResult] = useState<CalculationResult | null>(null);
 
   // Базовые цены за м² (обновленные с учетом минимального заказа 6000 руб)
@@ -68,9 +69,25 @@ export default function CleaningCalculator() {
     { id: 'kitchen', name: 'Уборка кухни', price: 2000, icon: Home },
     { id: 'bathroom', name: 'Уборка санузлов', price: 1500, icon: Home },
     { id: 'pet_hair', name: 'Уборка шерсти животных', price: 1000, icon: Home },
-    { id: 'disinfection', name: 'Дезинфекция', price: 2500, icon: Shield },
-    { id: 'night', name: 'Ночная уборка', price: 3000, icon: Sun },
-    { id: 'express', name: 'Срочная уборка', price: 2000, icon: Sparkles }
+    { id: 'disinfection', name: 'Дезинфекция', price: 2500, icon: Shield }
+  ], []);
+
+  // Специальные режимы (процентные надбавки)
+  const specialModesList = useMemo(() => [
+    { 
+      id: 'night', 
+      name: 'Ночной режим', 
+      description: 'Работа с 22:00 до 6:00',
+      multiplier: 1.3, // +30%
+      icon: '🌙'
+    },
+    { 
+      id: 'express', 
+      name: 'Экстренный режим', 
+      description: 'Выезд в течение 1-2 часов',
+      multiplier: 1.5, // +50%
+      icon: '⚡'
+    }
   ], []);
 
   // Расчет времени работы (реалистичный)
@@ -147,12 +164,24 @@ export default function CleaningCalculator() {
       return sum + (service?.price || 0);
     }, 0);
 
-    let totalPrice = basePrice + additionalPrice;
+    // Базовая цена без спецрежимов
+    let baseTotal = basePrice + additionalPrice;
     
     // Минимальный заказ 6000 руб
-    if (totalPrice < 6000) {
-      totalPrice = 6000;
+    if (baseTotal < 6000) {
+      baseTotal = 6000;
     }
+
+    // Применяем специальные режимы (процентные надбавки)
+    let specialModeMultiplier = 1;
+    specialModes.forEach(modeId => {
+      const mode = specialModesList.find(m => m.id === modeId);
+      if (mode) {
+        specialModeMultiplier *= mode.multiplier;
+      }
+    });
+
+    const totalPrice = baseTotal * specialModeMultiplier;
 
     const duration = calculateDuration(area, cleaningType, propertyType);
 
@@ -168,13 +197,21 @@ export default function CleaningCalculator() {
         ).filter(Boolean)
       ]
     });
-  }, [propertyType, area, cleaningType, additionalServices, additionalServicesList, basePrices, serviceNames]);
+  }, [propertyType, area, cleaningType, additionalServices, specialModes, additionalServicesList, specialModesList, basePrices, serviceNames]);
 
   const handleServiceToggle = (serviceId: string) => {
     setAdditionalServices(prev => 
       prev.includes(serviceId) 
         ? prev.filter(id => id !== serviceId)
         : [...prev, serviceId]
+    );
+  };
+
+  const handleSpecialModeToggle = (modeId: string) => {
+    setSpecialModes(prev => 
+      prev.includes(modeId) 
+        ? prev.filter(id => id !== modeId)
+        : [...prev, modeId]
     );
   };
 
@@ -328,6 +365,41 @@ export default function CleaningCalculator() {
                       <span className="text-sm">{service.name}</span>
                     </div>
                     <span className="text-sm font-medium">{service.price} ₽</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Специальные режимы */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              Специальные режимы
+            </label>
+            <div className="grid grid-cols-1 gap-2">
+              {specialModesList.map((mode) => (
+                <button
+                  key={mode.id}
+                  onClick={() => handleSpecialModeToggle(mode.id)}
+                  className={`p-3 rounded-lg border-2 transition-all duration-200 text-left ${
+                    specialModes.includes(mode.id)
+                      ? 'border-orange-600 bg-orange-50 text-orange-700'
+                      : 'border-gray-200 hover:border-orange-300'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <span className="w-4 h-4 text-center">{mode.icon}</span>
+                      <div>
+                        <div className="text-sm font-medium">{mode.name}</div>
+                        <div className="text-xs text-gray-500">{mode.description}</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-orange-600">
+                        +{Math.round((mode.multiplier - 1) * 100)}%
+                      </div>
+                    </div>
                   </div>
                 </button>
               ))}
