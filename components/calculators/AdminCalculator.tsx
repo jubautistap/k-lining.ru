@@ -82,6 +82,7 @@ interface Preset {
   distance: number;
   employeeId: string;
   additionalServices: string[];
+  commercialServices: string[];
 }
 
 export default function AdminCalculator() {
@@ -90,6 +91,7 @@ export default function AdminCalculator() {
   const [customArea, setCustomArea] = useState<string>('');
   const [cleaningType, setCleaningType] = useState<'maintenance' | 'general' | 'postRenovation' | 'eco' | 'vip'>('maintenance');
   const [additionalServices, setAdditionalServices] = useState<string[]>([]);
+  const [commercialServices, setCommercialServices] = useState<string[]>([]);
   const [distance, setDistance] = useState<number>(10); // км
   const [employees, setEmployees] = useState<Employee[]>([
     { 
@@ -136,7 +138,8 @@ export default function AdminCalculator() {
       area: 50,
       distance: 10,
       employeeId: '1',
-      additionalServices: []
+      additionalServices: [],
+      commercialServices: []
     },
     {
       id: '2',
@@ -146,7 +149,8 @@ export default function AdminCalculator() {
       area: 150,
       distance: 15,
       employeeId: '2',
-      additionalServices: ['windows', 'kitchen']
+      additionalServices: ['windows', 'kitchen'],
+      commercialServices: []
     },
     {
       id: '3',
@@ -156,7 +160,8 @@ export default function AdminCalculator() {
       area: 200,
       distance: 20,
       employeeId: '3',
-      additionalServices: ['disinfection', 'express']
+      additionalServices: ['disinfection', 'express'],
+      commercialServices: ['office_cleaning']
     }
   ]);
   const [showPresetModal, setShowPresetModal] = useState(false);
@@ -211,6 +216,28 @@ export default function AdminCalculator() {
     { id: 'disinfection', name: 'Дезинфекция', price: 2500, materials: 600 },
     { id: 'night', name: 'Ночная уборка', price: 3000, materials: 0 },
     { id: 'express', name: 'Срочная уборка', price: 2000, materials: 0 }
+  ];
+
+  // Коммерческие услуги
+  const commercialServicesList = [
+    { id: 'office_cleaning', name: 'Уборка офисов', price: 4000, materials: 300 },
+    { id: 'shopping_centers', name: 'Уборка торговых центров', price: 3500, materials: 400 },
+    { id: 'restaurants', name: 'Уборка ресторанов', price: 3500, materials: 350 },
+    { id: 'beauty_salons', name: 'Уборка салонов красоты', price: 3500, materials: 300 },
+    { id: 'medical_facilities', name: 'Уборка медицинских учреждений', price: 3500, materials: 500 },
+    { id: 'schools', name: 'Уборка школ', price: 3500, materials: 250 },
+    { id: 'fitness_clubs', name: 'Уборка фитнес клубов', price: 3500, materials: 300 },
+    { id: 'saunas', name: 'Уборка бани и сауны', price: 3500, materials: 400 },
+    { id: 'car_salons', name: 'Уборка автосалонов', price: 3500, materials: 200 },
+    { id: 'parking', name: 'Уборка паркингов', price: 2500, materials: 150 },
+    { id: 'window_washing', name: 'Мойка витрин', price: 1500, materials: 100 },
+    { id: 'facade_washing', name: 'Мойка фасадов', price: 2000, materials: 200 },
+    { id: 'industrial_climbing', name: 'Промышленный альпинизм', price: 5000, materials: 300 },
+    { id: 'mechanized_cleaning', name: 'Механизированная уборка', price: 4000, materials: 600 },
+    { id: 'territory_cleaning', name: 'Уборка территории', price: 3000, materials: 200 },
+    { id: 'grass_cutting', name: 'Покос травы', price: 2500, materials: 100 },
+    { id: 'snow_removal', name: 'Уборка снега', price: 3000, materials: 50 },
+    { id: 'car_detailing', name: 'Химчистка автомобилей', price: 2500, materials: 400 }
   ];
 
   // Материалы
@@ -285,7 +312,7 @@ export default function AdminCalculator() {
   };
 
   // Расчет затрат с учетом команды
-  const calculateCosts = useCallback((area: number, teamData: any, employee: Employee, additionalServices: string[]) => {
+  const calculateCosts = useCallback((area: number, teamData: any, employee: Employee, additionalServices: string[], commercialServices: string[]) => {
     const { totalHours, employeesCount, regularHours, overtimeHours } = teamData;
     
     // Трудозатраты с учетом сверхурочных
@@ -310,8 +337,13 @@ export default function AdminCalculator() {
       const service = additionalServicesList.find(s => s.id === serviceId);
       return sum + (service?.materials || 0);
     }, 0);
+
+    const commercialMaterials = commercialServices.reduce((sum, serviceId) => {
+      const service = commercialServicesList.find(s => s.id === serviceId);
+      return sum + (service?.materials || 0);
+    }, 0);
     
-    const materials = baseMaterials + additionalMaterials;
+    const materials = baseMaterials + additionalMaterials + commercialMaterials;
     
     // Транспорт (туда-обратно) - умножаем на количество сотрудников
     const transportCostPerKm = 50; // руб/км
@@ -329,7 +361,7 @@ export default function AdminCalculator() {
       overhead,
       totalCost
     };
-  }, [distance, additionalServicesList]);
+  }, [distance, additionalServicesList, commercialServicesList]);
 
   // Расчет прибыли и наценки
   const calculatePricing = (totalPrice: number, totalCost: number) => {
@@ -375,7 +407,12 @@ export default function AdminCalculator() {
       return sum + (service?.price || 0);
     }, 0);
 
-    let totalPrice = basePrice + additionalPrice;
+    const commercialPrice = commercialServices.reduce((sum, serviceId) => {
+      const service = commercialServicesList.find(s => s.id === serviceId);
+      return sum + (service?.price || 0);
+    }, 0);
+
+    let totalPrice = basePrice + additionalPrice + commercialPrice;
     
     // Минимальный заказ 6000 руб
     if (totalPrice < 6000) {
@@ -385,7 +422,7 @@ export default function AdminCalculator() {
     const maxHoursPerDay = selectedEmployeeData.maxHoursPerDay || 12;
     const teamData = calculateTeamAndDuration(area, cleaningType, propertyType, selectedEmployeeData.efficiency, maxHoursPerDay);
     
-    const costs = calculateCosts(area, teamData, selectedEmployeeData, additionalServices);
+    const costs = calculateCosts(area, teamData, selectedEmployeeData, additionalServices, commercialServices);
     const margins = calculatePricing(totalPrice, costs.totalCost);
 
     const pricing = {
@@ -407,12 +444,16 @@ export default function AdminCalculator() {
     setResult({
       basePrice: basePrice < 6000 ? 6000 : basePrice,
       additionalServices: additionalPrice,
+      commercialServices: commercialPrice,
       totalPrice,
       duration: teamData.duration,
       services: [
         serviceNames[cleaningType],
         ...additionalServices.map(id => 
           additionalServicesList.find(s => s.id === id)?.name || ''
+        ).filter(Boolean),
+        ...commercialServices.map(id =>
+          commercialServicesList.find(s => s.id === id)?.name || ''
         ).filter(Boolean)
       ],
       team,
@@ -423,10 +464,18 @@ export default function AdminCalculator() {
       margins,
       pricing
     });
-  }, [propertyType, area, cleaningType, additionalServices, distance, selectedEmployee, employees, additionalServicesList, basePrices, serviceNames, calculateCosts]);
+  }, [propertyType, area, cleaningType, additionalServices, commercialServices, distance, selectedEmployee, employees, additionalServicesList, commercialServicesList, basePrices, serviceNames, calculateCosts]);
 
   const handleServiceToggle = (serviceId: string) => {
     setAdditionalServices(prev => 
+      prev.includes(serviceId) 
+        ? prev.filter(id => id !== serviceId)
+        : [...prev, serviceId]
+    );
+  };
+
+  const handleCommercialServiceToggle = (serviceId: string) => {
+    setCommercialServices(prev => 
       prev.includes(serviceId) 
         ? prev.filter(id => id !== serviceId)
         : [...prev, serviceId]
@@ -478,6 +527,7 @@ export default function AdminCalculator() {
     setDistance(preset.distance);
     setSelectedEmployee(preset.employeeId);
     setAdditionalServices(preset.additionalServices);
+    setCommercialServices(preset.commercialServices);
   };
 
   const saveCurrentAsPreset = () => {
@@ -489,7 +539,8 @@ export default function AdminCalculator() {
       area,
       distance,
       employeeId: selectedEmployee,
-      additionalServices
+      additionalServices,
+      commercialServices
     };
     
     setPresets(prev => [...prev, newPreset]);
@@ -554,7 +605,7 @@ export default function AdminCalculator() {
                 </button>
               </div>
               <div className="text-sm text-gray-600 mb-3">
-                {preset.area}м² • {preset.distance}км • {preset.additionalServices.length} доп. услуг
+                {preset.area}м² • {preset.distance}км • {preset.additionalServices.length} доп. • {preset.commercialServices.length} комм.
               </div>
               <button
                 onClick={() => loadPreset(preset)}
@@ -593,6 +644,7 @@ export default function AdminCalculator() {
                   <li>• {serviceNames[cleaningType]} - {area}м²</li>
                   <li>• Расстояние: {distance}км</li>
                   <li>• Доп. услуг: {additionalServices.length}</li>
+                <li>• Комм. услуг: {commercialServices.length}</li>
                 </ul>
               </div>
             </div>
@@ -869,6 +921,37 @@ export default function AdminCalculator() {
               ))}
             </div>
           </div>
+
+          {/* Коммерческие услуги */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              Коммерческие услуги
+            </label>
+            <div className="grid grid-cols-1 gap-2 max-h-60 overflow-y-auto">
+              {commercialServicesList.map((service) => (
+                <button
+                  key={service.id}
+                  onClick={() => handleCommercialServiceToggle(service.id)}
+                  className={`p-3 rounded-lg border-2 transition-all duration-200 text-left ${
+                    commercialServices.includes(service.id)
+                      ? 'border-blue-600 bg-blue-50 text-blue-700'
+                      : 'border-gray-200 hover:border-blue-300'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <Building className="w-4 h-4" />
+                      <span className="text-sm">{service.name}</span>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm font-medium">{service.price} ₽</div>
+                      <div className="text-xs text-gray-500">+{service.materials} ₽ мат.</div>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Правая колонка - Результаты */}
@@ -903,16 +986,22 @@ export default function AdminCalculator() {
                    </div>
                   </div>
 
-                  {result.services.slice(1).map((service, index) => (
-                    <div key={index} className="bg-white rounded-lg p-4">
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium text-gray-900">{service}</span>
-                        <span className="text-lg font-bold text-primary-600">
-                          {additionalServicesList.find(s => s.name === service)?.price.toLocaleString()} ₽
-                        </span>
+                  {result.services.slice(1).map((service, index) => {
+                    const additionalService = additionalServicesList.find(s => s.name === service);
+                    const commercialService = commercialServicesList.find(s => s.name === service);
+                    const price = additionalService?.price || commercialService?.price || 0;
+                    
+                    return (
+                      <div key={index} className="bg-white rounded-lg p-4">
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium text-gray-900">{service}</span>
+                          <span className="text-lg font-bold text-primary-600">
+                            {price.toLocaleString()} ₽
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
 
                   <div className="bg-primary-600 text-white rounded-lg p-4">
                     <div className="flex items-center justify-between">
