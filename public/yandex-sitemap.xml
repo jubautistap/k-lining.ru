@@ -111,6 +111,43 @@
     <priority>0.7</priority>
   </url>
   
+  <!-- Новые блог посты -->
+  <url>
+    <loc>https://k-lining.ru/blog/apartment-cleaning-price-moscow/</loc>
+    <lastmod>2025-01-08T12:00:00+03:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://k-lining.ru/blog/cleaning-company-moscow/</loc>
+    <lastmod>2025-01-08T12:00:00+03:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://k-lining.ru/blog/office-cleaning-moscow-24-7/</loc>
+    <lastmod>2025-01-08T12:00:00+03:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Районы Москвы -->
+  <url>
+    <loc>https://k-lining.ru/districts/</loc>
+    <lastmod>2025-01-08T12:00:00+03:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://k-lining.ru/districts/basmannyy/</loc>
+    <lastmod>2025-01-08T12:00:00+03:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
   <!-- Информационные страницы -->
   <url>
     <loc>https://k-lining.ru/about/</loc>
