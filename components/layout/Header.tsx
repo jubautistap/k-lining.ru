@@ -244,28 +244,28 @@ export default function Header() {
             </button>
           </div>
 
-
-
-          {/* Mobile Contact & Menu */}
-          <div className="md:hidden flex items-center gap-4">
-            <a 
-              href="tel:+79255551833" 
-              className="flex items-center gap-2 px-3 h-12 rounded-lg hover:bg-gray-50 text-gray-600 hover:text-primary-600 transition-colors duration-200 touch-manipulation"
-            >
-              <Phone className="w-5 h-5 flex-shrink-0" />
-              <span className="text-sm font-medium whitespace-nowrap">+7 (925) 555-18-33</span>
-            </a>
-            <button
-              onClick={handleMobileMenuToggle}
-              className="flex items-center justify-center w-12 h-12 rounded-lg hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
-              aria-label="Открыть меню"
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6 flex-shrink-0" />
-              ) : (
-                <Menu className="w-6 h-6 flex-shrink-0" />
-              )}
-            </button>
+          {/* Mobile Contact & Menu - ИСПРАВЛЕНА СТРУКТУРА */}
+          <div className="md:hidden flex items-center">
+            <div className="flex items-center gap-3">
+              <a 
+                href="tel:+79255551833" 
+                className="flex items-center gap-2 px-3 py-3 rounded-lg hover:bg-gray-50 text-gray-600 hover:text-primary-600 transition-colors duration-200 touch-manipulation"
+              >
+                <Phone className="w-5 h-5 flex-shrink-0" />
+                <span className="text-sm font-medium whitespace-nowrap">+7 (925) 555-18-33</span>
+              </a>
+              <button
+                onClick={handleMobileMenuToggle}
+                className="flex items-center justify-center p-3 rounded-lg hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
+                aria-label="Открыть меню"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="w-6 h-6 flex-shrink-0" />
+                ) : (
+                  <Menu className="w-6 h-6 flex-shrink-0" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
