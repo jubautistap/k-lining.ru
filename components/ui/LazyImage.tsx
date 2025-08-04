@@ -43,9 +43,11 @@ export default function LazyImage({
       }
     );
 
-    const element = document.querySelector(`[data-src="${src}"]`);
-    if (element) {
-      observer.observe(element);
+    if (typeof document !== 'undefined') {
+      const element = document.querySelector(`[data-src="${src}"]`);
+      if (element) {
+        observer.observe(element);
+      }
     }
 
     return () => observer.disconnect();

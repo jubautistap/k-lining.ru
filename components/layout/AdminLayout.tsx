@@ -131,9 +131,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('admin_token');
-    setIsAuthenticated(false);
-    window.location.href = '/admin';
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('admin_token');
+      setIsAuthenticated(false);
+      window.location.href = '/admin';
+    }
   };
 
   if (isLoading) {

@@ -14,12 +14,16 @@ export default function Header() {
   const { openModal } = useAmoCRM();
 
   const handleScroll = useCallback(() => {
-    setIsScrolled(window.scrollY > 10);
+    if (typeof window !== 'undefined') {
+      setIsScrolled(window.scrollY > 10);
+    }
   }, []);
 
   const throttledHandleScroll = useThrottle(handleScroll, 100);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     window.addEventListener('scroll', throttledHandleScroll);
     return () => window.removeEventListener('scroll', throttledHandleScroll);
   }, [throttledHandleScroll]);

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Phone, Mail, MapPin, Clock, Shield, Award, Users, Zap } from 'lucide-react';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const currentYear = 2025; // Статический год для избежания hydration mismatch
 
   const services = [
     { name: 'Уборка квартир', href: '/services/apartment-cleaning' },
