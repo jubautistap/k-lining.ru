@@ -5,45 +5,50 @@
     <loc>https://k-lining.ru/</loc>
     <image:image>
       <image:loc>https://k-lining.ru/logo.png</image:loc>
-      <image:title>KliningPro - Логотип клининговой компании</image:title>
-      <image:caption>Профессиональная уборка в Москве</image:caption>
+      <image:title>K-lining - Логотип клининговой компании</image:title>
+      <image:caption>Профессиональная уборка в Москве 24/7</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://k-lining.ru/hero.PNG</image:loc>
-      <image:title>Профессиональная уборка квартир и офисов</image:title>
-      <image:caption>KliningPro - быстро, качественно, честно</image:caption>
+      <image:title>K-lining профессиональная уборка квартир и офисов в Москве</image:title>
+      <image:caption>Быстро, качественно, честно - работаем 24/7</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://k-lining.ru/og-image.jpg</image:loc>
+      <image:title>K-lining клининговая компания Москва</image:title>
+      <image:caption>Профессиональная уборка квартир и офисов в Москве от K-lining</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://k-lining.ru/blog/cleaning-tools-guide</loc>
     <image:image>
       <image:loc>https://k-lining.ru/blog/cleaning-tools.jpg</image:loc>
-      <image:title>Инструменты для уборки</image:title>
-      <image:caption>Профессиональные инструменты для клининга</image:caption>
+      <image:title>Профессиональные инструменты для уборки</image:title>
+      <image:caption>Гид по инструментам для клининга от K-lining</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://k-lining.ru/blog/dry-cleaning-guide</loc>
     <image:image>
       <image:loc>https://k-lining.ru/blog/dry-cleaning.jpg</image:loc>
-      <image:title>Химчистка мебели и ковров</image:title>
-      <image:caption>Профессиональная химчистка в Москве</image:caption>
+      <image:title>Химчистка мебели и ковров K-lining</image:title>
+      <image:caption>Профессиональная химчистка в Москве от K-lining</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://k-lining.ru/blog/office-cleaning-schedule</loc>
     <image:image>
       <image:loc>https://k-lining.ru/blog/office-cleaning.jpg</image:loc>
-      <image:title>Уборка офисов в Москве</image:title>
-      <image:caption>График и стандарты офисной уборки</image:caption>
+      <image:title>Уборка офисов в Москве K-lining</image:title>
+      <image:caption>График и стандарты офисной уборки от K-lining</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://k-lining.ru/blog/window-cleaning-tips</loc>
     <image:image>
       <image:loc>https://k-lining.ru/blog/window-cleaning.jpg</image:loc>
-      <image:title>Мытье окон профессионально</image:title>
-      <image:caption>Советы по мытью окон от экспертов</image:caption>
+      <image:title>Мытье окон профессионально K-lining</image:title>
+      <image:caption>Советы по мытью окон от экспертов K-lining</image:caption>
     </image:image>
   </url>
 </urlset>

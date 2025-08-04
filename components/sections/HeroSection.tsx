@@ -178,7 +178,7 @@ export default function HeroSection() {
                 <div className="aspect-[3/2] bg-gradient-to-br from-primary-200 to-secondary-200 rounded-xl overflow-hidden">
                   <Image
                     src="/hero.PNG"
-                    alt="Профессиональная уборка - KliningPro"
+                    alt="K-lining профессиональная уборка квартир и офисов в Москве - быстро качественно честно"
                     width={800}
                     height={533}
                     className="w-full h-full object-cover"

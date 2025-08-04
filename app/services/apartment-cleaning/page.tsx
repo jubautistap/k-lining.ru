@@ -4,14 +4,14 @@ import Link from 'next/link';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Уборка квартир в Москве: генеральная, после ремонта, поддерживающая | KliningPro',
+  title: 'Уборка квартир в Москве: генеральная, после ремонта, поддерживающая | K-lining',
   description: 'Профессиональная уборка квартир в Москве и МО. Генеральная уборка, уборка после ремонта, поддерживающая уборка. Гарантия качества, выезд в день заказа. Цены от 3000₽.',
   keywords: 'уборка квартир Москва, генеральная уборка квартиры, уборка после ремонта, поддерживающая уборка, клининг квартир, уборка квартиры цена, эко уборка квартиры, VIP уборка квартиры',
   openGraph: {
     title: 'Уборка квартир в Москве: генеральная, после ремонта, поддерживающая',
     description: 'Профессиональная уборка квартир в Москве и МО. Генеральная уборка, уборка после ремонта, поддерживающая уборка.',
     url: 'https://k-lining.ru/services/apartment-cleaning',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [{ url: '/images/apartment-cleaning.jpg', width: 1200, height: 630, alt: 'Уборка квартир в Москве' }],
     locale: 'ru_RU',
     type: 'website',
@@ -22,6 +22,95 @@ export const metadata: Metadata = {
 };
 
 export default function ApartmentCleaningPage() {
+  return (
+    <>
+      {/* Service Schema для локального SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Уборка квартир в Москве",
+            "description": "Профессиональная уборка квартир в Москве и МО. Генеральная уборка, уборка после ремонта, поддерживающая уборка. Гарантия качества, выезд в день заказа.",
+            "provider": {
+              "@type": "LocalBusiness",
+              "name": "K-lining",
+              "url": "https://k-lining.ru",
+              "telephone": "+7-925-555-18-33",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "ул. Бакунинская, 69, стр. 1",
+                "addressLocality": "Москва",
+                "postalCode": "105082",
+                "addressCountry": "RU"
+              }
+            },
+            "areaServed": {
+              "@type": "City",
+              "name": "Москва"
+            },
+            "offers": [
+              {
+                "@type": "Offer",
+                "name": "Генеральная уборка квартиры",
+                "description": "Комплексная уборка всех помещений с тщательной очисткой труднодоступных мест",
+                "priceRange": "от 5000₽",
+                "priceCurrency": "RUB"
+              },
+              {
+                "@type": "Offer", 
+                "name": "Уборка после ремонта",
+                "description": "Специализированная уборка после строительных и ремонтных работ",
+                "priceRange": "от 7000₽",
+                "priceCurrency": "RUB"
+              },
+              {
+                "@type": "Offer",
+                "name": "Поддерживающая уборка",
+                "description": "Регулярная уборка для поддержания чистоты в квартире",
+                "priceRange": "от 3000₽", 
+                "priceCurrency": "RUB"
+              }
+            ],
+            "category": "Клининговые услуги",
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Услуги по уборке квартир",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Генеральная уборка квартиры"
+                  }
+                },
+                {
+                  "@type": "Offer", 
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Уборка после ремонта"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service", 
+                    "name": "Поддерживающая уборка"
+                  }
+                }
+              ]
+            }
+          })
+        }}
+      />
+
+      <ApartmentCleaningContent />
+    </>
+  );
+}
+
+function ApartmentCleaningContent() {
   const services = [
     {
       title: 'Генеральная уборка квартиры',

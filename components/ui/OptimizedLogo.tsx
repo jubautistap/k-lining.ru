@@ -12,7 +12,7 @@ interface OptimizedLogoProps {
 
 export default function OptimizedLogo({ 
   className = "w-8 h-8 object-contain", 
-  alt = "KliningPro",
+  alt = "K-lining логотип клининговой компании",
   width = 32,
   height = 32 
 }: OptimizedLogoProps) {
