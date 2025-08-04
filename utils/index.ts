@@ -228,7 +228,7 @@ export function generateMetaTags(config: {
       title,
       description,
       url,
-      siteName: 'KliningPro',
+      siteName: 'K-lining',
       images: [{ url: image, width: 1200, height: 630 }],
       type,
     },

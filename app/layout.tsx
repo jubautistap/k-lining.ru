@@ -17,14 +17,14 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Профессиональная уборка квартир и офисов в Москве - KliningPro 24/7 | Цены от 2,500₽',
-    template: '%s | KliningPro'
+    default: 'Профессиональная уборка квартир и офисов в Москве - K-lining 24/7 | Цены от 2,500₽',
+    template: '%s | K-lining'
   },
-  description: 'Профессиональная уборка квартир и офисов в Москве 24/7 ⭐ Клининговая компания KliningPro ⭐ Химчистка мебели, мытье окон, генеральная уборка, уборка после ремонта ⭐ Работаем круглосуточно без выходных ⭐ Честные цены от 2,500₽ ⭐ Выезд в любой район Москвы и МО',
-  keywords: 'уборка квартир москва, клининговая компания москва, уборка офисов москва, генеральная уборка москва, химчистка мебели москва, мытье окон москва, уборка после ремонта москва, профессиональная уборка, клининг москва цена, химчистка дивана на дому, клининг 24 часа, уборка квартир недорого москва, kliningpro, басманный район, бакунинская',
-  authors: [{ name: 'KliningPro' }],
-  creator: 'KliningPro',
-  publisher: 'KliningPro',
+  description: 'Профессиональная уборка квартир и офисов в Москве 24/7 ⭐ Клининговая компания K-lining ⭐ Химчистка мебели, мытье окон, генеральная уборка, уборка после ремонта ⭐ Работаем круглосуточно без выходных ⭐ Честные цены от 2,500₽ ⭐ Выезд в любой район Москвы и МО',
+  keywords: 'уборка квартир москва, клининговая компания москва, уборка офисов москва, генеральная уборка москва, химчистка мебели москва, мытье окон москва, уборка после ремонта москва, профессиональная уборка, клининг москва цена, химчистка дивана на дому, клининг 24 часа, уборка квартир недорого москва, k-lining, басманный район, бакунинская',
+  authors: [{ name: 'K-lining' }],
+  creator: 'K-lining',
+  publisher: 'K-lining',
   formatDetection: {
     email: false,
     address: false,
@@ -35,16 +35,16 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Уборка квартир и офисов в Москве - KliningPro | Цены от 3000₽',
-    description: 'Профессиональная уборка квартир и офисов в Москве ⭐ Клининговая компания KliningPro ⭐ Химчистка мебели, мытье окон, генеральная уборка ⭐ Работаем 24/7 ⭐ Гарантия качества',
+    title: 'Уборка квартир и офисов в Москве - K-lining | Цены от 3000₽',
+    description: 'Профессиональная уборка квартир и офисов в Москве ⭐ Клининговая компания K-lining ⭐ Химчистка мебели, мытье окон, генеральная уборка ⭐ Работаем 24/7 ⭐ Гарантия качества',
     url: 'https://k-lining.ru',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'KliningPro - Профессиональная уборка в Москве',
+        alt: 'K-lining - Профессиональная уборка в Москве',
       },
     ],
     locale: 'ru_RU',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'KliningPro - Профессиональная уборка в Москве',
+    title: 'K-lining - Профессиональная уборка в Москве',
     description: 'Профессиональная клининговая компания в Москве. Уборка квартир, домов, офисов. Химчистка, мытье окон.',
     images: ['/og-image.jpg'],
   },
@@ -106,8 +106,8 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#2563eb" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
-        <meta name="application-name" content="KliningPro" />
-        <meta name="apple-mobile-web-app-title" content="KliningPro" />
+        <meta name="application-name" content="K-lining" />
+        <meta name="apple-mobile-web-app-title" content="K-lining" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-touch-fullscreen" content="yes" />
@@ -160,8 +160,8 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              "name": "KliningPro - Клининговая компания",
-              "alternateName": "КлинингПро", 
+              "name": "K-lining - Клининговая компания",
+              "alternateName": "К-лининг", 
               "description": "Профессиональная уборка квартир, домов и офисов в Москве и МО. Работаем 24/7 без выходных. Химчистка мебели, мытье окон, генеральная уборка, уборка после ремонта. Быстро, качественно, честно.",
               "url": "https://k-lining.ru",
               "telephone": ["+7-925-555-18-33", "+7-495-123-45-67"],
@@ -310,7 +310,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "KliningPro",
+              "name": "K-lining",
               "url": "https://k-lining.ru",
               "logo": "https://k-lining.ru/logo.png",
               "description": "Профессиональная клининговая компания в Москве",
@@ -364,7 +364,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              "name": "KliningPro",
+              "name": "K-lining",
               "url": "https://k-lining.ru",
               "description": "Профессиональная клининговая компания в Москве",
               "potentialAction": {
