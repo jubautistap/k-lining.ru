@@ -4,6 +4,14 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
+  // КРИТИЧНО: Запрет индексации админских страниц
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet, noimageindex');
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+  }
+
   // Кеширование статических ресурсов
   if (request.nextUrl.pathname.match(/\.(ico|png|jpg|jpeg|gif|svg|webp|avif|woff|woff2|ttf|eot|css|js)$/)) {
     response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
