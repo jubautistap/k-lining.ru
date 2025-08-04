@@ -129,17 +129,17 @@ export default function Header() {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-200 ${
       isMounted && isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white'
-    }`}>
+    } pt-safe-top`}>
       <div className="container-custom">
-        <div className="flex items-center justify-between h-16 md:h-20 min-h-[64px]">
+        <div className="flex items-center justify-between h-20 md:h-24 min-h-[80px] px-4 md:px-6">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-3">
             <OptimizedLogo 
-              className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 object-contain" 
-              width={48}
-              height={48}
+              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 object-contain" 
+              width={64}
+              height={64}
             />
-            <span className="text-lg md:text-xl lg:text-2xl font-bold text-primary-600">
+            <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-primary-600">
               KliningPro
             </span>
           </Link>
@@ -247,23 +247,23 @@ export default function Header() {
 
 
           {/* Mobile Contact & Menu */}
-          <div className="md:hidden flex items-center space-x-1 sm:space-x-2">
+          <div className="md:hidden flex items-center space-x-3">
             <a 
               href="tel:+79255551833" 
-              className="flex items-center space-x-1 text-xs sm:text-sm text-gray-600 hover:text-primary-600 transition-colors duration-200"
+              className="flex items-center space-x-2 text-sm sm:text-base text-gray-600 hover:text-primary-600 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-50"
             >
-              <Phone className="w-3 h-3 sm:w-4 sm:h-4" />
-              <span className="hidden sm:inline">+7 (925) 555-18-33</span>
+              <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
+              <span className="hidden sm:inline font-medium">+7 (925) 555-18-33</span>
             </a>
             <button
               onClick={handleMobileMenuToggle}
-              className="p-1 sm:p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+              className="p-3 rounded-lg hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
               aria-label="Открыть меню"
             >
               {isMobileMenuOpen ? (
-                <X className="w-5 h-5 sm:w-6 sm:h-6" />
+                <X className="w-6 h-6 sm:w-7 sm:h-7" />
               ) : (
-                <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
+                <Menu className="w-6 h-6 sm:w-7 sm:h-7" />
               )}
             </button>
           </div>
@@ -272,14 +272,14 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
-          <div className="container-custom py-4">
-            <nav className="flex flex-col space-y-4">
+        <div className="md:hidden bg-white border-t border-gray-200 shadow-lg pb-safe-bottom">
+          <div className="container-custom py-6 px-4">
+            <nav className="flex flex-col space-y-2">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-gray-700 hover:text-primary-600 font-medium py-2 transition-colors duration-200"
+                  className="text-gray-700 hover:text-primary-600 font-medium py-4 px-2 rounded-lg hover:bg-gray-50 transition-all duration-200 text-lg touch-manipulation"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.name}
@@ -287,18 +287,18 @@ export default function Header() {
               ))}
               
               {/* Mobile Corporate Menu */}
-              <div className="border-t border-gray-200 pt-4">
-                <div className="text-primary-600 font-semibold mb-4">Юрлицам</div>
-                <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="border-t border-gray-200 pt-6 mt-4">
+                <div className="text-primary-600 font-semibold mb-4 text-lg">Юрлицам</div>
+                <div className="grid grid-cols-1 gap-6 text-base">
                   {corporateServices.slice(0, 2).map((category, index) => (
                     <div key={index}>
-                      <div className="font-medium text-gray-900 mb-2">{category.title}</div>
-                      <ul className="space-y-1">
+                      <div className="font-medium text-gray-900 mb-3 text-lg">{category.title}</div>
+                      <ul className="space-y-2">
                         {category.services.slice(0, 4).map((service, serviceIndex) => (
                           <li key={serviceIndex}>
                             <Link
                               href="/corporate"
-                              className="text-gray-600 hover:text-primary-600"
+                              className="text-gray-600 hover:text-primary-600 py-2 px-2 rounded-lg hover:bg-gray-50 block transition-all duration-200 touch-manipulation"
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               {service}
@@ -312,27 +312,27 @@ export default function Header() {
               </div>
             </nav>
             
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <div className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
-                <Phone className="w-4 h-4" />
+            <div className="mt-8 pt-6 border-t border-gray-200">
+              <div className="flex items-center space-x-3 text-base text-gray-600 mb-4 p-2">
+                <Phone className="w-5 h-5" />
                 <a 
                   href="tel:+79255551833" 
-                  className="hover:text-primary-600 transition-colors duration-200"
+                  className="hover:text-primary-600 transition-colors duration-200 font-medium"
                 >
                   +7 (925) 555-18-33
                 </a>
               </div>
-              <div className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
-                <MapPin className="w-4 h-4" />
+              <div className="flex items-center space-x-3 text-base text-gray-600 mb-4 p-2">
+                <MapPin className="w-5 h-5" />
                 <span>Москва и МО</span>
               </div>
-              <div className="flex items-center space-x-2 text-sm text-gray-600 mb-6">
-                <Clock className="w-4 h-4" />
+              <div className="flex items-center space-x-3 text-base text-gray-600 mb-8 p-2">
+                <Clock className="w-5 h-5" />
                 <span>Работаем 24/7</span>
               </div>
               <button
                 onClick={handleModalOpen}
-                className="btn-primary w-full"
+                className="btn-primary w-full text-lg py-4 touch-manipulation"
               >
                 Заказать уборку
               </button>
