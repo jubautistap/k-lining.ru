@@ -15,7 +15,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   compiler: {
-    removeConsole: false, // Оставляем консоль для диагностики метрики
+    removeConsole: process.env.NODE_ENV === 'production',
   },
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],

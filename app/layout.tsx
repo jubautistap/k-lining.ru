@@ -238,74 +238,26 @@ export default function RootLayout({
           />
         </AmoCRMProvider>
         
-        {/* Yandex.Metrika counter - диагностическая версия */}
+        {/* Yandex.Metrika counter */}
         <script
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `
-              console.log('🔄 Начинаю загрузку Яндекс.Метрики...');
-              
-              // Проверка блокировщиков
-              if (window.navigator && window.navigator.userAgent && window.navigator.userAgent.indexOf('AdBlock') !== -1) {
-                console.warn('⚠️ Обнаружен AdBlock - может блокировать метрику');
-              }
-              
               (function(m,e,t,r,i,k,a){
-                  console.log('📊 Инициализирую функцию ym...');
-                  m[i]=m[i]||function(){
-                    console.log('📈 ym функция вызвана с аргументами:', arguments);
-                    (m[i].a=m[i].a||[]).push(arguments)
-                  };
+                  m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
                   m[i].l=1*new Date();
-                  
-                  // Проверяем что скрипт не загружен уже
-                  for (var j = 0; j < document.scripts.length; j++) {
-                    if (document.scripts[j].src === r) { 
-                      console.log('⚠️ Скрипт метрики уже загружен');
-                      return; 
-                    }
-                  }
-                  
-                  console.log('📥 Загружаю скрипт:', r);
-                  k=e.createElement(t);
-                  a=e.getElementsByTagName(t)[0];
-                  k.async=1;
-                  k.src=r;
-                  
-                  k.onload = function() {
-                    console.log('✅ Скрипт метрики загружен успешно');
-                  };
-                  
-                  k.onerror = function() {
-                    console.error('❌ Ошибка загрузки скрипта метрики');
-                  };
-                  
-                  a.parentNode.insertBefore(k,a);
+                  for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+                  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
               })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103567092', 'ym');
 
-              // Ждем немного и инициализируем
-              setTimeout(function() {
-                console.log('🚀 Инициализирую счетчик 103567092...');
-                if (typeof ym !== 'undefined') {
-                  ym(103567092, 'init', {
-                    ssr: true,
-                    webvisor: true,
-                    clickmap: true,
-                    ecommerce: "dataLayer",
-                    accurateTrackBounce: true,
-                    trackLinks: true
-                  });
-                  console.log('✅ Метрика инициализирована');
-                  
-                  // Тестовый хит
-                  setTimeout(function() {
-                    ym(103567092, 'hit', window.location.href);
-                    console.log('📤 Отправлен тестовый хит на:', window.location.href);
-                  }, 1000);
-                } else {
-                  console.error('❌ Функция ym не определена после загрузки');
-                }
-              }, 100);
+              ym(103567092, 'init', {
+                  ssr: true,
+                  webvisor: true,
+                  clickmap: true,
+                  ecommerce: "dataLayer",
+                  accurateTrackBounce: true,
+                  trackLinks: true
+              });
             `
           }}
         />

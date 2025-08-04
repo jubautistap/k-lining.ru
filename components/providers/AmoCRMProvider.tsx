@@ -31,6 +31,9 @@ export default function AmoCRMProvider({ children }: { children: React.ReactNode
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    // Проверяем что мы на клиенте (избегаем hydration mismatch)
+    if (typeof window === 'undefined') return;
+    
     // Проверяем, находимся ли мы на админ-странице
     const isAdminPage = window.location.pathname.startsWith('/admin');
     
