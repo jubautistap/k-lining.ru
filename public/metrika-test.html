@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест Яндекс.Метрики - KliningPro</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 50px auto; 
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .status { 
+            padding: 20px; 
+            margin: 20px 0; 
+            border-radius: 8px; 
+            border: 2px solid;
+        }
+        .success { 
+            background: #d4edda; 
+            border-color: #28a745; 
+            color: #155724;
+        }
+        .error { 
+            background: #f8d7da; 
+            border-color: #dc3545; 
+            color: #721c24;
+        }
+        .info { 
+            background: #d1ecf1; 
+            border-color: #17a2b8; 
+            color: #0c5460;
+        }
+        .console-log {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            margin: 10px 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Диагностика Яндекс.Метрики</h1>
+    <p>Эта страница поможет диагностировать проблемы с Яндекс.Метрикой на сайте k-lining.ru</p>
+    
+    <div id="status" class="status info">
+        <strong>🔄 Проверяю состояние метрики...</strong>
+    </div>
+    
+    <div class="console-log" id="logs">Загрузка диагностики...</div>
+    
+    <div>
+        <button onclick="testMetrika()">🧪 Протестировать метрику</button>
+        <button onclick="sendTestHit()">📤 Отправить тестовый хит</button>
+        <button onclick="clearLogs()">🗑️ Очистить логи</button>
+        <button onclick="checkNetworkRequests()">🌐 Проверить сетевые запросы</button>
+    </div>
+    
+    <script>
+        let logs = [];
+        
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}`;
+            logs.push(logEntry);
+            
+            const logsElement = document.getElementById('logs');
+            logsElement.textContent = logs.join('\n');
+            logsElement.scrollTop = logsElement.scrollHeight;
+            
+            console.log(message);
+        }
+        
+        function updateStatus(message, type = 'info') {
+            const statusElement = document.getElementById('status');
+            statusElement.className = `status ${type}`;
+            statusElement.innerHTML = `<strong>${message}</strong>`;
+        }
+        
+        function clearLogs() {
+            logs = [];
+            document.getElementById('logs').textContent = 'Логи очищены...';
+        }
+        
+        function testMetrika() {
+            addLog('🧪 Начинаю тестирование Яндекс.Метрики...');
+            
+            // Проверка существования функции ym
+            if (typeof ym === 'undefined') {
+                addLog('❌ Функция ym не определена!', 'error');
+                updateStatus('❌ Яндекс.Метрика НЕ работает', 'error');
+                return;
+            }
+            
+            addLog('✅ Функция ym определена');
+            
+            // Проверка инициализации
+            try {
+                ym(103567092, 'getClientID', function(clientID) {
+                    if (clientID) {
+                        addLog(`✅ Метрика инициализирована. Client ID: ${clientID}`);
+                        updateStatus('✅ Яндекс.Метрика работает корректно!', 'success');
+                    } else {
+                        addLog('⚠️ Метрика инициализирована, но Client ID пустой');
+                        updateStatus('⚠️ Метрика частично работает', 'info');
+                    }
+                });
+            } catch (error) {
+                addLog(`❌ Ошибка при проверке метрики: ${error.message}`);
+                updateStatus('❌ Ошибка в работе метрики', 'error');
+            }
+        }
+        
+        function sendTestHit() {
+            if (typeof ym === 'undefined') {
+                addLog('❌ Метрика не загружена, невозможно отправить хит');
+                return;
+            }
+            
+            try {
+                ym(103567092, 'hit', window.location.href, {
+                    title: 'Тест диагностики метрики',
+                    referer: document.referrer
+                });
+                addLog(`📤 Тестовый хит отправлен на URL: ${window.location.href}`);
+            } catch (error) {
+                addLog(`❌ Ошибка отправки хита: ${error.message}`);
+            }
+        }
+        
+        function checkNetworkRequests() {
+            addLog('🌐 Проверяю сетевые запросы к Яндекс.Метрике...');
+            
+            // Проверка загрузки скрипта
+            const scripts = document.querySelectorAll('script[src*="mc.yandex.ru"]');
+            if (scripts.length > 0) {
+                addLog(`✅ Найдено ${scripts.length} скрипт(ов) метрики`);
+                scripts.forEach((script, index) => {
+                    addLog(`  📄 Скрипт ${index + 1}: ${script.src}`);
+                });
+            } else {
+                addLog('❌ Скрипты метрики не найдены в DOM');
+            }
+            
+            // Проверка noscript картинки
+            const noscriptImgs = document.querySelectorAll('img[src*="mc.yandex.ru/watch"]');
+            if (noscriptImgs.length > 0) {
+                addLog(`✅ Найдено ${noscriptImgs.length} noscript изображений`);
+            } else {
+                addLog('⚠️ Noscript изображения не найдены');
+            }
+        }
+        
+        // Автоматическая диагностика при загрузке
+        window.addEventListener('load', function() {
+            addLog('🔄 Страница загружена, начинаю диагностику...');
+            
+            setTimeout(function() {
+                testMetrika();
+                checkNetworkRequests();
+            }, 2000);
+        });
+        
+        // Перехват ошибок
+        window.addEventListener('error', function(event) {
+            if (event.filename && event.filename.includes('yandex')) {
+                addLog(`❌ Ошибка в скрипте Яндекс: ${event.message}`);
+            }
+        });
+        
+        addLog('🚀 Диагностическая страница загружена');
+    </script>
+    
+    <!-- Яндекс.Метрика -->
+    <script type="text/javascript">
+        console.log('🔄 Начинаю загрузку Яндекс.Метрики...');
+        
+        (function(m,e,t,r,i,k,a){
+            console.log('📊 Инициализирую функцию ym...');
+            m[i]=m[i]||function(){
+                console.log('📈 ym функция вызвана с аргументами:', arguments);
+                (m[i].a=m[i].a||[]).push(arguments)
+            };
+            m[i].l=1*new Date();
+            
+            for (var j = 0; j < document.scripts.length; j++) {
+                if (document.scripts[j].src === r) { 
+                    console.log('⚠️ Скрипт метрики уже загружен');
+                    return; 
+                }
+            }
+            
+            console.log('📥 Загружаю скрипт:', r);
+            k=e.createElement(t);
+            a=e.getElementsByTagName(t)[0];
+            k.async=1;
+            k.src=r;
+            
+            k.onload = function() {
+                console.log('✅ Скрипт метрики загружен успешно');
+            };
+            
+            k.onerror = function() {
+                console.error('❌ Ошибка загрузки скрипта метрики');
+            };
+            
+            a.parentNode.insertBefore(k,a);
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103567092', 'ym');
+
+        setTimeout(function() {
+            console.log('🚀 Инициализирую счетчик 103567092...');
+            if (typeof ym !== 'undefined') {
+                ym(103567092, 'init', {
+                    ssr: true,
+                    webvisor: true,
+                    clickmap: true,
+                    ecommerce: "dataLayer",
+                    accurateTrackBounce: true,
+                    trackLinks: true
+                });
+                console.log('✅ Метрика инициализирована');
+            } else {
+                console.error('❌ Функция ym не определена после загрузки');
+            }
+        }, 100);
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/103567092" style="position:absolute; left:-9999px;" alt="" /></div>
+    </noscript>
+    <!-- /Яндекс.Метрика -->
+</body>
+</html>
