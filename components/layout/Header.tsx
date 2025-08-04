@@ -247,23 +247,22 @@ export default function Header() {
 
 
           {/* Mobile Contact & Menu */}
-          <div className="md:hidden flex items-center space-x-3">
+          <div className="md:hidden flex items-center justify-center space-x-2">
             <a 
               href="tel:+79255551833" 
-              className="flex items-center space-x-2 text-sm sm:text-base text-gray-600 hover:text-primary-600 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-50"
+              className="flex items-center justify-center p-3 rounded-lg hover:bg-gray-50 text-gray-600 hover:text-primary-600 transition-colors duration-200 touch-manipulation"
             >
-              <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
-              <span className="hidden sm:inline font-medium">+7 (925) 555-18-33</span>
+              <Phone className="w-6 h-6" />
             </a>
             <button
               onClick={handleMobileMenuToggle}
-              className="p-3 rounded-lg hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
+              className="flex items-center justify-center p-3 rounded-lg hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
               aria-label="Открыть меню"
             >
               {isMobileMenuOpen ? (
-                <X className="w-6 h-6 sm:w-7 sm:h-7" />
+                <X className="w-6 h-6" />
               ) : (
-                <Menu className="w-6 h-6 sm:w-7 sm:h-7" />
+                <Menu className="w-6 h-6" />
               )}
             </button>
           </div>
