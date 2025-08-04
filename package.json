@@ -12,7 +12,9 @@
     "postbuild": "next-sitemap",
     "analyze": "ANALYZE=true npm run build",
     "lighthouse": "lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html",
-    "performance": "npm run build && npm run start & sleep 10 && npm run lighthouse && pkill -f 'next start'"
+    "performance": "npm run build && npm run start & sleep 10 && npm run lighthouse && pkill -f 'next start'",
+    "seo:vitals": "node scripts/check-core-web-vitals.js",
+    "seo:audit": "npm run seo:vitals"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
