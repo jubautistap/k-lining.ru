@@ -250,7 +250,7 @@ export default function Header() {
           <div className="md:hidden flex items-center gap-4">
             <a 
               href="tel:+79255551833" 
-              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-50 text-gray-600 hover:text-primary-600 transition-colors duration-200 touch-manipulation"
+              className="flex items-center gap-2 px-3 h-12 rounded-lg hover:bg-gray-50 text-gray-600 hover:text-primary-600 transition-colors duration-200 touch-manipulation"
             >
               <Phone className="w-5 h-5 flex-shrink-0" />
               <span className="text-sm font-medium whitespace-nowrap">+7 (925) 555-18-33</span>
