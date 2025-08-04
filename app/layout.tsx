@@ -148,8 +148,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//mc.yandex.ru" />
         <link rel="dns-prefetch" href="//mc.yandex.com" />
         
-        {/* Preload критически важного LCP изображения */}
-        <link rel="preload" href="/logo.png" as="image" type="image/png" />
+        {/* LCP изображение будет загружено по требованию для лучшей производительности */}
         
         {/* Structured Data - загружаем асинхронно */}
         <script

@@ -11,7 +11,13 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCorporateMenuOpen, setIsCorporateMenuOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false); // Предотвращаем hydration mismatch
   const { openModal } = useAmoCRM();
+
+  // Устанавливаем mounted после hydration
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleScroll = useCallback(() => {
     if (typeof window !== 'undefined') {
@@ -22,11 +28,14 @@ export default function Header() {
   const throttledHandleScroll = useThrottle(handleScroll, 100);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || !isMounted) return;
+    
+    // Инициализируем состояние скролла
+    setIsScrolled(window.scrollY > 10);
     
     window.addEventListener('scroll', throttledHandleScroll);
     return () => window.removeEventListener('scroll', throttledHandleScroll);
-  }, [throttledHandleScroll]);
+  }, [throttledHandleScroll, isMounted]);
 
   const navigation = useMemo(() => [
     { name: 'Услуги', href: '/services' },
@@ -119,7 +128,7 @@ export default function Header() {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-200 ${
-      isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white'
+      isMounted && isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white'
     }`}>
       <div className="container-custom">
         <div className="flex items-center justify-between h-16 md:h-20 min-h-[64px]">
