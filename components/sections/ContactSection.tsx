@@ -59,7 +59,7 @@ export default function ContactSection() {
       icon: Phone,
       title: 'Телефон',
       value: '+7 (925) 555-18-33',
-      description: '24/7 поддержка'
+      description: 'Круглосуточная поддержка'
     },
     {
       icon: Mail,
@@ -69,15 +69,15 @@ export default function ContactSection() {
     },
     {
       icon: MapPin,
-      title: 'Регион работы',
-      value: 'Москва и МО',
-      description: 'Выезжаем по всей области'
+      title: 'Адрес офиса',
+      value: 'ул. Бакунинская, 69, стр. 1',
+      description: 'Басманный район, Москва'
     },
     {
       icon: Clock,
       title: 'Время работы',
-      value: 'Круглосуточно',
-      description: 'Без выходных'
+      value: '24/7 без выходных',
+      description: 'Принимаем заявки круглосуточно'
     }
   ];
 

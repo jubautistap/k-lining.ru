@@ -45,6 +45,36 @@ export const metadata: Metadata = {
 
 const blogPosts = [
   {
+    id: 'cleaning-company-moscow',
+    title: 'Клининговая компания в Москве: рейтинг лучших, цены 2025',
+    excerpt: 'Полный гид по выбору клининговой компании в Москве. Рейтинг лучших, сравнение цен и критерии выбора.',
+    category: 'Рейтинг компаний',
+    date: '2025-01-16',
+    readTime: '10 мин',
+    image: '/blog/cleaning-company.jpg',
+    featured: true
+  },
+  {
+    id: 'apartment-cleaning-price-moscow',
+    title: 'Уборка квартир в Москве недорого - цены 2025',
+    excerpt: 'Актуальные цены на уборку квартир в Москве. Способы экономии и сравнение тарифов клининговых компаний.',
+    category: 'Цены и тарифы',
+    date: '2025-01-16',
+    readTime: '11 мин',
+    image: '/blog/apartment-cleaning-price.jpg',
+    featured: false
+  },
+  {
+    id: 'office-cleaning-moscow-24-7',
+    title: 'Уборка офисов в Москве 24/7 - клининг офисных помещений',
+    excerpt: 'Профессиональная уборка офисов в Москве круглосуточно. Поддерживающая и генеральная уборка офисных помещений.',
+    category: 'Офисная уборка',
+    date: '2025-01-16',
+    readTime: '9 мин',
+    image: '/blog/office-cleaning.jpg',
+    featured: false
+  },
+  {
     id: 'how-to-clean-after-renovation',
     title: 'Как правильно убирать после ремонта',
     excerpt: 'Пошаговое руководство по уборке строительной пыли и мусора. Секреты профессионалов.',
@@ -52,7 +82,7 @@ const blogPosts = [
     date: '2025-01-15',
     readTime: '5 мин',
     image: '/blog/after-renovation.jpg',
-    featured: true
+    featured: false
   },
   {
     id: 'best-cleaning-products',

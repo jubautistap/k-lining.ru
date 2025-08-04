@@ -50,7 +50,7 @@ export default function AdminSettingsPage() {
   const [settings, setSettings] = useState<SiteSettings>({
     phone: '+7-925-555-18-33',
             email: 'info@k-lining.ru',
-    address: 'Москва, ул. Примерная, д. 1',
+    address: 'Москва, ул. Бакунинская, 69, стр. 1',
     siteTitle: 'KliningPro - Профессиональная уборка в Москве',
     siteDescription: 'Профессиональная клининговая компания в Москве',
     googleAnalyticsId: '',

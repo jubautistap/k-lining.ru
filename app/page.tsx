@@ -25,6 +25,11 @@ const ContactSection = dynamic(() => import('@/components/sections/ContactSectio
   ssr: true,
 });
 
+const SEOContentSection = dynamic(() => import('@/components/sections/SEOContentSection'), {
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
+  ssr: true,
+});
+
 const AmoCRMModal = dynamic(() => import('@/components/modals/AmoCRMModal'), {
   ssr: false, // Отключаем SSR для модального окна
 });
@@ -80,6 +85,7 @@ export default function HomePage() {
       <ProcessSection />
       <PricingSection />
       <CleaningCalculator />
+      <SEOContentSection />
       <ContactSection />
       <AmoCRMModal />
     </>

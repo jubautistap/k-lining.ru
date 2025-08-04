@@ -5,7 +5,7 @@ let siteSettings = {
   // Контактная информация
   phone: '+7-925-555-18-33',
         email: 'info@k-lining.ru',
-  address: 'Москва, ул. Примерная, д. 1',
+  address: 'Москва, ул. Бакунинская, 69, стр. 1',
   
   // SEO настройки
   siteTitle: 'KliningPro - Профессиональная уборка в Москве',
