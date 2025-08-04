@@ -131,7 +131,7 @@ export default function Header() {
       isMounted && isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white'
     } pt-safe-top`}>
       <div className="container-custom">
-        <div className="flex items-center justify-between h-20 md:h-24 min-h-[80px] px-4 md:px-6">
+        <div className="flex items-center justify-between h-20 md:h-24 min-h-[80px]">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
             <OptimizedLogo 
@@ -247,24 +247,28 @@ export default function Header() {
 
 
           {/* Mobile Contact & Menu */}
-          <div className="md:hidden flex items-center space-x-1">
-            <a 
-              href="tel:+79255551833" 
-              className="flex items-center justify-center w-12 h-12 rounded-lg hover:bg-gray-50 text-gray-600 hover:text-primary-600 transition-colors duration-200 touch-manipulation"
-            >
-              <Phone className="w-6 h-6" />
-            </a>
-            <button
-              onClick={handleMobileMenuToggle}
-              className="flex items-center justify-center w-12 h-12 rounded-lg hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
-              aria-label="Открыть меню"
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
+          <div className="md:hidden flex items-center gap-1">
+            <div className="flex items-center justify-center w-12 h-12 rounded-lg hover:bg-gray-50 transition-colors duration-200 touch-manipulation">
+              <a 
+                href="tel:+79255551833" 
+                className="flex items-center justify-center w-full h-full text-gray-600 hover:text-primary-600 transition-colors duration-200"
+              >
+                <Phone className="w-6 h-6 flex-shrink-0" />
+              </a>
+            </div>
+            <div className="flex items-center justify-center w-12 h-12 rounded-lg hover:bg-gray-100 transition-colors duration-200 touch-manipulation">
+              <button
+                onClick={handleMobileMenuToggle}
+                className="flex items-center justify-center w-full h-full"
+                aria-label="Открыть меню"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="w-6 h-6 flex-shrink-0" />
+                ) : (
+                  <Menu className="w-6 h-6 flex-shrink-0" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
