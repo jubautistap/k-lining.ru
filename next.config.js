@@ -12,7 +12,7 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   generateEtags: false,
-  reactStrictMode: true,
+  reactStrictMode: false, // Временно отключено для устранения hydration ошибок #425, #418, #423
   swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
