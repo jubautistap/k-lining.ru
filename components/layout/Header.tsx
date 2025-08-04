@@ -247,7 +247,7 @@ export default function Header() {
 
 
           {/* Mobile Contact & Menu */}
-          <div className="md:hidden flex items-center gap-2">
+          <div className="md:hidden flex items-center gap-4">
             <a 
               href="tel:+79255551833" 
               className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-50 text-gray-600 hover:text-primary-600 transition-colors duration-200 touch-manipulation"
