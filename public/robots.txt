@@ -21,6 +21,7 @@ Host: https://k-lining.ru
 # Sitemaps
 Sitemap: https://k-lining.ru/sitemap.xml
 Sitemap: https://k-lining.ru/sitemap-images.xml
+Sitemap: https://k-lining.ru/yandex-sitemap.xml
 
 # Clean param (для Яндекса)
 Clean-param: utm_source

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка Sitemap для Яндекса - KliningPro</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; }
+        .info { background: #cce7ff; border: 1px solid #b3d7ff; color: #0c5460; }
+        a { color: #007bff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Диагностика Sitemap для Яндекса</h1>
+    
+    <div class="info status">
+        <h2>📋 Проверочный лист для Яндекс.Вебмастера</h2>
+        <p>Этот файл поможет диагностировать проблемы с индексацией sitemap в Яндексе.</p>
+    </div>
+
+    <h2>🗺️ Доступные Sitemap файлы:</h2>
+    
+    <div class="success status">
+        <h3>✅ Основной sitemap.xml</h3>
+        <p><strong>URL:</strong> <a href="/sitemap.xml" target="_blank">https://k-lining.ru/sitemap.xml</a></p>
+        <p><strong>Описание:</strong> Автоматически сгенерированный sitemap со всеми страницами сайта</p>
+        <p><strong>Кодировка:</strong> UTF-8</p>
+        <p><strong>Формат:</strong> XML Schema 0.9</p>
+    </div>
+
+    <div class="success status">
+        <h3>🎯 Яндекс-оптимизированный sitemap</h3>
+        <p><strong>URL:</strong> <a href="/yandex-sitemap.xml" target="_blank">https://k-lining.ru/yandex-sitemap.xml</a></p>
+        <p><strong>Описание:</strong> Специально созданный для Яндекса с московским временем (UTC+3)</p>
+        <p><strong>Особенности:</strong></p>
+        <ul>
+            <li>Формат даты: ISO 8601 с часовым поясом +03:00</li>
+            <li>Поддержка Yandex Turbo Pages</li>
+            <li>Оптимизированные приоритеты для Яндекса</li>
+            <li>Меньший размер для быстрой загрузки</li>
+        </ul>
+    </div>
+
+    <div class="success status">
+        <h3>🖼️ Sitemap изображений</h3>
+        <p><strong>URL:</strong> <a href="/sitemap-images.xml" target="_blank">https://k-lining.ru/sitemap-images.xml</a></p>
+        <p><strong>Описание:</strong> Специальный sitemap для индексации изображений</p>
+    </div>
+
+    <h2>🤖 Настройки robots.txt:</h2>
+    <div class="info status">
+        <p><strong>URL:</strong> <a href="/robots.txt" target="_blank">https://k-lining.ru/robots.txt</a></p>
+        <pre>User-agent: Yandex
+Allow: /
+Crawl-delay: 1
+
+Sitemap: https://k-lining.ru/sitemap.xml
+Sitemap: https://k-lining.ru/sitemap-images.xml
+Sitemap: https://k-lining.ru/yandex-sitemap.xml</pre>
+    </div>
+
+    <h2>🔧 Инструкции по добавлению в Яндекс.Вебмастер:</h2>
+    
+    <div class="warning status">
+        <h3>1️⃣ Добавление sitemap в Яндекс.Вебмастер</h3>
+        <ol>
+            <li>Перейдите в <a href="https://webmaster.yandex.ru/" target="_blank">Яндекс.Вебмастер</a></li>
+            <li>Выберите сайт k-lining.ru</li>
+            <li>Перейдите в раздел "Индексирование" → "Файлы Sitemap"</li>
+            <li>Добавьте эти URL по очереди:</li>
+            <ul>
+                <li><code>https://k-lining.ru/yandex-sitemap.xml</code> (приоритетный)</li>
+                <li><code>https://k-lining.ru/sitemap.xml</code> (основной)</li>
+                <li><code>https://k-lining.ru/sitemap-images.xml</code> (изображения)</li>
+            </ul>
+        </ol>
+    </div>
+
+    <div class="info status">
+        <h3>2️⃣ Проверка доступности</h3>
+        <p>Перед добавлением в Вебмастер убедитесь, что все sitemap открываются:</p>
+        <ul>
+            <li><strong>Тест 1:</strong> Откройте каждый sitemap в браузере</li>
+            <li><strong>Тест 2:</strong> Проверьте отсутствие ошибок 404/403/500</li>
+            <li><strong>Тест 3:</strong> Убедитесь что XML валидный</li>
+        </ul>
+    </div>
+
+    <div class="success status">
+        <h3>3️⃣ Оптимизации для Яндекса</h3>
+        <ul>
+            <li>✅ Московское время в датах (UTC+3)</li>
+            <li>✅ Специальная namespace для Yandex Turbo</li>
+            <li>✅ Crawl-delay настроен в robots.txt</li>
+            <li>✅ Clean-param для фильтрации UTM параметров</li>
+            <li>✅ Host указан в robots.txt</li>
+            <li>✅ Все страницы доступны для индексации</li>
+        </ul>
+    </div>
+
+    <h2>📞 Поддержка</h2>
+    <div class="info status">
+        <p>Если у вас остались вопросы по настройке sitemap, обратитесь к веб-мастеру сайта.</p>
+        <p><strong>Дата создания диагностики:</strong> 8 января 2025</p>
+        <p><strong>Версия:</strong> 1.0</p>
+    </div>
+
+    <script>
+        // Автоматическая проверка доступности sitemap
+        document.addEventListener('DOMContentLoaded', function() {
+            const sitemaps = [
+                '/sitemap.xml',
+                '/yandex-sitemap.xml', 
+                '/sitemap-images.xml'
+            ];
+            
+            sitemaps.forEach(sitemap => {
+                fetch(sitemap)
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('✅ Sitemap доступен:', sitemap);
+                        } else {
+                            console.error('❌ Проблема с sitemap:', sitemap, response.status);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('🚫 Ошибка загрузки sitemap:', sitemap, error);
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
