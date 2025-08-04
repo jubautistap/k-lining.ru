@@ -81,6 +81,7 @@ interface Preset {
   employeeId: string;
   additionalServices: string[];
   commercialServices: string[];
+  specialModes: string[];
 }
 
 export default function AdminCalculator() {
@@ -90,6 +91,7 @@ export default function AdminCalculator() {
   const [cleaningType, setCleaningType] = useState<'maintenance' | 'general' | 'postRenovation' | 'eco' | 'vip'>('maintenance');
   const [additionalServices, setAdditionalServices] = useState<string[]>([]);
   const [commercialServices, setCommercialServices] = useState<string[]>([]);
+  const [specialModes, setSpecialModes] = useState<string[]>([]);
   const [distance, setDistance] = useState<number>(10); // км
   const [employees, setEmployees] = useState<Employee[]>([
     { 
@@ -137,7 +139,8 @@ export default function AdminCalculator() {
       distance: 10,
       employeeId: '1',
       additionalServices: [],
-      commercialServices: []
+      commercialServices: [],
+      specialModes: []
     },
     {
       id: '2',
@@ -148,7 +151,8 @@ export default function AdminCalculator() {
       distance: 15,
       employeeId: '2',
       additionalServices: ['windows', 'kitchen'],
-      commercialServices: []
+      commercialServices: [],
+      specialModes: []
     },
     {
       id: '3',
@@ -158,8 +162,9 @@ export default function AdminCalculator() {
       area: 200,
       distance: 20,
       employeeId: '3',
-      additionalServices: ['disinfection', 'express'],
-      commercialServices: ['office_cleaning']
+      additionalServices: ['disinfection'],
+      commercialServices: ['office_cleaning'],
+      specialModes: ['express']
     }
   ]);
   const [showPresetModal, setShowPresetModal] = useState(false);
@@ -211,9 +216,7 @@ export default function AdminCalculator() {
     { id: 'kitchen', name: 'Уборка кухни', price: 2000, materials: 200 },
     { id: 'bathroom', name: 'Уборка санузлов', price: 1500, materials: 150 },
     { id: 'pet_hair', name: 'Уборка шерсти животных', price: 1000, materials: 100 },
-    { id: 'disinfection', name: 'Дезинфекция', price: 2500, materials: 600 },
-    { id: 'night', name: 'Ночная уборка', price: 3000, materials: 0 },
-    { id: 'express', name: 'Срочная уборка', price: 2000, materials: 0 }
+    { id: 'disinfection', name: 'Дезинфекция', price: 2500, materials: 600 }
   ], []);
 
   // Коммерческие услуги
@@ -236,6 +239,24 @@ export default function AdminCalculator() {
     { id: 'grass_cutting', name: 'Покос травы', price: 2500, materials: 100 },
     { id: 'snow_removal', name: 'Уборка снега', price: 3000, materials: 50 },
     { id: 'car_detailing', name: 'Химчистка автомобилей', price: 2500, materials: 400 }
+  ], []);
+
+  // Специальные режимы (процентные надбавки)
+  const specialModesList = useMemo(() => [
+    { 
+      id: 'night', 
+      name: 'Ночной режим', 
+      description: 'Работа с 22:00 до 6:00',
+      multiplier: 1.3, // +30%
+      icon: '🌙'
+    },
+    { 
+      id: 'express', 
+      name: 'Экстренный režим', 
+      description: 'Выезд в течение 1-2 часов',
+      multiplier: 1.5, // +50%
+      icon: '⚡'
+    }
   ], []);
 
   // Материалы
@@ -410,12 +431,24 @@ export default function AdminCalculator() {
       return sum + (service?.price || 0);
     }, 0);
 
-    let totalPrice = basePrice + additionalPrice + commercialPrice;
+    // Базовая цена без спецрежимов
+    let baseTotal = basePrice + additionalPrice + commercialPrice;
     
     // Минимальный заказ 6000 руб
-    if (totalPrice < 6000) {
-      totalPrice = 6000;
+    if (baseTotal < 6000) {
+      baseTotal = 6000;
     }
+
+    // Применяем специальные режимы (процентные надбавки)
+    let specialModeMultiplier = 1;
+    specialModes.forEach(modeId => {
+      const mode = specialModesList.find(m => m.id === modeId);
+      if (mode) {
+        specialModeMultiplier *= mode.multiplier;
+      }
+    });
+
+    const totalPrice = baseTotal * specialModeMultiplier;
 
     const maxHoursPerDay = selectedEmployeeData.maxHoursPerDay || 12;
     const teamData = calculateTeamAndDuration(area, cleaningType, propertyType, selectedEmployeeData.efficiency, maxHoursPerDay);
@@ -462,7 +495,7 @@ export default function AdminCalculator() {
       margins,
       pricing
     });
-  }, [propertyType, area, cleaningType, additionalServices, commercialServices, distance, selectedEmployee, employees, additionalServicesList, commercialServicesList, basePrices, serviceNames, calculateCosts]);
+  }, [propertyType, area, cleaningType, additionalServices, commercialServices, specialModes, distance, selectedEmployee, employees, additionalServicesList, commercialServicesList, specialModesList, basePrices, serviceNames, calculateCosts]);
 
   const handleServiceToggle = (serviceId: string) => {
     setAdditionalServices(prev => 
@@ -477,6 +510,14 @@ export default function AdminCalculator() {
       prev.includes(serviceId) 
         ? prev.filter(id => id !== serviceId)
         : [...prev, serviceId]
+    );
+  };
+
+  const handleSpecialModeToggle = (modeId: string) => {
+    setSpecialModes(prev => 
+      prev.includes(modeId) 
+        ? prev.filter(id => id !== modeId)
+        : [...prev, modeId]
     );
   };
 
@@ -526,6 +567,7 @@ export default function AdminCalculator() {
     setSelectedEmployee(preset.employeeId);
     setAdditionalServices(preset.additionalServices);
     setCommercialServices(preset.commercialServices);
+    setSpecialModes(preset.specialModes);
   };
 
   const saveCurrentAsPreset = () => {
@@ -538,7 +580,8 @@ export default function AdminCalculator() {
       distance,
       employeeId: selectedEmployee,
       additionalServices,
-      commercialServices
+      commercialServices,
+      specialModes
     };
     
     setPresets(prev => [...prev, newPreset]);
@@ -603,7 +646,7 @@ export default function AdminCalculator() {
                 </button>
               </div>
               <div className="text-sm text-gray-600 mb-3">
-                {preset.area}м² • {preset.distance}км • {preset.additionalServices.length} доп. • {preset.commercialServices.length} комм.
+                {preset.area}м² • {preset.distance}км • {preset.additionalServices.length} доп. • {preset.commercialServices.length} комм. • {preset.specialModes.length} режим.
               </div>
               <button
                 onClick={() => loadPreset(preset)}
@@ -643,6 +686,7 @@ export default function AdminCalculator() {
                   <li>• Расстояние: {distance}км</li>
                   <li>• Доп. услуг: {additionalServices.length}</li>
                 <li>• Комм. услуг: {commercialServices.length}</li>
+                <li>• Спец. режимов: {specialModes.length}</li>
                 </ul>
               </div>
             </div>
@@ -944,6 +988,41 @@ export default function AdminCalculator() {
                     <div className="text-right">
                       <div className="text-sm font-medium">{service.price} ₽</div>
                       <div className="text-xs text-gray-500">+{service.materials} ₽ мат.</div>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Специальные режимы */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              Специальные режимы
+            </label>
+            <div className="grid grid-cols-1 gap-2">
+              {specialModesList.map((mode) => (
+                <button
+                  key={mode.id}
+                  onClick={() => handleSpecialModeToggle(mode.id)}
+                  className={`p-3 rounded-lg border-2 transition-all duration-200 text-left ${
+                    specialModes.includes(mode.id)
+                      ? 'border-orange-600 bg-orange-50 text-orange-700'
+                      : 'border-gray-200 hover:border-orange-300'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <span className="w-4 h-4 text-center">{mode.icon}</span>
+                      <div>
+                        <div className="text-sm font-medium">{mode.name}</div>
+                        <div className="text-xs text-gray-500">{mode.description}</div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-orange-600">
+                        +{Math.round((mode.multiplier - 1) * 100)}%
+                      </div>
                     </div>
                   </div>
                 </button>
