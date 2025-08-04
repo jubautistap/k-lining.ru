@@ -140,7 +140,7 @@ export default function Header() {
               height={64}
             />
             <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-primary-600">
-              KliningPro
+              K-lining
             </span>
           </Link>
 
@@ -251,8 +251,8 @@ export default function Header() {
                 href="tel:+79255551833" 
                 className="flex items-center gap-2 px-3 py-3 rounded-lg hover:bg-gray-50 text-gray-600 hover:text-primary-600 transition-colors duration-200 touch-manipulation"
               >
-                <Phone className="w-5 h-5 flex-shrink-0" />
-                <span className="text-sm font-medium whitespace-nowrap">+7 (925) 555-18-33</span>
+                <Phone className="w-4 h-4 flex-shrink-0" />
+                <span className="text-xs font-medium whitespace-nowrap">+7 (925) 555-18-33</span>
               </a>
               <button
                 onClick={handleMobileMenuToggle}
