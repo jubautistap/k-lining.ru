@@ -7,13 +7,10 @@ import {
   Home, 
   Building, 
   Sparkles, 
-  Sun, 
   Shield, 
   CheckCircle, 
   Star,
   Users,
-  Car,
-  Package,
   DollarSign,
   TrendingUp,
   AlertCircle,
@@ -25,6 +22,7 @@ import {
 interface CalculationResult {
   basePrice: number;
   additionalServices: number;
+  commercialServices: number;
   totalPrice: number;
   duration: string;
   services: string[];
@@ -168,7 +166,7 @@ export default function AdminCalculator() {
   const [newPresetName, setNewPresetName] = useState('');
 
   // Базовые цены за м² (как на сайте)
-  const basePrices = {
+  const basePrices = useMemo(() => ({
     apartment: {
       maintenance: 60,
       general: 100,
@@ -197,10 +195,10 @@ export default function AdminCalculator() {
       eco: 140,
       vip: 250
     }
-  };
+  }), []);
 
   // Дополнительные услуги
-  const additionalServicesList = [
+  const additionalServicesList = useMemo(() => [
     { id: 'windows', name: 'Мытье окон', price: 600, materials: 50 },
     { id: 'sofa', name: 'Химчистка дивана', price: 3000, materials: 800 },
     { id: 'carpet', name: 'Химчистка ковра', price: 1800, materials: 400 },
@@ -216,10 +214,10 @@ export default function AdminCalculator() {
     { id: 'disinfection', name: 'Дезинфекция', price: 2500, materials: 600 },
     { id: 'night', name: 'Ночная уборка', price: 3000, materials: 0 },
     { id: 'express', name: 'Срочная уборка', price: 2000, materials: 0 }
-  ];
+  ], []);
 
   // Коммерческие услуги
-  const commercialServicesList = [
+  const commercialServicesList = useMemo(() => [
     { id: 'office_cleaning', name: 'Уборка офисов', price: 4000, materials: 300 },
     { id: 'shopping_centers', name: 'Уборка торговых центров', price: 3500, materials: 400 },
     { id: 'restaurants', name: 'Уборка ресторанов', price: 3500, materials: 350 },
@@ -238,17 +236,17 @@ export default function AdminCalculator() {
     { id: 'grass_cutting', name: 'Покос травы', price: 2500, materials: 100 },
     { id: 'snow_removal', name: 'Уборка снега', price: 3000, materials: 50 },
     { id: 'car_detailing', name: 'Химчистка автомобилей', price: 2500, materials: 400 }
-  ];
+  ], []);
 
   // Материалы
-  const materialsList: Material[] = [
+  const materialsList: Material[] = useMemo(() => [
     { id: 'detergent', name: 'Моющие средства', costPerSqm: 5, usage: 100 },
     { id: 'disinfectant', name: 'Дезинфицирующие средства', costPerSqm: 3, usage: 100 },
     { id: 'cloths', name: 'Тряпки и салфетки', costPerSqm: 2, usage: 100 },
     { id: 'gloves', name: 'Перчатки', costPerSqm: 1, usage: 100 },
     { id: 'bags', name: 'Мусорные мешки', costPerSqm: 1, usage: 100 },
     { id: 'special', name: 'Специальные средства', costPerSqm: 8, usage: 50 }
-  ];
+  ], []);
 
   // Расчет времени работы и команды
   const calculateTeamAndDuration = (area: number, cleaningType: string, propertyType: string, employeeEfficiency: number, maxHoursPerDay: number = 12) => {
@@ -361,7 +359,7 @@ export default function AdminCalculator() {
       overhead,
       totalCost
     };
-  }, [distance, additionalServicesList, commercialServicesList]);
+  }, [distance, additionalServicesList, commercialServicesList, materialsList]);
 
   // Расчет прибыли и наценки
   const calculatePricing = (totalPrice: number, totalCost: number) => {
