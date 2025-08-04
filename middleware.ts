@@ -20,10 +20,10 @@ export function middleware(request: NextRequest) {
   response.headers.set('X-XSS-Protection', '1; mode=block');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-  // CSP для дополнительной безопасности
+  // CSP для дополнительной безопасности (исправлен для Яндекс.Метрики)
   response.headers.set(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' mc.yandex.ru mc.yandex.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: mc.yandex.ru mc.yandex.com; connect-src 'self' mc.yandex.ru mc.yandex.com;"
+    "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://mc.yandex.ru https://yandex.st; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob: https://mc.yandex.ru; connect-src 'self' https://mc.yandex.ru https://mc.yandex.com;"
   );
 
   return response;
