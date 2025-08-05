@@ -164,17 +164,17 @@ export default function Header() {
           </nav>
 
           {/* Contact Info & CTA */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-4">
             <a 
               href="tel:+79255551833" 
-              className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
+              className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium whitespace-nowrap"
             >
-              <Phone className="w-5 h-5" />
-              <span className="text-base">+7 (925) 555-18-33</span>
+              <Phone className="w-4 h-4" />
+              <span className="text-sm">+7 (925) 555-18-33</span>
             </a>
             <button
               onClick={openModal}
-              className="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors text-base"
+              className="bg-primary-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-primary-700 transition-colors text-sm whitespace-nowrap"
             >
               Заказать уборку
             </button>
