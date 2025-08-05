@@ -101,7 +101,7 @@ export default function PopularServicesSection() {
                   </div>
                   
                   <div className="flex items-center text-primary-600 text-sm font-medium group-hover:text-primary-700">
-                    <span>Подробнее</span>
+                    <span>Заказать услугу</span>
                     <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>

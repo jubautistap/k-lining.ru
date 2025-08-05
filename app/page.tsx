@@ -139,12 +139,9 @@ export default function HomePage() {
 
       <HeroSection />
       <PopularServicesSection />
-      <ServicesSection />
       <WhyChooseUsSection />
       <ProcessSection />
-      <PricingSection />
       <CleaningCalculator />
-      <SEOContentSection />
       <ContactSection />
       <AmoCRMModal />
     </>
