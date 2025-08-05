@@ -16,7 +16,7 @@ module.exports = {
     ],
           host: 'https://k-lining.ru',
   },
-  exclude: ['/admin/*', '/api/*', '/_next/*', '/static/*'],
+  exclude: ['/admin', '/admin/*', '/api/*', '/_next/*', '/static/*'],
   changefreq: 'weekly',
   priority: 0.7,
   sitemapSize: 5000,
@@ -40,6 +40,12 @@ module.exports = {
     // Блог
     if (path.includes('/blog')) {
       priority = 0.8;
+      changefreq = 'monthly';
+    }
+    
+    // Районы
+    if (path.includes('/districts')) {
+      priority = 0.7;
       changefreq = 'monthly';
     }
     
