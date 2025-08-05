@@ -1,34 +1,111 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { leads, addLead } from './data';
+import { z } from 'zod';
+import { requireManager } from '@/lib/auth/middleware';
+import { prisma } from '@/lib/prisma';
+import { apiRateLimit } from '@/lib/rate-limit';
 
-export async function GET() {
-  return NextResponse.json({ leads });
+const leadSchema = z.object({
+  name: z.string().min(1, 'Имя обязательно'),
+  phone: z.string().min(10, 'Телефон обязателен'),
+  email: z.string().email().optional(),
+  service: z.string().optional(),
+  message: z.string().optional(),
+});
+
+export async function GET(request: NextRequest) {
+  try {
+    // Проверяем авторизацию
+    const authResult = await requireManager(request);
+    if (authResult) return authResult;
+
+    // Rate limiting
+    const ip = request.ip || 'unknown';
+    await apiRateLimit.check(100, ip);
+
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '20');
+    const status = searchParams.get('status');
+    const search = searchParams.get('search');
+
+    const skip = (page - 1) * limit;
+
+    // Строим фильтры
+    const where: any = {};
+    if (status) where.status = status;
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: 'insensitive' } },
+        { phone: { contains: search, mode: 'insensitive' } },
+        { email: { contains: search, mode: 'insensitive' } },
+      ];
+    }
+
+    const [leads, total] = await Promise.all([
+      prisma.lead.findMany({
+        where,
+        orderBy: { created_at: 'desc' },
+        skip,
+        take: limit,
+        include: {
+          assigned_to: {
+            select: { id: true, name: true, email: true }
+          }
+        }
+      }),
+      prisma.lead.count({ where })
+    ]);
+
+    return NextResponse.json({
+      leads,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit)
+      }
+    });
+
+  } catch (error) {
+    if (error instanceof Error && error.message === 'Rate limit exceeded') {
+      return NextResponse.json(
+        { error: 'Too many requests' },
+        { status: 429 }
+      );
+    }
+
+    console.error('Error fetching leads:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting
+    const ip = request.ip || 'unknown';
+    await apiRateLimit.check(10, ip);
+
     const body = await request.json();
-    
-    // Валидация
-    if (!body.name || !body.phone) {
-      return NextResponse.json(
-        { error: 'Имя и телефон обязательны' },
-        { status: 400 }
-      );
-    }
+    const { name, phone, email, service, message } = leadSchema.parse(body);
 
-    const newLead = {
-      id: Date.now().toString(),
-      name: body.name,
-      phone: body.phone,
-      email: body.email || '',
-      service: body.service || '',
-      message: body.message || '',
-      status: 'new',
-      createdAt: new Date().toISOString()
-    };
-
-    leads.unshift(newLead); // Добавляем в начало списка
+    const newLead = await prisma.lead.create({
+      data: {
+        name,
+        phone,
+        email,
+        service,
+        message,
+        source: 'website'
+      },
+      include: {
+        assigned_to: {
+          select: { id: true, name: true, email: true }
+        }
+      }
+    });
 
     // Отправляем уведомление в Telegram (если настроено)
     if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
@@ -55,9 +132,23 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: 'Validation failed', details: error.errors },
+        { status: 400 }
+      );
+    }
+
+    if (error instanceof Error && error.message === 'Rate limit exceeded') {
+      return NextResponse.json(
+        { error: 'Too many requests' },
+        { status: 429 }
+      );
+    }
+
     console.error('Error creating lead:', error);
     return NextResponse.json(
-      { error: 'Внутренняя ошибка сервера' },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }

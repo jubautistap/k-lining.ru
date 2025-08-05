@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
 import AdminLayout from '@/components/layout/AdminLayout';
 
 export default function AdminLayoutWrapper({
@@ -8,6 +10,9 @@ export default function AdminLayoutWrapper({
 }: {
   children: React.ReactNode;
 }) {
+  const { isAuthenticated, isLoading, user } = useAuth();
+  const router = useRouter();
+
   useEffect(() => {
     // КРИТИЧНО: Динамически добавляем meta теги для запрета индексации
     const metaTags = [
@@ -31,7 +36,7 @@ export default function AdminLayoutWrapper({
     });
     
     // Меняем title
-    document.title = 'Админ панель - Доступ запрещен';
+    document.title = 'Админ панель - K-lining Pro';
     
     // Cleanup при размонтировании
     return () => {
@@ -42,9 +47,30 @@ export default function AdminLayoutWrapper({
     };
   }, []);
 
+  // Проверяем авторизацию
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.push('/admin/login');
+    }
+  }, [isAuthenticated, isLoading, router]);
+
+  // Показываем загрузку
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
+      </div>
+    );
+  }
+
+  // Если не авторизован, не показываем контент
+  if (!isAuthenticated) {
+    return null;
+  }
+
   return (
     <>
-      <AdminLayout>{children}</AdminLayout>
+      <AdminLayout user={user}>{children}</AdminLayout>
       {/* Скрываем react-hot-toast для админки */}
       <style jsx global>{`
         #_rht_toaster {

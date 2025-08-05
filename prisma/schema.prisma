@@ -1,0 +1,137 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  password_hash String
+  name          String
+  role          Role     @default(MANAGER)
+  status        Status   @default(ACTIVE)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  last_login    DateTime?
+  
+  // Связи
+  leads         Lead[]
+  blog_posts    BlogPost[]
+  
+  @@map("users")
+}
+
+model Lead {
+  id            String      @id @default(cuid())
+  name          String?
+  phone         String
+  email         String?
+  service       String
+  message       String?
+  status        LeadStatus  @default(NEW)
+  source        String      @default("website")
+  price         Float?
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+  
+  // Связи
+  assigned_to   User?       @relation(fields: [user_id], references: [id])
+  user_id       String?
+  orders        Order[]
+  
+  @@map("leads")
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  lead_id         String
+  service_type    String
+  rooms           Int?
+  area            Float?
+  price           Float
+  status          OrderStatus @default(PENDING)
+  scheduled_at    DateTime?
+  completed_at    DateTime?
+  notes           String?
+  created_at      DateTime    @default(now())
+  updated_at      DateTime    @updatedAt
+  
+  // Связи
+  lead            Lead        @relation(fields: [lead_id], references: [id])
+  
+  @@map("orders")
+}
+
+model BlogPost {
+  id           String   @id @default(cuid())
+  title        String
+  slug         String   @unique
+  content      String
+  excerpt      String?
+  status       PostStatus @default(DRAFT)
+  published_at DateTime?
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  
+  // SEO поля
+  meta_title       String?
+  meta_description String?
+  keywords         String?
+  
+  // Связи
+  author       User     @relation(fields: [author_id], references: [id])
+  author_id    String
+  
+  @@map("blog_posts")
+}
+
+model Settings {
+  id         String   @id @default(cuid())
+  key        String   @unique
+  value      String
+  updated_at DateTime @updatedAt
+  
+  @@map("settings")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  EDITOR
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  QUOTED
+  WON
+  LOST
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}

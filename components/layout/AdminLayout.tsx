@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -20,9 +20,18 @@ import {
 } from 'lucide-react';
 import { ToastContainer } from '@/components/ui/Toast';
 import { useToast } from '@/hooks/useToast';
+import { useAuth } from '@/hooks/useAuth';
+
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+}
 
 interface AdminLayoutProps {
   children: React.ReactNode;
+  user?: User;
 }
 
 const adminMenuItems = [
@@ -88,75 +97,15 @@ const adminMenuItems = [
   }
 ];
 
-export default function AdminLayout({ children }: AdminLayoutProps) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+export default function AdminLayout({ children, user }: AdminLayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const { toasts, removeToast } = useToast();
+  const { logout } = useAuth();
 
-  useEffect(() => {
-    // Убираем задержку загрузки
-    setIsAuthenticated(true);
-    setIsLoading(false);
-    // checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
-    try {
-      // Временно отключаем проверку авторизации для тестирования
-      setIsAuthenticated(true);
-      setIsLoading(false);
-      
-      // Рабочий код (закомментирован):
-      /*
-      const token = localStorage.getItem('admin_token');
-      if (token) {
-        // Проверяем токен с сервером
-        const response = await fetch('/api/admin/auth', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        
-        if (response.ok) {
-          setIsAuthenticated(true);
-        } else {
-          localStorage.removeItem('admin_token');
-        }
-      }
-      */
-    } catch (error) {
-      console.error('Auth check failed:', error);
-      setIsLoading(false);
-    }
+  const handleLogout = async () => {
+    await logout();
   };
-
-  const handleLogout = () => {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('admin_token');
-      setIsAuthenticated(false);
-      window.location.href = '/admin';
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-8 h-8 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Загрузка...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Если не авторизован, показываем форму входа
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        {children}
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -181,7 +130,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
                 <Shield className="w-5 h-5 text-white" />
               </div>
-              <h1 className="text-lg font-bold text-gray-900">Админка</h1>
+              <div>
+                <h1 className="text-lg font-bold text-gray-900">Админка</h1>
+                {user && (
+                  <p className="text-sm text-gray-500">{user.name} ({user.role})</p>
+                )}
+              </div>
             </div>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
