@@ -38,11 +38,11 @@ export default function Header() {
   }, [throttledHandleScroll, isMounted]);
 
   const navigation = useMemo(() => [
-    { name: 'Услуги', href: '/services' },
-    { name: 'Цены', href: '/prices' },
-    { name: 'Калькулятор', href: '/calculator' },
+    { name: 'Уборка квартир', href: '/services/apartment-cleaning' },
+    { name: 'Цены на уборку', href: '/prices' },
+    { name: 'Калькулятор стоимости', href: '/calculator' },
     { name: 'Блог', href: '/blog' },
-    { name: 'О нас', href: '/about' },
+    { name: 'О компании', href: '/about' },
     { name: 'Контакты', href: '/contacts' },
   ], []);
 

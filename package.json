@@ -15,7 +15,8 @@
     "performance": "npm run build && npm run start & sleep 10 && npm run lighthouse && pkill -f 'next start'",
     "seo:vitals": "node scripts/check-core-web-vitals.js",
     "seo:check": "node scripts/simple-seo-check.js",
-    "seo:audit": "npm run seo:check && echo '\n' && npm run seo:vitals"
+    "seo:sitelinks": "node scripts/yandex-sitelinks-check.js",
+    "seo:audit": "npm run seo:check && echo '\n' && npm run seo:sitelinks"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",

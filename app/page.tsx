@@ -30,6 +30,11 @@ const SEOContentSection = dynamic(() => import('@/components/sections/SEOContent
   ssr: true,
 });
 
+const PopularServicesSection = dynamic(() => import('@/components/sections/PopularServicesSection'), {
+  loading: () => <div className="h-80 bg-gray-100 animate-pulse" />,
+  ssr: true,
+});
+
 const AmoCRMModal = dynamic(() => import('@/components/modals/AmoCRMModal'), {
   ssr: false, // Отключаем SSR для модального окна
 });
@@ -133,6 +138,7 @@ export default function HomePage() {
       />
 
       <HeroSection />
+      <PopularServicesSection />
       <ServicesSection />
       <WhyChooseUsSection />
       <ProcessSection />
