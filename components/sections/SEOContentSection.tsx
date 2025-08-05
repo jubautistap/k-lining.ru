@@ -45,12 +45,12 @@ export default function SEOContentSection() {
           className="max-w-4xl mx-auto mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
-            Клининговая компания KliningPro в Москве — ваш надежный партнер в вопросах чистоты
+            Клининговая компания K-lining в Москве — ваш надежный партнер в вопросах чистоты
           </h2>
           
           <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
             <p className="text-xl mb-6">
-              <strong>Профессиональная уборка квартир в Москве</strong> от компании KliningPro — это качественный сервис 
+              <strong>Профессиональная уборка квартир в Москве</strong> от компании K-lining — это качественный сервис 
               по доступным ценам. Мы специализируемся на <Link href="/services/apartment-cleaning" className="text-primary-600 hover:text-primary-700 underline">уборке квартир</Link>, <Link href="/services/office-cleaning" className="text-primary-600 hover:text-primary-700 underline">уборке офисов</Link>, 
               <Link href="/services/furniture-dry-cleaning" className="text-primary-600 hover:text-primary-700 underline">химчистке мебели</Link> и <strong>генеральной уборке</strong> любой сложности.
             </p>
@@ -90,7 +90,7 @@ export default function SEOContentSection() {
               </li>
             </ul>
 
-            <h3 className="text-2xl font-bold mb-4">Почему выбирают KliningPro для уборки в Москве?</h3>
+            <h3 className="text-2xl font-bold mb-4">Почему выбирают K-lining для уборки в Москве?</h3>
             <p className="mb-6">
               Выбирая нашу <strong>клининговую компанию</strong>, вы получаете не просто уборку, а комплексное решение 
               всех вопросов чистоты. Мы используем только <strong>профессиональные средства для уборки</strong> 
@@ -139,7 +139,7 @@ export default function SEOContentSection() {
           className="mb-16"
         >
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-            Преимущества работы с KliningPro
+            Преимущества работы с K-lining
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {advantages.map((advantage, index) => (
