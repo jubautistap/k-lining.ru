@@ -16,13 +16,33 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const auth = useAuth();
+  try {
+    const auth = useAuth();
 
-  return (
-    <AuthContext.Provider value={auth}>
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+      <AuthContext.Provider value={auth}>
+        {children}
+      </AuthContext.Provider>
+    );
+  } catch (error) {
+    console.error('AuthProvider error:', error);
+    // Fallback если useAuth не работает
+    const fallbackAuth = {
+      user: null,
+      isAuthenticated: false,
+      isLoading: false,
+      login: async () => ({ success: false, error: 'Auth not available' }),
+      logout: async () => {},
+      refreshToken: async () => {},
+      hasRole: () => false,
+    };
+
+    return (
+      <AuthContext.Provider value={fallbackAuth}>
+        {children}
+      </AuthContext.Provider>
+    );
+  }
 }
 
 export function useAuthContext() {

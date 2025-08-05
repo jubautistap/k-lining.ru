@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { ToastContainer } from '@/components/ui/Toast';
 import { useToast } from '@/hooks/useToast';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuthContext } from '@/components/providers/AuthProvider';
 
 interface User {
   id: string;
@@ -101,7 +101,7 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const { toasts, removeToast } = useToast();
-  const { logout } = useAuth();
+  const { logout } = useAuthContext();
 
   const handleLogout = async () => {
     await logout();

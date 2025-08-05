@@ -342,7 +342,8 @@ export default function RootLayout({
                   clickmap: true,
                   ecommerce: "dataLayer",
                   accurateTrackBounce: true,
-                  trackLinks: true
+                  trackLinks: true,
+                  defer: true
               });
             `
           }}

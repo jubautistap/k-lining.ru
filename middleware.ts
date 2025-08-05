@@ -31,7 +31,7 @@ export function middleware(request: NextRequest) {
   // CSP для дополнительной безопасности (исправлен для Яндекс.Метрики)
   response.headers.set(
             'Content-Security-Policy',
-        "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://mc.yandex.ru https://yandex.st https://yastatic.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob: https://mc.yandex.ru; connect-src 'self' https://mc.yandex.ru https://mc.yandex.com; frame-src 'self' https://mc.yandex.ru https://mc.yandex.md;"
+        "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://mc.yandex.ru https://yandex.st https://yastatic.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob: https://mc.yandex.ru; connect-src 'self' https://mc.yandex.ru https://mc.yandex.com https://mc.yandex.md; frame-src 'self' https://mc.yandex.ru https://mc.yandex.md; object-src 'none'; base-uri 'self'; form-action 'self';"
   );
 
   return response;
