@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useAuthContext } from '@/components/providers/AuthProvider';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import AdminLayout from '@/components/layout/AdminLayout';
 
 export default function AdminLayoutWrapper({
@@ -12,6 +12,7 @@ export default function AdminLayoutWrapper({
 }) {
   const { isAuthenticated, isLoading, user } = useAuthContext();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     // КРИТИЧНО: Динамически добавляем meta теги для запрета индексации
@@ -47,12 +48,12 @@ export default function AdminLayoutWrapper({
     };
   }, []);
 
-  // Проверяем авторизацию
+  // Проверяем авторизацию, но не на странице логина
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (!isLoading && !isAuthenticated && pathname !== '/admin/login') {
       router.push('/admin/login');
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [isAuthenticated, isLoading, router, pathname]);
 
   // Показываем загрузку
   if (isLoading) {
@@ -63,9 +64,14 @@ export default function AdminLayoutWrapper({
     );
   }
 
-  // Если не авторизован, не показываем контент
-  if (!isAuthenticated) {
+  // Если не авторизован и не на странице логина, не показываем контент
+  if (!isAuthenticated && pathname !== '/admin/login') {
     return null;
+  }
+
+  // Если на странице логина, показываем контент без AdminLayout
+  if (pathname === '/admin/login') {
+    return <>{children}</>;
   }
 
   return (
