@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import { Menu, X, Phone, MapPin, Clock, ChevronDown } from 'lucide-react';
+import { Menu, X, Phone, MapPin, Clock } from 'lucide-react';
 import { useAmoCRM } from '../providers/AmoCRMProvider';
 import { useThrottle } from '../../hooks/usePerformance';
 import OptimizedLogo from '../ui/OptimizedLogo';
@@ -10,7 +10,7 @@ import OptimizedLogo from '../ui/OptimizedLogo';
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isCorporateMenuOpen, setIsCorporateMenuOpen] = useState(false);
+
   const [isMounted, setIsMounted] = useState(false); // Предотвращаем hydration mismatch
   const { openModal } = useAmoCRM();
 
@@ -117,9 +117,7 @@ export default function Header() {
     setIsMobileMenuOpen(prev => !prev);
   }, []);
 
-  const handleCorporateMenuToggle = useCallback((isOpen: boolean) => {
-    setIsCorporateMenuOpen(isOpen);
-  }, []);
+
 
   const handleModalOpen = useCallback(() => {
     openModal();
@@ -224,29 +222,15 @@ export default function Header() {
                 </Link>
               ))}
               
-              {/* Mobile Corporate Menu */}
-              <div className="border-t border-gray-200 pt-6 mt-4">
-                <div className="text-primary-600 font-semibold mb-4 text-lg">Юрлицам</div>
-                <div className="grid grid-cols-1 gap-6 text-base">
-                  {corporateServices.slice(0, 2).map((category, index) => (
-                    <div key={index}>
-                      <div className="font-medium text-gray-900 mb-3 text-lg">{category.title}</div>
-                      <ul className="space-y-2">
-                        {category.services.slice(0, 4).map((service, serviceIndex) => (
-                          <li key={serviceIndex}>
-                            <Link
-                              href="/corporate"
-                              className="text-gray-600 hover:text-primary-600 py-2 px-2 rounded-lg hover:bg-gray-50 block transition-all duration-200 touch-manipulation"
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              {service}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
+              {/* Mobile Corporate Link */}
+              <div className="border-t border-gray-200 pt-4 mt-4">
+                <Link
+                  href="/corporate"
+                  className="text-primary-600 hover:text-primary-700 font-semibold text-lg block py-3 px-2 rounded-lg hover:bg-gray-50 transition-all duration-200 touch-manipulation"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Для бизнеса
+                </Link>
               </div>
             </nav>
             
