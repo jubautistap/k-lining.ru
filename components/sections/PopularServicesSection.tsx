@@ -14,7 +14,7 @@ export default function PopularServicesSection() {
       title: 'Уборка квартир',
       description: 'Генеральная и поддерживающая уборка',
       href: '/services/apartment-cleaning',
-      color: 'bg-blue-500',
+      color: 'bg-gradient-to-br from-blue-500 to-blue-600',
       price: 'от 3,000₽'
     },
     {
@@ -22,7 +22,7 @@ export default function PopularServicesSection() {
       title: 'Уборка офисов',
       description: 'Регулярная уборка коммерческих помещений',
       href: '/services/office-cleaning',
-      color: 'bg-green-500',
+      color: 'bg-gradient-to-br from-indigo-500 to-indigo-600',
       price: 'от 5,000₽'
     },
     {
@@ -30,7 +30,7 @@ export default function PopularServicesSection() {
       title: 'Химчистка мебели',
       description: 'Профессиональная химчистка диванов и кресел',
       href: '/services/furniture-dry-cleaning',
-      color: 'bg-purple-500',
+      color: 'bg-gradient-to-br from-blue-600 to-blue-700',
       price: 'от 2,500₽'
     },
     {
@@ -38,7 +38,7 @@ export default function PopularServicesSection() {
       title: 'Мытье окон',
       description: 'Мытье окон в квартирах и офисах',
       href: '/services/window-cleaning',
-      color: 'bg-sky-500',
+      color: 'bg-gradient-to-br from-sky-500 to-blue-500',
       price: 'от 150₽/м²'
     }
   ];
@@ -49,14 +49,14 @@ export default function PopularServicesSection() {
       title: 'Рассчитать стоимость',
       description: 'Онлайн калькулятор уборки',
       href: '/calculator',
-      color: 'bg-orange-500'
+      color: 'bg-gradient-to-br from-blue-400 to-blue-500'
     },
     {
       icon: Phone,
       title: 'Заказать уборку',
       description: 'Быстрый заказ по телефону',
       href: '/contacts',
-      color: 'bg-red-500'
+      color: 'bg-gradient-to-br from-indigo-600 to-blue-600'
     }
   ];
 
@@ -84,8 +84,8 @@ export default function PopularServicesSection() {
                 className="group bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-primary-200"
               >
                 <div className="flex flex-col items-center text-center">
-                  <div className={`w-16 h-16 ${service.color} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    <IconComponent className="w-8 h-8 text-white" />
+                  <div className={`w-16 h-16 ${service.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300 shadow-lg group-hover:shadow-xl`}>
+                    <IconComponent className="w-8 h-8 text-white drop-shadow-sm" />
                   </div>
                   
                   <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
@@ -121,8 +121,8 @@ export default function PopularServicesSection() {
                 className="group bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-primary-200"
               >
                 <div className="flex items-center">
-                  <div className={`w-14 h-14 ${action.color} rounded-lg flex items-center justify-center mr-6 group-hover:scale-110 transition-transform duration-300`}>
-                    <IconComponent className="w-7 h-7 text-white" />
+                  <div className={`w-14 h-14 ${action.color} rounded-xl flex items-center justify-center mr-6 group-hover:scale-110 transition-all duration-300 shadow-lg group-hover:shadow-xl`}>
+                    <IconComponent className="w-7 h-7 text-white drop-shadow-sm" />
                   </div>
                   
                   <div className="flex-1">
