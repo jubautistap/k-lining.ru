@@ -5,6 +5,9 @@
  * Автоматическая проверка производительности сайта k-lining.ru
  */
 
+// Загружаем переменные окружения
+require('dotenv').config({ path: '.env.local' });
+
 const API_URL = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed";
 
 // Страницы для проверки
@@ -108,13 +111,26 @@ async function generateReport() {
   console.log('   • FID (First Input Delay) < 100ms'); 
   console.log('   • CLS (Cumulative Layout Shift) < 0.1\n');
   
+  const hasApiKey = !!process.env.PAGESPEED_API_KEY;
+  
+  if (hasApiKey) {
+    console.log('🔑 API ключ найден! Используем полный режим мониторинга\n');
+  } else {
+    console.log('⚠️  API ключ не найден. Ограниченный режим (1 страница)');
+    console.log('💡 Инструкция: cat scripts/setup-pagespeed-api.md\n');
+  }
+  
+  // Ограничиваем количество страниц без API ключа
+  const pagesToCheck = hasApiKey ? pages : [pages[0]]; // Только главная без ключа
+  const strategiesToCheck = hasApiKey ? strategies : ['mobile']; // Только mobile без ключа
+  
   const results = [];
   
-  for (const page of pages) {
+  for (const page of pagesToCheck) {
     console.log(`\n🌐 Проверяю: ${page.name}`);
     console.log(`📄 URL: ${page.url}`);
     
-    for (const strategy of strategies) {
+    for (const strategy of strategiesToCheck) {
       const result = await checkPageSpeed(page.url, strategy);
       if (result) {
         results.push(result);

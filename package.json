@@ -14,7 +14,8 @@
     "lighthouse": "lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html",
     "performance": "npm run build && npm run start & sleep 10 && npm run lighthouse && pkill -f 'next start'",
     "seo:vitals": "node scripts/check-core-web-vitals.js",
-    "seo:audit": "npm run seo:vitals"
+    "seo:check": "node scripts/simple-seo-check.js",
+    "seo:audit": "npm run seo:check && echo '\n' && npm run seo:vitals"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
@@ -49,6 +50,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
+    "dotenv": "^17.2.1",
     "eslint": "^8.56.0",
     "eslint-config-next": "14.0.4",
     "prettier": "^3.1.1",
