@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Clock, Shield, Zap, Users, CheckCircle, Star, Heart, Award } from 'lucide-react';
+import { Clock, Shield, Zap, Users, CheckCircle, Heart, Award } from 'lucide-react';
 
 export default function WhyChooseUsSection() {
   const advantages = [

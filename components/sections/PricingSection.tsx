@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Check, Star, Home, Building, Sparkles, Shield, CheckCircle } from 'lucide-react';
+import { Check, Star, Home, Building, Sparkles, CheckCircle } from 'lucide-react';
 import { useAmoCRM } from '@/components/providers/AmoCRMProvider';
 
 export default function PricingSection() {

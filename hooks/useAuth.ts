@@ -92,12 +92,12 @@ export function useAuth() {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('accessToken', data.accessToken);
+        const responseData = await response.json();
+        localStorage.setItem('accessToken', responseData.accessToken);
         
         setAuthState({
-          user: data.user,
-          accessToken: data.accessToken,
+          user: responseData.user,
+          accessToken: responseData.accessToken,
           isLoading: false,
           isAuthenticated: true,
         });

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Phone, Mail, MapPin, Clock, Shield, Award, Users, Zap } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Shield } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = 2025; // Статический год для избежания hydration mismatch
@@ -22,7 +22,7 @@ export default function Footer() {
     { name: 'Блог', href: '/blog' },
   ];
 
-  const support = [
+  const supportLinks = [
     { name: 'Контакты', href: '/contacts' },
     { name: 'FAQ', href: '/faq' },
     { name: 'Политика конфиденциальности', href: '/privacy' },
