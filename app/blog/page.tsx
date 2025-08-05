@@ -46,6 +46,26 @@ export const metadata: Metadata = {
 
 const blogPosts = [
   {
+    id: 'general-apartment-cleaning-checklist-prices',
+    title: 'Генеральная уборка квартиры: чек-лист и цены 2025',
+    excerpt: 'Подробный гид по генеральной уборке квартиры. Полный чек-лист, актуальные цены, что входит в услугу от профессионалов K-lining.',
+    category: 'Генеральная уборка',
+    date: '2025-01-16', 
+    readTime: '12 мин',
+    image: '/blog/general-cleaning-checklist.jpg',
+    featured: true
+  },
+  {
+    id: 'how-to-choose-reliable-cleaning-company-moscow',
+    title: 'Клининг в Москве: как выбрать надежную компанию',
+    excerpt: 'Полное руководство по выбору клининговой компании. Критерии отбора, красные флаги, вопросы для проверки. Советы от профессионалов K-lining.',
+    category: 'Советы',
+    date: '2025-01-16',
+    readTime: '15 мин',
+    image: '/blog/choose-cleaning-company.jpg',
+    featured: true
+  },
+  {
     id: 'cleaning-company-moscow',
     title: 'Клининговая компания в Москве: рейтинг лучших, цены 2025',
     excerpt: 'Полный гид по выбору клининговой компании в Москве. Рейтинг лучших, сравнение цен и критерии выбора.',
@@ -53,7 +73,7 @@ const blogPosts = [
     date: '2025-01-16',
     readTime: '10 мин',
     image: '/blog/cleaning-company.jpg',
-    featured: true
+    featured: false
   },
   {
     id: 'apartment-cleaning-price-moscow',
