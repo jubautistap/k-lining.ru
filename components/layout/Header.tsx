@@ -145,100 +145,38 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-8">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200 whitespace-nowrap text-sm"
+                className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200 whitespace-nowrap text-base"
               >
                 {item.name}
               </Link>
             ))}
             
-            {/* Corporate Menu */}
-            <div className="relative">
-              <button
-                onMouseEnter={() => handleCorporateMenuToggle(true)}
-                onMouseLeave={() => handleCorporateMenuToggle(false)}
-                className="flex items-center space-x-1 text-primary-600 hover:text-primary-700 font-semibold transition-colors duration-200"
-              >
-                <span>Юрлицам</span>
-                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${
-                  isCorporateMenuOpen ? 'rotate-180' : ''
-                }`} />
-              </button>
-
-              {/* Mega Menu */}
-              {isCorporateMenuOpen && (
-                <div
-                  onMouseEnter={() => handleCorporateMenuToggle(true)}
-                  onMouseLeave={() => handleCorporateMenuToggle(false)}
-                  className="absolute top-full left-0 mt-2 w-screen max-w-6xl bg-white border border-gray-200 rounded-lg shadow-xl"
-                  style={{ left: '50%', transform: 'translateX(-50%)' }}
-                >
-                  <div className="p-6">
-                    <div className="grid grid-cols-4 gap-8">
-                      {corporateServices.map((category, index) => (
-                        <div key={index}>
-                          <h3 className="font-semibold text-gray-900 mb-4 text-lg">
-                            {category.title}
-                          </h3>
-                          <ul className="space-y-2">
-                            {category.services.map((service, serviceIndex) => (
-                              <li key={serviceIndex}>
-                                <Link
-                                  href="/corporate"
-                                  className="text-gray-600 hover:text-primary-600 text-sm transition-colors duration-200"
-                                >
-                                  {service}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    {/* CTA Section */}
-                    <div className="mt-6 pt-6 border-t border-gray-200">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h4 className="font-semibold text-gray-900 mb-2">
-                            Корпоративным клиентам
-                          </h4>
-                          <p className="text-sm text-gray-600">
-                            Специальные условия и скидки для бизнеса
-                          </p>
-                        </div>
-                        <button
-                          onClick={openModal}
-                          className="bg-primary-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
-                        >
-                          Заказать звонок
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+            {/* Corporate Link (simplified) */}
+            <Link
+              href="/corporate"
+              className="text-primary-600 hover:text-primary-700 font-semibold transition-colors duration-200 whitespace-nowrap text-base"
+            >
+              Для бизнеса
+            </Link>
           </nav>
 
           {/* Contact Info & CTA */}
-          <div className="hidden md:flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <Phone className="w-4 h-4" />
-              <a 
-                href="tel:+79255551833" 
-                className="hover:text-primary-600 transition-colors duration-200"
-              >
-                +7 (925) 555-18-33
-              </a>
-            </div>
+          <div className="hidden md:flex items-center space-x-6">
+            <a 
+              href="tel:+79255551833" 
+              className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
+            >
+              <Phone className="w-5 h-5" />
+              <span className="text-base">+7 (925) 555-18-33</span>
+            </a>
             <button
               onClick={openModal}
-              className="btn-primary text-sm"
+              className="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors text-base"
             >
               Заказать уборку
             </button>
