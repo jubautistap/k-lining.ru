@@ -214,16 +214,7 @@ export default function Header() {
                 </Link>
               ))}
               
-              {/* Mobile Corporate Link */}
-              <div className="border-t border-gray-200 pt-4 mt-4">
-                <Link
-                  href="/corporate"
-                  className="text-primary-600 hover:text-primary-700 font-semibold text-lg block py-3 px-2 rounded-lg hover:bg-gray-50 transition-all duration-200 touch-manipulation"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Для бизнеса
-                </Link>
-              </div>
+
             </nav>
             
             <div className="mt-8 pt-6 border-t border-gray-200">
