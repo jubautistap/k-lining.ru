@@ -70,7 +70,7 @@ export default function AdminLayoutWrapper({
 
   return (
     <>
-      <AdminLayout user={user}>{children}</AdminLayout>
+      <AdminLayout user={user || undefined}>{children}</AdminLayout>
       {/* Скрываем react-hot-toast для админки */}
       <style jsx global>{`
         #_rht_toaster {
