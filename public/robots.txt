@@ -15,6 +15,13 @@ User-agent: Googlebot
 Allow: /
 Crawl-delay: 1
 
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+# Request rate для защиты от агрессивного сканирования
+Request-rate: 1/10s
+
 # Host
 Host: https://k-lining.ru
 
@@ -31,3 +38,9 @@ Clean-param: utm_content
 Clean-param: utm_term
 Clean-param: gclid
 Clean-param: fbclid
+Clean-param: yclid
+Clean-param: _openstat
+Clean-param: from
+Clean-param: ref
+Clean-param: referrer
+Clean-param: ymclid
