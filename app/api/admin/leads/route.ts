@@ -95,9 +95,9 @@ export async function POST(request: NextRequest) {
       data: {
         name,
         phone,
-        email,
-        service,
-        message,
+        email: email || null,
+        service: service || '',
+        message: message || null,
         source: 'website'
       },
       include: {
