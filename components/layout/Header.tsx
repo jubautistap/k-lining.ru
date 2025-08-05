@@ -38,11 +38,9 @@ export default function Header() {
   }, [throttledHandleScroll, isMounted]);
 
   const navigation = useMemo(() => [
-    { name: 'Уборка квартир', href: '/services/apartment-cleaning' },
-    { name: 'Цены на уборку', href: '/prices' },
-    { name: 'Калькулятор стоимости', href: '/calculator' },
-    { name: 'Блог', href: '/blog' },
-    { name: 'О компании', href: '/about' },
+    { name: 'Услуги', href: '/services' },
+    { name: 'Цены', href: '/prices' },
+    { name: 'Калькулятор', href: '/calculator' },
     { name: 'Контакты', href: '/contacts' },
   ], []);
 
@@ -143,7 +141,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
+          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -154,17 +152,11 @@ export default function Header() {
               </Link>
             ))}
             
-            {/* Corporate Link (simplified) */}
-            <Link
-              href="/corporate"
-              className="text-primary-600 hover:text-primary-700 font-semibold transition-colors duration-200 whitespace-nowrap text-sm"
-            >
-              Для бизнеса
-            </Link>
+
           </nav>
 
           {/* Contact Info & CTA */}
-          <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
+          <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
             <a 
               href="tel:+79255551833" 
               className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium whitespace-nowrap"
