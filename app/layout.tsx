@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
 import AmoCRMProvider from '@/components/providers/AmoCRMProvider';
-import AuthProvider from '@/components/providers/AuthProvider';
+import { AuthProvider } from '@/components/providers/AuthProvider';
 import AmoCRMModal from '@/components/modals/AmoCRMModal';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
