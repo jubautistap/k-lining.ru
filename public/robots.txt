@@ -19,9 +19,6 @@ User-agent: Bingbot
 Allow: /
 Crawl-delay: 2
 
-# Request rate для защиты от агрессивного сканирования
-Request-rate: 1/10s
-
 # Host
 Host: https://k-lining.ru
 
