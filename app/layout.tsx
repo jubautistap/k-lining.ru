@@ -251,6 +251,54 @@ export default function RootLayout({
             })
           }}
         />
+
+        {/* SiteNavigationElement Schema для быстрых ссылок Яндекса */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "SiteNavigationElement",
+                  "name": "Уборка квартир",
+                  "url": "https://k-lining.ru/services/apartment-cleaning",
+                  "description": "Профессиональная уборка квартир в Москве"
+                },
+                {
+                  "@type": "SiteNavigationElement", 
+                  "name": "Цены на уборку",
+                  "url": "https://k-lining.ru/prices",
+                  "description": "Актуальные цены на клининговые услуги"
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  "name": "Калькулятор стоимости",
+                  "url": "https://k-lining.ru/calculator", 
+                  "description": "Рассчитать стоимость уборки онлайн"
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  "name": "Уборка офисов",
+                  "url": "https://k-lining.ru/services/office-cleaning",
+                  "description": "Регулярная уборка коммерческих помещений"
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  "name": "Химчистка мебели", 
+                  "url": "https://k-lining.ru/services/furniture-dry-cleaning",
+                  "description": "Химчистка диванов и кресел на дому"
+                },
+                {
+                  "@type": "SiteNavigationElement",
+                  "name": "Контакты",
+                  "url": "https://k-lining.ru/contacts",
+                  "description": "Связаться с клининговой компанией K-lining"
+                }
+              ]
+            })
+          }}
+        />
       </head>
       <body className={`${inter.className} ${inter.variable} overflow-x-hidden`}>
         <AmoCRMProvider>
