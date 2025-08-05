@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'K-lining - Профессиональная уборка в Москве',
-    description: 'Профессиональная клининговая компания в Москве. Уборка квартир, домов, офисов. Химчистка, мытье окон.',
+    description: 'Профессиональная клининговая компания в Москве и МО. Уборка квартир, домов, офисов в Басманном, Тверском и других районах. Химчистка, мытье окон.',
     images: ['/og-image.jpg'],
   },
   robots: {
@@ -360,7 +360,7 @@ export default function RootLayout({
               "name": "K-lining",
               "url": "https://k-lining.ru",
               "logo": "https://k-lining.ru/logo.png",
-              "description": "Профессиональная клининговая компания в Москве",
+              "description": "Профессиональная клининговая компания в Москве и МО. Работаем в ЦАО, ЮЗАО, САО и других округах",
               "foundingDate": "2024",
               "address": {
                 "@type": "PostalAddress",
@@ -413,7 +413,7 @@ export default function RootLayout({
               "@type": "WebSite",
               "name": "K-lining",
               "url": "https://k-lining.ru",
-              "description": "Профессиональная клининговая компания в Москве",
+              "description": "Профессиональная клининговая компания в Москве и МО. Работаем в ЦАО, ЮЗАО, САО и других округах",
               "potentialAction": {
                 "@type": "SearchAction",
                 "target": {
