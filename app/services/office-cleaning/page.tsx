@@ -1,17 +1,18 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Уборка офисов в Москве: коммерческие помещения, ежедневная уборка | KliningPro',
+  title: 'Уборка офисов в Москве: коммерческие помещения, ежедневная уборка | K-lining',
   description: 'Профессиональная уборка офисов и коммерческих помещений в Москве. Ежедневная уборка, генеральная уборка, уборка после ремонта. Дезинфекция, мытье окон. Цены от 3000₽.',
   keywords: 'уборка офисов Москва, клининг офисов, уборка коммерческих помещений, ежедневная уборка офиса, генеральная уборка офиса, дезинфекция офиса, мытье окон в офисе',
   openGraph: {
     title: 'Уборка офисов в Москве: коммерческие помещения, ежедневная уборка',
     description: 'Профессиональная уборка офисов и коммерческих помещений в Москве.',
     url: 'https://k-lining.ru/services/office-cleaning',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [{ url: '/images/office-cleaning.jpg', width: 1200, height: 630, alt: 'Уборка офисов в Москве' }],
     locale: 'ru_RU',
     type: 'website',
@@ -138,6 +139,15 @@ export default function OfficeCleaningPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Хлебные крошки для быстрых ссылок */}
+      <div className="container-custom pt-6">
+        <BreadcrumbSchema 
+          items={[
+            { name: 'Услуги', url: '/services' },
+            { name: 'Уборка офисов', url: '/services/office-cleaning' }
+          ]} 
+        />
+      </div>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary-600 to-primary-700 text-white py-20">
         <div className="container-custom">

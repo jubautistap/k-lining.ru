@@ -1,21 +1,22 @@
 import { Metadata } from 'next';
+import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 import PricingSection from '@/components/sections/PricingSection';
 
 export const metadata: Metadata = {
-  title: 'Цены на уборку квартир и офисов в Москве 2025 | KliningPro',
+  title: 'Цены на уборку квартир и офисов в Москве 2025 | K-lining',
   description: 'Прозрачные цены на клининговые услуги в Москве. Уборка квартир, домов, офисов, химчистка, мытье окон. Никаких скрытых доплат. Актуальные цены 2025 года.',
   keywords: 'цены уборка, стоимость уборки, цены клининга, уборка квартир цена, химчистка цена, мытье окон цена, уборка офисов цена, генеральная уборка цена, уборка после ремонта цена',
   openGraph: {
     title: 'Цены на уборку квартир и офисов в Москве 2025',
     description: 'Прозрачные цены на клининговые услуги в Москве. Уборка квартир, домов, офисов, химчистка, мытье окон.',
     url: 'https://k-lining.ru/prices',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Цены на уборку KliningPro',
+        alt: 'Цены на уборку K-lining',
       },
     ],
     locale: 'ru_RU',
@@ -46,6 +47,15 @@ export const metadata: Metadata = {
 export default function PricesPage() {
   return (
     <div className="section-padding bg-gradient-to-br from-gray-50 to-white">
+      {/* Хлебные крошки для быстрых ссылок */}
+      <div className="container-custom pt-6">
+        <BreadcrumbSchema 
+          items={[
+            { name: 'Цены на уборку', url: '/prices' }
+          ]} 
+        />
+      </div>
+      
       <div className="container-custom">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
