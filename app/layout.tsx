@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
 import AmoCRMProvider from '@/components/providers/AmoCRMProvider';
+import AuthProvider from '@/components/providers/AuthProvider';
 import AmoCRMModal from '@/components/modals/AmoCRMModal';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -300,26 +301,28 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} ${inter.variable} overflow-x-hidden`}>
-        <AmoCRMProvider>
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-grow pt-20 md:pt-24">
-              {children}
-            </main>
-            <Footer />
-          </div>
-          <AmoCRMModal />
-          <Toaster 
-            position="top-right"
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: '#363636',
-                color: '#fff',
-              },
-            }}
-          />
-        </AmoCRMProvider>
+        <AuthProvider>
+          <AmoCRMProvider>
+            <div className="min-h-screen flex flex-col">
+              <Header />
+              <main className="flex-grow pt-20 md:pt-24">
+                {children}
+              </main>
+              <Footer />
+            </div>
+            <AmoCRMModal />
+            <Toaster 
+              position="top-right"
+              toastOptions={{
+                duration: 4000,
+                style: {
+                  background: '#363636',
+                  color: '#fff',
+                },
+              }}
+            />
+          </AmoCRMProvider>
+        </AuthProvider>
         
         {/* Yandex.Metrika counter */}
         <script

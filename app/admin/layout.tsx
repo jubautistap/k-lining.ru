@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuthContext } from '@/components/providers/AuthProvider';
 import { useRouter } from 'next/navigation';
 import AdminLayout from '@/components/layout/AdminLayout';
 
@@ -10,7 +10,7 @@ export default function AdminLayoutWrapper({
 }: {
   children: React.ReactNode;
 }) {
-  const { isAuthenticated, isLoading, user } = useAuth();
+  const { isAuthenticated, isLoading, user } = useAuthContext();
   const router = useRouter();
 
   useEffect(() => {

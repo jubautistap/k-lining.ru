@@ -25,41 +25,26 @@ export function useAuth() {
   
   const router = useRouter();
 
-  // Проверяем авторизацию при загрузке
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const token = localStorage.getItem('accessToken');
-        if (!token) {
-          setAuthState(prev => ({ ...prev, isLoading: false }));
-          return;
-        }
-
-        // Проверяем токен через API
-        const response = await fetch('/api/auth/me', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setAuthState({
-            user: data.user,
-            accessToken: token,
-            isLoading: false,
-            isAuthenticated: true,
-          });
-        } else {
-          // Токен недействителен, пробуем обновить
-          await refreshToken();
-        }
-      } catch (error) {
-        console.error('Auth check error:', error);
-        setAuthState(prev => ({ ...prev, isLoading: false }));
-      }
-    };
-
-    checkAuth();
-  }, []);
+  // Логаут (объявляем первым)
+  const logout = useCallback(async () => {
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      localStorage.removeItem('accessToken');
+      setAuthState({
+        user: null,
+        accessToken: null,
+        isLoading: false,
+        isAuthenticated: false,
+      });
+      router.push('/admin/login');
+    }
+  }, [router]);
 
   // Обновление токена
   const refreshToken = useCallback(async () => {
@@ -95,7 +80,7 @@ export function useAuth() {
       console.error('Token refresh error:', error);
       logout();
     }
-  }, []);
+  }, [logout]);
 
   // Логин
   const login = useCallback(async (email: string, password: string) => {
@@ -128,26 +113,41 @@ export function useAuth() {
     }
   }, []);
 
-  // Логаут
-  const logout = useCallback(async () => {
-    try {
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include',
-      });
-    } catch (error) {
-      console.error('Logout error:', error);
-    } finally {
-      localStorage.removeItem('accessToken');
-      setAuthState({
-        user: null,
-        accessToken: null,
-        isLoading: false,
-        isAuthenticated: false,
-      });
-      router.push('/admin/login');
-    }
-  }, [router]);
+  // Проверяем авторизацию при загрузке
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+          setAuthState(prev => ({ ...prev, isLoading: false }));
+          return;
+        }
+
+        // Проверяем токен через API
+        const response = await fetch('/api/auth/me', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setAuthState({
+            user: data.user,
+            accessToken: token,
+            isLoading: false,
+            isAuthenticated: true,
+          });
+        } else {
+          // Токен недействителен, пробуем обновить
+          await refreshToken();
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+        setAuthState(prev => ({ ...prev, isLoading: false }));
+      }
+    };
+
+    checkAuth();
+  }, [refreshToken]);
 
   // Проверка роли
   const hasRole = useCallback((roles: string[]) => {
