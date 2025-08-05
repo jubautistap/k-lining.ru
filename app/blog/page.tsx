@@ -1,21 +1,22 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 
 export const metadata: Metadata = {
-  title: 'Блог о клининге и уборке | Полезные советы от профессионалов KliningPro',
+  title: 'Блог о клининге и уборке | Полезные советы от профессионалов K-lining',
   description: 'Полезные статьи о клининге, уборке, химчистке. Советы профессионалов, обзоры средств, секреты чистоты. Уборка квартир, офисов, химчистка мебели, мытье окон.',
   keywords: 'блог клининга, статьи уборка, советы чистоты, химчистка советы, уборка квартиры, уборка офисов, химчистка мебели, мытье окон, уборка после ремонта, профессиональная уборка',
   openGraph: {
     title: 'Блог о клининге и уборке | Полезные советы от профессионалов',
     description: 'Полезные статьи о клининге, уборке, химчистке. Советы профессионалов, обзоры средств, секреты чистоты.',
     url: 'https://k-lining.ru/blog',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Блог о клининге KliningPro',
+        alt: 'Блог о клининге K-lining',
       },
     ],
     locale: 'ru_RU',
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Блог о клининге и уборке | KliningPro',
+    title: 'Блог о клининге и уборке | K-lining',
     description: 'Полезные статьи о клининге, уборке, химчистке. Советы профессионалов.',
     images: ['/og-image.jpg'],
   },
@@ -134,6 +135,60 @@ const blogPosts = [
 export default function BlogPage() {
   return (
     <div className="section-padding bg-gradient-to-br from-gray-50 to-white">
+      {/* FAQ Schema для rich snippets */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Как часто выходят новые статьи в блоге?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Мы публикуем новые полезные статьи о клининге 2-3 раза в неделю. Подпишитесь на обновления, чтобы не пропустить свежие материалы от наших экспертов."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Можно ли задать вопрос авторам статей?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Да, вы можете задать любой вопрос по уборке через форму обратной связи или по телефону +7-925-555-18-33. Наши эксперты ответят в течение 24 часов."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Все советы из блога проверены на практике?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Абсолютно все статьи написаны практикующими специалистами с опытом более 5 лет. Каждый совет проверен в реальных условиях работы."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Можно ли использовать ваши советы для коммерческой уборки?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Да, многие наши советы универсальны и подходят как для домашней, так и для коммерческой уборки офисов, магазинов и других помещений."
+                }
+              }
+            ]
+          })
+        }}
+      />
+      
+      {/* Хлебные крошки для быстрых ссылок */}
+      <div className="container-custom pt-6">
+        <BreadcrumbSchema 
+          items={[
+            { name: 'Блог', url: '/blog' }
+          ]} 
+        />
+      </div>
+      
       <div className="container-custom">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">

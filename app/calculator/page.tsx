@@ -47,6 +47,51 @@ export const metadata: Metadata = {
 export default function CalculatorPage() {
   return (
     <div className="section-padding bg-gradient-to-br from-gray-50 to-white">
+      {/* FAQ Schema для rich snippets */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Насколько точна стоимость в калькуляторе?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Калькулятор показывает примерную стоимость с точностью 90-95%. Финальная цена может незначительно отличаться в зависимости от состояния помещения и дополнительных пожеланий."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Можно ли изменить параметры после расчета?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Да, вы можете в любое время изменить площадь, тип уборки или дополнительные услуги. Стоимость пересчитается автоматически."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Включены ли в стоимость моющие средства?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Да, все профессиональные моющие средства и оборудование уже включены в расчетную стоимость. Доплачивать ничего не нужно."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Есть ли скидки для больших площадей?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Да, для площадей свыше 200 м² действуют прогрессивные скидки до 15%. Калькулятор автоматически их учитывает в расчете."
+                }
+              }
+            ]
+          })
+        }}
+      />
+      
       {/* Хлебные крошки для быстрых ссылок */}
       <div className="container-custom pt-6">
         <BreadcrumbSchema 

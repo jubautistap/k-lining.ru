@@ -1,21 +1,22 @@
 import { Metadata } from 'next';
 import ContactSection from '@/components/sections/ContactSection';
+import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 
 export const metadata: Metadata = {
-  title: 'Контакты клининговой компании в Москве | Заказать уборку KliningPro',
+  title: 'Контакты клининговой компании в Москве | Заказать уборку K-lining',
   description: 'Свяжитесь с нами для заказа уборки в Москве. Телефон, email, адрес. Работаем 24/7. Бесплатная консультация. Уборка квартир, офисов, химчистка, мытье окон.',
   keywords: 'контакты клининга, уборка москва контакты, заказать уборку, телефон клининга, контакты уборки квартир, заказать уборку офиса, контакты химчистки',
   openGraph: {
     title: 'Контакты клининговой компании в Москве | Заказать уборку',
     description: 'Свяжитесь с нами для заказа уборки в Москве. Телефон, email, адрес. Работаем 24/7.',
     url: 'https://k-lining.ru/contacts',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Контакты KliningPro',
+        alt: 'Контакты K-lining',
       },
     ],
     locale: 'ru_RU',
@@ -46,6 +47,60 @@ export const metadata: Metadata = {
 export default function ContactsPage() {
   return (
     <div className="section-padding bg-gradient-to-br from-gray-50 to-white">
+      {/* FAQ Schema для rich snippets */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Как быстро вы приедете после заказа?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "При заказе уборки мы можем приехать в течение 2-4 часов в будние дни и 1-2 часов в выходные. Для срочных заказов - в течение 1 часа."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Работаете ли вы в выходные и праздники?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Да, мы работаем 24/7 без выходных и праздников. Принимаем заявки круглосуточно по телефону +7-925-555-18-33 или через WhatsApp."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Можно ли оплатить услуги онлайн?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Да, мы принимаем оплату наличными, банковскими картами на месте, а также безналичный перевод для юридических лиц."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Предоставляете ли вы гарантию на услуги?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Да, мы даем гарантию качества на все виды уборки. Если результат вас не устроит, мы бесплатно переделаем работу или вернем деньги."
+                }
+              }
+            ]
+          })
+        }}
+      />
+      
+      {/* Хлебные крошки для быстрых ссылок */}
+      <div className="container-custom pt-6">
+        <BreadcrumbSchema 
+          items={[
+            { name: 'Контакты', url: '/contacts' }
+          ]} 
+        />
+      </div>
+      
       <div className="container-custom">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
