@@ -183,7 +183,6 @@ export default function RootLayout({
               "priceRange": "₽₽",
               "paymentAccepted": ["наличные", "банковские карты", "безналичный расчет"],
               "currenciesAccepted": "RUB",
-              "serviceType": "Клининговые услуги",
               "areaServed": [
                 "Москва",
                 "Московская область",
@@ -417,7 +416,10 @@ export default function RootLayout({
               "description": "Профессиональная клининговая компания в Москве",
               "potentialAction": {
                 "@type": "SearchAction",
-                "target": "https://k-lining.ru/search?q={search_term_string}",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://k-lining.ru/search?q={search_term_string}"
+                },
                 "query-input": "required name=search_term_string"
               }
             })
