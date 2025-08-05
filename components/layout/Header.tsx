@@ -143,12 +143,12 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200 whitespace-nowrap text-base"
+                className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200 whitespace-nowrap text-sm"
               >
                 {item.name}
               </Link>
@@ -157,7 +157,7 @@ export default function Header() {
             {/* Corporate Link (simplified) */}
             <Link
               href="/corporate"
-              className="text-primary-600 hover:text-primary-700 font-semibold transition-colors duration-200 whitespace-nowrap text-base"
+              className="text-primary-600 hover:text-primary-700 font-semibold transition-colors duration-200 whitespace-nowrap text-sm"
             >
               Для бизнеса
             </Link>
