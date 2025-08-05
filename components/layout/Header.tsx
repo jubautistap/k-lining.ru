@@ -143,7 +143,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+          <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -164,7 +164,7 @@ export default function Header() {
           </nav>
 
           {/* Contact Info & CTA */}
-          <div className="hidden lg:flex items-center space-x-3 xl:space-x-4">
+          <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
             <a 
               href="tel:+79255551833" 
               className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium whitespace-nowrap"
@@ -180,8 +180,8 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Mobile/Tablet Contact & Menu - ИСПРАВЛЕНА СТРУКТУРА */}
-          <div className="lg:hidden flex items-center">
+          {/* Mobile Contact & Menu - ИСПРАВЛЕНА СТРУКТУРА */}
+          <div className="md:hidden flex items-center">
             <div className="flex items-center gap-3">
               <a 
                 href="tel:+79255551833" 
