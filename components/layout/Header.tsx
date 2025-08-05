@@ -38,9 +38,11 @@ export default function Header() {
   }, [throttledHandleScroll, isMounted]);
 
   const navigation = useMemo(() => [
+    { name: 'Главная', href: '/' },
     { name: 'Услуги', href: '/services' },
     { name: 'Цены', href: '/prices' },
     { name: 'Калькулятор', href: '/calculator' },
+    { name: 'Блог', href: '/blog' },
     { name: 'Контакты', href: '/contacts' },
   ], []);
 
