@@ -70,8 +70,8 @@ export default function HeroSection() {
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 <span>Бесплатная консультация</span>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* Image - загружается после LCP */}
           <motion.div
@@ -125,8 +125,8 @@ export default function HeroSection() {
                 <div className="text-xs text-gray-600">Поддержка</div>
               </div>
             </motion.div>
-                      </div>
-          </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
