@@ -180,6 +180,7 @@ export default function RootLayout({
         {/* Preload критических ресурсов */}
         <link rel="preload" href="/_next/static/media/inter-regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/_next/static/media/inter-semibold.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/og-image.jpg" as="image" fetchPriority="high" />
         
         {/* Убираем preload для аналитики - загружаем асинхронно */}
         
