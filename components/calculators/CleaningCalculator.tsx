@@ -1,8 +1,23 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Calculator, Home, Building, Sparkles, Sun, Shield, CheckCircle, Car, Hotel, School, Store, Factory, Star } from 'lucide-react';
+import { 
+  Calculator, 
+  Home, 
+  Building, 
+  Store,
+  Shield, 
+  Sparkles, 
+  CheckCircle, 
+  Star,
+  Clock,
+  Zap,
+  Moon,
+  AlertTriangle,
+  Phone,
+  ArrowRight
+} from 'lucide-react';
 import { useAmoCRM } from '../providers/AmoCRMProvider';
 
 interface CalculationResult {
@@ -23,107 +38,90 @@ export default function CleaningCalculator() {
   const [specialModes, setSpecialModes] = useState<string[]>([]);
   const [result, setResult] = useState<CalculationResult | null>(null);
 
-  // Базовые цены за м² (обновленные с учетом минимального заказа 6000 руб)
+  // Базовые цены за м²
   const basePrices = useMemo(() => ({
     apartment: {
-      maintenance: 60, // 3,000 / 50 м²
-      general: 100, // 5,000 / 50 м²
-      postRenovation: 140, // 7,000 / 50 м²
-      eco: 120, // 6,000 / 50 м²
-      vip: 200 // 10,000 / 50 м²
+      maintenance: 60,
+      general: 100,
+      postRenovation: 140,
+      eco: 120,
+      vip: 200
     },
     house: {
-      maintenance: 120, // 6,000 / 50 м²
-      general: 200, // 10,000 / 50 м²
-      postRenovation: 280, // 14,000 / 50 м²
-      eco: 240, // 12,000 / 50 м²
-      vip: 400 // 20,000 / 50 м²
+      maintenance: 120,
+      general: 200,
+      postRenovation: 280,
+      eco: 240,
+      vip: 400
     },
     office: {
-      maintenance: 80, // 4,000 / 50 м²
-      general: 140, // 7,000 / 50 м²
-      postRenovation: 200, // 10,000 / 50 м²
-      eco: 160, // 8,000 / 50 м²
-      vip: 300 // 15,000 / 50 м²
+      maintenance: 80,
+      general: 140,
+      postRenovation: 200,
+      eco: 160,
+      vip: 300
     },
     commercial: {
-      maintenance: 70, // 3,500 / 50 м²
-      general: 120, // 6,000 / 50 м²
-      postRenovation: 180, // 9,000 / 50 м²
-      eco: 140, // 7,000 / 50 м²
-      vip: 250 // 12,500 / 50 м²
+      maintenance: 70,
+      general: 120,
+      postRenovation: 180,
+      eco: 140,
+      vip: 250
     }
   }), []);
 
-  // Расширенный список дополнительных услуг
+  // Дополнительные услуги
   const additionalServicesList = useMemo(() => [
-    { id: 'windows', name: 'Мытье окон', price: 600, icon: Sun },
-    { id: 'sofa', name: 'Химчистка дивана', price: 3000, icon: Sparkles },
-    { id: 'carpet', name: 'Химчистка ковра', price: 1800, icon: Sparkles },
-    { id: 'balcony', name: 'Уборка балкона', price: 1200, icon: Home },
-    { id: 'fridge', name: 'Мытье холодильника', price: 1000, icon: Home },
-    { id: 'wardrobe', name: 'Уборка шкафов', price: 1500, icon: Home },
-    { id: 'mattress', name: 'Химчистка матраса', price: 2500, icon: Sparkles },
-    { id: 'curtains', name: 'Химчистка штор', price: 2000, icon: Sparkles },
-    { id: 'furniture', name: 'Химчистка мягкой мебели', price: 3500, icon: Sparkles },
+    { id: 'windows', name: 'Мытье окон', price: 1500, icon: Sparkles },
     { id: 'kitchen', name: 'Уборка кухни', price: 2000, icon: Home },
-    { id: 'bathroom', name: 'Уборка санузлов', price: 1500, icon: Home },
-    { id: 'pet_hair', name: 'Уборка шерсти животных', price: 1000, icon: Home },
-    { id: 'disinfection', name: 'Дезинфекция', price: 2500, icon: Shield }
+    { id: 'bathroom', name: 'Уборка санузла', price: 1500, icon: Shield },
+    { id: 'balcony', name: 'Уборка балкона', price: 1000, icon: Building },
+    { id: 'fridge', name: 'Мытье холодильника', price: 800, icon: Home },
+    { id: 'oven', name: 'Чистка духовки', price: 1200, icon: Home },
+    { id: 'disinfection', name: 'Дезинфекция', price: 3000, icon: Shield },
+    { id: 'carpet', name: 'Химчистка ковра', price: 2500, icon: Sparkles }
   ], []);
 
-  // Специальные режимы (процентные надбавки)
+  // Специальные режимы
   const specialModesList = useMemo(() => [
-    { 
-      id: 'night', 
-      name: 'Ночной режим', 
-      description: 'Работа с 22:00 до 6:00',
-      multiplier: 1.3, // +30%
-      icon: '🌙'
-    },
-    { 
-      id: 'express', 
-      name: 'Экстренный режим', 
-      description: 'Выезд в течение 1-2 часов',
-      multiplier: 1.5, // +50%
-      icon: '⚡'
-    }
+    { id: 'express', name: 'Экспресс уборка', description: 'Быстрая уборка за 2-3 часа', multiplier: 1.3, icon: '⚡' },
+    { id: 'night', name: 'Ночная уборка', description: 'Работа в ночное время', multiplier: 1.5, icon: '🌙' },
+    { id: 'weekend', name: 'Выходной день', description: 'Уборка в выходные', multiplier: 1.2, icon: '📅' },
+    { id: 'urgent', name: 'Срочный выезд', description: 'Выезд в течение часа', multiplier: 1.4, icon: '🚨' }
   ], []);
 
-  // Расчет времени работы (реалистичный)
+  // Расчет времени работы
   const calculateDuration = (area: number, cleaningType: string, propertyType: string) => {
     let baseHours = 0;
     
-    // Базовое время в зависимости от типа уборки
     switch (cleaningType) {
       case 'maintenance':
-        baseHours = Math.max(2, Math.ceil(area / 25)); // 25 м² за час
+        baseHours = Math.max(2, Math.ceil(area / 25));
         break;
       case 'general':
-        baseHours = Math.max(3, Math.ceil(area / 20)); // 20 м² за час
+        baseHours = Math.max(3, Math.ceil(area / 20));
         break;
       case 'postRenovation':
-        baseHours = Math.max(4, Math.ceil(area / 15)); // 15 м² за час
+        baseHours = Math.max(4, Math.ceil(area / 15));
         break;
       case 'eco':
-        baseHours = Math.max(3, Math.ceil(area / 18)); // 18 м² за час
+        baseHours = Math.max(3, Math.ceil(area / 18));
         break;
       case 'vip':
-        baseHours = Math.max(4, Math.ceil(area / 12)); // 12 м² за час
+        baseHours = Math.max(4, Math.ceil(area / 12));
         break;
     }
     
-    // Множитель для типа помещения
     let multiplier = 1;
     switch (propertyType) {
       case 'house':
-        multiplier = 1.3; // Дома сложнее
+        multiplier = 1.3;
         break;
       case 'office':
-        multiplier = 0.9; // Офисы проще
+        multiplier = 0.9;
         break;
       case 'commercial':
-        multiplier = 1.1; // Коммерческие помещения
+        multiplier = 1.1;
         break;
     }
     
@@ -164,15 +162,12 @@ export default function CleaningCalculator() {
       return sum + (service?.price || 0);
     }, 0);
 
-    // Базовая цена без спецрежимов
     let baseTotal = basePrice + additionalPrice;
     
-    // Минимальный заказ 6000 руб
     if (baseTotal < 6000) {
       baseTotal = 6000;
     }
 
-    // Применяем специальные режимы (процентные надбавки)
     let specialModeMultiplier = 1;
     specialModes.forEach(modeId => {
       const mode = specialModesList.find(m => m.id === modeId);
@@ -182,7 +177,6 @@ export default function CleaningCalculator() {
     });
 
     const totalPrice = baseTotal * specialModeMultiplier;
-
     const duration = calculateDuration(area, cleaningType, propertyType);
 
     setResult({
@@ -216,60 +210,68 @@ export default function CleaningCalculator() {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-8">
-      <div className="flex items-center space-x-3 mb-8">
-        <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-          <Calculator className="w-6 h-6 text-primary-600" />
-        </div>
-        <div>
-          <h3 className="text-2xl font-bold text-gray-900">
-            Расчет стоимости услуг
-          </h3>
-          <p className="text-gray-600">
-            Рассчитайте примерную стоимость уборки онлайн
-          </p>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="max-w-6xl mx-auto">
+      {/* Современный дизайн с карточками */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
         {/* Левая колонка - Настройки */}
-        <div className="space-y-6">
+        <div className="lg:col-span-2 space-y-6">
+          
           {/* Тип помещения */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              Тип помещения
-            </label>
-            <div className="grid grid-cols-2 gap-3">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-2xl shadow-lg p-6"
+          >
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                <Building className="w-5 h-5 text-blue-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Тип помещения</h3>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {[
-                { id: 'apartment', name: 'Квартира', icon: Home },
-                { id: 'house', name: 'Дом', icon: Building },
-                { id: 'office', name: 'Офис', icon: Building },
-                { id: 'commercial', name: 'Коммерческое', icon: Store }
+                { id: 'apartment', name: 'Квартира', icon: Home, color: 'blue' },
+                { id: 'house', name: 'Дом', icon: Building, color: 'green' },
+                { id: 'office', name: 'Офис', icon: Building, color: 'purple' },
+                { id: 'commercial', name: 'Коммерческое', icon: Store, color: 'orange' }
               ].map((type) => (
                 <button
                   key={type.id}
                   onClick={() => setPropertyType(type.id as any)}
-                  className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                  className={`p-4 rounded-xl border-2 transition-all duration-200 hover:shadow-md ${
                     propertyType === type.id
-                      ? 'border-primary-600 bg-primary-50 text-primary-700'
-                      : 'border-gray-200 hover:border-primary-300'
+                      ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-md'
+                      : 'border-gray-200 hover:border-blue-300'
                   }`}
                 >
-                  <type.icon className="w-6 h-6 mx-auto mb-2" />
-                  <span className="text-sm font-medium">{type.name}</span>
+                  <type.icon className={`w-6 h-6 mx-auto mb-2 ${
+                    propertyType === type.id ? 'text-blue-600' : 'text-gray-600'
+                  }`} />
+                  <span className="text-sm font-medium block text-center">{type.name}</span>
                 </button>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Площадь */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              Площадь помещения
-            </label>
-            <div className="space-y-3">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="bg-white rounded-2xl shadow-lg p-6"
+          >
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                <Calculator className="w-5 h-5 text-green-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Площадь помещения</h3>
+            </div>
+            
+            <div className="space-y-4">
               {/* Быстрый выбор */}
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-3">
                 {[50, 100, 200].map((size) => (
                   <button
                     key={size}
@@ -277,23 +279,24 @@ export default function CleaningCalculator() {
                       setArea(size);
                       setCustomArea(size.toString());
                     }}
-                    className={`p-2 rounded-lg border-2 transition-all duration-200 text-sm ${
+                    className={`p-3 rounded-xl border-2 transition-all duration-200 ${
                       area === size
-                        ? 'border-primary-600 bg-primary-50 text-primary-700'
-                        : 'border-gray-200 hover:border-primary-300'
+                        ? 'border-green-500 bg-green-50 text-green-700'
+                        : 'border-gray-200 hover:border-green-300'
                     }`}
                   >
-                    {size} м²
+                    <span className="text-lg font-bold">{size}</span>
+                    <span className="text-sm block">м²</span>
                   </button>
                 ))}
               </div>
               
               {/* Кастомный ввод */}
-              <div>
-                <label className="block text-xs text-gray-600 mb-2">
+              <div className="bg-gray-50 rounded-xl p-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Или введите точную площадь:
                 </label>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3">
                   <input
                     type="number"
                     min="1"
@@ -301,102 +304,132 @@ export default function CleaningCalculator() {
                     value={customArea}
                     onChange={(e) => handleAreaChange(e.target.value)}
                     placeholder="Например: 150"
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
                   />
-                  <span className="text-sm text-gray-500">м²</span>
+                  <span className="text-sm text-gray-500 font-medium">м²</span>
                 </div>
-                <div className="text-xs text-gray-500 mt-1">
+                <div className="text-xs text-gray-500 mt-2">
                   Максимум: 5,000 м²
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Тип уборки */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              Тип уборки
-            </label>
-            <div className="space-y-3">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white rounded-2xl shadow-lg p-6"
+          >
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-purple-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Тип уборки</h3>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {[
-                { id: 'maintenance', name: 'Поддерживающая', icon: Home },
-                { id: 'general', name: 'Генеральная', icon: Shield },
-                { id: 'postRenovation', name: 'После ремонта', icon: Sparkles },
-                { id: 'eco', name: 'Эко уборка', icon: CheckCircle },
-                { id: 'vip', name: 'VIP уборка', icon: Star }
+                { id: 'maintenance', name: 'Поддерживающая', icon: Home, desc: 'Регулярная уборка' },
+                { id: 'general', name: 'Генеральная', icon: Shield, desc: 'Глубокая уборка' },
+                { id: 'postRenovation', name: 'После ремонта', icon: Sparkles, desc: 'Уборка строительной пыли' },
+                { id: 'eco', name: 'Эко уборка', icon: CheckCircle, desc: 'Безопасные средства' },
+                { id: 'vip', name: 'VIP уборка', icon: Star, desc: 'Премиум сервис' }
               ].map((type) => (
                 <button
                   key={type.id}
                   onClick={() => setCleaningType(type.id as any)}
-                  className={`w-full p-4 rounded-lg border-2 transition-all duration-200 text-left ${
+                  className={`p-4 rounded-xl border-2 transition-all duration-200 text-left hover:shadow-md ${
                     cleaningType === type.id
-                      ? 'border-primary-600 bg-primary-50 text-primary-700'
-                      : 'border-gray-200 hover:border-primary-300'
+                      ? 'border-purple-500 bg-purple-50 text-purple-700'
+                      : 'border-gray-200 hover:border-purple-300'
                   }`}
                 >
                   <div className="flex items-center space-x-3">
                     <type.icon className="w-5 h-5" />
-                    <span className="font-medium">{type.name}</span>
+                    <div>
+                      <div className="font-medium">{type.name}</div>
+                      <div className="text-xs opacity-75">{type.desc}</div>
+                    </div>
                   </div>
                 </button>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Дополнительные услуги */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              Дополнительные услуги
-            </label>
-            <div className="grid grid-cols-1 gap-2 max-h-60 overflow-y-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-white rounded-2xl shadow-lg p-6"
+          >
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                <Zap className="w-5 h-5 text-orange-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Дополнительные услуги</h3>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-64 overflow-y-auto">
               {additionalServicesList.map((service) => (
                 <button
                   key={service.id}
                   onClick={() => handleServiceToggle(service.id)}
-                  className={`p-3 rounded-lg border-2 transition-all duration-200 text-left ${
+                  className={`p-3 rounded-xl border-2 transition-all duration-200 text-left hover:shadow-md ${
                     additionalServices.includes(service.id)
-                      ? 'border-primary-600 bg-primary-50 text-primary-700'
-                      : 'border-gray-200 hover:border-primary-300'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <service.icon className="w-4 h-4" />
-                      <span className="text-sm">{service.name}</span>
-                    </div>
-                    <span className="text-sm font-medium">{service.price} ₽</span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Специальные режимы */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              Специальные режимы
-            </label>
-            <div className="grid grid-cols-1 gap-2">
-              {specialModesList.map((mode) => (
-                <button
-                  key={mode.id}
-                  onClick={() => handleSpecialModeToggle(mode.id)}
-                  className={`p-3 rounded-lg border-2 transition-all duration-200 text-left ${
-                    specialModes.includes(mode.id)
-                      ? 'border-orange-600 bg-orange-50 text-orange-700'
+                      ? 'border-orange-500 bg-orange-50 text-orange-700'
                       : 'border-gray-200 hover:border-orange-300'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <span className="w-4 h-4 text-center">{mode.icon}</span>
+                      <service.icon className="w-4 h-4" />
+                      <span className="text-sm font-medium">{service.name}</span>
+                    </div>
+                    <span className="text-sm font-bold">{service.price} ₽</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Специальные режимы */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="bg-white rounded-2xl shadow-lg p-6"
+          >
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                <AlertTriangle className="w-5 h-5 text-red-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Специальные режимы</h3>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {specialModesList.map((mode) => (
+                <button
+                  key={mode.id}
+                  onClick={() => handleSpecialModeToggle(mode.id)}
+                  className={`p-4 rounded-xl border-2 transition-all duration-200 text-left hover:shadow-md ${
+                    specialModes.includes(mode.id)
+                      ? 'border-red-500 bg-red-50 text-red-700'
+                      : 'border-gray-200 hover:border-red-300'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <span className="text-lg">{mode.icon}</span>
                       <div>
-                        <div className="text-sm font-medium">{mode.name}</div>
-                        <div className="text-xs text-gray-500">{mode.description}</div>
+                        <div className="font-medium">{mode.name}</div>
+                        <div className="text-xs opacity-75">{mode.description}</div>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-sm font-medium text-orange-600">
+                      <div className="text-sm font-bold text-red-600">
                         +{Math.round((mode.multiplier - 1) * 100)}%
                       </div>
                     </div>
@@ -404,112 +437,116 @@ export default function CleaningCalculator() {
                 </button>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Правая колонка - Результат */}
-        <div className="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-xl p-6">
-          <h4 className="text-lg font-semibold text-gray-900 mb-4">
-            Результат расчета
-          </h4>
-
-          {result && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-4"
-            >
-              {/* Основная услуга */}
-              <div className="bg-white rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium text-gray-900">
-                    {result.services[0]}
-                  </span>
-                  <span className="text-lg font-bold text-primary-600">
-                    {result.basePrice.toLocaleString()} ₽
-                  </span>
-                </div>
-                <div className="text-sm text-gray-600">
-                  Площадь: {area} м² • Время: {result.duration}
-                </div>
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5 }}
+          className="lg:col-span-1"
+        >
+          <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl shadow-xl p-6 text-white sticky top-6">
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                <Calculator className="w-5 h-5" />
               </div>
+              <h3 className="text-xl font-bold">Результат расчета</h3>
+            </div>
 
-              {/* Дополнительные услуги */}
-              {result.services.slice(1).map((service, index) => (
-                <div key={index} className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between">
-                    <span className="font-medium text-gray-900">{service}</span>
-                    <span className="text-lg font-bold text-primary-600">
-                      {additionalServicesList.find(s => s.name === service)?.price.toLocaleString()} ₽
+            {result ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="space-y-4"
+              >
+                {/* Основная услуга */}
+                <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-medium">
+                      {result.services[0]}
+                    </span>
+                    <span className="text-xl font-bold">
+                      {result.basePrice.toLocaleString()} ₽
                     </span>
                   </div>
-                </div>
-              ))}
-
-              {/* Итого */}
-              <div className="bg-primary-600 text-white rounded-lg p-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-semibold">Итого:</span>
-                  <span className="text-2xl font-bold">
-                    {result.totalPrice.toLocaleString()} ₽
-                  </span>
-                </div>
-                <div className="text-sm opacity-90 mt-1">
-                  Время работы: {result.duration}
-                </div>
-                {result.totalPrice === 6000 && (
-                  <div className="text-xs opacity-90 mt-1">
-                    * Минимальная стоимость заказа
+                  <div className="text-sm opacity-90">
+                    Площадь: {area} м² • Время: {result.duration}
                   </div>
-                )}
+                </div>
+
+                {/* Дополнительные услуги */}
+                {result.services.slice(1).map((service, index) => (
+                  <div key={index} className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium">{service}</span>
+                      <span className="text-lg font-bold">
+                        {additionalServicesList.find(s => s.name === service)?.price.toLocaleString()} ₽
+                      </span>
+                    </div>
+                  </div>
+                ))}
+
+                {/* Итого */}
+                <div className="bg-white/20 rounded-xl p-4 backdrop-blur-sm border border-white/30">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-lg font-semibold">Итого:</span>
+                    <span className="text-3xl font-bold">
+                      {result.totalPrice.toLocaleString()} ₽
+                    </span>
+                  </div>
+                  <div className="text-sm opacity-90">
+                    Время работы: {result.duration}
+                  </div>
+                  {result.totalPrice === 6000 && (
+                    <div className="text-xs opacity-90 mt-1">
+                      * Минимальная стоимость заказа
+                    </div>
+                  )}
+                </div>
+
+                {/* Кнопка заказа */}
+                <button 
+                  onClick={openModal}
+                  className="w-full bg-white text-blue-600 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg"
+                >
+                  <Phone className="w-5 h-5" />
+                  <span>Заказать уборку</span>
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+
+                {/* Информация */}
+                <div className="space-y-3 text-sm opacity-90">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-white rounded-full"></div>
+                    <span>Расчет примерный</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-white rounded-full"></div>
+                    <span>Окончательная цена после осмотра</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-white rounded-full"></div>
+                    <span>Минимальный заказ: 6,000 ₽</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-white rounded-full"></div>
+                    <span>Время работы зависит от сложности</span>
+                  </div>
+                </div>
+              </motion.div>
+            ) : (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Calculator className="w-8 h-8" />
+                </div>
+                <p className="text-lg font-medium mb-2">Выберите параметры</p>
+                <p className="text-sm opacity-75">для расчета стоимости</p>
               </div>
-
-              {/* Кнопка заказа */}
-              <button 
-                onClick={openModal}
-                className="w-full btn-primary py-4 text-lg font-semibold"
-              >
-                Заказать уборку
-              </button>
-
-              {/* Информация */}
-              <div className="text-center text-sm text-gray-600 space-y-2">
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="w-4 h-4 bg-primary-600 rounded-full flex items-center justify-center">
-                    <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span>Расчет примерный</span>
-                </div>
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="w-4 h-4 bg-primary-600 rounded-full flex items-center justify-center">
-                    <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span>Окончательная цена после осмотра</span>
-                </div>
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="w-4 h-4 bg-primary-600 rounded-full flex items-center justify-center">
-                    <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span>Минимальный заказ: 6,000 ₽</span>
-                </div>
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="w-4 h-4 bg-primary-600 rounded-full flex items-center justify-center">
-                    <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span>Время работы зависит от сложности</span>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </div>
+            )}
+          </div>
+        </motion.div>
       </div>
     </div>
   );
