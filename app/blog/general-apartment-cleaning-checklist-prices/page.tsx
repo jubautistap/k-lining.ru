@@ -131,9 +131,9 @@ export default function GeneralCleaningChecklistPage() {
       <div className="container-custom pt-6">
         <BreadcrumbSchema
           items={[
-            { name: 'Главная', href: '/' },
-            { name: 'Блог', href: '/blog' },
-            { name: 'Генеральная уборка квартиры' }
+            { name: 'Главная', url: '/' },
+            { name: 'Блог', url: '/blog' },
+            { name: 'Генеральная уборка квартиры', url: '/blog/general-apartment-cleaning-checklist-prices' }
           ]}
         />
       </div>

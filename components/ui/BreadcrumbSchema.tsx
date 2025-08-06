@@ -11,6 +11,7 @@ import { ChevronRight, Home } from 'lucide-react';
 interface BreadcrumbItem {
   name: string;
   href?: string;
+  url?: string; // Поддержка старого формата
 }
 
 interface BreadcrumbSchemaProps {
@@ -26,7 +27,7 @@ export default function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
       "@type": "ListItem",
       "position": index + 1,
       "name": item.name,
-      "item": item.href || `https://k-lining.ru${item.href}`
+      "item": item.href || item.url || `https://k-lining.ru${item.href || item.url}`
     }))
   };
 
@@ -49,9 +50,9 @@ export default function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
             {items.map((item, index) => (
               <li key={index} className="flex items-center">
                 <ChevronRight className="w-4 h-4 text-gray-400 mx-2" />
-                {item.href ? (
+                {(item.href || item.url) ? (
                   <Link 
-                    href={item.href}
+                    href={item.href || item.url || '#'}
                     className="text-gray-500 hover:text-blue-600 transition-colors"
                   >
                     {item.name}

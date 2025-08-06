@@ -96,7 +96,7 @@ export default function CalculatorPage() {
       <div className="container-custom pt-6">
         <BreadcrumbSchema 
           items={[
-            { name: 'Калькулятор стоимости' }
+            { name: 'Калькулятор стоимости', url: '/calculator' }
           ]} 
         />
       </div>

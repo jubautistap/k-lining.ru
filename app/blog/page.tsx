@@ -204,7 +204,7 @@ export default function BlogPage() {
       <div className="container-custom pt-6">
         <BreadcrumbSchema 
           items={[
-            { name: 'Блог' }
+            { name: 'Блог', url: '/blog' }
           ]} 
         />
       </div>
