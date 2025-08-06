@@ -12,46 +12,12 @@ interface LazyProvidersProps {
 
 export default function LazyProviders({ children }: LazyProvidersProps) {
   const [isClient, setIsClient] = useState(false);
-  const [shouldLoadProviders, setShouldLoadProviders] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
-    
-    // Загружаем провайдеры только после LCP на клиенте
-    const timer = setTimeout(() => {
-      setShouldLoadProviders(true);
-    }, 2000);
-
-    return () => clearTimeout(timer);
   }, []);
 
-  // На сервере всегда рендерим провайдеры
-  if (!isClient) {
-    return (
-      <AuthProvider>
-        <AmoCRMProvider>
-          {children}
-          <AmoCRMModal />
-          <Toaster 
-            position="top-right"
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: '#363636',
-                color: '#fff',
-              },
-            }}
-          />
-        </AmoCRMProvider>
-      </AuthProvider>
-    );
-  }
-
-  // На клиенте загружаем провайдеры с задержкой
-  if (!shouldLoadProviders) {
-    return <>{children}</>;
-  }
-
+  // На сервере и клиенте всегда рендерим провайдеры
   return (
     <AuthProvider>
       <AmoCRMProvider>

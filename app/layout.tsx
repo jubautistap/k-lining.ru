@@ -8,8 +8,6 @@ import Footer from '@/components/layout/Footer';
 const inter = Inter({ 
   subsets: ['latin'],
   display: 'swap',
-  preload: true, // Включаем preload для критического шрифта
-  fallback: ['system-ui', 'arial'],
   variable: '--font-inter'
 });
 
@@ -356,10 +354,9 @@ export default function RootLayout({
         
         {/* Яндекс.Метрика - загружаем асинхронно для избежания блокировки */}
         <script
-          type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `
-              // Проверяем, не заблокированы ли трекеры
+              // Проверяем блокировку трекеров
               const isTrackerBlocked = () => {
                 return new Promise((resolve) => {
                   const testImg = new Image();
@@ -370,55 +367,34 @@ export default function RootLayout({
                 });
               };
 
-              // Инициализация метрики с проверкой блокировки
               const initMetrika = async () => {
-                const blocked = await isTrackerBlocked();
-                if (blocked) {
-                  console.warn('Трекеры заблокированы браузером');
-                  return;
-                }
-
-                (function(m,e,t,r,i,k,a){
-                    m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                    m[i].l=1*new Date();
-                    for (var j = 0; j < document.scripts.length; j++) {
-                        if (document.scripts[j].src === r) { return; }
-                    }
-                    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-                })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103567092', 'ym');
-
-                // Инициализация после загрузки DOM
-                const initCounter = () => {
-                  if (typeof ym !== 'undefined') {
-                    try {
-                      ym(103567092, 'init', {
-                        ssr: true,
-                        webvisor: true,
-                        clickmap: true,
-                        ecommerce: "dataLayer",
-                        accurateTrackBounce: true,
-                        trackLinks: true,
-                        defer: true,
-                        trackHash: true,
-                        ut: 'noindex'
-                      });
-                    } catch (error) {
-                      console.warn('Ошибка инициализации Яндекс.Метрики:', error);
-                    }
-                  } else {
-                    setTimeout(initCounter, 100);
+                try {
+                  const blocked = await isTrackerBlocked();
+                  if (blocked) {
+                    console.warn('Яндекс.Метрика заблокирована браузером');
+                    return;
                   }
-                };
 
-                if (document.readyState === 'loading') {
-                  document.addEventListener('DOMContentLoaded', initCounter);
-                } else {
-                  initCounter();
+                  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                  m[i].l=1*new Date();
+                  for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+                  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+                  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+                  ym(103567092, "init", {
+                    clickmap: true,
+                    trackLinks: true,
+                    accurateTrackBounce: true,
+                    webvisor: true,
+                    defer: true
+                  });
+                } catch (error) {
+                  console.warn('Ошибка инициализации Яндекс.Метрики:', error);
                 }
               };
 
               // Запускаем инициализацию с задержкой
-              setTimeout(initMetrika, 1000);
+              setTimeout(initMetrika, 2000);
             `
           }}
         />
@@ -436,37 +412,41 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // Проверяем блокировку GA
-              const isGABlocked = () => {
-                return new Promise((resolve) => {
-                  const testImg = new Image();
-                  testImg.onload = () => resolve(false);
-                  testImg.onerror = () => resolve(true);
-                  testImg.src = 'https://www.google-analytics.com/collect';
-                  setTimeout(() => resolve(true), 2000);
-                });
-              };
-
               const initGA = async () => {
-                const blocked = await isGABlocked();
-                if (blocked) {
-                  console.warn('Google Analytics заблокирован браузером');
-                  return;
-                }
+                try {
+                  // Проверяем блокировку GA
+                  const isGABlocked = () => {
+                    return new Promise((resolve) => {
+                      const testImg = new Image();
+                      testImg.onload = () => resolve(false);
+                      testImg.onerror = () => resolve(true);
+                      testImg.src = 'https://www.google-analytics.com/collect';
+                      setTimeout(() => resolve(true), 2000);
+                    });
+                  };
 
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'G-64S5B5HBCR', {
-                  page_title: document.title,
-                  page_location: window.location.href,
-                  anonymize_ip: true,
-                  allow_google_signals: false,
-                  allow_ad_personalization_signals: false
-                });
+                  const blocked = await isGABlocked();
+                  if (blocked) {
+                    console.warn('Google Analytics заблокирован браузером');
+                    return;
+                  }
+
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', 'G-64S5B5HBCR', {
+                    page_title: document.title,
+                    page_location: window.location.href,
+                    anonymize_ip: true,
+                    allow_google_signals: false,
+                    allow_ad_personalization_signals: false
+                  });
+                } catch (error) {
+                  console.warn('Ошибка инициализации Google Analytics:', error);
+                }
               };
 
-              setTimeout(initGA, 1500);
+              setTimeout(initGA, 2500);
             `
           }}
         />
