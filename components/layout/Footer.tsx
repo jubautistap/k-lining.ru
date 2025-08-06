@@ -24,7 +24,7 @@ export default function Footer() {
 
   const supportLinks = [
     { name: 'Контакты', href: '/contacts' },
-    { name: 'FAQ', href: '/faq' },
+    { name: 'Часто задаваемые вопросы', href: '/faq' },
     { name: 'Политика конфиденциальности', href: '/privacy' },
     { name: 'Условия использования', href: '/terms' },
   ];
@@ -32,7 +32,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="container-custom py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-6">
@@ -90,7 +90,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact & Support */}
+          {/* Contact */}
           <div>
             <h3 className="text-lg font-semibold mb-6">Контакты</h3>
             <div className="space-y-4">
@@ -126,6 +126,23 @@ export default function Footer() {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Support */}
+          <div>
+            <h3 className="text-lg font-semibold mb-6">Поддержка</h3>
+            <ul className="space-y-3">
+              {supportLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-gray-300 hover:text-white transition-colors duration-200"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 

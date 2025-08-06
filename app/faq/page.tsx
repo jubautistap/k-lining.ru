@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import FAQSchema from '@/components/ui/FAQSchema';
+import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 
 export const metadata: Metadata = {
   title: 'FAQ - Часто задаваемые вопросы о клининге | K-lining',
@@ -85,8 +86,15 @@ const faqData = [
 ];
 
 export default function FAQPage() {
+  const breadcrumbItems = [
+    { name: 'Часто задаваемые вопросы' }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Breadcrumbs */}
+      <BreadcrumbSchema items={breadcrumbItems} />
+      
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
         <div className="container-custom">
