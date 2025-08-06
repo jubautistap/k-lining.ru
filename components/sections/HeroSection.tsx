@@ -109,7 +109,7 @@ export default function HeroSection() {
             <div className="relative bg-gradient-to-br from-primary-100 to-secondary-100 rounded-2xl p-4 shadow-2xl">
               <div className="aspect-[3/2] bg-gradient-to-br from-primary-200 to-secondary-200 rounded-xl overflow-hidden">
                 <Image
-                  src="/hero.PNG"
+                  src="/og-image.jpg"
                   alt="K-lining профессиональная уборка квартир и офисов в Москве - быстро качественно честно"
                   width={800}
                   height={533}

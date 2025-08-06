@@ -35,13 +35,13 @@ export default function TestImagesPage() {
           <h2 className="text-2xl font-semibold mb-4">Hero изображение</h2>
           <div className="max-w-2xl">
             <Image
-              src="/hero.PNG"
+              src="/og-image.jpg"
               alt="Hero изображение"
               width={800}
               height={533}
               className="border rounded-lg"
             />
-            <p className="text-sm text-gray-600 mt-2">Файл: /hero.PNG</p>
+            <p className="text-sm text-gray-600 mt-2">Файл: /og-image.jpg</p>
           </div>
         </section>
 
@@ -132,7 +132,7 @@ export default function TestImagesPage() {
             <h3 className="font-semibold mb-2">Проверьте наличие файлов:</h3>
             <ul className="space-y-1 text-sm">
               <li>✅ /logo.png - Логотип</li>
-              <li>✅ /hero.PNG - Hero изображение</li>
+              <li>✅ /og-image.jpg - Hero изображение</li>
               <li>✅ /og-image.jpg - OG изображение</li>
               <li>✅ /favicon.ico - Favicon</li>
               <li>✅ /apple-touch-icon.png - Apple Touch Icon</li>
