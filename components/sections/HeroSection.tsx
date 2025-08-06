@@ -1,12 +1,11 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
 import OrderButton from '@/components/ui/OrderButton';
 
 export default function HeroSection() {
   useEffect(() => {
-    // Загружаем изображение только после полной загрузки страницы
+    // Загружаем изображение только через 3 секунды после загрузки страницы
     const loadImage = () => {
       const container = document.getElementById('hero-image-container');
       if (container) {
@@ -21,12 +20,18 @@ export default function HeroSection() {
       }
     };
 
-    // Загружаем изображение только после полной загрузки страницы
-    if (document.readyState === 'complete') {
-      loadImage();
-    } else {
-      window.addEventListener('load', loadImage);
-    }
+    // Загружаем изображение только через 3 секунды после загрузки страницы
+    const timer = setTimeout(() => {
+      if (document.readyState === 'complete') {
+        loadImage();
+      } else {
+        window.addEventListener('load', () => {
+          setTimeout(loadImage, 3000);
+        });
+      }
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -36,21 +41,11 @@ export default function HeroSection() {
           {/* Content */}
           <div className="space-y-8">
             <div className="space-y-4">
-              <h1 className="hero-title text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+              <h1 className="hero-title text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-gray-900 leading-tight">
                 Профессиональная{' '}
-                <motion.span 
-                  className="text-gradient"
-                  animate={{ 
-                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-                  }}
-                  transition={{ 
-                    duration: 3, 
-                    repeat: Infinity, 
-                    ease: "easeInOut" 
-                  }}
-                >
+                <span className="text-gradient">
                   уборка
-                </motion.span>{' '}
+                </span>{' '}
                 в Москве
               </h1>
               
@@ -104,7 +99,7 @@ export default function HeroSection() {
                 {/* Красивый CSS градиент как основной элемент */}
                 <div className="absolute inset-0 hero-visual"></div>
                 
-                {/* Изображение загружается только после полной загрузки страницы */}
+                {/* Изображение загружается только через 3 секунды после загрузки страницы */}
                 <div id="hero-image-container" className="w-full h-full"></div>
               </div>
             </div>
