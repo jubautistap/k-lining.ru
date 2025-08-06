@@ -169,6 +169,12 @@ export default function RootLayout({
               @media (min-width: 768px) { .hero-title { font-size: 3rem; } }
               @media (min-width: 1024px) { .hero-title { font-size: 3.75rem; } }
               
+              /* CSS градиент для быстрого отображения */
+              .hero-gradient {
+                background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);
+                opacity: 0.8;
+              }
+              
               /* Оптимизация шрифтов */
               @font-face {
                 font-family: 'Inter';

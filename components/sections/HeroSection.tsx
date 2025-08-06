@@ -80,19 +80,24 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="relative"
           >
-            {/* Main Image */}
+            {/* Main Image - CSS градиент вместо изображения для LCP */}
             <div className="relative bg-gradient-to-br from-primary-100 to-secondary-100 rounded-2xl p-4 shadow-2xl">
-              <div className="aspect-[3/2] bg-gradient-to-br from-primary-200 to-secondary-200 rounded-xl overflow-hidden">
+              <div className="aspect-[3/2] bg-gradient-to-br from-primary-200 to-secondary-200 rounded-xl overflow-hidden relative">
+                {/* CSS градиент как placeholder */}
+                <div className="absolute inset-0 hero-gradient"></div>
+                
+                {/* Изображение загружается позже */}
                 <Image
                   src="/og-image.jpg"
                   alt="K-lining профессиональная уборка квартир и офисов в Москве - быстро качественно честно"
                   width={600}
                   height={400}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover opacity-0 transition-opacity duration-500"
                   priority={false}
                   loading="lazy"
-                  placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                  onLoad={(e) => {
+                    e.currentTarget.classList.remove('opacity-0');
+                  }}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
