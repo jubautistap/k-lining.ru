@@ -158,6 +158,17 @@ export default function RootLayout({
               img { max-width: 100%; height: auto; }
               .image-container { position: relative; overflow: hidden; }
               
+              /* Критический CSS для LCP */
+              .hero-title { 
+                font-size: 2.5rem; 
+                font-weight: 700; 
+                line-height: 1.2; 
+                color: #111827; 
+                margin: 0; 
+              }
+              @media (min-width: 768px) { .hero-title { font-size: 3rem; } }
+              @media (min-width: 1024px) { .hero-title { font-size: 3.75rem; } }
+              
               /* Оптимизация шрифтов */
               @font-face {
                 font-family: 'Inter';
@@ -180,7 +191,7 @@ export default function RootLayout({
         {/* Preload критических ресурсов */}
         <link rel="preload" href="/_next/static/media/inter-regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/_next/static/media/inter-semibold.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="/og-image.jpg" as="image" fetchPriority="high" />
+
         
         {/* Убираем preload для аналитики - загружаем асинхронно */}
         
