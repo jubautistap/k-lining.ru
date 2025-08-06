@@ -336,53 +336,21 @@ export default function RootLayout({
                   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
               })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103567092', 'ym');
 
-              ym(103567092, 'init', {
-                  ssr: true,
-                  webvisor: true,
-                  clickmap: true,
-                  ecommerce: "dataLayer",
-                  accurateTrackBounce: true,
-                  trackLinks: true,
-                  defer: true,
-                  trackHash: true,
-                  ut: 'noindex'
-              });
-              
-              // Отслеживание событий для уведомлений
+              // Инициализация метрики после загрузки DOM
               document.addEventListener('DOMContentLoaded', function() {
-                // Отслеживание кликов по кнопкам заказа
-                const orderButtons = document.querySelectorAll('[data-order-button]');
-                orderButtons.forEach(button => {
-                  button.addEventListener('click', function() {
-                    if (typeof ym !== 'undefined') {
-                      ym(103567092, 'reachGoal', 'order_button_click', {
-                        service: this.getAttribute('data-service') || 'unknown'
-                      });
-                    }
+                if (typeof ym !== 'undefined') {
+                  ym(103567092, 'init', {
+                    ssr: true,
+                    webvisor: true,
+                    clickmap: true,
+                    ecommerce: "dataLayer",
+                    accurateTrackBounce: true,
+                    trackLinks: true,
+                    defer: true,
+                    trackHash: true,
+                    ut: 'noindex'
                   });
-                });
-                
-                // Отслеживание отправки форм
-                const forms = document.querySelectorAll('form');
-                forms.forEach(form => {
-                  form.addEventListener('submit', function() {
-                    if (typeof ym !== 'undefined') {
-                      ym(103567092, 'reachGoal', 'form_submit', {
-                        form_type: this.getAttribute('data-form-type') || 'contact'
-                      });
-                    }
-                  });
-                });
-                
-                // Отслеживание звонков
-                const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
-                phoneLinks.forEach(link => {
-                  link.addEventListener('click', function() {
-                    if (typeof ym !== 'undefined') {
-                      ym(103567092, 'reachGoal', 'phone_call');
-                    }
-                  });
-                });
+                }
               });
             `
           }}
@@ -407,40 +375,6 @@ export default function RootLayout({
               gtag('config', 'G-64S5B5HBCR', {
                 page_title: document.title,
                 page_location: window.location.href
-              });
-              
-              // Отслеживание событий для Google Analytics
-              document.addEventListener('DOMContentLoaded', function() {
-                // Отслеживание кликов по кнопкам заказа
-                const orderButtons = document.querySelectorAll('[data-order-button]');
-                orderButtons.forEach(button => {
-                  button.addEventListener('click', function() {
-                    gtag('event', 'order_button_click', {
-                      service: this.getAttribute('data-service') || 'unknown',
-                      button_text: this.textContent.trim()
-                    });
-                  });
-                });
-                
-                // Отслеживание отправки форм
-                const forms = document.querySelectorAll('form');
-                forms.forEach(form => {
-                  form.addEventListener('submit', function() {
-                    gtag('event', 'form_submit', {
-                      form_type: this.getAttribute('data-form-type') || 'contact'
-                    });
-                  });
-                });
-                
-                // Отслеживание звонков
-                const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
-                phoneLinks.forEach(link => {
-                  link.addEventListener('click', function() {
-                    gtag('event', 'phone_call', {
-                      phone_number: this.getAttribute('href').replace('tel:', '')
-                    });
-                  });
-                });
               });
             `
           }}

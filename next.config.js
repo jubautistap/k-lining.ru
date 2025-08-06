@@ -82,6 +82,10 @@ const nextConfig = {
             value: 'strict-origin-when-cross-origin',
           },
           {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://mc.yandex.ru https://yandex.st https://yastatic.net https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://mc.yandex.ru https://www.google-analytics.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline';",
+          },
+          {
             key: 'Cache-Control',
             value: 'public, max-age=3600, s-maxage=86400',
           },

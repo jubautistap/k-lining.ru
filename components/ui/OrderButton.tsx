@@ -23,17 +23,25 @@ export default function OrderButton({ children, className = '', variant = 'prima
   const handleClick = () => {
     // Отслеживание события в Яндекс.Метрике
     if (typeof window !== 'undefined' && (window as any).ym) {
-      (window as any).ym(103567092, 'reachGoal', 'order_button_click', {
-        service: service
-      });
+      try {
+        (window as any).ym(103567092, 'reachGoal', 'order_button_click', {
+          service: service
+        });
+      } catch (error) {
+        console.warn('Ошибка отправки в Яндекс.Метрику:', error);
+      }
     }
     
     // Отслеживание события в Google Analytics
     if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'order_button_click', {
-        service: service,
-        button_text: children
-      });
+      try {
+        (window as any).gtag('event', 'order_button_click', {
+          service: service,
+          button_text: typeof children === 'string' ? children : 'Заказать услугу'
+        });
+      } catch (error) {
+        console.warn('Ошибка отправки в Google Analytics:', error);
+      }
     }
     
     openModal();

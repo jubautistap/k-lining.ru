@@ -34,18 +34,26 @@ export default function AmoCRMModal() {
     try {
       // Отслеживание события в Яндекс.Метрике
       if (typeof window !== 'undefined' && (window as any).ym) {
-        (window as any).ym(103567092, 'reachGoal', 'form_submit', {
-          form_type: 'callback',
-          service: 'callback'
-        });
+        try {
+          (window as any).ym(103567092, 'reachGoal', 'form_submit', {
+            form_type: 'callback',
+            service: 'callback'
+          });
+        } catch (error) {
+          console.warn('Ошибка отправки в Яндекс.Метрику:', error);
+        }
       }
       
       // Отслеживание события в Google Analytics
       if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('event', 'form_submit', {
-          form_type: 'callback',
-          service: 'callback'
-        });
+        try {
+          (window as any).gtag('event', 'form_submit', {
+            form_type: 'callback',
+            service: 'callback'
+          });
+        } catch (error) {
+          console.warn('Ошибка отправки в Google Analytics:', error);
+        }
       }
 
       await submitLead({
