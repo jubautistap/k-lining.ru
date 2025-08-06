@@ -11,19 +11,9 @@ export default function HeroSection() {
       <div className="container-custom">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
-          >
+          <div className="space-y-8">
             <div className="space-y-4">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="hero-title text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight"
-              >
+              <h1 className="hero-title text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
                 Профессиональная{' '}
                 <motion.span 
                   className="text-gradient"
@@ -39,25 +29,15 @@ export default function HeroSection() {
                   уборка
                 </motion.span>{' '}
                 в Москве
-              </motion.h1>
+              </h1>
               
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-xl text-gray-600 leading-relaxed"
-              >
+              <p className="text-xl text-gray-600 leading-relaxed">
                 Быстро, качественно, честно. Работаем 24/7 без выходных. 
                 Уборка квартир, офисов, химчистка мебели. Гарантия качества.
-              </motion.p>
+              </p>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4"
-            >
+            <div className="flex flex-col sm:flex-row gap-4">
               <OrderButton 
                 service="general"
                 className="text-lg px-8 py-4"
@@ -74,15 +54,10 @@ export default function HeroSection() {
                 </svg>
                 +7 (925) 555-18-33
               </a>
-            </motion.div>
+            </div>
 
             {/* Trust Indicators */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="flex flex-wrap items-center gap-6 text-sm text-gray-600"
-            >
+            <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 <span>Работаем 24/7</span>
@@ -145,8 +120,8 @@ export default function HeroSection() {
                 <div className="text-xs text-gray-600">Поддержка</div>
               </div>
             </motion.div>
-          </motion.div>
-        </div>
+                      </div>
+          </div>
       </div>
     </section>
   );
