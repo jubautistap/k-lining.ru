@@ -1,39 +1,9 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import OrderButton from '@/components/ui/OrderButton';
 
 export default function HeroSection() {
-  useEffect(() => {
-    // Загружаем изображение только через 3 секунды после загрузки страницы
-    const loadImage = () => {
-      const container = document.getElementById('hero-image-container');
-      if (container) {
-        const img = new window.Image();
-        img.src = '/og-image.jpg';
-        img.alt = 'K-lining профессиональная уборка квартир и офисов в Москве - быстро качественно честно';
-        img.className = 'w-full h-full object-cover opacity-0 transition-opacity duration-500';
-        img.onload = () => {
-          img.classList.remove('opacity-0');
-        };
-        container.appendChild(img);
-      }
-    };
-
-    // Загружаем изображение только через 3 секунды после загрузки страницы
-    const timer = setTimeout(() => {
-      if (document.readyState === 'complete') {
-        loadImage();
-      } else {
-        window.addEventListener('load', () => {
-          setTimeout(loadImage, 3000);
-        });
-      }
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <section className="section-padding bg-gradient-to-br from-primary-50 via-white to-secondary-50">
       <div className="container-custom">
@@ -91,16 +61,13 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Image - загружается после LCP */}
+          {/* Visual - только CSS градиент для LCP */}
           <div className="relative">
-            {/* Main Image - только CSS градиент для LCP */}
+            {/* Main Visual - только CSS градиент */}
             <div className="relative bg-gradient-to-br from-primary-100 to-secondary-100 rounded-2xl p-4 shadow-2xl">
               <div className="aspect-[3/2] bg-gradient-to-br from-primary-200 to-secondary-200 rounded-xl overflow-hidden relative">
                 {/* Красивый CSS градиент как основной элемент */}
                 <div className="absolute inset-0 hero-visual"></div>
-                
-                {/* Изображение загружается только через 3 секунды после загрузки страницы */}
-                <div id="hero-image-container" className="w-full h-full"></div>
               </div>
             </div>
 

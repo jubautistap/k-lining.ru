@@ -37,7 +37,7 @@
   "categories": ["business", "lifestyle"],
   "screenshots": [
     {
-      "src": "/og-image.jpg",
+      "src": "/og-image.webp",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide"

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { AuthProvider } from './AuthProvider';
 import AmoCRMProvider from './AmoCRMProvider';
 import AmoCRMModal from '@/components/modals/AmoCRMModal';
@@ -11,12 +11,6 @@ interface LazyProvidersProps {
 }
 
 export default function LazyProviders({ children }: LazyProvidersProps) {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
   // На сервере и клиенте всегда рендерим провайдеры
   return (
     <AuthProvider>

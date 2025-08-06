@@ -215,7 +215,7 @@ export function generateMetaTags(config: {
     title,
     description,
     keywords,
-    image = '/og-image.jpg',
+    image = '/og-image.webp',
             url = 'https://k-lining.ru',
     type = 'website'
   } = config;
