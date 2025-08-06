@@ -69,7 +69,7 @@ export default function AmoCRMModal() {
 
   const handleTelegram = () => {
     const message = encodeURIComponent('Здравствуйте! Хочу получить консультацию по услугам клининга.');
-    window.open(`https://t.me/kliningpro?text=${message}`, '_blank');
+    window.open(`https://t.me/k_liningru?text=${message}`, '_blank');
     closeModal();
   };
 

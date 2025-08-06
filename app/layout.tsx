@@ -214,7 +214,7 @@ export default function RootLayout({
                 }
               },
               "sameAs": [
-                "https://t.me/kliningpro",
+                "https://t.me/k_liningru",
                 "https://wa.me/79255551833"
               ],
               "hasOfferCatalog": {

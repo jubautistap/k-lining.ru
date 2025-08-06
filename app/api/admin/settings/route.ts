@@ -26,7 +26,7 @@ let siteSettings = {
   showModal: true,
   
   // Социальные сети
-  telegram: 'https://t.me/kliningpro',
+  telegram: 'https://t.me/k_liningru',
       whatsapp: 'https://wa.me/79255551833',
   vk: 'https://vk.com/kliningpro'
 };
