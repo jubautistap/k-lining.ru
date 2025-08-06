@@ -9,37 +9,31 @@ export default function WhyChooseUsSection() {
       icon: Clock,
       title: 'Работаем 24/7',
       description: 'Заказывайте уборку в любое время дня и ночи. Мы всегда на связи.',
-      color: 'primary'
     },
     {
       icon: Shield,
       title: 'Честные цены',
       description: 'Никаких скрытых доплат. Цена фиксированная и прозрачная.',
-      color: 'secondary'
     },
     {
       icon: Zap,
       title: 'Быстро и качественно',
       description: 'Средняя уборка занимает 2-4 часа. Результат виден сразу.',
-      color: 'accent'
     },
     {
       icon: Users,
       title: 'Профессиональная команда',
       description: 'Опытные клинеры с собственным инвентарем и химией.',
-      color: 'primary'
     },
     {
       icon: CheckCircle,
       title: 'Гарантия качества',
       description: 'Если что-то не понравилось — переделаем бесплатно.',
-      color: 'secondary'
     },
     {
       icon: Heart,
       title: 'Индивидуальный подход',
       description: 'Учитываем ваши пожелания и особенности помещения.',
-      color: 'accent'
     }
   ];
 
@@ -97,8 +91,8 @@ export default function WhyChooseUsSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="text-center"
             >
-              <div className={`w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center bg-${advantage.color}-100`}>
-                <advantage.icon className={`w-8 h-8 text-${advantage.color}-600`} />
+              <div className="w-16 h-16 mx-auto mb-6 rounded-xl flex items-center justify-center bg-primary-100">
+                <advantage.icon className="w-8 h-8 text-primary-600" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
                 {advantage.title}
