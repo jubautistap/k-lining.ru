@@ -1,10 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { Toaster } from 'react-hot-toast';
-import AmoCRMProvider from '@/components/providers/AmoCRMProvider';
-import { AuthProvider } from '@/components/providers/AuthProvider';
-import AmoCRMModal from '@/components/modals/AmoCRMModal';
+import LazyProviders from '@/components/providers/LazyProviders';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
@@ -117,27 +114,15 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#2563eb" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         
-        {/* Полифилл для устранения предупреждения InstallTrigger */}
+        {/* Критический JavaScript только для предотвращения ошибок */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // Полифилл для InstallTrigger
-              if (typeof InstallTrigger !== 'undefined') {
-                console.warn('InstallTrigger устарел и будет удалён в будущем.');
-              }
-              
-              // Глобальная обработка ошибок для предотвращения React ошибок
+              // Минимальная обработка ошибок для LCP
               window.addEventListener('error', function(e) {
                 if (e.message.includes('Minified React error')) {
-                  console.warn('React ошибка перехвачена:', e.message);
                   e.preventDefault();
                 }
-              });
-              
-              // Обработка необработанных промисов
-              window.addEventListener('unhandledrejection', function(e) {
-                console.warn('Необработанное отклонение промиса:', e.reason);
-                e.preventDefault();
               });
             `
           }}
@@ -359,28 +344,15 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} ${inter.variable} overflow-x-hidden`} suppressHydrationWarning>
-        <AuthProvider>
-          <AmoCRMProvider>
-            <div className="min-h-screen flex flex-col">
-              <Header />
-              <main className="flex-grow pt-20 md:pt-24">
-                {children}
-              </main>
-              <Footer />
-            </div>
-            <AmoCRMModal />
-            <Toaster 
-              position="top-right"
-              toastOptions={{
-                duration: 4000,
-                style: {
-                  background: '#363636',
-                  color: '#fff',
-                },
-              }}
-            />
-          </AmoCRMProvider>
-        </AuthProvider>
+        <LazyProviders>
+          <div className="min-h-screen flex flex-col">
+            <Header />
+            <main className="flex-grow pt-20 md:pt-24">
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </LazyProviders>
         
         {/* Яндекс.Метрика - загружаем асинхронно для избежания блокировки */}
         <script
