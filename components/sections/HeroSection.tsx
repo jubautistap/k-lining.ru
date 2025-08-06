@@ -73,11 +73,8 @@ export default function HeroSection() {
                 <img 
                   src="/og-image.webp" 
                   alt="Профессиональная уборка в Москве - K-lining"
-                  className="absolute inset-0 w-full h-full object-cover opacity-0"
+                  className="absolute inset-0 w-full h-full object-cover opacity-100"
                   loading="eager"
-                  onLoad={(e) => {
-                    e.currentTarget.style.opacity = '1';
-                  }}
                 />
               </div>
             </div>
