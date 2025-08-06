@@ -48,15 +48,34 @@ export default function TestImagesPage() {
         {/* OG изображение */}
         <section>
           <h2 className="text-2xl font-semibold mb-4">OG изображение</h2>
-          <div className="max-w-2xl">
-            <Image
-              src="/og-image.jpg"
-              alt="OG изображение для соцсетей"
-              width={1200}
-              height={630}
-              className="border rounded-lg"
-            />
-            <p className="text-sm text-gray-600 mt-2">Файл: /og-image.jpg</p>
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h3 className="text-lg font-semibold mb-4">OG изображение для соцсетей</h3>
+            <div className="space-y-4">
+              <picture>
+                <source srcSet="/og-image.webp" type="image/webp" />
+                <img
+                  src="/og-image.jpg"
+                  alt="OG Image"
+                  className="w-full h-auto rounded-lg shadow-lg"
+                />
+              </picture>
+              <p className="text-sm text-gray-600 mt-2">Файл: /og-image.webp (с fallback на .jpg)</p>
+            </div>
+          </div>
+
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h3 className="text-lg font-semibold mb-4">Изображение для соцсетей</h3>
+            <div className="space-y-4">
+              <picture>
+                <source srcSet="/og-image.webp" type="image/webp" />
+                <img
+                  src="/og-image.jpg"
+                  alt="Social Media Image"
+                  className="w-full h-auto rounded-lg shadow-lg"
+                />
+              </picture>
+              <p className="text-sm text-gray-600 mt-2">Файл: /og-image.webp (с fallback на .jpg)</p>
+            </div>
           </div>
         </section>
 
@@ -133,7 +152,7 @@ export default function TestImagesPage() {
             <ul className="space-y-1 text-sm">
               <li>✅ /logo.png - Логотип</li>
               <li>✅ /og-image.jpg - Hero изображение</li>
-              <li>✅ /og-image.jpg - OG изображение</li>
+              <li>✅ /og-image.webp - OG изображение</li>
               <li>✅ /favicon.ico - Favicon</li>
               <li>✅ /apple-touch-icon.png - Apple Touch Icon</li>
               <li>✅ /icon-192.png - PWA Icon 192</li>

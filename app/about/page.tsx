@@ -5,16 +5,16 @@ export const metadata: Metadata = {
   description: 'Узнайте больше о компании KliningPro - профессиональная клининговая компания в Москве. Наша миссия, ценности и подход к работе. Уборка квартир, офисов, химчистка, мытье окон.',
   keywords: 'о компании, клининговая компания, уборка москва, профессиональная уборка, kliningpro отзывы, клининговая компания москва, уборка квартир москва',
   openGraph: {
-    title: 'О компании KliningPro - профессиональная клининговая компания в Москве',
-    description: 'Узнайте больше о компании KliningPro - профессиональная клининговая компания в Москве. Наша миссия, ценности и подход к работе.',
+    title: 'О компании K-lining - Профессиональная уборка в Москве',
+    description: 'Узнайте больше о компании K-lining - профессиональная клининговая компания в Москве. Наша команда специалистов с многолетним опытом работы.',
     url: 'https://k-lining.ru/about',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/og-image.webp',
         width: 1200,
         height: 630,
-        alt: 'О компании KliningPro',
+        alt: 'О компании K-lining',
       },
     ],
     locale: 'ru_RU',
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'О компании KliningPro - профессиональная клининговая компания в Москве',
-    description: 'Узнайте больше о компании KliningPro',
-    images: ['/og-image.jpg'],
+    title: 'О компании K-lining - Профессиональная уборка в Москве',
+    description: 'Узнайте больше о компании K-lining - профессиональная клининговая компания в Москве.',
+    images: ['/og-image.webp'],
   },
   alternates: {
     canonical: 'https://k-lining.ru/about',
