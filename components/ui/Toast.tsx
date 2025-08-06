@@ -70,14 +70,16 @@ interface ToastContainerProps {
 export function ToastContainer({ toasts, removeToast }: ToastContainerProps) {
   return (
     <div className="fixed top-4 right-4 z-50 space-y-2">
-      {toasts.map((toast) => (
-        <Toast
-          key={toast.id}
-          type={toast.type}
-          message={toast.message}
-          onClose={() => removeToast(toast.id)}
-        />
-      ))}
+      {toasts.map((toast) => {
+        const { id, ...toastProps } = toast;
+        return (
+          <Toast
+            key={id}
+            {...toastProps}
+            onClose={() => removeToast(id)}
+          />
+        );
+      })}
     </div>
   );
 } 

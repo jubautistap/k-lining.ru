@@ -154,9 +154,9 @@ export default function ChooseCleaningCompanyPage() {
       <div className="container-custom pt-6">
         <BreadcrumbSchema
           items={[
-            { name: 'Главная', url: '/' },
-            { name: 'Блог', url: '/blog' },
-            { name: 'Как выбрать клининговую компанию', url: '/blog/how-to-choose-reliable-cleaning-company-moscow' }
+            { name: 'Главная', href: '/' },
+            { name: 'Блог', href: '/blog' },
+            { name: 'Как выбрать клининговую компанию' }
           ]}
         />
       </div>
