@@ -6,17 +6,26 @@ import OrderButton from '@/components/ui/OrderButton';
 
 export default function HeroSection() {
   useEffect(() => {
-    // Загружаем изображение после рендера для улучшения LCP
-    const container = document.getElementById('hero-image-container');
-    if (container) {
-      const img = new window.Image();
-      img.src = '/og-image.jpg';
-      img.alt = 'K-lining профессиональная уборка квартир и офисов в Москве - быстро качественно честно';
-      img.className = 'w-full h-full object-cover opacity-0 transition-opacity duration-500';
-      img.onload = () => {
-        img.classList.remove('opacity-0');
-      };
-      container.appendChild(img);
+    // Загружаем изображение только после полной загрузки страницы
+    const loadImage = () => {
+      const container = document.getElementById('hero-image-container');
+      if (container) {
+        const img = new window.Image();
+        img.src = '/og-image.jpg';
+        img.alt = 'K-lining профессиональная уборка квартир и офисов в Москве - быстро качественно честно';
+        img.className = 'w-full h-full object-cover opacity-0 transition-opacity duration-500';
+        img.onload = () => {
+          img.classList.remove('opacity-0');
+        };
+        container.appendChild(img);
+      }
+    };
+
+    // Загружаем изображение только после полной загрузки страницы
+    if (document.readyState === 'complete') {
+      loadImage();
+    } else {
+      window.addEventListener('load', loadImage);
     }
   }, []);
 
@@ -92,10 +101,10 @@ export default function HeroSection() {
             {/* Main Image - только CSS градиент для LCP */}
             <div className="relative bg-gradient-to-br from-primary-100 to-secondary-100 rounded-2xl p-4 shadow-2xl">
               <div className="aspect-[3/2] bg-gradient-to-br from-primary-200 to-secondary-200 rounded-xl overflow-hidden relative">
-                {/* CSS градиент как основной элемент */}
-                <div className="absolute inset-0 hero-gradient"></div>
+                {/* Красивый CSS градиент как основной элемент */}
+                <div className="absolute inset-0 hero-visual"></div>
                 
-                {/* Изображение загружается через useEffect */}
+                {/* Изображение загружается только после полной загрузки страницы */}
                 <div id="hero-image-container" className="w-full h-full"></div>
               </div>
             </div>

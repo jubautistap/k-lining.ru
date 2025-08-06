@@ -175,6 +175,28 @@ export default function RootLayout({
                 opacity: 0.8;
               }
               
+              /* Красивый градиент для hero секции */
+              .hero-visual {
+                background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 25%, #1e40af 50%, #1e3a8a 75%, #1e293b 100%);
+                position: relative;
+                overflow: hidden;
+              }
+              .hero-visual::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(circle at 30% 70%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                            radial-gradient(circle at 70% 30%, rgba(30, 64, 175, 0.3) 0%, transparent 50%);
+                animation: pulse 4s ease-in-out infinite;
+              }
+              @keyframes pulse {
+                0%, 100% { opacity: 0.7; }
+                50% { opacity: 1; }
+              }
+              
               /* Оптимизация шрифтов */
               @font-face {
                 font-family: 'Inter';
