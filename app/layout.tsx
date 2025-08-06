@@ -100,7 +100,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -300,7 +300,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.className} ${inter.variable} overflow-x-hidden`}>
+      <body className={`${inter.className} ${inter.variable} overflow-x-hidden`} suppressHydrationWarning>
         <AuthProvider>
           <AmoCRMProvider>
             <div className="min-h-screen flex flex-col">
@@ -339,17 +339,21 @@ export default function RootLayout({
               // Инициализация метрики после загрузки DOM
               document.addEventListener('DOMContentLoaded', function() {
                 if (typeof ym !== 'undefined') {
-                  ym(103567092, 'init', {
-                    ssr: true,
-                    webvisor: true,
-                    clickmap: true,
-                    ecommerce: "dataLayer",
-                    accurateTrackBounce: true,
-                    trackLinks: true,
-                    defer: true,
-                    trackHash: true,
-                    ut: 'noindex'
-                  });
+                  try {
+                    ym(103567092, 'init', {
+                      ssr: true,
+                      webvisor: true,
+                      clickmap: true,
+                      ecommerce: "dataLayer",
+                      accurateTrackBounce: true,
+                      trackLinks: true,
+                      defer: true,
+                      trackHash: true,
+                      ut: 'noindex'
+                    });
+                  } catch (error) {
+                    console.warn('Ошибка инициализации Яндекс.Метрики:', error);
+                  }
                 }
               });
             `
