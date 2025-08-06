@@ -11,10 +11,10 @@ export const metadata: Metadata = {
     siteName: 'K-lining',
     images: [
       {
-        url: '/og-image.webp',
+        url: '/og-image-new.webp',
         width: 1200,
         height: 630,
-        alt: 'О компании K-lining',
+        alt: 'О компании K-lining - Профессиональная уборка в Москве',
       },
     ],
     locale: 'ru_RU',
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'О компании K-lining - Профессиональная уборка в Москве',
-    description: 'Узнайте больше о компании K-lining - профессиональная клининговая компания в Москве.',
-    images: ['/og-image.webp'],
+    description: 'Узнайте больше о компании K-lining. Профессиональная клининговая компания в Москве с опытом более 5 лет.',
+    images: ['/og-image-new.webp'],
   },
   alternates: {
     canonical: 'https://k-lining.ru/about',

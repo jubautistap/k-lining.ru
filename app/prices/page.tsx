@@ -13,10 +13,10 @@ export const metadata: Metadata = {
     siteName: 'K-lining',
     images: [
       {
-        url: '/og-image.webp',
+        url: '/og-image-new.webp',
         width: 1200,
         height: 630,
-        alt: 'Цены на уборку K-lining',
+        alt: 'Цены на уборку K-lining - Актуальные тарифы',
       },
     ],
     locale: 'ru_RU',
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Цены на уборку квартир и офисов в Москве | K-lining',
-    description: 'Актуальные цены на профессиональную уборку в Москве. Прозрачное ценообразование от K-lining.',
-    images: ['/og-image.webp'],
+    title: 'Цены на уборку K-lining - Актуальные тарифы',
+    description: 'Актуальные цены на уборку квартир и офисов в Москве. Прозрачные тарифы клининговых услуг.',
+    images: ['/og-image-new.webp'],
   },
   alternates: {
     canonical: 'https://k-lining.ru/prices',

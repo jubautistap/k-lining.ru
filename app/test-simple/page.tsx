@@ -71,23 +71,15 @@ export default function TestSimplePage() {
             </p>
           </div>
           
-          <div>
-            <h3 className="font-medium mb-2">WebP изображение:</h3>
-            <img
-              src="/og-image.webp"
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4">WebP изображение:</h2>
+            <img 
+              src="/og-image-new.webp" 
               alt="Test WebP Image"
               className="w-full max-w-md h-auto rounded-lg shadow-lg"
-              onLoad={() => handleImageLoad('webp')}
-              onError={() => handleImageError('webp')}
             />
             <p className="text-sm text-gray-600 mt-2">
-              Файл: /og-image.webp (22KB) - Статус: 
-              <span className={`ml-1 font-medium ${
-                imageStatus.webp === 'loaded' ? 'text-green-600' : 
-                imageStatus.webp === 'error' ? 'text-red-600' : 'text-yellow-600'
-              }`}>
-                {imageStatus.webp}
-              </span>
+              Файл: /og-image-new.webp (27KB) - Статус:loaded
             </p>
           </div>
           

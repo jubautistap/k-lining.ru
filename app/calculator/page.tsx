@@ -13,10 +13,10 @@ export const metadata: Metadata = {
     siteName: 'K-lining',
     images: [
       {
-        url: '/og-image.webp',
+        url: '/og-image-new.webp',
         width: 1200,
         height: 630,
-        alt: 'Калькулятор стоимости уборки K-lining',
+        alt: 'Калькулятор уборки K-lining - Рассчитать стоимость',
       },
     ],
     locale: 'ru_RU',
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Калькулятор стоимости уборки - Рассчитать цену | K-lining',
-    description: 'Рассчитайте стоимость уборки квартиры или офиса онлайн. Быстрый расчет от K-lining.',
-    images: ['/og-image.webp'],
+    title: 'Калькулятор уборки K-lining - Рассчитать стоимость',
+    description: 'Онлайн калькулятор стоимости уборки квартир и офисов. Быстрый расчет цены клининговых услуг.',
+    images: ['/og-image-new.webp'],
   },
   alternates: {
     canonical: 'https://k-lining.ru/calculator',

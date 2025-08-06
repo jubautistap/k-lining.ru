@@ -68,6 +68,17 @@ export default function HeroSection() {
               <div className="aspect-[3/2] bg-gradient-to-br from-primary-200 to-secondary-200 rounded-xl overflow-hidden relative">
                 {/* Красивый CSS градиент как основной элемент */}
                 <div className="absolute inset-0 hero-visual"></div>
+                
+                {/* Fallback изображение для SEO */}
+                <img 
+                  src="/og-image-new.webp" 
+                  alt="Профессиональная уборка в Москве - K-lining"
+                  className="absolute inset-0 w-full h-full object-cover opacity-0"
+                  loading="eager"
+                  onLoad={(e) => {
+                    e.currentTarget.style.opacity = '1';
+                  }}
+                />
               </div>
             </div>
 

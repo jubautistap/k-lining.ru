@@ -13,10 +13,10 @@ export const metadata: Metadata = {
     siteName: 'K-lining',
     images: [
       {
-        url: '/og-image.webp',
+        url: '/og-image-new.webp',
         width: 1200,
         height: 630,
-        alt: 'Контакты K-lining',
+        alt: 'Контакты K-lining - Профессиональная уборка в Москве',
       },
     ],
     locale: 'ru_RU',
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Контакты K-lining - Связаться с клининговой компанией',
-    description: 'Свяжитесь с K-lining для заказа профессиональной уборки. Бесплатная консультация.',
-    images: ['/og-image.webp'],
+    title: 'Контакты K-lining - Профессиональная уборка в Москве',
+    description: 'Свяжитесь с нами для заказа уборки. Телефон, адрес, режим работы клининговой компании K-lining.',
+    images: ['/og-image-new.webp'],
   },
   alternates: {
     canonical: 'https://k-lining.ru/contacts',

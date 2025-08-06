@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     siteName: 'K-lining',
     images: [
       {
-        url: '/og-image.webp',
+        url: '/og-image-new.webp',
         width: 1200,
         height: 630,
         alt: 'Блог о клининге K-lining',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Блог о клининге - Полезные статьи о уборке | K-lining',
     description: 'Полезные статьи о профессиональной уборке квартир и офисов. Советы по клинингу от экспертов K-lining.',
-    images: ['/og-image.webp'],
+    images: ['/og-image-new.webp'],
   },
   alternates: {
     canonical: 'https://k-lining.ru/blog',
