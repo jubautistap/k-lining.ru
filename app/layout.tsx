@@ -343,7 +343,46 @@ export default function RootLayout({
                   ecommerce: "dataLayer",
                   accurateTrackBounce: true,
                   trackLinks: true,
-                  defer: true
+                  defer: true,
+                  trackHash: true,
+                  ut: 'noindex'
+              });
+              
+              // Отслеживание событий для уведомлений
+              document.addEventListener('DOMContentLoaded', function() {
+                // Отслеживание кликов по кнопкам заказа
+                const orderButtons = document.querySelectorAll('[data-order-button]');
+                orderButtons.forEach(button => {
+                  button.addEventListener('click', function() {
+                    if (typeof ym !== 'undefined') {
+                      ym(103567092, 'reachGoal', 'order_button_click', {
+                        service: this.getAttribute('data-service') || 'unknown'
+                      });
+                    }
+                  });
+                });
+                
+                // Отслеживание отправки форм
+                const forms = document.querySelectorAll('form');
+                forms.forEach(form => {
+                  form.addEventListener('submit', function() {
+                    if (typeof ym !== 'undefined') {
+                      ym(103567092, 'reachGoal', 'form_submit', {
+                        form_type: this.getAttribute('data-form-type') || 'contact'
+                      });
+                    }
+                  });
+                });
+                
+                // Отслеживание звонков
+                const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+                phoneLinks.forEach(link => {
+                  link.addEventListener('click', function() {
+                    if (typeof ym !== 'undefined') {
+                      ym(103567092, 'reachGoal', 'phone_call');
+                    }
+                  });
+                });
               });
             `
           }}
@@ -354,7 +393,59 @@ export default function RootLayout({
           </div>
         </noscript>
         
-        {/* Загружаем остальные схемы асинхронно */}
+        {/* Google Analytics 4 */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-64S5B5HBCR"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-64S5B5HBCR', {
+                page_title: document.title,
+                page_location: window.location.href
+              });
+              
+              // Отслеживание событий для Google Analytics
+              document.addEventListener('DOMContentLoaded', function() {
+                // Отслеживание кликов по кнопкам заказа
+                const orderButtons = document.querySelectorAll('[data-order-button]');
+                orderButtons.forEach(button => {
+                  button.addEventListener('click', function() {
+                    gtag('event', 'order_button_click', {
+                      service: this.getAttribute('data-service') || 'unknown',
+                      button_text: this.textContent.trim()
+                    });
+                  });
+                });
+                
+                // Отслеживание отправки форм
+                const forms = document.querySelectorAll('form');
+                forms.forEach(form => {
+                  form.addEventListener('submit', function() {
+                    gtag('event', 'form_submit', {
+                      form_type: this.getAttribute('data-form-type') || 'contact'
+                    });
+                  });
+                });
+                
+                // Отслеживание звонков
+                const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+                phoneLinks.forEach(link => {
+                  link.addEventListener('click', function() {
+                    gtag('event', 'phone_call', {
+                      phone_number: this.getAttribute('href').replace('tel:', '')
+                    });
+                  });
+                });
+              });
+            `
+          }}
+        />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

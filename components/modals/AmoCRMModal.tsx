@@ -32,6 +32,22 @@ export default function AmoCRMModal() {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
+      // Отслеживание события в Яндекс.Метрике
+      if (typeof window !== 'undefined' && (window as any).ym) {
+        (window as any).ym(103567092, 'reachGoal', 'form_submit', {
+          form_type: 'callback',
+          service: 'callback'
+        });
+      }
+      
+      // Отслеживание события в Google Analytics
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'form_submit', {
+          form_type: 'callback',
+          service: 'callback'
+        });
+      }
+
       await submitLead({
         name: 'Заявка на звонок',
         phone: data.phone,
@@ -115,7 +131,7 @@ export default function AmoCRMModal() {
                 </div>
 
                 {/* Обратный звонок - первый вариант */}
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" data-form-type="callback">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       <Phone className="w-4 h-4 inline mr-2" />

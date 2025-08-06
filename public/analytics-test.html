@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест аналитики - KliningPro</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 50px auto; 
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .status { 
+            padding: 20px; 
+            margin: 20px 0; 
+            border-radius: 8px; 
+            border: 2px solid;
+        }
+        .success { 
+            background: #d4edda; 
+            border-color: #28a745; 
+            color: #155724;
+        }
+        .error { 
+            background: #f8d7da; 
+            border-color: #dc3545; 
+            color: #721c24;
+        }
+        .info { 
+            background: #d1ecf1; 
+            border-color: #17a2b8; 
+            color: #0c5460;
+        }
+        .console-log {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            margin: 10px 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Тест аналитики и уведомлений</h1>
+    <p>Эта страница поможет проверить работу счетчиков и уведомлений на сайте k-lining.ru</p>
+    
+    <div id="status" class="status info">
+        <strong>🔄 Проверяю состояние аналитики...</strong>
+    </div>
+    
+    <div class="console-log" id="logs">Загрузка диагностики...</div>
+    
+    <div class="test-section">
+        <h3>🧪 Тестовые кнопки</h3>
+        <button onclick="testOrderButton()" data-order-button="true" data-service="test">Заказать услугу (тест)</button>
+        <button onclick="testPhoneCall()">Позвонить (тест)</button>
+        <button onclick="testFormSubmit()">Отправить форму (тест)</button>
+        <button onclick="clearLogs()">🗑️ Очистить логи</button>
+    </div>
+    
+    <div class="test-section">
+        <h3>📊 Проверка счетчиков</h3>
+        <button onclick="checkYandexMetrika()">Проверить Яндекс.Метрику</button>
+        <button onclick="checkGoogleAnalytics()">Проверить Google Analytics</button>
+        <button onclick="checkNetworkRequests()">Проверить сетевые запросы</button>
+    </div>
+    
+    <script>
+        let logs = [];
+        
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}`;
+            logs.push(logEntry);
+            
+            const logsElement = document.getElementById('logs');
+            logsElement.textContent = logs.join('\n');
+            logsElement.scrollTop = logsElement.scrollHeight;
+            
+            console.log(message);
+        }
+        
+        function updateStatus(message, type = 'info') {
+            const statusElement = document.getElementById('status');
+            statusElement.className = `status ${type}`;
+            statusElement.innerHTML = `<strong>${message}</strong>`;
+        }
+        
+        function clearLogs() {
+            logs = [];
+            document.getElementById('logs').textContent = '';
+        }
+        
+        // Тестовые функции
+        function testOrderButton() {
+            addLog('🧪 Тестирую кнопку заказа...');
+            
+            // Отслеживание в Яндекс.Метрике
+            if (typeof ym !== 'undefined') {
+                ym(103567092, 'reachGoal', 'order_button_click', {
+                    service: 'test'
+                });
+                addLog('✅ Событие отправлено в Яндекс.Метрику');
+            } else {
+                addLog('❌ Функция ym не определена');
+            }
+            
+            // Отслеживание в Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'order_button_click', {
+                    service: 'test',
+                    button_text: 'Заказать услугу (тест)'
+                });
+                addLog('✅ Событие отправлено в Google Analytics');
+            } else {
+                addLog('❌ Функция gtag не определена');
+            }
+        }
+        
+        function testPhoneCall() {
+            addLog('🧪 Тестирую звонок...');
+            
+            // Отслеживание в Яндекс.Метрике
+            if (typeof ym !== 'undefined') {
+                ym(103567092, 'reachGoal', 'phone_call');
+                addLog('✅ Событие звонка отправлено в Яндекс.Метрику');
+            } else {
+                addLog('❌ Функция ym не определена');
+            }
+            
+            // Отслеживание в Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'phone_call', {
+                    phone_number: '+79255551833'
+                });
+                addLog('✅ Событие звонка отправлено в Google Analytics');
+            } else {
+                addLog('❌ Функция gtag не определена');
+            }
+        }
+        
+        function testFormSubmit() {
+            addLog('🧪 Тестирую отправку формы...');
+            
+            // Отслеживание в Яндекс.Метрике
+            if (typeof ym !== 'undefined') {
+                ym(103567092, 'reachGoal', 'form_submit', {
+                    form_type: 'test',
+                    has_email: true
+                });
+                addLog('✅ Событие формы отправлено в Яндекс.Метрику');
+            } else {
+                addLog('❌ Функция ym не определена');
+            }
+            
+            // Отслеживание в Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'form_submit', {
+                    form_type: 'test',
+                    has_email: true
+                });
+                addLog('✅ Событие формы отправлено в Google Analytics');
+            } else {
+                addLog('❌ Функция gtag не определена');
+            }
+        }
+        
+        function checkYandexMetrika() {
+            addLog('🔍 Проверяю Яндекс.Метрику...');
+            
+            if (typeof ym === 'undefined') {
+                addLog('❌ Функция ym не определена!');
+                updateStatus('❌ Яндекс.Метрика НЕ работает', 'error');
+                return;
+            }
+            
+            addLog('✅ Функция ym определена');
+            
+            try {
+                ym(103567092, 'getClientID', function(clientID) {
+                    if (clientID) {
+                        addLog(`✅ Метрика инициализирована. Client ID: ${clientID}`);
+                        updateStatus('✅ Яндекс.Метрика работает корректно!', 'success');
+                    } else {
+                        addLog('⚠️ Метрика инициализирована, но Client ID пустой');
+                        updateStatus('⚠️ Метрика частично работает', 'info');
+                    }
+                });
+            } catch (error) {
+                addLog(`❌ Ошибка при проверке метрики: ${error.message}`);
+                updateStatus('❌ Ошибка в работе метрики', 'error');
+            }
+        }
+        
+        function checkGoogleAnalytics() {
+            addLog('🔍 Проверяю Google Analytics...');
+            
+            if (typeof gtag === 'undefined') {
+                addLog('❌ Функция gtag не определена!');
+                updateStatus('❌ Google Analytics НЕ работает', 'error');
+                return;
+            }
+            
+            addLog('✅ Функция gtag определена');
+            
+            try {
+                gtag('event', 'test_event', {
+                    event_category: 'test',
+                    event_label: 'analytics_test'
+                });
+                addLog('✅ Тестовое событие отправлено в Google Analytics');
+                updateStatus('✅ Google Analytics работает корректно!', 'success');
+            } catch (error) {
+                addLog(`❌ Ошибка при отправке события: ${error.message}`);
+                updateStatus('❌ Ошибка в работе Google Analytics', 'error');
+            }
+        }
+        
+        function checkNetworkRequests() {
+            addLog('🌐 Проверяю сетевые запросы...');
+            
+            // Проверяем, загружены ли скрипты счетчиков
+            const yandexScript = document.querySelector('script[src*="mc.yandex.ru"]');
+            const googleScript = document.querySelector('script[src*="googletagmanager.com"]');
+            
+            if (yandexScript) {
+                addLog('✅ Скрипт Яндекс.Метрики загружен');
+            } else {
+                addLog('❌ Скрипт Яндекс.Метрики НЕ найден');
+            }
+            
+            if (googleScript) {
+                addLog('✅ Скрипт Google Analytics загружен');
+            } else {
+                addLog('❌ Скрипт Google Analytics НЕ найден');
+            }
+            
+            // Проверяем noscript теги
+            const yandexNoscript = document.querySelector('noscript img[src*="mc.yandex.ru"]');
+            const googleNoscript = document.querySelector('noscript img[src*="google-analytics"]');
+            
+            if (yandexNoscript) {
+                addLog('✅ Noscript тег Яндекс.Метрики найден');
+            } else {
+                addLog('❌ Noscript тег Яндекс.Метрики НЕ найден');
+            }
+        }
+        
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            addLog('🚀 Страница загружена, начинаю диагностику...');
+            
+            // Проверяем наличие функций аналитики
+            setTimeout(() => {
+                if (typeof ym !== 'undefined') {
+                    addLog('✅ Яндекс.Метрика доступна');
+                } else {
+                    addLog('❌ Яндекс.Метрика НЕ доступна');
+                }
+                
+                if (typeof gtag !== 'undefined') {
+                    addLog('✅ Google Analytics доступен');
+                } else {
+                    addLog('❌ Google Analytics НЕ доступен');
+                }
+                
+                updateStatus('✅ Диагностика завершена', 'success');
+            }, 2000);
+        });
+    </script>
+    
+    <!-- Яндекс.Метрика -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            console.log('📊 Инициализирую функцию ym...');
+            m[i]=m[i]||function(){
+                console.log('📈 ym функция вызвана с аргументами:', arguments);
+                (m[i].a=m[i].a||[]).push(arguments)
+            };
+            m[i].l=1*new Date();
+            
+            for (var j = 0; j < document.scripts.length; j++) {
+                if (document.scripts[j].src === r) { 
+                    console.log('⚠️ Скрипт метрики уже загружен');
+                    return; 
+                }
+            }
+            
+            console.log('📥 Загружаю скрипт:', r);
+            k=e.createElement(t);
+            a=e.getElementsByTagName(t)[0];
+            k.async=1;
+            k.src=r;
+            
+            k.onload = function() {
+                console.log('✅ Скрипт метрики загружен успешно');
+            };
+            
+            k.onerror = function() {
+                console.error('❌ Ошибка загрузки скрипта метрики');
+            };
+            
+            a.parentNode.insertBefore(k,a);
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103567092', 'ym');
+
+        setTimeout(function() {
+            console.log('🚀 Инициализирую счетчик 103567092...');
+            if (typeof ym !== 'undefined') {
+                ym(103567092, 'init', {
+                    ssr: true,
+                    webvisor: true,
+                    clickmap: true,
+                    ecommerce: "dataLayer",
+                    accurateTrackBounce: true,
+                    trackLinks: true,
+                    trackHash: true,
+                    ut: 'noindex'
+                });
+                console.log('✅ Метрика инициализирована');
+            } else {
+                console.error('❌ Функция ym не определена после загрузки');
+            }
+        }, 100);
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/103567092" style="position:absolute; left:-9999px;" alt="" /></div>
+    </noscript>
+    <!-- /Яндекс.Метрика -->
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-64S5B5HBCR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-64S5B5HBCR', {
+            page_title: document.title,
+            page_location: window.location.href
+        });
+        console.log('✅ Google Analytics инициализирован');
+    </script>
+    <!-- /Google Analytics 4 -->
+</body>
+</html> 

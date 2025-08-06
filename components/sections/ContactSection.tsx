@@ -28,6 +28,22 @@ export default function ContactSection() {
 
   const onSubmit = async (data: ContactFormData) => {
     try {
+      // Отслеживание события в Яндекс.Метрике
+      if (typeof window !== 'undefined' && (window as any).ym) {
+        (window as any).ym(103567092, 'reachGoal', 'form_submit', {
+          form_type: 'contact',
+          has_email: !!data.email
+        });
+      }
+      
+      // Отслеживание события в Google Analytics
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'form_submit', {
+          form_type: 'contact',
+          has_email: !!data.email
+        });
+      }
+
       const response = await fetch('/api/admin/leads', {
         method: 'POST',
         headers: {
@@ -195,7 +211,7 @@ export default function ContactSection() {
               </div>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" data-form-type="contact">
               {/* Name Field */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
