@@ -54,6 +54,12 @@ module.exports = {
       priority = 0.8;
       changefreq = 'monthly';
     }
+    
+    // FAQ
+    if (path.includes('/faq')) {
+      priority = 0.8;
+      changefreq = 'monthly';
+    }
 
     return {
       loc: path,
