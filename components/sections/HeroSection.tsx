@@ -2,7 +2,6 @@
 
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import OrderButton from '@/components/ui/OrderButton';
 
 export default function HeroSection() {
@@ -10,7 +9,7 @@ export default function HeroSection() {
     // Загружаем изображение после рендера для улучшения LCP
     const container = document.getElementById('hero-image-container');
     if (container) {
-      const img = new Image();
+      const img = new window.Image();
       img.src = '/og-image.jpg';
       img.alt = 'K-lining профессиональная уборка квартир и офисов в Москве - быстро качественно честно';
       img.className = 'w-full h-full object-cover opacity-0 transition-opacity duration-500';
