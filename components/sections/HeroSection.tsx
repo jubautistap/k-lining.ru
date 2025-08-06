@@ -1,11 +1,26 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import OrderButton from '@/components/ui/OrderButton';
 
 export default function HeroSection() {
+  useEffect(() => {
+    // Загружаем изображение после рендера для улучшения LCP
+    const container = document.getElementById('hero-image-container');
+    if (container) {
+      const img = new Image();
+      img.src = '/og-image.jpg';
+      img.alt = 'K-lining профессиональная уборка квартир и офисов в Москве - быстро качественно честно';
+      img.className = 'w-full h-full object-cover opacity-0 transition-opacity duration-500';
+      img.onload = () => {
+        img.classList.remove('opacity-0');
+      };
+      container.appendChild(img);
+    }
+  }, []);
+
   return (
     <section className="section-padding bg-gradient-to-br from-primary-50 via-white to-secondary-50">
       <div className="container-custom">
@@ -74,58 +89,33 @@ export default function HeroSection() {
           </div>
 
           {/* Image - загружается после LCP */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative"
-          >
-            {/* Main Image - CSS градиент вместо изображения для LCP */}
+          <div className="relative">
+            {/* Main Image - только CSS градиент для LCP */}
             <div className="relative bg-gradient-to-br from-primary-100 to-secondary-100 rounded-2xl p-4 shadow-2xl">
               <div className="aspect-[3/2] bg-gradient-to-br from-primary-200 to-secondary-200 rounded-xl overflow-hidden relative">
-                {/* CSS градиент как placeholder */}
+                {/* CSS градиент как основной элемент */}
                 <div className="absolute inset-0 hero-gradient"></div>
                 
-                {/* Изображение загружается позже */}
-                <Image
-                  src="/og-image.jpg"
-                  alt="K-lining профессиональная уборка квартир и офисов в Москве - быстро качественно честно"
-                  width={600}
-                  height={400}
-                  className="w-full h-full object-cover opacity-0 transition-opacity duration-500"
-                  priority={false}
-                  loading="lazy"
-                  onLoad={(e) => {
-                    e.currentTarget.classList.remove('opacity-0');
-                  }}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
+                {/* Изображение загружается через useEffect */}
+                <div id="hero-image-container" className="w-full h-full"></div>
               </div>
             </div>
 
             {/* Floating Elements */}
-            <motion.div
-              animate={{ y: [-10, 10, -10] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-4 -right-4 bg-white rounded-lg shadow-lg p-4"
-            >
+            <div className="absolute -top-4 -right-4 bg-white rounded-lg shadow-lg p-4">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 <span className="text-sm font-medium">Онлайн</span>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              animate={{ y: [10, -10, 10] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-4 -left-4 bg-white rounded-lg shadow-lg p-4"
-            >
+            <div className="absolute -bottom-4 -left-4 bg-white rounded-lg shadow-lg p-4">
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary-600">24/7</div>
                 <div className="text-xs text-gray-600">Поддержка</div>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
