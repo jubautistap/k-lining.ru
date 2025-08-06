@@ -1,60 +1,65 @@
 'use client';
 
 import React from 'react';
-import { useAmoCRM } from '@/components/providers/AmoCRMProvider';
+import { motion } from 'framer-motion';
 
 interface OrderButtonProps {
-  children: React.ReactNode;
+  service: string;
   className?: string;
-  variant?: 'primary' | 'secondary';
-  service?: string;
+  children: React.ReactNode;
+  onClick?: () => void;
 }
 
-export default function OrderButton({ children, className = '', variant = 'primary', service = 'general' }: OrderButtonProps) {
-  const { openModal } = useAmoCRM();
-
-  const baseClasses = 'inline-block px-6 py-3 rounded-lg font-semibold transition-colors w-full text-center';
+export default function OrderButton({ 
+  service, 
+  className = "", 
+  children, 
+  onClick 
+}: OrderButtonProps) {
   
-  const variantClasses = {
-    primary: 'bg-primary-600 text-white hover:bg-primary-700',
-    secondary: 'bg-white text-primary-600 border-2 border-primary-600 hover:bg-gray-50'
-  };
-
-  const handleClick = () => {
-    // Отслеживание события в Яндекс.Метрике
-    if (typeof window !== 'undefined' && (window as any).ym) {
-      try {
-        (window as any).ym(103567092, 'reachGoal', 'order_button_click', {
-          service: service
-        });
-      } catch (error) {
-        console.warn('Ошибка отправки в Яндекс.Метрику:', error);
-      }
-    }
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
     
-    // Отслеживание события в Google Analytics
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      try {
+    // Отслеживание событий с обработкой ошибок
+    try {
+      // Яндекс.Метрика
+      if (typeof window !== 'undefined' && (window as any).ym) {
+        (window as any).ym(103567092, 'reachGoal', 'order_button_click', {
+          service: service,
+          button_text: children,
+          page_url: window.location.href
+        });
+      }
+      
+      // Google Analytics
+      if (typeof window !== 'undefined' && (window as any).gtag) {
         (window as any).gtag('event', 'order_button_click', {
           service: service,
-          button_text: typeof children === 'string' ? children : 'Заказать услугу'
+          button_text: children,
+          page_url: window.location.href
         });
-      } catch (error) {
-        console.warn('Ошибка отправки в Google Analytics:', error);
       }
+    } catch (error) {
+      console.warn('Ошибка отслеживания события:', error);
     }
     
-    openModal();
+    // Вызываем пользовательский обработчик
+    if (onClick) {
+      onClick();
+    }
   };
 
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className={`btn-primary ${className}`}
       onClick={handleClick}
-      className={`${baseClasses} ${variantClasses[variant]} ${className}`}
       data-order-button="true"
       data-service={service}
+      type="button"
     >
       {children}
-    </button>
+    </motion.button>
   );
 } 

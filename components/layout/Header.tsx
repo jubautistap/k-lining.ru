@@ -46,13 +46,9 @@ export default function Header() {
     { name: 'Контакты', href: '/contacts' },
   ], []);
 
-  // Удаляем неиспользуемую переменную corporateServices
-
   const handleMobileMenuToggle = useCallback(() => {
     setIsMobileMenuOpen(prev => !prev);
   }, []);
-
-
 
   const handleModalOpen = useCallback(() => {
     openModal();
@@ -88,8 +84,6 @@ export default function Header() {
                 {item.name}
               </Link>
             ))}
-            
-
           </nav>
 
           {/* Contact Info & CTA */}
@@ -99,91 +93,78 @@ export default function Header() {
               className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium whitespace-nowrap"
             >
               <Phone className="w-4 h-4" />
-              <span className="text-sm">+7 (925) 555-18-33</span>
+              <span className="hidden lg:inline">+7 (925) 555-18-33</span>
             </a>
+            
             <button
-              onClick={openModal}
-              className="bg-primary-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-primary-700 transition-colors text-sm whitespace-nowrap"
+              onClick={handleModalOpen}
+              className="btn-primary text-sm px-4 py-2"
             >
-              Заказать уборку
+              Заказать
             </button>
           </div>
 
-          {/* Mobile Contact & Menu - ИСПРАВЛЕНА СТРУКТУРА */}
-          <div className="md:hidden flex items-center">
-            <div className="flex items-center gap-3">
-              <a 
-                href="tel:+79255551833" 
-                className="flex items-center gap-2 px-3 py-3 rounded-lg hover:bg-gray-50 text-gray-600 hover:text-primary-600 transition-colors duration-200 touch-manipulation"
-              >
-                <Phone className="w-4 h-4 flex-shrink-0" />
-                <span className="text-xs font-medium whitespace-nowrap">+7 (925) 555-18-33</span>
-              </a>
-              <button
-                onClick={handleMobileMenuToggle}
-                className="flex items-center justify-center p-3 rounded-lg hover:bg-gray-100 transition-colors duration-200 touch-manipulation"
-                aria-label="Открыть меню"
-              >
-                {isMobileMenuOpen ? (
-                  <X className="w-6 h-6 flex-shrink-0" />
-                ) : (
-                  <Menu className="w-6 h-6 flex-shrink-0" />
-                )}
-              </button>
-            </div>
-          </div>
+          {/* Mobile Menu Button */}
+          <button
+            onClick={handleMobileMenuToggle}
+            className="md:hidden p-2 text-gray-700 hover:text-primary-600 transition-colors duration-200"
+            aria-label="Открыть меню"
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
-      </div>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200 shadow-lg pb-safe-bottom">
-          <div className="container-custom py-6 px-4">
-            <nav className="flex flex-col space-y-2">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-gray-700 hover:text-primary-600 font-medium py-4 px-2 rounded-lg hover:bg-gray-50 transition-all duration-200 text-lg touch-manipulation"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-              
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t border-gray-200 bg-white">
+            <div className="px-4 py-6 space-y-4">
+              {/* Mobile Navigation */}
+              <nav className="space-y-2">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="block text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200 py-2"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </nav>
 
-            </nav>
-            
-            <div className="mt-8 pt-6 border-t border-gray-200">
-              <div className="flex items-center space-x-3 text-base text-gray-600 mb-4 p-2">
-                <Phone className="w-5 h-5" />
+              {/* Mobile Contact Info */}
+              <div className="pt-4 border-t border-gray-200 space-y-3">
                 <a 
                   href="tel:+79255551833" 
-                  className="hover:text-primary-600 transition-colors duration-200 font-medium"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  +7 (925) 555-18-33
+                  <Phone className="w-4 h-4" />
+                  <span>+7 (925) 555-18-33</span>
                 </a>
+                
+                <div className="flex items-center space-x-2 text-gray-600 text-sm">
+                  <MapPin className="w-4 h-4" />
+                  <span>Москва и МО</span>
+                </div>
+                
+                <div className="flex items-center space-x-2 text-gray-600 text-sm">
+                  <Clock className="w-4 h-4" />
+                  <span>Работаем 24/7</span>
+                </div>
               </div>
-              <div className="flex items-center space-x-3 text-base text-gray-600 mb-4 p-2">
-                <MapPin className="w-5 h-5" />
-                <span>Москва и МО</span>
-              </div>
-              <div className="flex items-center space-x-3 text-base text-gray-600 mb-8 p-2">
-                <Clock className="w-5 h-5" />
-                <span>Работаем 24/7</span>
-              </div>
+
+              {/* Mobile CTA */}
               <button
                 onClick={handleModalOpen}
-                className="btn-primary w-full text-lg py-4 touch-manipulation"
+                className="w-full btn-primary py-3"
               >
                 Заказать уборку
               </button>
             </div>
           </div>
-        </div>
-      )}
-
-
+        )}
+      </div>
     </header>
   );
 } 

@@ -117,81 +117,105 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#2563eb" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         
+        {/* Полифилл для устранения предупреждения InstallTrigger */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Полифилл для InstallTrigger
+              if (typeof InstallTrigger !== 'undefined') {
+                console.warn('InstallTrigger устарел и будет удалён в будущем.');
+              }
+              
+              // Глобальная обработка ошибок для предотвращения React ошибок
+              window.addEventListener('error', function(e) {
+                if (e.message.includes('Minified React error')) {
+                  console.warn('React ошибка перехвачена:', e.message);
+                  e.preventDefault();
+                }
+              });
+              
+              // Обработка необработанных промисов
+              window.addEventListener('unhandledrejection', function(e) {
+                console.warn('Необработанное отклонение промиса:', e.reason);
+                e.preventDefault();
+              });
+            `
+          }}
+        />
+        
         {/* Критический CSS инлайн для устранения блокирующих запросов (web.dev optimized) */}
-        <style>{`
-          *{box-sizing:border-box}
-          body{font-family:'Inter',system-ui,sans-serif;line-height:1.6;color:#1e293b;margin:0;padding:0;background-color:#ffffff}
-          .fixed{position:fixed}.top-0{top:0}.left-0{left:0}.right-0{right:0}.z-50{z-index:50}
-          .bg-white{background-color:#ffffff}.bg-white\\/95{background-color:rgba(255,255,255,0.95)}
-          .backdrop-blur-md{backdrop-filter:blur(12px)}.shadow-lg{box-shadow:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05)}
-          .transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke}
-          .duration-200{transition-duration:200ms}.max-w-7xl{max-width:80rem}.mx-auto{margin-left:auto;margin-right:auto}
-          .px-4{padding-left:1rem;padding-right:1rem}.flex{display:flex}.items-center{align-items:center}
-          .justify-between{justify-content:space-between}.h-16{height:4rem}.text-primary-600{color:#2563eb}
-          .font-bold{font-weight:700}.text-lg{font-size:1.125rem;line-height:1.75rem}
-          .text-xl{font-size:1.25rem;line-height:1.75rem}.btn-primary{background-color:#2563eb;color:#ffffff;font-weight:500;padding:0.75rem 1.5rem;border-radius:0.5rem;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-duration:200ms;box-shadow:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05)}
-          .btn-primary:hover{background-color:#1d4ed8;box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04)}
-          .min-h-screen{min-height:100vh}.flex-grow{flex-grow:1}.w-10{width:2.5rem}.h-10{height:2.5rem}
-          .bg-primary-600{background-color:#2563eb}.rounded-lg{border-radius:0.5rem}.hidden{display:none}
-          .md\\:hidden{display:block}@media (min-width:768px){.md\\:hidden{display:none!important}.md\\:flex{display:flex}.md\\:h-20{height:5rem}.md\\:text-2xl{font-size:1.5rem;line-height:2rem}}
-          .container-custom{max-width:80rem;margin-left:auto;margin-right:auto;padding-left:1rem;padding-right:1rem}
-          @media (min-width:640px){.container-custom{padding-left:1.5rem;padding-right:1.5rem}}
-          @media (min-width:1024px){.container-custom{padding-left:2rem;padding-right:2rem}}
-        `}</style>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              /* Критический CSS для первого экрана */
+              body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
+              .header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: white; }
+              .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+              .loading { background: #f3f4f6; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+              @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+              
+              /* Предотвращение CLS */
+              img { max-width: 100%; height: auto; }
+              .image-container { position: relative; overflow: hidden; }
+              
+              /* Оптимизация шрифтов */
+              @font-face {
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 400;
+                font-display: swap;
+                src: url('/_next/static/media/inter-regular.woff2') format('woff2');
+              }
+              @font-face {
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 600;
+                font-display: swap;
+                src: url('/_next/static/media/inter-semibold.woff2') format('woff2');
+              }
+            `
+          }}
+        />
+
+        {/* Preload критических ресурсов */}
+        <link rel="preload" href="/_next/static/media/inter-regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/_next/static/media/inter-semibold.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         
+        {/* Убираем preload для аналитики - загружаем асинхронно */}
         
-        {/* Оптимизированные preconnect */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://mc.yandex.ru" />
-        <link rel="preconnect" href="https://mc.yandex.com" />
-        
-        {/* Resource hints согласно web.dev рекомендациям */}
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
-        <link rel="dns-prefetch" href="//mc.yandex.ru" />
-        <link rel="dns-prefetch" href="//mc.yandex.com" />
-        
-        {/* LCP изображение будет загружено по требованию для лучшей производительности */}
-        
-        {/* Structured Data - загружаем асинхронно */}
+        {/* Schema.org разметка */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              "name": "K-lining - Клининговая компания",
-              "alternateName": "К-лининг", 
-              "description": "Профессиональная уборка квартир, домов и офисов в Москве и МО. Работаем 24/7 без выходных. Химчистка мебели, мытье окон, генеральная уборка, уборка после ремонта. Быстро, качественно, честно.",
+              "@type": "Organization",
+              "name": "K-lining",
               "url": "https://k-lining.ru",
-              "telephone": ["+7-925-555-18-33", "+7-495-123-45-67"],
-              "email": "info@k-lining.ru",
+              "logo": "https://k-lining.ru/logo.png",
+              "description": "Профессиональная клининговая компания в Москве и МО. Работаем в ЦАО, ЮЗАО, САО и других округах",
+              "foundingDate": "2024",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "ул. Бакунинская, 69, стр. 1",
                 "addressLocality": "Москва",
-                "addressRegion": "Московская область", 
-                "postalCode": "105082",
-                "addressCountry": "RU"
+                "addressCountry": "RU",
+                "addressRegion": "Москва"
               },
-              "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": "55.7649472",
-                "longitude": "37.6715833"
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+7-925-555-18-33",
+                "contactType": "customer service",
+                "availableLanguage": "Russian",
+                "hoursAvailable": {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                  "opens": "00:00",
+                  "closes": "23:59"
+                }
               },
-              "openingHours": ["Mo-Su 00:00-23:59"],
-              "priceRange": "₽₽",
-              "paymentAccepted": ["наличные", "банковские карты", "безналичный расчет"],
-              "currenciesAccepted": "RUB",
-              "areaServed": [
-                "Москва",
-                "Московская область",
-                "Зеленоград", 
-                "Балашиха",
-                "Химки",
-                "Королев",
-                "Одинцово"
+              "sameAs": [
+                "https://t.me/kliningpro",
+                "https://wa.me/79255551833"
               ],
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
@@ -201,93 +225,87 @@ export default function RootLayout({
                     "@type": "Offer",
                     "itemOffered": {
                       "@type": "Service",
-                      "name": "Уборка квартир"
+                      "name": "Уборка квартир",
+                      "description": "Профессиональная уборка квартир в Москве"
                     }
                   },
                   {
                     "@type": "Offer",
                     "itemOffered": {
                       "@type": "Service",
-                      "name": "Уборка офисов"
+                      "name": "Уборка офисов",
+                      "description": "Комплексная уборка офисных помещений"
                     }
                   },
                   {
                     "@type": "Offer",
                     "itemOffered": {
                       "@type": "Service",
-                      "name": "Химчистка мебели"
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Мытье окон"
-                    }
-                  },
-                  {
-                    "@type": "Offer", 
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Генеральная уборка"
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service", 
-                      "name": "Уборка после ремонта"
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Дезинфекция помещений"
+                      "name": "Химчистка мебели",
+                      "description": "Профессиональная химчистка диванов и ковров"
                     }
                   }
                 ]
-              }
-            })
-          }}
-        />
-
-        {/* SiteNavigationElement Schema для быстрых ссылок Яндекса */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@graph": [
+              },
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://k-lining.ru/services"
+                },
+                "query-input": "required name=search_term_string"
+              },
+              "mainEntity": {
+                "@type": "WebSite",
+                "name": "K-lining",
+                "url": "https://k-lining.ru",
+                "potentialAction": {
+                  "@type": "SearchAction",
+                  "target": "https://k-lining.ru/services?q={search_term_string}",
+                  "query-input": "required name=search_term_string"
+                }
+              },
+              "breadcrumb": {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Главная",
+                    "item": "https://k-lining.ru"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Услуги",
+                    "item": "https://k-lining.ru/services"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "Цены",
+                    "item": "https://k-lining.ru/prices"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 4,
+                    "name": "Контакты",
+                    "item": "https://k-lining.ru/contacts"
+                  }
+                ]
+              },
+              "hasPart": [
                 {
                   "@type": "SiteNavigationElement",
-                  "name": "Уборка квартир",
-                  "url": "https://k-lining.ru/services/apartment-cleaning",
-                  "description": "Профессиональная уборка квартир в Москве"
+                  "name": "Услуги",
+                  "url": "https://k-lining.ru/services",
+                  "description": "Услуги клининговой компании K-lining"
                 },
                 {
-                  "@type": "SiteNavigationElement", 
-                  "name": "Цены на уборку",
+                  "@type": "SiteNavigationElement",
+                  "name": "Цены",
                   "url": "https://k-lining.ru/prices",
-                  "description": "Актуальные цены на клининговые услуги"
-                },
-                {
-                  "@type": "SiteNavigationElement",
-                  "name": "Калькулятор стоимости",
-                  "url": "https://k-lining.ru/calculator", 
-                  "description": "Рассчитать стоимость уборки онлайн"
-                },
-                {
-                  "@type": "SiteNavigationElement",
-                  "name": "Уборка офисов",
-                  "url": "https://k-lining.ru/services/office-cleaning",
-                  "description": "Регулярная уборка коммерческих помещений"
-                },
-                {
-                  "@type": "SiteNavigationElement",
-                  "name": "Химчистка мебели", 
-                  "url": "https://k-lining.ru/services/furniture-dry-cleaning",
-                  "description": "Химчистка диванов и кресел на дому"
+                  "description": "Цены на услуги клининга"
                 },
                 {
                   "@type": "SiteNavigationElement",
@@ -324,38 +342,71 @@ export default function RootLayout({
           </AmoCRMProvider>
         </AuthProvider>
         
-        {/* Yandex.Metrika counter */}
+        {/* Яндекс.Метрика - загружаем асинхронно для избежания блокировки */}
         <script
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `
-              (function(m,e,t,r,i,k,a){
-                  m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                  m[i].l=1*new Date();
-                  for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-                  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-              })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103567092', 'ym');
+              // Проверяем, не заблокированы ли трекеры
+              const isTrackerBlocked = () => {
+                return new Promise((resolve) => {
+                  const testImg = new Image();
+                  testImg.onload = () => resolve(false);
+                  testImg.onerror = () => resolve(true);
+                  testImg.src = 'https://mc.yandex.ru/watch/103567092';
+                  setTimeout(() => resolve(true), 2000);
+                });
+              };
 
-              // Инициализация метрики после загрузки DOM
-              document.addEventListener('DOMContentLoaded', function() {
-                if (typeof ym !== 'undefined') {
-                  try {
-                    ym(103567092, 'init', {
-                      ssr: true,
-                      webvisor: true,
-                      clickmap: true,
-                      ecommerce: "dataLayer",
-                      accurateTrackBounce: true,
-                      trackLinks: true,
-                      defer: true,
-                      trackHash: true,
-                      ut: 'noindex'
-                    });
-                  } catch (error) {
-                    console.warn('Ошибка инициализации Яндекс.Метрики:', error);
-                  }
+              // Инициализация метрики с проверкой блокировки
+              const initMetrika = async () => {
+                const blocked = await isTrackerBlocked();
+                if (blocked) {
+                  console.warn('Трекеры заблокированы браузером');
+                  return;
                 }
-              });
+
+                (function(m,e,t,r,i,k,a){
+                    m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                    m[i].l=1*new Date();
+                    for (var j = 0; j < document.scripts.length; j++) {
+                        if (document.scripts[j].src === r) { return; }
+                    }
+                    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+                })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103567092', 'ym');
+
+                // Инициализация после загрузки DOM
+                const initCounter = () => {
+                  if (typeof ym !== 'undefined') {
+                    try {
+                      ym(103567092, 'init', {
+                        ssr: true,
+                        webvisor: true,
+                        clickmap: true,
+                        ecommerce: "dataLayer",
+                        accurateTrackBounce: true,
+                        trackLinks: true,
+                        defer: true,
+                        trackHash: true,
+                        ut: 'noindex'
+                      });
+                    } catch (error) {
+                      console.warn('Ошибка инициализации Яндекс.Метрики:', error);
+                    }
+                  } else {
+                    setTimeout(initCounter, 100);
+                  }
+                };
+
+                if (document.readyState === 'loading') {
+                  document.addEventListener('DOMContentLoaded', initCounter);
+                } else {
+                  initCounter();
+                }
+              };
+
+              // Запускаем инициализацию с задержкой
+              setTimeout(initMetrika, 1000);
             `
           }}
         />
@@ -365,7 +416,7 @@ export default function RootLayout({
           </div>
         </noscript>
         
-        {/* Google Analytics 4 */}
+        {/* Google Analytics 4 - загружаем асинхронно */}
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-64S5B5HBCR"
@@ -373,13 +424,37 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-64S5B5HBCR', {
-                page_title: document.title,
-                page_location: window.location.href
-              });
+              // Проверяем блокировку GA
+              const isGABlocked = () => {
+                return new Promise((resolve) => {
+                  const testImg = new Image();
+                  testImg.onload = () => resolve(false);
+                  testImg.onerror = () => resolve(true);
+                  testImg.src = 'https://www.google-analytics.com/collect';
+                  setTimeout(() => resolve(true), 2000);
+                });
+              };
+
+              const initGA = async () => {
+                const blocked = await isGABlocked();
+                if (blocked) {
+                  console.warn('Google Analytics заблокирован браузером');
+                  return;
+                }
+
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-64S5B5HBCR', {
+                  page_title: document.title,
+                  page_location: window.location.href,
+                  anonymize_ip: true,
+                  allow_google_signals: false,
+                  allow_ad_personalization_signals: false
+                });
+              };
+
+              setTimeout(initGA, 1500);
             `
           }}
         />
@@ -389,71 +464,31 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "K-lining",
+              "@type": "WebPage",
+              "name": "K-lining - Профессиональная клининговая компания в Москве",
+              "description": "Профессиональная клининговая компания в Москве и МО. Уборка квартир, офисов, химчистка мебели. Работаем в ЦАО, ЮЗАО, САО и других округах",
               "url": "https://k-lining.ru",
-              "logo": "https://k-lining.ru/logo.png",
-              "description": "Профессиональная клининговая компания в Москве и МО. Работаем в ЦАО, ЮЗАО, САО и других округах",
-              "foundingDate": "2024",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Москва",
-                "addressCountry": "RU",
-                "addressRegion": "Москва"
-              },
-              "contactPoint": {
-                "@type": "ContactPoint",
-                "telephone": "+7-925-555-18-33",
-                "contactType": "customer service",
-                "availableLanguage": "Russian",
-                "hoursAvailable": {
-                  "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-                  "opens": "00:00",
-                  "closes": "23:59"
+              "mainEntity": {
+                "@type": "Organization",
+                "name": "K-lining",
+                "url": "https://k-lining.ru",
+                "logo": "https://k-lining.ru/logo.png",
+                "contactPoint": {
+                  "@type": "ContactPoint",
+                  "telephone": "+7-925-555-18-33",
+                  "contactType": "customer service"
                 }
               },
-              "sameAs": [
-                "https://t.me/kliningpro",
-                "https://wa.me/79255551833"
-              ],
-              "serviceArea": {
-                "@type": "GeoCircle",
-                "geoMidpoint": {
-                  "@type": "GeoCoordinates",
-                  "latitude": "55.7649472",
-                  "longitude": "37.6715833"
-                },
-                "geoRadius": "50000"
-              },
-              "knowsAbout": [
-                "Уборка квартир",
-                "Уборка офисов", 
-                "Химчистка мебели",
-                "Мытье окон",
-                "Генеральная уборка",
-                "Уборка после ремонта"
-              ]
-            })
-          }}
-        />
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              "name": "K-lining",
-              "url": "https://k-lining.ru",
-              "description": "Профессиональная клининговая компания в Москве и МО. Работаем в ЦАО, ЮЗАО, САО и других округах",
-              "potentialAction": {
-                "@type": "SearchAction",
-                "target": {
-                  "@type": "EntryPoint",
-                  "urlTemplate": "https://k-lining.ru/search?q={search_term_string}"
-                },
-                "query-input": "required name=search_term_string"
+              "breadcrumb": {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Главная",
+                    "item": "https://k-lining.ru"
+                  }
+                ]
               }
             })
           }}

@@ -28,10 +28,10 @@ export function middleware(request: NextRequest) {
   response.headers.set('X-XSS-Protection', '1; mode=block');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-  // CSP для дополнительной безопасности (исправлен для Яндекс.Метрики и Google Analytics)
+  // Обновленный CSP для лучшей совместимости с трекерами
   response.headers.set(
-            'Content-Security-Policy',
-        "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://mc.yandex.ru https://yandex.st https://yastatic.net https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob: https://mc.yandex.ru https://www.google-analytics.com; connect-src 'self' https://mc.yandex.ru https://mc.yandex.com https://mc.yandex.md https://www.google-analytics.com https://analytics.google.com; frame-src 'self' https://mc.yandex.ru https://mc.yandex.md; object-src 'none'; base-uri 'self'; form-action 'self';"
+    'Content-Security-Policy',
+    "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://mc.yandex.ru https://yandex.st https://yastatic.net https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob: https://mc.yandex.ru https://www.google-analytics.com https://www.google.com; connect-src 'self' https://mc.yandex.ru https://mc.yandex.com https://mc.yandex.md https://www.google-analytics.com https://analytics.google.com https://www.google.com; frame-src 'self' https://mc.yandex.ru https://mc.yandex.md; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;"
   );
 
   return response;

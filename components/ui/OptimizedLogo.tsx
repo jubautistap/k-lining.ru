@@ -1,7 +1,7 @@
 'use client';
 
+import React, { useState } from 'react';
 import Image from 'next/image';
-import { useState } from 'react';
 
 interface OptimizedLogoProps {
   className?: string;
@@ -38,6 +38,7 @@ export default function OptimizedLogo({
       quality={90}
       onError={() => setImageError(true)}
       sizes="(max-width: 768px) 24px, 32px"
+      unoptimized={false}
     />
   );
 }
