@@ -45,6 +45,25 @@ img {
   src: url('/_next/static/media/inter-semibold.woff2') format('woff2');
 }
 
+/* Градиентный текст */
+.text-gradient {
+  background: linear-gradient(135deg, #000000 0%, #1e40af 50%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 /* Компоненты */
 .btn-primary {
   @apply bg-primary-600 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 shadow-lg;

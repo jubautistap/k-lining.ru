@@ -25,7 +25,19 @@ export default function HeroSection() {
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight"
               >
                 Профессиональная{' '}
-                <span className="text-gradient">уборка</span>{' '}
+                <motion.span 
+                  className="text-gradient"
+                  animate={{ 
+                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                  }}
+                  transition={{ 
+                    duration: 3, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                  }}
+                >
+                  уборка
+                </motion.span>{' '}
                 в Москве
               </motion.h1>
               
