@@ -71,7 +71,7 @@ export default function HeroSection() {
                 
                 {/* Fallback изображение для SEO */}
                 <img 
-                  src="/og-image-new.webp" 
+                  src="/og-image.webp" 
                   alt="Профессиональная уборка в Москве - K-lining"
                   className="absolute inset-0 w-full h-full object-cover opacity-0"
                   loading="eager"

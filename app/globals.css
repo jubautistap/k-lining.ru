@@ -101,7 +101,7 @@ img {
 
 /* Hero Visual стили */
 .hero-visual {
-  background-image: url('/og-image-new.webp');
+  background-image: url('/og-image.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
