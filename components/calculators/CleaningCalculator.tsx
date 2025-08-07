@@ -16,7 +16,10 @@ import {
   Moon,
   AlertTriangle,
   Phone,
-  ArrowRight
+  ArrowRight,
+  DollarSign,
+  Target,
+  Scale
 } from 'lucide-react';
 import { useAmoCRM } from '../providers/AmoCRMProvider';
 
@@ -162,7 +165,6 @@ export default function CleaningCalculator() {
     // Базовая цена без спецрежимов
     let baseTotal = basePrice + additionalPrice;
     
-    // Минимальный заказ 3500 руб (как у конкурента)
     if (baseTotal < 3500) {
       baseTotal = 3500;
     }
@@ -215,8 +217,8 @@ export default function CleaningCalculator() {
             className="bg-white rounded-2xl shadow-lg p-6"
           >
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Building className="w-5 h-5 text-blue-600" />
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                <Building className="w-5 h-5 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Тип помещения</h3>
             </div>
@@ -233,13 +235,17 @@ export default function CleaningCalculator() {
                   onClick={() => setPropertyType(type.id as any)}
                   className={`p-4 rounded-xl border-2 transition-all duration-200 hover:shadow-md ${
                     propertyType === type.id
-                      ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-md'
+                      ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-blue-100 text-blue-700 shadow-md'
                       : 'border-gray-200 hover:border-blue-300'
                   }`}
                 >
-                  <type.icon className={`w-6 h-6 mx-auto mb-2 ${
-                    propertyType === type.id ? 'text-blue-600' : 'text-gray-600'
-                  }`} />
+                  <div className={`w-6 h-6 mx-auto mb-2 rounded-lg flex items-center justify-center ${
+                    propertyType === type.id 
+                      ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white' 
+                      : 'bg-gray-100 text-gray-600'
+                  }`}>
+                    <type.icon className="w-4 h-4" />
+                  </div>
                   <span className="text-sm font-medium block text-center">{type.name}</span>
                 </button>
               ))}
@@ -254,8 +260,8 @@ export default function CleaningCalculator() {
             className="bg-white rounded-2xl shadow-lg p-6"
           >
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <Calculator className="w-5 h-5 text-green-600" />
+              <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                <Calculator className="w-5 h-5 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Площадь помещения</h3>
             </div>
@@ -314,8 +320,8 @@ export default function CleaningCalculator() {
             className="bg-white rounded-2xl shadow-lg p-6"
           >
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-purple-600" />
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Тип уборки</h3>
             </div>
@@ -357,8 +363,8 @@ export default function CleaningCalculator() {
             className="bg-white rounded-2xl shadow-lg p-6"
           >
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                <Zap className="w-5 h-5 text-orange-600" />
+              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+                <Zap className="w-5 h-5 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Дополнительные услуги</h3>
             </div>
@@ -370,13 +376,19 @@ export default function CleaningCalculator() {
                   onClick={() => handleServiceToggle(service.id)}
                   className={`p-3 rounded-xl border-2 transition-all duration-200 text-left hover:shadow-md ${
                     additionalServices.includes(service.id)
-                      ? 'border-orange-500 bg-orange-50 text-orange-700'
+                      ? 'border-orange-500 bg-gradient-to-br from-orange-50 to-orange-100 text-orange-700'
                       : 'border-gray-200 hover:border-orange-300'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <service.icon className="w-4 h-4" />
+                      <div className={`w-4 h-4 rounded flex items-center justify-center ${
+                        additionalServices.includes(service.id)
+                          ? 'bg-gradient-to-br from-orange-500 to-orange-600 text-white'
+                          : 'bg-gray-100 text-gray-600'
+                      }`}>
+                        <service.icon className="w-3 h-3" />
+                      </div>
                       <span className="text-sm font-medium">{service.name}</span>
                     </div>
                     <span className="text-sm font-bold">{service.price} ₽</span>
@@ -449,7 +461,7 @@ export default function CleaningCalculator() {
                   <div className="text-sm opacity-90">
                     Время работы: {result.duration}
                   </div>
-                  {result.totalPrice === 6000 && (
+                  {result.totalPrice === 3500 && (
                     <div className="text-xs opacity-90 mt-1">
                       * Минимальная стоимость заказа
                     </div>
@@ -496,6 +508,66 @@ export default function CleaningCalculator() {
               </div>
             )}
           </div>
+        </motion.div>
+      </div>
+
+      {/* Новые секции с иконками */}
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        {/* Реалистичный расчет */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="bg-white rounded-2xl shadow-lg p-6 text-center"
+        >
+          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Target className="w-6 h-6 text-white" />
+          </div>
+          <h4 className="text-lg font-semibold text-gray-900 mb-2">Реалистичный расчет</h4>
+          <p className="text-sm text-gray-600">Учитываем сложность работ</p>
+        </motion.div>
+
+        {/* Прозрачные цены */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          className="bg-white rounded-2xl shadow-lg p-6 text-center"
+        >
+          <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <DollarSign className="w-6 h-6 text-white" />
+          </div>
+          <h4 className="text-lg font-semibold text-gray-900 mb-2">Прозрачные цены</h4>
+          <p className="text-sm text-gray-600">Никаких скрытых доплат</p>
+        </motion.div>
+
+        {/* Гибкие площади */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          className="bg-white rounded-2xl shadow-lg p-6 text-center"
+        >
+          <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Scale className="w-6 h-6 text-white" />
+          </div>
+          <h4 className="text-lg font-semibold text-gray-900 mb-2">Гибкие площади</h4>
+          <p className="text-sm text-gray-600">До 5,000 м² включительно</p>
+        </motion.div>
+
+        {/* Быстрый расчет */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9 }}
+          className="bg-white rounded-2xl shadow-lg p-6 text-center"
+        >
+          <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <Zap className="w-6 h-6 text-white" />
+          </div>
+          <h4 className="text-lg font-semibold text-gray-900 mb-2">Быстрый расчет</h4>
+          <p className="text-sm text-gray-600">Мгновенный результат</p>
         </motion.div>
       </div>
     </div>
