@@ -84,10 +84,7 @@ export default function CleaningCalculator() {
 
   // Специальные режимы
   const specialModesList = useMemo(() => [
-    { id: 'express', name: 'Экспресс уборка', description: 'Быстрая уборка за 2-3 часа', multiplier: 1.3, icon: '⚡' },
-    { id: 'night', name: 'Ночная уборка', description: 'Работа в ночное время', multiplier: 1.5, icon: '🌙' },
-    { id: 'weekend', name: 'Выходной день', description: 'Уборка в выходные', multiplier: 1.2, icon: '📅' },
-    { id: 'urgent', name: 'Срочный выезд', description: 'Выезд в течение часа', multiplier: 1.4, icon: '🚨' }
+    // Убираем специальные режимы - у конкурентов их нет
   ], []);
 
   // Расчет времени работы
@@ -162,21 +159,15 @@ export default function CleaningCalculator() {
       return sum + (service?.price || 0);
     }, 0);
 
+    // Базовая цена без спецрежимов
     let baseTotal = basePrice + additionalPrice;
     
-    if (baseTotal < 6000) {
-      baseTotal = 6000;
+    // Минимальный заказ 3500 руб (как у конкурента)
+    if (baseTotal < 3500) {
+      baseTotal = 3500;
     }
 
-    let specialModeMultiplier = 1;
-    specialModes.forEach(modeId => {
-      const mode = specialModesList.find(m => m.id === modeId);
-      if (mode) {
-        specialModeMultiplier *= mode.multiplier;
-      }
-    });
-
-    const totalPrice = baseTotal * specialModeMultiplier;
+    const totalPrice = baseTotal;
     const duration = calculateDuration(area, cleaningType, propertyType);
 
     setResult({
@@ -191,7 +182,7 @@ export default function CleaningCalculator() {
         ).filter(Boolean)
       ]
     });
-  }, [propertyType, area, cleaningType, additionalServices, specialModes, additionalServicesList, specialModesList, basePrices, serviceNames]);
+  }, [propertyType, area, cleaningType, additionalServices, additionalServicesList, basePrices, serviceNames]);
 
   const handleServiceToggle = (serviceId: string) => {
     setAdditionalServices(prev => 
@@ -396,48 +387,7 @@ export default function CleaningCalculator() {
           </motion.div>
 
           {/* Специальные режимы */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="bg-white rounded-2xl shadow-lg p-6"
-          >
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-                <AlertTriangle className="w-5 h-5 text-red-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900">Специальные режимы</h3>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {specialModesList.map((mode) => (
-                <button
-                  key={mode.id}
-                  onClick={() => handleSpecialModeToggle(mode.id)}
-                  className={`p-4 rounded-xl border-2 transition-all duration-200 text-left hover:shadow-md ${
-                    specialModes.includes(mode.id)
-                      ? 'border-red-500 bg-red-50 text-red-700'
-                      : 'border-gray-200 hover:border-red-300'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <span className="text-lg">{mode.icon}</span>
-                      <div>
-                        <div className="font-medium">{mode.name}</div>
-                        <div className="text-xs opacity-75">{mode.description}</div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm font-bold text-red-600">
-                        +{Math.round((mode.multiplier - 1) * 100)}%
-                      </div>
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </motion.div>
+          {/* Убрали специальные режимы - у конкурентов их нет */}
         </div>
 
         {/* Правая колонка - Результат */}
@@ -528,7 +478,7 @@ export default function CleaningCalculator() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 bg-white rounded-full"></div>
-                    <span>Минимальный заказ: 6,000 ₽</span>
+                    <span>Минимальный заказ: 3,500 ₽</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 bg-white rounded-full"></div>

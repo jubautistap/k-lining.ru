@@ -204,11 +204,11 @@ export default function AdminCalculator() {
 
   // Дополнительные услуги
   const additionalServicesList = useMemo(() => [
-    { id: 'windows', name: 'Мытье окон', price: 600, materials: 50 },
+    { id: 'windows', name: 'Мытье окон', price: 1500, materials: 50 },
     { id: 'sofa', name: 'Химчистка дивана', price: 3000, materials: 800 },
-    { id: 'carpet', name: 'Химчистка ковра', price: 1800, materials: 400 },
-    { id: 'balcony', name: 'Уборка балкона', price: 1200, materials: 100 },
-    { id: 'fridge', name: 'Мытье холодильника', price: 1000, materials: 150 },
+    { id: 'carpet', name: 'Химчистка ковра', price: 2500, materials: 400 },
+    { id: 'balcony', name: 'Уборка балкона', price: 1000, materials: 100 },
+    { id: 'fridge', name: 'Мытье холодильника', price: 800, materials: 150 },
     { id: 'wardrobe', name: 'Уборка шкафов', price: 1500, materials: 50 },
     { id: 'mattress', name: 'Химчистка матраса', price: 2500, materials: 600 },
     { id: 'curtains', name: 'Химчистка штор', price: 2000, materials: 500 },
@@ -216,7 +216,7 @@ export default function AdminCalculator() {
     { id: 'kitchen', name: 'Уборка кухни', price: 2000, materials: 200 },
     { id: 'bathroom', name: 'Уборка санузлов', price: 1500, materials: 150 },
     { id: 'pet_hair', name: 'Уборка шерсти животных', price: 1000, materials: 100 },
-    { id: 'disinfection', name: 'Дезинфекция', price: 2500, materials: 600 }
+    { id: 'disinfection', name: 'Дезинфекция', price: 3000, materials: 600 }
   ], []);
 
   // Коммерческие услуги
@@ -244,18 +244,32 @@ export default function AdminCalculator() {
   // Специальные режимы (процентные надбавки)
   const specialModesList = useMemo(() => [
     { 
-      id: 'night', 
-      name: 'Ночной режим', 
-      description: 'Работа с 22:00 до 6:00',
+      id: 'express', 
+      name: 'Экспресс уборка', 
+      description: 'Быстрая уборка за 2-3 часа',
       multiplier: 1.3, // +30%
+      icon: '⚡'
+    },
+    { 
+      id: 'night', 
+      name: 'Ночная уборка', 
+      description: 'Работа в ночное время',
+      multiplier: 1.5, // +50%
       icon: '🌙'
     },
     { 
-      id: 'express', 
-      name: 'Экстренный režим', 
-      description: 'Выезд в течение 1-2 часов',
-      multiplier: 1.5, // +50%
-      icon: '⚡'
+      id: 'weekend', 
+      name: 'Выходной день', 
+      description: 'Уборка в выходные',
+      multiplier: 1.2, // +20%
+      icon: '📅'
+    },
+    { 
+      id: 'urgent', 
+      name: 'Срочный выезд', 
+      description: 'Выезд в течение часа',
+      multiplier: 1.4, // +40%
+      icon: '🚨'
     }
   ], []);
 
@@ -434,9 +448,9 @@ export default function AdminCalculator() {
     // Базовая цена без спецрежимов
     let baseTotal = basePrice + additionalPrice + commercialPrice;
     
-    // Минимальный заказ 6000 руб
-    if (baseTotal < 6000) {
-      baseTotal = 6000;
+    // Минимальный заказ 3500 руб (как у конкурента)
+    if (baseTotal < 3500) {
+      baseTotal = 3500;
     }
 
     // Применяем специальные режимы (процентные надбавки)
