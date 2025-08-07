@@ -14,6 +14,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #ffffff;
+  overflow-x: hidden; /* фикс горизонтального скролла на iOS */
 }
 
 /* Предотвращение CLS для изображений */

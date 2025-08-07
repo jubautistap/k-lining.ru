@@ -130,7 +130,7 @@ export default function PricingSection() {
   ];
 
   return (
-    <section className="section-padding bg-gradient-to-br from-gray-50 to-white">
+    <section className="section-padding bg-gradient-to-br from-gray-50 to-white overflow-x-hidden">
       <div className="container-custom">
         {/* Header */}
         <motion.div

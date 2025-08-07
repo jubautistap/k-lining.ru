@@ -5,7 +5,7 @@ import OrderButton from '@/components/ui/OrderButton';
 
 export default function HeroSection() {
   return (
-    <section className="section-padding bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+    <section className="section-padding bg-gradient-to-br from-primary-50 via-white to-secondary-50 overflow-x-hidden">
       <div className="container-custom">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
@@ -62,7 +62,7 @@ export default function HeroSection() {
           </div>
 
           {/* Visual - только CSS градиент для LCP */}
-          <div className="relative">
+          <div className="relative overflow-hidden">
             {/* Main Visual - только CSS градиент */}
             <div className="relative bg-gradient-to-br from-primary-100 to-secondary-100 rounded-2xl p-4 shadow-2xl">
               <div className="aspect-[3/2] bg-gradient-to-br from-primary-200 to-secondary-200 rounded-xl overflow-hidden relative">

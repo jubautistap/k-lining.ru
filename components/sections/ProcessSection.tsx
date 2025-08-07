@@ -45,7 +45,7 @@ export default function ProcessSection() {
   ];
 
   return (
-    <section className="section-padding bg-white">
+    <section className="section-padding bg-white overflow-x-hidden">
       <div className="container-custom">
         {/* Header */}
         <motion.div
