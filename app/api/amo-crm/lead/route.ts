@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString()
     };
 
-    // Добавляем заявку в админку через API
+    // Добавляем заявку в админку через API (единообразный ввод, Telegram отправит админ-роут)
     try {
       await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/admin/leads`, {
         method: 'POST',
@@ -34,25 +34,6 @@ export async function POST(request: NextRequest) {
       });
     } catch (error) {
       console.error('Error adding lead to admin:', error);
-    }
-
-    // Отправляем уведомление в Telegram (если настроено)
-    if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
-      try {
-        const message = `🆕 Новая заявка!\n\n👤 ${newLead.name}\n📞 ${newLead.phone}\n${newLead.email ? `📧 ${newLead.email}\n` : ''}${newLead.service ? `🔧 ${newLead.service}\n` : ''}${newLead.message ? `💬 ${newLead.message}\n` : ''}\n⏰ ${new Date().toLocaleString('ru-RU')}`;
-        
-        await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: process.env.TELEGRAM_CHAT_ID,
-            text: message,
-            parse_mode: 'HTML'
-          })
-        });
-      } catch (error) {
-        console.error('Telegram notification error:', error);
-      }
     }
 
     // Здесь будет интеграция с amoCRM API

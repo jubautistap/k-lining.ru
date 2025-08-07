@@ -5,47 +5,36 @@ const contactSchema = z.object({
   name: z.string().min(2, 'Имя должно содержать минимум 2 символа'),
   phone: z.string().min(10, 'Введите корректный номер телефона'),
   email: z.string().email('Введите корректный email').optional().or(z.literal('')),
-  message: z.string().min(10, 'Сообщение должно содержать минимум 10 символов'),
+  message: z.string().min(5, 'Сообщение должно содержать минимум 5 символов').optional(),
+  service: z.string().optional(),
 });
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
-    // Валидация данных
-    const validatedData = contactSchema.parse(body);
-    
-    // Здесь можно добавить логику отправки в AmoCRM или сохранения в БД
-    console.log('Получена заявка:', validatedData);
-    
-    // Имитация обработки
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Заявка успешно отправлена' 
+    const { name, phone, email, message, service } = contactSchema.parse(body);
+
+    // Проксируем в админский endpoint для единой логики (включая Telegram)
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/admin/leads`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, phone, email, message, service })
     });
-    
+
+    if (!response.ok) {
+      const data = await response.json().catch(() => ({}));
+      return NextResponse.json({ success: false, message: data.error || 'Не удалось создать заявку' }, { status: 400 });
+    }
+
+    const data = await response.json();
+    return NextResponse.json({ success: true, lead: data.lead });
   } catch (error) {
-    console.error('Ошибка обработки заявки:', error);
-    
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { 
-          success: false, 
-          message: 'Ошибка валидации данных',
-          errors: error.errors 
-        },
+        { success: false, message: 'Ошибка валидации данных', errors: error.errors },
         { status: 400 }
       );
     }
-    
-    return NextResponse.json(
-      { 
-        success: false, 
-        message: 'Внутренняя ошибка сервера' 
-      },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: 'Внутренняя ошибка сервера' }, { status: 500 });
   }
-} 
+}

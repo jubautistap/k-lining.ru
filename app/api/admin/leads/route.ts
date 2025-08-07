@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
       ];
     }
 
-    const [leads, total] = await Promise.all([
+    const [rows, total] = await Promise.all([
       prisma.lead.findMany({
         where,
         orderBy: { created_at: 'desc' },
@@ -55,6 +55,20 @@ export async function GET(request: NextRequest) {
       }),
       prisma.lead.count({ where })
     ]);
+
+    // Нормализуем под UI (camelCase и lowercase статус)
+    const leads = rows.map((l: any) => ({
+      id: l.id,
+      name: l.name ?? '',
+      phone: l.phone,
+      email: l.email ?? '',
+      service: l.service ?? '',
+      message: l.message ?? '',
+      status: String(l.status).toLowerCase(),
+      createdAt: l.created_at,
+      contactedAt: l.updated_at,
+      assigned_to: l.assigned_to ?? null,
+    }));
 
     return NextResponse.json({
       leads,
