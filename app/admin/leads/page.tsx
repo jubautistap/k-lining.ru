@@ -40,7 +40,10 @@ export default function AdminLeadsPage() {
   const loadLeads = React.useCallback(async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('/api/admin/leads');
+      const token = localStorage.getItem('accessToken');
+      const response = await fetch('/api/admin/leads', {
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+      });
       if (response.ok) {
         const data = await response.json();
         setLeads(data.leads);
@@ -81,9 +84,13 @@ export default function AdminLeadsPage() {
 
   const updateLeadStatus = async (leadId: string, status: Lead['status']) => {
     try {
+      const token = localStorage.getItem('accessToken');
       const response = await fetch(`/api/admin/leads/${leadId}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({ status })
       });
 
@@ -99,8 +106,10 @@ export default function AdminLeadsPage() {
     if (!confirm('Удалить эту заявку?')) return;
 
     try {
+      const token = localStorage.getItem('accessToken');
       const response = await fetch(`/api/admin/leads/${leadId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
       });
 
       if (response.ok) {

@@ -84,10 +84,6 @@ const nextConfig = {
             value: 'strict-origin-when-cross-origin',
           },
           {
-            key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://mc.yandex.ru https://yandex.st https://yastatic.net https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob: https://mc.yandex.ru https://www.google-analytics.com; connect-src 'self' https://mc.yandex.ru https://mc.yandex.com https://mc.yandex.md https://www.google-analytics.com https://analytics.google.com; frame-src 'self' https://mc.yandex.ru https://mc.yandex.md; object-src 'none'; base-uri 'self'; form-action 'self';",
-          },
-          {
             key: 'Cache-Control',
             value: 'public, max-age=3600, s-maxage=86400',
           },

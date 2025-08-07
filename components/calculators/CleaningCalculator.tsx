@@ -153,8 +153,8 @@ export default function CleaningCalculator() {
     // Базовая цена без спецрежимов
     let baseTotal = basePrice + additionalPrice;
     
-    if (baseTotal < 3500) {
-      baseTotal = 3500;
+    if (baseTotal < 6000) {
+      baseTotal = 6000;
     }
 
     const totalPrice = baseTotal;
@@ -441,7 +441,7 @@ export default function CleaningCalculator() {
                   <div className="text-sm opacity-90">
                     Время работы: {result.duration}
                   </div>
-                  {result.totalPrice === 3500 && (
+                  {result.totalPrice === 6000 && (
                     <div className="text-xs opacity-90 mt-1">
                       * Минимальная стоимость заказа
                     </div>
@@ -470,7 +470,7 @@ export default function CleaningCalculator() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 bg-white rounded-full"></div>
-                    <span>Минимальный заказ: 3,500 ₽</span>
+                    <span>Минимальный заказ: 6,000 ₽</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 bg-white rounded-full"></div>

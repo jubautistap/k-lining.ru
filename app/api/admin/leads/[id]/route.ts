@@ -1,35 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { leads } from '../data';
+import { requireManager } from '@/lib/auth/middleware';
+import { prisma } from '@/lib/prisma';
 
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
+    const auth = await requireManager(request);
+    if (auth) return auth;
     const body = await request.json();
     const { status } = body;
 
-    const leadIndex = leads.findIndex(lead => lead.id === params.id);
-    
-    if (leadIndex === -1) {
-      return NextResponse.json(
-        { error: 'Заявка не найдена' },
-        { status: 404 }
-      );
-    }
-
-    // Обновляем статус
-    leads[leadIndex].status = status;
-    
-    // Если статус "contacted", добавляем время контакта
-    if (status === 'contacted' && !leads[leadIndex].contactedAt) {
-      leads[leadIndex].contactedAt = new Date().toISOString();
-    }
-
-    return NextResponse.json({ 
-      success: true, 
-      lead: leads[leadIndex] 
+    const updated = await prisma.lead.update({
+      where: { id: params.id },
+      data: { status },
     });
+
+    return NextResponse.json({ success: true, lead: updated });
 
   } catch (error) {
     console.error('Error updating lead:', error);
@@ -45,23 +33,10 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const leadIndex = leads.findIndex(lead => lead.id === params.id);
-    
-    if (leadIndex === -1) {
-      return NextResponse.json(
-        { error: 'Заявка не найдена' },
-        { status: 404 }
-      );
-    }
-
-    // Удаляем заявку
-    const deletedLead = leads.splice(leadIndex, 1)[0];
-
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Заявка удалена',
-      lead: deletedLead 
-    });
+    const auth = await requireManager(request);
+    if (auth) return auth;
+    const deleted = await prisma.lead.delete({ where: { id: params.id } });
+    return NextResponse.json({ success: true, message: 'Заявка удалена', lead: deleted });
 
   } catch (error) {
     console.error('Error deleting lead:', error);

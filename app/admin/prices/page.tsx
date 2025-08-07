@@ -42,7 +42,10 @@ export default function AdminPricesPage() {
 
   const loadPrices = async () => {
     try {
-      const response = await fetch('/api/admin/prices');
+      const token = localStorage.getItem('accessToken');
+      const response = await fetch('/api/admin/prices', {
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+      });
       if (response.ok) {
         const data = await response.json();
         setPrices(data.prices);
@@ -54,9 +57,13 @@ export default function AdminPricesPage() {
 
   const handleSave = async (price: PriceItem) => {
     try {
+      const token = localStorage.getItem('accessToken');
       const response = await fetch('/api/admin/prices', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify(price)
       });
 
@@ -74,8 +81,10 @@ export default function AdminPricesPage() {
     if (!confirm('Удалить эту услугу?')) return;
 
     try {
+      const token = localStorage.getItem('accessToken');
       const response = await fetch(`/api/admin/prices/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
       });
 
       if (response.ok) {
@@ -88,9 +97,13 @@ export default function AdminPricesPage() {
 
   const handleAdd = async () => {
     try {
+      const token = localStorage.getItem('accessToken');
       const response = await fetch('/api/admin/prices', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify(newPrice)
       });
 

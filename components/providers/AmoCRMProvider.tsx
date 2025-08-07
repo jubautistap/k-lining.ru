@@ -34,12 +34,16 @@ export default function AmoCRMProvider({ children }: { children: React.ReactNode
     // Проверяем что мы на клиенте (избегаем hydration mismatch)
     if (typeof window === 'undefined') return;
     
-    // Показываем модальное окно через 5 секунд после загрузки
-    const timer = setTimeout(() => {
-      setIsModalOpen(true);
-    }, 5000);
+    // Показываем модальное окно через 5 секунд, один раз за сессию
+    if (!sessionStorage.getItem('amocrm_modal_shown')) {
+      const timer = setTimeout(() => {
+        setIsModalOpen(true);
+        sessionStorage.setItem('amocrm_modal_shown', '1');
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
 
-    return () => clearTimeout(timer);
+    return () => {};
   }, []);
 
   const openModal = () => setIsModalOpen(true);

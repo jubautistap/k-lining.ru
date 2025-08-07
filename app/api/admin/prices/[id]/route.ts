@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireManager } from '@/lib/auth/middleware';
 
 // Временное хранилище цен (в реальном проекте - база данных)
 const prices = [
@@ -49,6 +50,8 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
+    const auth = await requireManager(request);
+    if (auth) return auth;
     const { id } = params;
 
     const priceIndex = prices.findIndex(p => p.id === id);

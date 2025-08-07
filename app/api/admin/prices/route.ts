@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireManager } from '@/lib/auth/middleware';
 import { v4 as uuidv4 } from 'uuid';
 
 // Временное хранилище цен (в реальном проекте - база данных)
@@ -45,12 +46,16 @@ const prices = [
   }
 ];
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const auth = await requireManager(request);
+  if (auth) return auth;
   return NextResponse.json({ prices });
 }
 
 export async function POST(request: NextRequest) {
   try {
+    const auth = await requireManager(request);
+    if (auth) return auth;
     const body = await request.json();
     
     // Валидация
@@ -88,6 +93,8 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
+    const auth = await requireManager(request);
+    if (auth) return auth;
     const body = await request.json();
     
     if (!body.id) {

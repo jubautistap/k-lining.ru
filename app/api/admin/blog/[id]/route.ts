@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireEditor } from '@/lib/auth/middleware';
 
 // Временное хранилище статей (в реальном проекте - база данных)
 const blogPosts = [
@@ -35,6 +36,8 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
+    const auth = await requireEditor(request);
+    if (auth) return auth;
     const { id } = params;
 
     const postIndex = blogPosts.findIndex(p => p.id === id);

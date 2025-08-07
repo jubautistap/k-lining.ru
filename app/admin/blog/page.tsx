@@ -51,7 +51,10 @@ export default function AdminBlogPage() {
 
   const loadPosts = async () => {
     try {
-      const response = await fetch('/api/admin/blog');
+      const token = localStorage.getItem('accessToken');
+      const response = await fetch('/api/admin/blog', {
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+      });
       if (response.ok) {
         const data = await response.json();
         setPosts(data.posts);
@@ -63,9 +66,13 @@ export default function AdminBlogPage() {
 
   const handleSave = async (post: BlogPost) => {
     try {
+      const token = localStorage.getItem('accessToken');
       const response = await fetch('/api/admin/blog', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify(post)
       });
 
@@ -83,8 +90,10 @@ export default function AdminBlogPage() {
     if (!confirm('Удалить эту статью?')) return;
 
     try {
+      const token = localStorage.getItem('accessToken');
       const response = await fetch(`/api/admin/blog/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
       });
 
       if (response.ok) {
@@ -97,9 +106,13 @@ export default function AdminBlogPage() {
 
   const handleAdd = async () => {
     try {
+      const token = localStorage.getItem('accessToken');
       const response = await fetch('/api/admin/blog', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify(newPost)
       });
 

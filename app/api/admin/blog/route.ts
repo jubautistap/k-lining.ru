@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireEditor } from '@/lib/auth/middleware';
 import { v4 as uuidv4 } from 'uuid';
 
 // Временное хранилище статей (в реальном проекте - база данных)
@@ -31,12 +32,16 @@ const blogPosts = [
   }
 ];
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const auth = await requireEditor(request);
+  if (auth) return auth;
   return NextResponse.json({ posts: blogPosts });
 }
 
 export async function POST(request: NextRequest) {
   try {
+    const auth = await requireEditor(request);
+    if (auth) return auth;
     const body = await request.json();
     
     // Валидация
@@ -79,6 +84,8 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
+    const auth = await requireEditor(request);
+    if (auth) return auth;
     const body = await request.json();
     
     if (!body.id) {

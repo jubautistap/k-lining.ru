@@ -448,9 +448,9 @@ export default function AdminCalculator() {
     // Базовая цена без спецрежимов
     let baseTotal = basePrice + additionalPrice + commercialPrice;
     
-    // Минимальный заказ 3500 руб (как у конкурента)
-    if (baseTotal < 3500) {
-      baseTotal = 3500;
+    // Минимальный заказ 6000 руб
+    if (baseTotal < 6000) {
+      baseTotal = 6000;
     }
 
     // Применяем специальные режимы (процентные надбавки)
