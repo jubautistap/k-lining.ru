@@ -235,6 +235,21 @@ export default function AdminPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Быстрые ссылки наверху */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+          <a href="/admin/leads" className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:shadow">
+            Заявки
+          </a>
+          <a href="/admin/calculator" className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:shadow">
+            Калькулятор
+          </a>
+          <a href="/admin/analytics" className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:shadow">
+            Аналитика
+          </a>
+          <a href="/admin/settings" className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:shadow">
+            Настройки
+          </a>
+        </div>
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-xl shadow-sm p-6">

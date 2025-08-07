@@ -66,7 +66,14 @@ export default function AdminLayoutWrapper({
 
   // Если не авторизован и не на странице логина, не показываем контент
   if (!isAuthenticated && pathname !== '/admin/login') {
-    return null;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Перенаправление на страницу входа...</p>
+        </div>
+      </div>
+    );
   }
 
   // Если на странице логина, показываем контент без AdminLayout
