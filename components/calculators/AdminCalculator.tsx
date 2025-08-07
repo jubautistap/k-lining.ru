@@ -129,6 +129,42 @@ export default function AdminCalculator() {
   ]);
   const [selectedEmployee, setSelectedEmployee] = useState<string>('1');
   const [result, setResult] = useState<CalculationResult | null>(null);
+  // Оформление заказа (PRO)
+  const [orderLeadId, setOrderLeadId] = useState<string>("");
+  const [orderClientName, setOrderClientName] = useState<string>("");
+  const [orderClientPhone, setOrderClientPhone] = useState<string>("");
+  const [orderManagerNote, setOrderManagerNote] = useState<string>("");
+  const authorizedFetch = async (input: RequestInfo | URL, init: RequestInit = {}) => {
+    let token: string | null = null;
+    if (typeof window !== 'undefined') {
+      token = localStorage.getItem('accessToken');
+    }
+    const make = async (bearer?: string) => {
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+        ...(init.headers || {}),
+        ...(bearer ? { Authorization: `Bearer ${bearer}` } : {}),
+      };
+      return fetch(input, { ...init, headers, credentials: init.credentials ?? 'include' });
+    };
+    let res = await make(token || undefined);
+    if (res.status === 401) {
+      try {
+        const refresh = await fetch('/api/auth/refresh', { method: 'POST', credentials: 'include' });
+        if (refresh.ok) {
+          const data = await refresh.json();
+          token = data.accessToken as string;
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('accessToken', token);
+          }
+          res = await make(token || undefined);
+        }
+      } catch {
+        // ignore
+      }
+    }
+    return res;
+  };
   const [presets, setPresets] = useState<Preset[]>([
     {
       id: '1',
@@ -1218,6 +1254,112 @@ export default function AdminCalculator() {
                     <span className="text-gray-600">Цена за услугу:</span>
                     <span className="font-medium">{result.pricing.pricePerService.toFixed(0)} ₽</span>
                   </div>
+                </div>
+              </div>
+
+              {/* Оформление заказа (PRO) */}
+              <div className="bg-white rounded-xl p-6 border border-gray-200">
+                <h4 className="text-lg font-semibold text-gray-900 mb-4">Оформление заказа</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                  <input
+                    type="text"
+                    placeholder="ID лида (опционально)"
+                    value={orderLeadId}
+                    onChange={(e) => setOrderLeadId(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Имя клиента"
+                    value={orderClientName}
+                    onChange={(e) => setOrderClientName(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  />
+                  <input
+                    type="tel"
+                    placeholder="Телефон"
+                    value={orderClientPhone}
+                    onChange={(e) => setOrderClientPhone(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Тип услуги (авто)"
+                    value={serviceNames[cleaningType]}
+                    readOnly
+                    className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50"
+                  />
+                </div>
+                <textarea
+                  placeholder="Заметка менеджера"
+                  value={orderManagerNote}
+                  onChange={(e) => setOrderManagerNote(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 mb-3"
+                  rows={3}
+                />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <button
+                    onClick={async () => {
+                      if (!result) return;
+                      try {
+                        const res = await authorizedFetch('/api/admin/orders', {
+                          method: 'POST',
+                          body: JSON.stringify({
+                            leadId: orderLeadId || undefined,
+                            service_type: serviceNames[cleaningType],
+                            area,
+                            price: result.totalPrice,
+                            notes: orderManagerNote,
+                          }),
+                        });
+                        const data = await res.json().catch(() => ({}));
+                        if (res.ok) {
+                          alert('Заказ оформлен. Лид переведён в WON (если указан).');
+                          setOrderLeadId('');
+                          setOrderManagerNote('');
+                        } else {
+                          alert(`Ошибка: ${data.error || res.status}`);
+                        }
+                      } catch (e) {
+                        console.error(e);
+                        alert('Ошибка сети при оформлении заказа');
+                      }
+                    }}
+                    className="btn-primary"
+                  >
+                    Закрыть на {result.totalPrice.toLocaleString()} ₽
+                  </button>
+
+                  <button
+                    onClick={async () => {
+                      try {
+                        const res = await fetch('/api/admin/leads', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            name: orderClientName || 'Клиент',
+                            phone: orderClientPhone || '+7',
+                            email: '',
+                            service: serviceNames[cleaningType],
+                            message: orderManagerNote,
+                          }),
+                        });
+                        const data = await res.json();
+                        if (res.ok) {
+                          setOrderLeadId(data.lead?.id || '');
+                          alert('Лид создан и отправлен в Telegram');
+                        } else {
+                          alert(`Ошибка создания лида: ${data.error || res.status}`);
+                        }
+                      } catch (e) {
+                        console.error(e);
+                        alert('Ошибка сети при создании лида');
+                      }
+                    }}
+                    className="btn-secondary"
+                  >
+                    Создать лид из расчёта
+                  </button>
                 </div>
               </div>
 
