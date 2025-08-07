@@ -27,13 +27,20 @@ export async function POST(request: NextRequest) {
 
     // Добавляем заявку в админку через API (единообразный ввод, Telegram отправит админ-роут)
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://k-lining.ru'}/api/admin/leads`, {
+      const origin = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || new URL(request.url).origin;
+      const res = await fetch(`${origin}/api/admin/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, phone, email, service, message, utm, referrer, page })
       });
+      if (!res.ok) {
+        const errTxt = await res.text().catch(() => '');
+        console.error('Admin leads POST failed:', res.status, errTxt);
+        return NextResponse.json({ error: 'Failed to create lead in admin', details: errTxt }, { status: 502 });
+      }
     } catch (error) {
       console.error('Error adding lead to admin:', error);
+      return NextResponse.json({ error: 'Upstream error while creating lead' }, { status: 502 });
     }
 
     // Здесь будет интеграция с amoCRM API
