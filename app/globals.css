@@ -101,10 +101,7 @@ img {
 
 /* Hero Visual стили */
 .hero-visual {
-  background-image: url('/og-image.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: linear-gradient(135deg, #dbeafe 0%, #bbf7d0 100%);
   width: 100%;
   height: 100%;
   border-radius: 0.75rem;
