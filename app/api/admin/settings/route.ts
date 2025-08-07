@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
 
 // Временное хранилище настроек (в реальном проекте - база данных)
 let siteSettings = {
@@ -32,7 +33,27 @@ let siteSettings = {
 };
 
 export async function GET() {
-  return NextResponse.json({ settings: siteSettings });
+  try {
+    // Читаем настройки из БД и перекрываем дефолты
+    const rows = await prisma.settings.findMany();
+    const fromDb: Record<string, string> = {};
+    for (const row of rows) {
+      fromDb[row.key] = row.value;
+    }
+
+    const merged = {
+      ...siteSettings,
+      ...fromDb,
+    } as typeof siteSettings;
+
+    // Кешируем в памяти для скорости между запросами
+    siteSettings = merged;
+
+    return NextResponse.json({ settings: merged });
+  } catch (error) {
+    console.error('Settings GET error, fallback to memory:', error);
+    return NextResponse.json({ settings: siteSettings });
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -45,8 +66,18 @@ export async function POST(request: NextRequest) {
       ...body
     };
 
-    // В реальном проекте здесь будет сохранение в базу данных
-    console.log('Settings updated:', siteSettings);
+    // Сохраняем каждую настройку по ключу в БД (upsert)
+    const entries = Object.entries(body) as Array<[string, string | number | boolean]>;
+    await Promise.all(
+      entries.map(async ([key, val]) => {
+        const value = String(val);
+        await prisma.settings.upsert({
+          where: { key },
+          create: { key, value },
+          update: { value },
+        });
+      })
+    );
 
     return NextResponse.json({ 
       success: true, 
