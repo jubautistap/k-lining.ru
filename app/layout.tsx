@@ -180,28 +180,12 @@ export default function RootLayout({
                 50% { opacity: 1; }
               }
               
-              /* Оптимизация шрифтов */
-              @font-face {
-                font-family: 'Inter';
-                font-style: normal;
-                font-weight: 400;
-                font-display: swap;
-                src: url('/_next/static/media/inter-regular.woff2') format('woff2');
-              }
-              @font-face {
-                font-family: 'Inter';
-                font-style: normal;
-                font-weight: 600;
-                font-display: swap;
-                src: url('/_next/static/media/inter-semibold.woff2') format('woff2');
-              }
+              /* Убраны кастомные @font-face: используем next/font Inter */
             `
           }}
         />
 
-        {/* Preload критических ресурсов */}
-        <link rel="preload" href="/_next/static/media/inter-regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="/_next/static/media/inter-semibold.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        {/* Убрали preload шрифтов, чтобы избежать 404 на проде */}
 
         
         {/* Убираем preload для аналитики - загружаем асинхронно */}
