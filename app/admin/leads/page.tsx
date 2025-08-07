@@ -38,14 +38,13 @@ export default function AdminLeadsPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   // Получить валидный токен: если истёк — обновить и вернуть новый
-  const getTokenOrRefresh = async (): Promise<string | null> => {
-    let token = localStorage.getItem('accessToken');
-    if (!token) return null;
-    return token;
-  };
+  const getTokenOrRefresh = React.useCallback(async (): Promise<string | null> => {
+    const token = localStorage.getItem('accessToken');
+    return token ?? null;
+  }, []);
 
   // Обёртка поверх fetch с автоповтором на 401 (обновляем токен и пробуем снова)
-  const authorizedFetch = async (input: RequestInfo | URL, init: RequestInit = {}) => {
+  const authorizedFetch = React.useCallback(async (input: RequestInfo | URL, init: RequestInit = {}) => {
     let token = await getTokenOrRefresh();
     const makeRequest = async (bearer?: string) => {
       const headers: HeadersInit = {
@@ -64,14 +63,14 @@ export default function AdminLeadsPage() {
           const data = await refreshRes.json();
           localStorage.setItem('accessToken', data.accessToken);
           token = data.accessToken;
-          res = await makeRequest(token);
+          res = await makeRequest(token || undefined);
         }
       } catch {
         // ignore, вернём оригинальный 401
       }
     }
     return res;
-  };
+  }, [getTokenOrRefresh]);
 
   const loadLeads = React.useCallback(async () => {
     setIsLoading(true);
@@ -86,7 +85,7 @@ export default function AdminLeadsPage() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [authorizedFetch]);
 
   useEffect(() => {
     loadLeads();
