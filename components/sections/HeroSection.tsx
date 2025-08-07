@@ -5,15 +5,15 @@ import OrderButton from '@/components/ui/OrderButton';
 
 export default function HeroSection() {
   return (
-    <section className="section-padding bg-gradient-to-br from-primary-50 via-white to-secondary-50 overflow-x-hidden">
+    <section className="section-padding bg-gradient-to-br from-primary-50 via-white to-secondary-50">
       <div className="container-custom">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div className="space-y-8">
             <div className="space-y-4">
-              <h1 className="hero-title text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-gray-900 leading-tight">
+              <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight break-words">
                 Профессиональная{' '}
-                <span className="text-gradient">
+                <span className="text-gradient break-words">
                   уборка
                 </span>{' '}
                 в Москве

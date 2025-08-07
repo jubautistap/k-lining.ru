@@ -24,6 +24,11 @@ img {
   display: block;
 }
 
+/* Запрет горизонтального скролла на корне в iOS (резервный дубль) */
+html {
+  overflow-x: hidden;
+}
+
 .image-container {
   position: relative;
   overflow: hidden;

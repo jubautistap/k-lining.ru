@@ -60,7 +60,7 @@ export default function Header() {
       isMounted && isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white'
     } pt-safe-top`}>
       <div className="container-custom">
-        <div className="flex items-center justify-between h-20 md:h-24 min-h-[80px]">
+        <div className="flex items-center justify-between h-20 md:h-24 min-h-[80px] overflow-hidden">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
             <OptimizedLogo 
