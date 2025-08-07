@@ -1,12 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireManager } from '@/lib/auth/middleware';
 
 export async function POST(request: NextRequest) {
   try {
-    const { botToken, chatId } = await request.json();
+    // Только менеджеры/админы
+    const auth = await requireManager(request);
+    if (auth) return auth;
+
+    let body: any = {};
+    try {
+      body = await request.json();
+    } catch {}
+
+    const botToken = body?.botToken || process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = body?.chatId || process.env.TELEGRAM_CHAT_ID;
 
     if (!botToken || !chatId) {
       return NextResponse.json(
-        { error: 'Токен бота и ID чата обязательны' },
+        { error: 'botToken и chatId обязательны (или задайте TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID в окружении)' },
         { status: 400 }
       );
     }
@@ -24,7 +35,8 @@ export async function POST(request: NextRequest) {
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
+      let errorData: any = {};
+      try { errorData = await response.json(); } catch {}
       return NextResponse.json(
         { error: `Ошибка Telegram API: ${errorData.description || 'Неизвестная ошибка'}` },
         { status: 400 }
