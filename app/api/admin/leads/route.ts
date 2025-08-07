@@ -195,35 +195,50 @@ export async function POST(request: NextRequest) {
 
     // Отправляем уведомление в Telegram (если настроено)
     try {
-      // 1) Берём из ENV
-      let botToken = process.env.TELEGRAM_BOT_TOKEN;
-      let chatId = process.env.TELEGRAM_CHAT_ID;
+      const origin = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || new URL(request.url).origin;
 
-      // 2) Если нет в ENV — пробуем из настроек админки
-      if (!botToken || !chatId) {
-        try {
-          const origin = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || new URL(request.url).origin;
-          const sRes = await fetch(`${origin}/api/admin/settings`, { cache: 'no-store' });
-          if (sRes.ok) {
-            const sData = await sRes.json();
-            botToken = botToken || sData?.settings?.telegramBotToken;
-            chatId = chatId || sData?.settings?.telegramChatId;
-          }
-        } catch {}
+      // Собираем кандидаты из ENV и из настроек админки
+      const candidates: Array<{ token: string; chat: string }> = [];
+      if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
+        candidates.push({ token: String(process.env.TELEGRAM_BOT_TOKEN), chat: String(process.env.TELEGRAM_CHAT_ID) });
       }
+      try {
+        const sRes = await fetch(`${origin}/api/admin/settings`, { cache: 'no-store' });
+        if (sRes.ok) {
+          const sData = await sRes.json();
+          const t = sData?.settings?.telegramBotToken as string | undefined;
+          const c = sData?.settings?.telegramChatId as string | undefined;
+          if (t && c) candidates.push({ token: t, chat: c });
+        }
+      } catch {}
 
-      // 3) Если всё ещё нет — тихо пропускаем уведомление
-      if (botToken && chatId) {
+      // Уникализируем пары, чтобы не слать дубль
+      const unique = new Map<string, { token: string; chat: string }>();
+      for (const pair of candidates) unique.set(`${pair.token}:${pair.chat}`, pair);
+      const list = Array.from(unique.values());
+
+      if (list.length > 0) {
         const utmText = utm ? Object.entries(utm).map(([k,v]) => `${k}: ${v}`).join('\n') : '';
-        const url = page || (process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://k-lining.ru');
-        const adminLink = `${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://k-lining.ru'}/admin/leads#${newLead.id}`;
+        const url = page || origin;
+        const adminLink = `${origin}/admin/leads#${newLead.id}`;
         const text = `🆕 Новая заявка!\n\n👤 ${newLead.name}\n📞 ${newLead.phone}\n${newLead.email ? `📧 ${newLead.email}\n` : ''}${newLead.service ? `🔧 ${newLead.service}\n` : ''}${newLead.message ? `💬 ${newLead.message}\n` : ''}${utmText ? `\n🧭 UTM:\n${utmText}\n` : ''}${referrer ? `\n↩️ Referrer: ${referrer}\n` : ''}${url ? `\n🔗 Страница: ${url}\n` : ''}⏰ ${new Date().toLocaleString('ru-RU')}\n\n➡️ Админка: ${adminLink}`;
 
-        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML' })
-        });
+        // Пытаемся отправить хотя бы по одной паре; ошибки не валят ответ
+        await Promise.all(list.map(async ({ token, chat }) => {
+          try {
+            const resp = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ chat_id: chat, text, parse_mode: 'HTML' })
+            });
+            if (!resp.ok) {
+              const errTxt = await resp.text().catch(() => '');
+              console.warn('Telegram send failed:', resp.status, errTxt);
+            }
+          } catch (e) {
+            console.warn('Telegram send error:', e);
+          }
+        }));
       }
     } catch (error) {
       console.error('Telegram notification error:', error);
