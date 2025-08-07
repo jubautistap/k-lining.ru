@@ -10,6 +10,9 @@ const leadSchema = z.object({
   email: z.string().email().optional(),
   service: z.string().optional(),
   message: z.string().optional(),
+  utm: z.record(z.string()).optional(),
+  referrer: z.string().optional(),
+  page: z.string().optional(),
 });
 
 export async function GET(request: NextRequest) {
@@ -103,7 +106,7 @@ export async function POST(request: NextRequest) {
     await apiRateLimit.check(10, ip);
 
     const body = await request.json();
-    const { name, phone, email, service, message } = leadSchema.parse(body);
+    const { name, phone, email, service, message, utm, referrer, page } = leadSchema.parse(body);
 
     const newLead = await prisma.lead.create({
       data: {
@@ -124,14 +127,17 @@ export async function POST(request: NextRequest) {
     // Отправляем уведомление в Telegram (если настроено)
     if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
       try {
-        const message = `🆕 Новая заявка!\n\n👤 ${newLead.name}\n📞 ${newLead.phone}\n${newLead.email ? `📧 ${newLead.email}\n` : ''}${newLead.service ? `🔧 ${newLead.service}\n` : ''}${newLead.message ? `💬 ${newLead.message}\n` : ''}\n⏰ ${new Date().toLocaleString('ru-RU')}`;
+        const utmText = utm ? Object.entries(utm).map(([k,v]) => `${k}: ${v}`).join('\n') : '';
+        const url = page || (process.env.NEXT_PUBLIC_BASE_URL || 'https://k-lining.ru');
+        const adminLink = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://k-lining.ru'}/admin/leads#${newLead.id}`;
+        const text = `🆕 Новая заявка!\n\n👤 ${newLead.name}\n📞 ${newLead.phone}\n${newLead.email ? `📧 ${newLead.email}\n` : ''}${newLead.service ? `🔧 ${newLead.service}\n` : ''}${newLead.message ? `💬 ${newLead.message}\n` : ''}${utmText ? `\n🧭 UTM:\n${utmText}\n` : ''}${referrer ? `\n↩️ Referrer: ${referrer}\n` : ''}${url ? `\n🔗 Страница: ${url}\n` : ''}⏰ ${new Date().toLocaleString('ru-RU')}\n\n➡️ Админка: ${adminLink}`;
         
         await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             chat_id: process.env.TELEGRAM_CHAT_ID,
-            text: message,
+            text,
             parse_mode: 'HTML'
           })
         });

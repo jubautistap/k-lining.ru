@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, phone, email, service, message } = body;
+    const { name, phone, email, service, message, utm, referrer, page } = body;
 
     // Валидация данных
     if (!name || !phone) {
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/admin/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newLead)
+        body: JSON.stringify({ name, phone, email, service, message, utm, referrer, page })
       });
     } catch (error) {
       console.error('Error adding lead to admin:', error);

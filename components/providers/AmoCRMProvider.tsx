@@ -15,6 +15,9 @@ interface LeadData {
   email?: string;
   service?: string;
   message?: string;
+  utm?: Record<string, string>;
+  referrer?: string;
+  page?: string;
 }
 
 const AmoCRMContext = createContext<AmoCRMContextType | undefined>(undefined);
@@ -51,13 +54,32 @@ export default function AmoCRMProvider({ children }: { children: React.ReactNode
 
   const submitLead = async (data: LeadData) => {
     try {
-      // Здесь будет интеграция с amoCRM API
+      // Собираем UTM и источники на клиенте
+      let utm: Record<string, string> | undefined = undefined;
+      let referrer: string | undefined = undefined;
+      let page: string | undefined = undefined;
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search);
+        const keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','yclid','ymclid','fbclid','_openstat'];
+        const collected: Record<string,string> = {};
+        keys.forEach(k => {
+          const v = params.get(k);
+          if (v) collected[k] = v;
+        });
+        if (Object.keys(collected).length > 0) utm = collected;
+        referrer = document.referrer || undefined;
+        page = window.location.href;
+      }
+
+      const payload: LeadData = { ...data, ...(utm ? { utm } : {}), ...(referrer ? { referrer } : {}), ...(page ? { page } : {}) };
+
+      // Единая точка отправки
       const response = await fetch('/api/amo-crm/lead', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
