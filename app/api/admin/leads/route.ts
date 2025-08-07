@@ -194,25 +194,39 @@ export async function POST(request: NextRequest) {
     }
 
     // Отправляем уведомление в Telegram (если настроено)
-    if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
-      try {
+    try {
+      // 1) Берём из ENV
+      let botToken = process.env.TELEGRAM_BOT_TOKEN;
+      let chatId = process.env.TELEGRAM_CHAT_ID;
+
+      // 2) Если нет в ENV — пробуем из настроек админки
+      if (!botToken || !chatId) {
+        try {
+          const origin = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || new URL(request.url).origin;
+          const sRes = await fetch(`${origin}/api/admin/settings`, { cache: 'no-store' });
+          if (sRes.ok) {
+            const sData = await sRes.json();
+            botToken = botToken || sData?.settings?.telegramBotToken;
+            chatId = chatId || sData?.settings?.telegramChatId;
+          }
+        } catch {}
+      }
+
+      // 3) Если всё ещё нет — тихо пропускаем уведомление
+      if (botToken && chatId) {
         const utmText = utm ? Object.entries(utm).map(([k,v]) => `${k}: ${v}`).join('\n') : '';
         const url = page || (process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://k-lining.ru');
         const adminLink = `${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://k-lining.ru'}/admin/leads#${newLead.id}`;
         const text = `🆕 Новая заявка!\n\n👤 ${newLead.name}\n📞 ${newLead.phone}\n${newLead.email ? `📧 ${newLead.email}\n` : ''}${newLead.service ? `🔧 ${newLead.service}\n` : ''}${newLead.message ? `💬 ${newLead.message}\n` : ''}${utmText ? `\n🧭 UTM:\n${utmText}\n` : ''}${referrer ? `\n↩️ Referrer: ${referrer}\n` : ''}${url ? `\n🔗 Страница: ${url}\n` : ''}⏰ ${new Date().toLocaleString('ru-RU')}\n\n➡️ Админка: ${adminLink}`;
-        
-        await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+
+        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: process.env.TELEGRAM_CHAT_ID,
-            text,
-            parse_mode: 'HTML'
-          })
+          body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML' })
         });
-      } catch (error) {
-        console.error('Telegram notification error:', error);
       }
+    } catch (error) {
+      console.error('Telegram notification error:', error);
     }
 
     return NextResponse.json({ 
