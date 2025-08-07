@@ -13,10 +13,7 @@ import {
   Star,
   Zap,
   Phone,
-  ArrowRight,
-  DollarSign,
-  Target,
-  Scale
+  ArrowRight
 } from 'lucide-react';
 import { useAmoCRM } from '../providers/AmoCRMProvider';
 
@@ -491,66 +488,6 @@ export default function CleaningCalculator() {
               </div>
             )}
           </div>
-        </motion.div>
-      </div>
-
-      {/* Новые секции с иконками */}
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        
-        {/* Реалистичный расчет */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="bg-white rounded-2xl shadow-lg p-6 text-center"
-        >
-          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <Target className="w-6 h-6 text-white" />
-          </div>
-          <h4 className="text-lg font-semibold text-gray-900 mb-2">Реалистичный расчет</h4>
-          <p className="text-sm text-gray-600">Учитываем сложность работ</p>
-        </motion.div>
-
-        {/* Прозрачные цены */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-          className="bg-white rounded-2xl shadow-lg p-6 text-center"
-        >
-          <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <DollarSign className="w-6 h-6 text-white" />
-          </div>
-          <h4 className="text-lg font-semibold text-gray-900 mb-2">Прозрачные цены</h4>
-          <p className="text-sm text-gray-600">Никаких скрытых доплат</p>
-        </motion.div>
-
-        {/* Гибкие площади */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="bg-white rounded-2xl shadow-lg p-6 text-center"
-        >
-          <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <Scale className="w-6 h-6 text-white" />
-          </div>
-          <h4 className="text-lg font-semibold text-gray-900 mb-2">Гибкие площади</h4>
-          <p className="text-sm text-gray-600">До 5,000 м² включительно</p>
-        </motion.div>
-
-        {/* Быстрый расчет */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9 }}
-          className="bg-white rounded-2xl shadow-lg p-6 text-center"
-        >
-          <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <Zap className="w-6 h-6 text-white" />
-          </div>
-          <h4 className="text-lg font-semibold text-gray-900 mb-2">Быстрый расчет</h4>
-          <p className="text-sm text-gray-600">Мгновенный результат</p>
         </motion.div>
       </div>
     </div>
