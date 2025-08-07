@@ -11,10 +11,7 @@ import {
   Sparkles, 
   CheckCircle, 
   Star,
-  Clock,
   Zap,
-  Moon,
-  AlertTriangle,
   Phone,
   ArrowRight,
   DollarSign,
@@ -38,7 +35,6 @@ export default function CleaningCalculator() {
   const [customArea, setCustomArea] = useState<string>('');
   const [cleaningType, setCleaningType] = useState<'maintenance' | 'general' | 'postRenovation' | 'eco' | 'vip'>('maintenance');
   const [additionalServices, setAdditionalServices] = useState<string[]>([]);
-  const [specialModes, setSpecialModes] = useState<string[]>([]);
   const [result, setResult] = useState<CalculationResult | null>(null);
 
   // Базовые цены за м²
@@ -83,11 +79,6 @@ export default function CleaningCalculator() {
     { id: 'oven', name: 'Чистка духовки', price: 1200, icon: Home },
     { id: 'disinfection', name: 'Дезинфекция', price: 3000, icon: Shield },
     { id: 'carpet', name: 'Химчистка ковра', price: 2500, icon: Sparkles }
-  ], []);
-
-  // Специальные режимы
-  const specialModesList = useMemo(() => [
-    // Убираем специальные режимы - у конкурентов их нет
   ], []);
 
   // Расчет времени работы
@@ -191,14 +182,6 @@ export default function CleaningCalculator() {
       prev.includes(serviceId) 
         ? prev.filter(id => id !== serviceId)
         : [...prev, serviceId]
-    );
-  };
-
-  const handleSpecialModeToggle = (modeId: string) => {
-    setSpecialModes(prev => 
-      prev.includes(modeId) 
-        ? prev.filter(id => id !== modeId)
-        : [...prev, modeId]
     );
   };
 
