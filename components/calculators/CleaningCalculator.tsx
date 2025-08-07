@@ -198,7 +198,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
           >
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary-50 border border-primary-200 text-primary-600">
-                <Building className="w-5 h-5 text-white" />
+                <Building className="w-5 h-5" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Тип помещения</h3>
             </div>
@@ -213,18 +213,18 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                 <button
                   key={type.id}
                   onClick={() => setPropertyType(type.id as any)}
-                  className={`h-12 px-4 rounded-lg border transition ${
+                  className={`px-4 py-3 rounded-lg border transition flex flex-col items-center justify-center min-h-[72px] ${
                     propertyType === type.id
                       ? 'border-primary-600 bg-primary-50 text-primary-700'
                       : 'border-gray-200 hover:border-primary-300'
                   }`}
                 >
-                  <div className={`w-6 h-6 mx-auto mb-2 rounded-lg flex items-center justify-center ${
+                  <div className={`w-6 h-6 mx-auto mb-1 rounded-lg flex items-center justify-center overflow-hidden ${
                     propertyType === type.id 
                       ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white' 
                       : 'bg-gray-100 text-gray-600'
                   }`}>
-                    <type.icon className="w-4 h-4" />
+                    <type.icon className="w-4 h-4 shrink-0" />
                   </div>
                   <span className="text-sm font-medium block text-center">{type.name}</span>
                 </button>
@@ -241,7 +241,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
           >
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary-50 border border-primary-200 text-primary-600">
-                <Calculator className="w-5 h-5 text-white" />
+                <Calculator className="w-5 h-5" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Площадь помещения</h3>
             </div>
@@ -301,7 +301,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
           >
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary-50 border border-primary-200 text-primary-600">
-                <Sparkles className="w-5 h-5 text-white" />
+                <Sparkles className="w-5 h-5" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Тип уборки</h3>
             </div>
@@ -344,7 +344,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
           >
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary-50 border border-primary-200 text-primary-600">
-                <Zap className="w-5 h-5 text-white" />
+                <Zap className="w-5 h-5" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Дополнительные услуги</h3>
             </div>
