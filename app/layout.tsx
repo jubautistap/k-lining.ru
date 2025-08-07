@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import LazyProviders from '@/components/providers/LazyProviders';
+import dynamic from 'next/dynamic';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
@@ -94,11 +95,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const YandexMetrika = dynamic(() => import('@/components/providers/YandexMetrika'), { ssr: false });
   return (
     <html lang="ru" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#2563eb" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
@@ -336,57 +340,22 @@ export default function RootLayout({
           </div>
         </LazyProviders>
         
-        {/* Яндекс.Метрика - загружаем асинхронно для избежания блокировки */}
+        {/* Яндекс.Метрика: официальный скрипт + клиентский hit на роутинг */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // Проверяем блокировку трекеров
-              const isTrackerBlocked = () => {
-                return new Promise((resolve) => {
-                  const testImg = new Image();
-                  testImg.onload = () => resolve(false);
-                  testImg.onerror = () => resolve(true);
-                  testImg.src = 'https://mc.yandex.ru/watch/103567092';
-                  setTimeout(() => resolve(true), 2000);
-                });
-              };
-
-              const initMetrika = async () => {
-                try {
-                  const blocked = await isTrackerBlocked();
-                  if (blocked) {
-                    console.warn('Яндекс.Метрика заблокирована браузером');
-                    return;
-                  }
-
-                  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                  m[i].l=1*new Date();
-                  for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-                  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-                  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-                  ym(103567092, "init", {
-                    clickmap: true,
-                    trackLinks: true,
-                    accurateTrackBounce: true,
-                    webvisor: true,
-                    defer: true
-                  });
-                } catch (error) {
-                  console.warn('Ошибка инициализации Яндекс.Метрики:', error);
-                }
-              };
-
-              // Запускаем инициализацию с задержкой
-              setTimeout(initMetrika, 2000);
+              (function(m,e,t,r,i,k,a){
+                m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                m[i].l=1*new Date();
+                for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
+                k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+              })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+              ym(103567092, 'init', { webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true });
             `
           }}
         />
-        <noscript>
-          <div>
-            <img src="https://mc.yandex.ru/watch/103567092" style={{position:'absolute', left:'-9999px'}} alt="" />
-          </div>
-        </noscript>
+        <noscript><div><img src="https://mc.yandex.ru/watch/103567092" style={{position:'absolute', left:'-9999px'}} alt="" /></div></noscript>
+        <YandexMetrika />
         
         {/* Google Analytics 4 - загружаем асинхронно */}
         <script
