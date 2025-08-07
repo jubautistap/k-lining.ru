@@ -194,10 +194,10 @@ export default function CleaningCalculator() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-2xl shadow-lg p-6"
+className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
           >
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary-50 border border-primary-200 text-primary-600">
                 <Building className="w-5 h-5 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Тип помещения</h3>
@@ -213,10 +213,10 @@ export default function CleaningCalculator() {
                 <button
                   key={type.id}
                   onClick={() => setPropertyType(type.id as any)}
-                  className={`p-4 rounded-xl border-2 transition-all duration-200 hover:shadow-md ${
+                  className={`h-12 px-4 rounded-lg border transition ${
                     propertyType === type.id
-                      ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-blue-100 text-blue-700 shadow-md'
-                      : 'border-gray-200 hover:border-blue-300'
+                      ? 'border-primary-600 bg-primary-50 text-primary-700'
+                      : 'border-gray-200 hover:border-primary-300'
                   }`}
                 >
                   <div className={`w-6 h-6 mx-auto mb-2 rounded-lg flex items-center justify-center ${
@@ -237,10 +237,10 @@ export default function CleaningCalculator() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white rounded-2xl shadow-lg p-6"
+className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
           >
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary-50 border border-primary-200 text-primary-600">
                 <Calculator className="w-5 h-5 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Площадь помещения</h3>
@@ -297,10 +297,10 @@ export default function CleaningCalculator() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white rounded-2xl shadow-lg p-6"
+className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
           >
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary-50 border border-primary-200 text-primary-600">
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Тип уборки</h3>
@@ -317,10 +317,10 @@ export default function CleaningCalculator() {
                 <button
                   key={type.id}
                   onClick={() => setCleaningType(type.id as any)}
-                  className={`p-4 rounded-xl border-2 transition-all duration-200 text-left hover:shadow-md ${
+                  className={`p-4 rounded-lg border transition text-left ${
                     cleaningType === type.id
-                      ? 'border-purple-500 bg-purple-50 text-purple-700'
-                      : 'border-gray-200 hover:border-purple-300'
+                      ? 'border-primary-600 bg-primary-50 text-primary-700'
+                      : 'border-gray-200 hover:border-primary-300'
                   }`}
                 >
                   <div className="flex items-center space-x-3">
@@ -340,16 +340,16 @@ export default function CleaningCalculator() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white rounded-2xl shadow-lg p-6"
+className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
           >
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary-50 border border-primary-200 text-primary-600">
                 <Zap className="w-5 h-5 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Дополнительные услуги</h3>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-64 overflow-y-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-64 overflow-y-auto [mask-image:linear-gradient(to_bottom,transparent,black_12px,black_calc(100%-12px),transparent)]">
               {additionalServicesList.map((service) => (
                 <button
                   key={service.id}
