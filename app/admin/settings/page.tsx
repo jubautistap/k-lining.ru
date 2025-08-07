@@ -140,9 +140,10 @@ export default function AdminSettingsPage() {
         const refresh = await fetch('/api/auth/refresh', { method: 'POST', credentials: 'include' });
         if (refresh.ok) {
           const data = await refresh.json();
-          accessToken = data.accessToken;
-          localStorage.setItem('accessToken', accessToken);
-          response = await doRequest(accessToken);
+          const newToken: string = data.accessToken;
+          accessToken = newToken;
+          localStorage.setItem('accessToken', newToken);
+          response = await doRequest(newToken);
         }
       }
 
