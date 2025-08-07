@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -102,6 +102,23 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
   const pathname = usePathname();
   const { toasts, removeToast } = useToast();
   const { logout } = useAuthContext();
+  const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const handler = (e: MediaQueryListEvent | MediaQueryList) => {
+      const matches = 'matches' in e ? e.matches : (e as MediaQueryList).matches;
+      setIsLargeScreen(matches);
+    };
+    // init
+    handler(mq as unknown as MediaQueryList);
+    // subscribe
+    mq.addEventListener?.('change', handler as (ev: MediaQueryListEvent) => void);
+    return () => {
+      mq.removeEventListener?.('change', handler as (ev: MediaQueryListEvent) => void);
+    };
+  }, []);
 
   const handleLogout = async () => {
     await logout();
@@ -119,8 +136,8 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
 
       {/* Sidebar */}
       <motion.div
-        initial={{ x: -300 }}
-        animate={{ x: isMobileMenuOpen ? 0 : -300 }}
+        initial={false}
+        animate={{ x: isLargeScreen ? 0 : (isMobileMenuOpen ? 0 : -300) }}
         className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl transform lg:translate-x-0 lg:static lg:inset-0 transition-transform duration-300 ease-in-out lg:relative`}
       >
         <div className="flex flex-col h-full">
