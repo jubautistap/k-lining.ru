@@ -148,14 +148,17 @@ export default function RootLayout({
               
               /* Критический CSS для LCP */
               .hero-title { 
-                font-size: 2.5rem; 
+                font-size: 2rem; /* меньше на мобильных */
                 font-weight: 700; 
-                line-height: 1.2; 
+                line-height: 1.15; 
                 color: #111827; 
                 margin: 0; 
+                word-break: normal;
+                overflow-wrap: anywhere; /* безопасный перенос длинных слов */
               }
-              @media (min-width: 768px) { .hero-title { font-size: 3rem; } }
-              @media (min-width: 1024px) { .hero-title { font-size: 3.75rem; } }
+              @media (min-width: 640px) { .hero-title { font-size: 2.25rem; } }
+              @media (min-width: 768px) { .hero-title { font-size: 2.75rem; } }
+              @media (min-width: 1024px) { .hero-title { font-size: 3.25rem; } }
               
               /* CSS градиент для быстрого отображения */
               .hero-gradient {
