@@ -92,8 +92,6 @@ export default function AdminLayoutWrapper({
         #_rht_toaster {
           display: none !important;
         }
-        /* Скрываем публичный шапку/подвал для всех /admin роутов на случай их монтирования */
-        header, footer { display: none !important; }
         main.flex-grow { padding-top: 0 !important; }
       `}</style>
     </>

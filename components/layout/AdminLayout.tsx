@@ -186,16 +186,16 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
 
       {/* Main content */}
       <div className="lg:ml-64">
-        {/* Top bar */}
-        <header className="bg-white shadow-sm border-b lg:hidden">
+        {/* Top bar (всегда видна в админке) */}
+        <header className="bg-white shadow-sm border-b">
           <div className="flex items-center justify-between px-4 py-3">
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="text-gray-600 hover:text-gray-900"
+              className="text-gray-600 hover:text-gray-900 lg:hidden"
             >
               <Menu className="w-6 h-6" />
             </button>
-            <h1 className="text-lg font-semibold text-gray-900">KliningPro</h1>
+            <h1 className="text-lg font-semibold text-gray-900">Админка</h1>
             <div className="w-6"></div>
           </div>
         </header>
