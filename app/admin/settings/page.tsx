@@ -129,7 +129,8 @@ export default function AdminSettingsPage() {
           credentials: 'include',
           body: JSON.stringify({
             botToken: settings.telegramBotToken,
-            chatId: settings.telegramChatId
+            chatId: settings.telegramChatId,
+            createLead: true
           })
         });
       };
