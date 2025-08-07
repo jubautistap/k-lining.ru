@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireManager } from '@/lib/auth/middleware';
 import { prisma } from '@/lib/prisma';
 
+const uiToDbStatus: Record<string, string> = {
+  new: 'NEW',
+  contacted: 'CONTACTED',
+  confirmed: 'QUALIFIED',
+  completed: 'WON',
+  cancelled: 'LOST',
+};
+
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -11,10 +19,11 @@ export async function PATCH(
     if (auth) return auth;
     const body = await request.json();
     const { status } = body;
+    const dbStatus = uiToDbStatus[status] ?? String(status).toUpperCase();
 
     const updated = await prisma.lead.update({
       where: { id: params.id },
-      data: { status },
+      data: { status: dbStatus as any },
     });
 
     return NextResponse.json({ success: true, lead: updated });

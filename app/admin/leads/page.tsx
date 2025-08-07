@@ -37,13 +37,46 @@ export default function AdminLeadsPage() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [isLoading, setIsLoading] = useState(true);
 
+  // Получить валидный токен: если истёк — обновить и вернуть новый
+  const getTokenOrRefresh = async (): Promise<string | null> => {
+    let token = localStorage.getItem('accessToken');
+    if (!token) return null;
+    return token;
+  };
+
+  // Обёртка поверх fetch с автоповтором на 401 (обновляем токен и пробуем снова)
+  const authorizedFetch = async (input: RequestInfo | URL, init: RequestInit = {}) => {
+    let token = await getTokenOrRefresh();
+    const makeRequest = async (bearer?: string) => {
+      const headers: HeadersInit = {
+        ...(init.headers || {}),
+        ...(bearer ? { Authorization: `Bearer ${bearer}` } : {}),
+      } as HeadersInit;
+      return fetch(input, { ...init, headers, credentials: init.credentials ?? 'include' });
+    };
+
+    let res = await makeRequest(token || undefined);
+    if (res.status === 401) {
+      // Пытаемся обновить токен
+      try {
+        const refreshRes = await fetch('/api/auth/refresh', { method: 'POST', credentials: 'include' });
+        if (refreshRes.ok) {
+          const data = await refreshRes.json();
+          localStorage.setItem('accessToken', data.accessToken);
+          token = data.accessToken;
+          res = await makeRequest(token);
+        }
+      } catch {
+        // ignore, вернём оригинальный 401
+      }
+    }
+    return res;
+  };
+
   const loadLeads = React.useCallback(async () => {
     setIsLoading(true);
     try {
-      const token = localStorage.getItem('accessToken');
-      const response = await fetch('/api/admin/leads', {
-        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-      });
+      const response = await authorizedFetch('/api/admin/leads');
       if (response.ok) {
         const data = await response.json();
         setLeads(data.leads);
@@ -84,13 +117,9 @@ export default function AdminLeadsPage() {
 
   const updateLeadStatus = async (leadId: string, status: Lead['status']) => {
     try {
-      const token = localStorage.getItem('accessToken');
-      const response = await fetch(`/api/admin/leads/${leadId}`, {
+      const response = await authorizedFetch(`/api/admin/leads/${leadId}`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status })
       });
 
@@ -106,10 +135,8 @@ export default function AdminLeadsPage() {
     if (!confirm('Удалить эту заявку?')) return;
 
     try {
-      const token = localStorage.getItem('accessToken');
-      const response = await fetch(`/api/admin/leads/${leadId}`, {
+      const response = await authorizedFetch(`/api/admin/leads/${leadId}`, {
         method: 'DELETE',
-        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
       });
 
       if (response.ok) {

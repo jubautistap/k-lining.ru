@@ -3,6 +3,25 @@ import { z } from 'zod';
 import { requireManager } from '@/lib/auth/middleware';
 import { prisma } from '@/lib/prisma';
 import { apiRateLimit } from '@/lib/rate-limit';
+import { leads as memoryLeads, addLead as addMemoryLead } from './data';
+
+// UI <-> DB статус маппинг
+const uiToDbStatus: Record<string, string> = {
+  new: 'NEW',
+  contacted: 'CONTACTED',
+  confirmed: 'QUALIFIED',
+  completed: 'WON',
+  cancelled: 'LOST',
+};
+
+const dbToUiStatus: Record<string, string> = {
+  NEW: 'new',
+  CONTACTED: 'contacted',
+  QUALIFIED: 'confirmed',
+  QUOTED: 'confirmed',
+  WON: 'completed',
+  LOST: 'cancelled',
+};
 
 const leadSchema = z.object({
   name: z.string().min(1, 'Имя обязательно'),
@@ -35,7 +54,11 @@ export async function GET(request: NextRequest) {
 
     // Строим фильтры
     const where: any = {};
-    if (status) where.status = status;
+    if (status) {
+      // принимаем UI-статусы и маппим в enum Prisma
+      const dbStatus = uiToDbStatus[status] ?? status.toUpperCase();
+      where.status = dbStatus;
+    }
     if (search) {
       where.OR = [
         { name: { contains: search, mode: 'insensitive' } },
@@ -44,44 +67,72 @@ export async function GET(request: NextRequest) {
       ];
     }
 
-    const [rows, total] = await Promise.all([
-      prisma.lead.findMany({
-        where,
-        orderBy: { created_at: 'desc' },
-        skip,
-        take: limit,
-        include: {
-          assigned_to: {
-            select: { id: true, name: true, email: true }
+    try {
+      const [rows, total] = await Promise.all([
+        prisma.lead.findMany({
+          where,
+          orderBy: { created_at: 'desc' },
+          skip,
+          take: limit,
+          include: {
+            assigned_to: {
+              select: { id: true, name: true, email: true }
+            }
           }
+        }),
+        prisma.lead.count({ where })
+      ]);
+
+      const leads = rows.map((l: any) => ({
+        id: l.id,
+        name: l.name ?? '',
+        phone: l.phone,
+        email: l.email ?? '',
+        service: l.service ?? '',
+        message: l.message ?? '',
+        status: dbToUiStatus[String(l.status)] ?? String(l.status).toLowerCase(),
+        createdAt: l.created_at,
+        contactedAt: l.updated_at,
+        assigned_to: l.assigned_to ?? null,
+      }));
+
+      return NextResponse.json({
+        leads,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: Math.ceil(total / limit)
         }
-      }),
-      prisma.lead.count({ where })
-    ]);
-
-    // Нормализуем под UI (camelCase и lowercase статус)
-    const leads = rows.map((l: any) => ({
-      id: l.id,
-      name: l.name ?? '',
-      phone: l.phone,
-      email: l.email ?? '',
-      service: l.service ?? '',
-      message: l.message ?? '',
-      status: String(l.status).toLowerCase(),
-      createdAt: l.created_at,
-      contactedAt: l.updated_at,
-      assigned_to: l.assigned_to ?? null,
-    }));
-
-    return NextResponse.json({
-      leads,
-      pagination: {
-        page,
-        limit,
-        total,
-        pages: Math.ceil(total / limit)
-      }
-    });
+      });
+    } catch (dbError) {
+      console.error('DB error fetching leads, fallback to memory:', dbError);
+      const rows = memoryLeads;
+      const total = rows.length;
+      const sliced = rows.slice(skip, skip + limit);
+      const leads = sliced.map((l: any) => ({
+        id: l.id,
+        name: l.name ?? '',
+        phone: l.phone,
+        email: l.email ?? '',
+        service: l.service ?? '',
+        message: l.message ?? '',
+        status: (l.status || 'new').toLowerCase(),
+        createdAt: l.createdAt || l.created_at || new Date().toISOString(),
+        contactedAt: l.updatedAt || l.updated_at || null,
+        assigned_to: null,
+      }));
+      return NextResponse.json({
+        leads,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: Math.ceil(total / limit)
+        },
+        fallback: true
+      });
+    }
 
   } catch (error) {
     if (error instanceof Error && error.message === 'Rate limit exceeded') {
@@ -108,21 +159,39 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { name, phone, email, service, message, utm, referrer, page } = leadSchema.parse(body);
 
-    const newLead = await prisma.lead.create({
-      data: {
+    let newLead: any;
+    try {
+      newLead = await prisma.lead.create({
+        data: {
+          name,
+          phone,
+          email: email || null,
+          service: service || '',
+          message: message || null,
+          source: 'website'
+        },
+        include: {
+          assigned_to: {
+            select: { id: true, name: true, email: true }
+          }
+        }
+      });
+    } catch (dbError) {
+      console.error('DB error creating lead, fallback to memory:', dbError);
+      newLead = {
+        id: Date.now().toString(),
         name,
         phone,
-        email: email || null,
+        email: email || '',
         service: service || '',
-        message: message || null,
+        message: message || '',
+        status: 'new',
+        created_at: new Date(),
+        updated_at: new Date(),
         source: 'website'
-      },
-      include: {
-        assigned_to: {
-          select: { id: true, name: true, email: true }
-        }
-      }
-    });
+      };
+      addMemoryLead(newLead);
+    }
 
     // Отправляем уведомление в Telegram (если настроено)
     if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
