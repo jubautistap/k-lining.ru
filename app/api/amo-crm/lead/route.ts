@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
 
     // Добавляем заявку в админку через API (единообразный ввод, Telegram отправит админ-роут)
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/admin/leads`, {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://k-lining.ru'}/api/admin/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, phone, email, service, message, utm, referrer, page })

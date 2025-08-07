@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     const { name, phone, email, message, service } = contactSchema.parse(body);
 
     // Проксируем в админский endpoint для единой логики (включая Telegram)
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/admin/leads`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://k-lining.ru'}/api/admin/leads`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, phone, email, message, service })

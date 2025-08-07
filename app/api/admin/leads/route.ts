@@ -128,8 +128,8 @@ export async function POST(request: NextRequest) {
     if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
       try {
         const utmText = utm ? Object.entries(utm).map(([k,v]) => `${k}: ${v}`).join('\n') : '';
-        const url = page || (process.env.NEXT_PUBLIC_BASE_URL || 'https://k-lining.ru');
-        const adminLink = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://k-lining.ru'}/admin/leads#${newLead.id}`;
+        const url = page || (process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://k-lining.ru');
+        const adminLink = `${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://k-lining.ru'}/admin/leads#${newLead.id}`;
         const text = `🆕 Новая заявка!\n\n👤 ${newLead.name}\n📞 ${newLead.phone}\n${newLead.email ? `📧 ${newLead.email}\n` : ''}${newLead.service ? `🔧 ${newLead.service}\n` : ''}${newLead.message ? `💬 ${newLead.message}\n` : ''}${utmText ? `\n🧭 UTM:\n${utmText}\n` : ''}${referrer ? `\n↩️ Referrer: ${referrer}\n` : ''}${url ? `\n🔗 Страница: ${url}\n` : ''}⏰ ${new Date().toLocaleString('ru-RU')}\n\n➡️ Админка: ${adminLink}`;
         
         await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
