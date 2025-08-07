@@ -116,19 +116,41 @@ export default function AdminSettingsPage() {
     }
 
     try {
-      const response = await fetch('/api/admin/test-telegram', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          botToken: settings.telegramBotToken,
-          chatId: settings.telegramChatId
-        })
-      });
+      // Берём accessToken из localStorage и передаём как Bearer
+      let accessToken = localStorage.getItem('accessToken');
+
+      const doRequest = async (token?: string) => {
+        return fetch('/api/admin/test-telegram', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {})
+          },
+          credentials: 'include',
+          body: JSON.stringify({
+            botToken: settings.telegramBotToken,
+            chatId: settings.telegramChatId
+          })
+        });
+      };
+
+      let response = await doRequest(accessToken || undefined);
+      if (response.status === 401) {
+        // Пытаемся освежить токен из куки refreshToken
+        const refresh = await fetch('/api/auth/refresh', { method: 'POST', credentials: 'include' });
+        if (refresh.ok) {
+          const data = await refresh.json();
+          accessToken = data.accessToken;
+          localStorage.setItem('accessToken', accessToken);
+          response = await doRequest(accessToken);
+        }
+      }
 
       if (response.ok) {
         alert('Тестовое сообщение отправлено в Telegram!');
       } else {
-        alert('Ошибка отправки тестового сообщения');
+        const err = await response.json().catch(() => ({} as any));
+        alert(`Ошибка отправки: ${err.error || 'неизвестно'}`);
       }
     } catch (error) {
       console.error('Error testing telegram:', error);
