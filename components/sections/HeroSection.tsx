@@ -69,7 +69,13 @@ export default function HeroSection() {
                 {/* Красивый CSS градиент как основной элемент */}
                 <div className="absolute inset-0 hero-visual"></div>
                 
-                {/* Убрали IMG для ускорения LCP: оставляем только CSS-градиент */}
+                {/* Fallback изображение для SEO */}
+                <img 
+                  src="/og-image.webp" 
+                  alt="Профессиональная уборка в Москве - K-lining"
+                  className="absolute inset-0 w-full h-full object-cover opacity-100"
+                  loading="eager"
+                />
               </div>
             </div>
 
