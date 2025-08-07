@@ -1,24 +1,37 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl: process.env.SITE_URL || 'https://k-lining.ru',
-  generateRobotsTxt: false, // Используем кастомный robots.txt
+  generateRobotsTxt: true, // Генерим robots из конфига (оставим кастомный файл как fallback)
   generateIndexSitemap: false,
   robotsTxtOptions: {
     policies: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin/*', '/api/*', '/_next/*', '/static/*'],
+        disallow: ['/admin', '/admin/*', '/api/*', '/_next/*', '/static/*'],
+      },
+      {
+        userAgent: 'Yandex',
+        allow: '/',
+        crawlDelay: 1,
+      },
+      {
+        userAgent: 'Googlebot',
+        allow: '/',
       },
     ],
     additionalSitemaps: [
       'https://k-lining.ru/sitemap.xml',
+      'https://k-lining.ru/sitemap-images.xml',
+      'https://k-lining.ru/yandex-sitemap.xml',
     ],
-          host: 'https://k-lining.ru',
+    host: 'https://k-lining.ru',
   },
   exclude: ['/admin', '/admin/*', '/api/*', '/_next/*', '/static/*'],
   changefreq: 'weekly',
   priority: 0.7,
+  autoLastmod: true,
+  // предпочтительные расширения locales уже в путях, поэтому alternateRefs не нужен
   sitemapSize: 5000,
   transform: async (config, path) => {
     // Настройка приоритетов для разных страниц

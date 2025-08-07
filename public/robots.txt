@@ -10,22 +10,26 @@ Disallow: /static/*
 User-agent: Yandex
 Allow: /
 Crawl-delay: 1
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&gclid&fbclid&yclid&_openstat&from&ref&referrer&ymclid
 
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 1
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&gclid&fbclid&yclid&_openstat&from&ref&referrer&ymclid
 
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 2
 
 # Host
-Host: https://k-lining.ru
+Host: k-lining.ru
 
 # Sitemaps
 Sitemap: https://k-lining.ru/sitemap.xml
 Sitemap: https://k-lining.ru/sitemap-images.xml
 Sitemap: https://k-lining.ru/yandex-sitemap.xml
+# Дополнительно
+Sitemap: https://k-lining.ru/sitemap-0.xml
 
 # Clean param (для Яндекса)
 Clean-param: utm_source
