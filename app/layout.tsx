@@ -3,8 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import LazyProviders from '@/components/providers/LazyProviders';
 import dynamic from 'next/dynamic';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+import SiteChrome from '@/components/providers/SiteChrome';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -335,13 +334,9 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} ${inter.variable} overflow-x-hidden`} suppressHydrationWarning>
         <LazyProviders>
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-grow pt-20 md:pt-24">
-              {children}
-            </main>
-            <Footer />
-          </div>
+          <SiteChrome>
+            {children}
+          </SiteChrome>
         </LazyProviders>
         
         {/* Яндекс.Метрика: официальный скрипт + клиентский hit на роутинг */}
