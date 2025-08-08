@@ -203,9 +203,9 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
       </motion.div>
 
       {/* Main content */}
-      <div className="lg:ml-64 min-h-screen flex flex-col bg-gray-50">
-        {/* Top bar (всегда видна в админке) */}
-        <header className="bg-white shadow-sm border-b sticky top-0 z-30">
+      <div className="lg:ml-64 flex flex-col bg-gray-50">
+        {/* Top bar */}
+        <header className="bg-white shadow-sm border-b">
           <div className="flex items-center justify-between px-4 py-3">
             <button
               onClick={() => setIsMobileMenuOpen(true)}
@@ -219,7 +219,7 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
         </header>
 
         {/* Page content */}
-        <main className="flex-1 p-4">
+        <main className="p-4">
           {children}
         </main>
       </div>

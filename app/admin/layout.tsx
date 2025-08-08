@@ -85,7 +85,7 @@ export default function AdminLayoutWrapper({
   }
 
   return (
-    <div id="__admin_root">
+    <div id="__admin_root" className="lg:overflow-x-hidden">
       <AdminLayout user={user || undefined}>{children}</AdminLayout>
       {/* Скрываем react-hot-toast для админки и убираем любые верхние отступы */}
       <style jsx global>{`
@@ -96,6 +96,10 @@ export default function AdminLayoutWrapper({
         /* Снимаем margin-top у первого блока контента на страницах админки */
         #__admin_root main > *:first-child { margin-top: 0 !important; }
         #__admin_root main > * { scroll-margin-top: 0 !important; }
+        /* На десктопе исключаем липкий хедер для предотвращения скачка */
+        @media (min-width: 1024px) {
+          #__admin_root header.sticky { position: static !important; }
+        }
       `}</style>
     </div>
   );
