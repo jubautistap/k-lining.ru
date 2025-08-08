@@ -2,20 +2,24 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 interface OrderButtonProps {
   service: string;
   className?: string;
   children: React.ReactNode;
   onClick?: () => void;
+  href?: string;
 }
 
 export default function OrderButton({ 
   service, 
   className = "", 
   children, 
-  onClick 
+  onClick,
+  href
 }: OrderButtonProps) {
+  const router = useRouter();
   
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -46,6 +50,14 @@ export default function OrderButton({
     // Вызываем пользовательский обработчик
     if (onClick) {
       onClick();
+      return;
+    }
+
+    // Дефолтное действие: навигация на страницу контактов (или указанную ссылку)
+    try {
+      router.push(href || '/contacts');
+    } catch (navError) {
+      console.warn('Ошибка навигации по кнопке заказа:', navError);
     }
   };
 
