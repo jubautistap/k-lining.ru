@@ -85,15 +85,15 @@ export default function AdminLayoutWrapper({
   }
 
   return (
-    <>
+    <div id="__admin_root">
       <AdminLayout user={user || undefined}>{children}</AdminLayout>
-      {/* Скрываем react-hot-toast для админки */}
+      {/* Скрываем react-hot-toast для админки и убираем любые верхние отступы */}
       <style jsx global>{`
-        #_rht_toaster {
-          display: none !important;
-        }
-        main.flex-grow { padding-top: 0 !important; }
+        #_rht_toaster { display: none !important; }
+        /* На всякий случай обнуляем верхние отступы в админке */
+        #__admin_root main { padding-top: 0 !important; margin-top: 0 !important; }
+        #__admin_root [class*="pt-"] { padding-top: 0 !important; }
       `}</style>
-    </>
+    </div>
   );
 } 
