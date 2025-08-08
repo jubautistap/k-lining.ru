@@ -89,6 +89,12 @@ export default function AdminLayoutWrapper({
       <AdminLayout user={user || undefined}>{children}</AdminLayout>
       {/* Скрываем react-hot-toast для админки и убираем любые верхние отступы */}
       <style jsx global>{`
+        /* Стабилизируем раскладку ТОЛЬКО на страницах админки */
+        html, body { margin: 0 !important; padding: 0 !important; }
+        html, body { scroll-behavior: auto !important; }
+        html { overflow-anchor: none; }
+        #__admin_root { display: flex; flex-direction: column; min-height: 100vh; }
+        #__admin_root > * { flex: 0 0 auto; }
         #_rht_toaster { display: none !important; }
         /* На всякий случай обнуляем верхние отступы в админке */
         #__admin_root main { padding-top: 0 !important; margin-top: 0 !important; }
