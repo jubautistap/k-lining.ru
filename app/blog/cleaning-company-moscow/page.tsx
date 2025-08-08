@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { CheckCircle, Star, Phone, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Клининговая компания в Москве - рейтинг лучших, цены 2025 | KliningPro',
+  title: 'Клининговая компания в Москве - рейтинг лучших, цены 2025 | K-lining',
   description: 'Выбираете клининговую компанию в Москве? ⭐ Рейтинг лучших, сравнение цен, отзывы клиентов ⭐ KliningPro - качественная уборка квартир и офисов от 2,500₽ ⭐ Работаем 24/7',
   keywords: 'клининговая компания москва, клининг москва, уборка квартир москва, лучшие клининговые компании, рейтинг клининговых компаний, цены на клининг москва',
   openGraph: {
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description: 'Выбираете клининговую компанию в Москве? Рейтинг лучших, цены, отзывы. KliningPro - качественная уборка от 2,500₽',
     type: 'article',
     publishedTime: '2025-01-16T00:00:00.000Z',
-    authors: ['KliningPro'],
+    authors: ['K-lining'],
     section: 'Советы по выбору',
     tags: ['клининг', 'москва', 'рейтинг', 'цены'],
     url: 'https://k-lining.ru/blog/cleaning-company-moscow',
@@ -68,18 +68,18 @@ export default function CleaningCompanyMoscowPage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Article",
+            "@type": "BlogPosting",
             "headline": "Клининговая компания в Москве - рейтинг лучших, цены 2025",
             "description": "Полный гид по выбору клининговой компании в Москве. Рейтинг лучших, сравнение цен, критерии выбора.",
             "image": "https://k-lining.ru/blog/cleaning-company.jpg",
             "author": {
               "@type": "Organization",
-              "name": "KliningPro",
+              "name": "K-lining",
               "url": "https://k-lining.ru"
             },
             "publisher": {
               "@type": "Organization",
-              "name": "KliningPro",
+              "name": "K-lining",
               "logo": {
                 "@type": "ImageObject",
                 "url": "https://k-lining.ru/logo.png"

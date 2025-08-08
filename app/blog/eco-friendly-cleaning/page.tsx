@@ -3,20 +3,20 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Экологичная уборка: натуральные средства без химии | Блог KliningPro',
+  title: 'Экологичная уборка: натуральные средства без химии | Блог K-lining',
   description: 'Как убирать дом без химии и вреда для здоровья. Натуральные средства для чистоты. Эко-уборка квартир и офисов. Безопасные средства для детей и аллергиков.',
   keywords: 'экологичная уборка, натуральные средства, уборка без химии, эко клининг, безопасная уборка, уборка для аллергиков, натуральные чистящие средства, уборка с содой, уборка с уксусом',
   openGraph: {
     title: 'Экологичная уборка: натуральные средства без химии',
     description: 'Как убирать дом без химии и вреда для здоровья. Натуральные средства для чистоты.',
     url: 'https://k-lining.ru/blog/eco-friendly-cleaning',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [{ url: '/blog/eco-cleaning.jpg', width: 1200, height: 630, alt: 'Экологичная уборка' }],
     locale: 'ru_RU',
     type: 'article',
     publishedTime: '2024-12-20T10:00:00Z',
     modifiedTime: '2024-12-20T10:00:00Z',
-    authors: ['KliningPro'],
+    authors: ['K-lining'],
     tags: ['экологичная уборка', 'натуральные средства', 'эко клининг', 'безопасная уборка']
   },
   twitter: {
@@ -44,6 +44,24 @@ export const metadata: Metadata = {
 export default function EcoFriendlyCleaningPage() {
   return (
     <div className="section-padding bg-gradient-to-br from-gray-50 to-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": "Экологичная уборка: натуральные средства без химии",
+            "description": "Как убирать дом без химии и вреда для здоровья. Натуральные средства для чистоты.",
+            "image": ["https://k-lining.ru/blog/eco-cleaning.jpg"],
+            "author": { "@type": "Organization", "name": "K-lining", "url": "https://k-lining.ru" },
+            "publisher": { "@type": "Organization", "name": "K-lining", "logo": { "@type": "ImageObject", "url": "https://k-lining.ru/logo.png" } },
+            "datePublished": new Date().toISOString().split('T')[0],
+            "dateModified": new Date().toISOString().split('T')[0],
+            "mainEntityOfPage": { "@type": "WebPage", "@id": "https://k-lining.ru/blog/eco-friendly-cleaning" },
+            "inLanguage": "ru-RU"
+          })
+        }}
+      />
       <div className="container-custom">
         <nav className="mb-8">
           <ol className="flex items-center space-x-2 text-sm text-gray-500">

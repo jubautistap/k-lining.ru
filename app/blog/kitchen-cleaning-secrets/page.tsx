@@ -12,7 +12,7 @@ export const metadata = {
     type: 'article',
     publishedTime: '2025-01-15T10:00:00Z',
     modifiedTime: '2025-01-15T10:00:00Z',
-    authors: ['KliningPro'],
+    authors: ['K-lining'],
     tags: ['уборка кухни', 'клининг', 'советы по уборке']
   }
 };
@@ -20,6 +20,24 @@ export const metadata = {
 export default function KitchenCleaningSecretsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": "Секреты идеальной уборки кухни: 15 проверенных способов",
+            "description": "Профессиональные секреты уборки кухни: плита, холодильник, микроволновка и другие поверхности.",
+            "image": ["https://k-lining.ru/og-image.webp"],
+            "author": { "@type": "Organization", "name": "K-lining", "url": "https://k-lining.ru" },
+            "publisher": { "@type": "Organization", "name": "K-lining", "logo": { "@type": "ImageObject", "url": "https://k-lining.ru/logo.png" } },
+            "datePublished": new Date().toISOString().split('T')[0],
+            "dateModified": new Date().toISOString().split('T')[0],
+            "mainEntityOfPage": { "@type": "WebPage", "@id": "https://k-lining.ru/blog/kitchen-cleaning-secrets" },
+            "inLanguage": "ru-RU"
+          })
+        }}
+      />
       <div className="container-custom py-8">
         {/* Breadcrumbs */}
         <nav className="mb-8">

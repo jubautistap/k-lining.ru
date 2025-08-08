@@ -4,14 +4,14 @@ import Link from 'next/link';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Химчистка в Москве: мебель, ковры, диваны, матрасы | KliningPro',
+  title: 'Химчистка мебели и ковров в Москве на дому — от 1 000 ₽, 24/7 | K-lining',
   description: 'Профессиональная химчистка мебели, ковров, диванов, матрасов в Москве и МО. Химчистка на дому, выезд специалиста. Гарантия качества, цены от 1000₽.',
   keywords: 'химчистка Москва, химчистка мебели, химчистка ковров, химчистка диванов, химчистка матрасов, химчистка на дому, химчистка штор, химчистка стульев',
   openGraph: {
-    title: 'Химчистка в Москве: мебель, ковры, диваны, матрасы',
+    title: 'Химчистка мебели и ковров в Москве — на дому, 24/7',
     description: 'Профессиональная химчистка мебели, ковров, диванов, матрасов в Москве и МО.',
     url: 'https://k-lining.ru/services/dry-cleaning',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [{ url: '/images/dry-cleaning.jpg', width: 1200, height: 630, alt: 'Химчистка в Москве' }],
     locale: 'ru_RU',
     type: 'website',

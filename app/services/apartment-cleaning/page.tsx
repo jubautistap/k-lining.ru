@@ -5,7 +5,7 @@ import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Уборка квартир в Москве: генеральная, после ремонта, поддерживающая | K-lining',
+  title: 'Уборка квартир в Москве — от 2 500 ₽, 24/7, выезд сегодня | K-lining',
   description: 'Профессиональная уборка квартир в Москве и МО. Генеральная уборка, уборка после ремонта, поддерживающая уборка. Гарантия качества, выезд в день заказа. Цены от 3000₽.',
   keywords: 'уборка квартир Москва, генеральная уборка квартиры, уборка после ремонта, поддерживающая уборка, клининг квартир, уборка квартиры цена, эко уборка квартиры, VIP уборка квартиры',
   openGraph: {

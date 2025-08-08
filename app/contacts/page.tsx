@@ -3,11 +3,11 @@ import ContactSection from '@/components/sections/ContactSection';
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 
 export const metadata: Metadata = {
-  title: 'Контакты клининговой компании в Москве | Заказать уборку K-lining',
+  title: 'Контакты K-lining — заказать уборку 24/7, выезд сегодня',
   description: 'Свяжитесь с нами для заказа уборки в Москве. Телефон, email, адрес. Работаем 24/7. Бесплатная консультация. Уборка квартир, офисов, химчистка, мытье окон.',
   keywords: 'контакты клининга, уборка москва контакты, заказать уборку, телефон клининга, контакты уборки квартир, заказать уборку офиса, контакты химчистки',
   openGraph: {
-    title: 'Контакты K-lining - Связаться с клининговой компанией',
+    title: 'Контакты K-lining — клининг в Москве 24/7',
     description: 'Свяжитесь с K-lining для заказа профессиональной уборки. Телефон, адрес, режим работы. Бесплатная консультация и расчет стоимости.',
     url: 'https://k-lining.ru/contacts',
     siteName: 'K-lining',

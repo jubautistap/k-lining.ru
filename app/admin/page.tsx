@@ -25,6 +25,18 @@ export default function AdminPage() {
   const [recentLeads, setRecentLeads] = React.useState<Lead[]>([]);
   const [loading, setLoading] = React.useState(true);
 
+  // Гарантированный скролл к началу при первом монтировании главной админки
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        if ('scrollRestoration' in window.history) {
+          window.history.scrollRestoration = 'manual';
+        }
+        window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
+      } catch {}
+    }
+  }, []);
+
   const getTokenOrRefresh = React.useCallback(async (): Promise<string> => {
     const token = localStorage.getItem('accessToken') || '';
     return token;
@@ -100,7 +112,7 @@ export default function AdminPage() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       {/* Быстрые действия */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
         <a href="/admin/leads" className="bg-white border border-gray-200 rounded-lg p-4 text-center hover:shadow">Заявки</a>

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { CheckCircle, Shield, Clock, Users, Star, Zap, Building, Briefcase } from 'lucide-react';
 
 export const metadata = {
-  title: 'Клининг для бизнеса: корпоративные услуги в Москве | KliningPro',
+  title: 'Клининг для бизнеса в Москве — КП за 10 минут, 24/7 | K-lining',
   description: 'Профессиональные клининговые услуги для бизнеса в Москве. Уборка офисов, торговых центров, производственных помещений. Корпоративные скидки.',
   keywords: 'клининг для бизнеса, уборка офисов, корпоративные услуги, уборка торговых центров, клининг Москва',
 };

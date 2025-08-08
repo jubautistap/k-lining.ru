@@ -4,20 +4,20 @@ import Link from 'next/link';
 import { Calendar, Clock, User, ArrowLeft } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Мытье окон: секреты профессионалов без разводов | Блог KliningPro',
+  title: 'Мытье окон: секреты профессионалов без разводов | Блог K-lining',
   description: 'Как правильно мыть окна без разводов. Инструменты и техники от опытных клинеров. Мытье окон в квартире, офисе, на высоте. Профессиональные секреты чистых окон.',
   keywords: 'мытье окон, мытье окон без разводов, мытье окон в квартире, профессиональное мытье окон, мытье окон на высоте, чистка окон, уборка окон, мытье окон в офисе',
   openGraph: {
     title: 'Мытье окон: секреты профессионалов без разводов',
     description: 'Как правильно мыть окна без разводов. Инструменты и техники от опытных клинеров.',
     url: 'https://k-lining.ru/blog/window-cleaning-tips',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [{ url: '/blog/window-cleaning.jpg', width: 1200, height: 630, alt: 'Мытье окон' }],
     locale: 'ru_RU',
     type: 'article',
     publishedTime: '2024-12-28T10:00:00Z',
     modifiedTime: '2024-12-28T10:00:00Z',
-    authors: ['KliningPro'],
+    authors: ['K-lining'],
     tags: ['мытье окон', 'чистка окон', 'профессиональное мытье', 'уборка окон']
   },
   twitter: {
@@ -45,6 +45,24 @@ export const metadata: Metadata = {
 export default function WindowCleaningTipsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": "Профессиональное мытье окон в квартире: секреты идеальной чистоты",
+            "description": "Как правильно мыть окна без разводов. Инструменты и техники от опытных клинеров.",
+            "image": ["https://k-lining.ru/blog/window-cleaning.jpg"],
+            "author": { "@type": "Organization", "name": "K-lining", "url": "https://k-lining.ru" },
+            "publisher": { "@type": "Organization", "name": "K-lining", "logo": { "@type": "ImageObject", "url": "https://k-lining.ru/logo.png" } },
+            "datePublished": "2024-12-28",
+            "dateModified": "2024-12-28",
+            "mainEntityOfPage": { "@type": "WebPage", "@id": "https://k-lining.ru/blog/window-cleaning-tips" },
+            "inLanguage": "ru-RU"
+          })
+        }}
+      />
       <div className="container-custom py-8">
         {/* Breadcrumbs */}
         <nav className="mb-8">

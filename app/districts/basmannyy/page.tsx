@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { MapPin, Clock, Phone, CheckCircle, ArrowRight, Home, Building2 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Уборка квартир и офисов в Басманном районе Москвы | KliningPro',
+  title: 'Уборка в Басманном районе — офис рядом, выезд 30 минут | K-lining',
   description: 'Профессиональная уборка квартир и офисов в Басманном районе ⭐ Офис на Бакунинской 69 стр 1 ⭐ Быстрый выезд, работаем 24/7 ⭐ Химчистка, генеральная уборка ⭐ Цены от 2,500₽',
   keywords: 'уборка басманный район, клининг басманный, уборка квартир басманный район москва, бакунинская уборка, уборка офисов басманный',
   openGraph: {

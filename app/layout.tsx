@@ -27,9 +27,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   metadataBase: new URL('https://k-lining.ru'),
-  alternates: {
-    canonical: '/',
-  },
+  // Каноникал выставляем динамически клиентом, чтобы не форсить '/' для всех страниц
   openGraph: {
     title: 'Уборка квартир и офисов в Москве - K-lining | Цены от 3000₽',
     description: 'Профессиональная уборка квартир и офисов в Москве ⭐ Клининговая компания K-lining ⭐ Химчистка мебели, мытье окон, генеральная уборка ⭐ Работаем 24/7 ⭐ Гарантия качества',
@@ -98,6 +96,12 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://mc.yandex.ru" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="//mc.yandex.ru" />
+        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="shortcut icon" href="/favicon.ico?v=2" />
         <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
         <link rel="icon" type="image/png" href="/favicon-32x32.png?v=2" sizes="32x32" />
@@ -197,36 +201,36 @@ export default function RootLayout({
         
         {/* Убираем preload для аналитики - загружаем асинхронно */}
         
-        {/* Schema.org разметка */}
+        {/* Schema.org разметка: точный тип бизнеса */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Organization",
+              "@type": "CleaningService",
               "name": "K-lining",
               "url": "https://k-lining.ru",
               "logo": "https://k-lining.ru/logo.png",
-              "description": "Профессиональная клининговая компания в Москве и МО. Работаем в ЦАО, ЮЗАО, САО и других округах",
-              "foundingDate": "2024",
+              "image": "https://k-lining.ru/og-image.webp",
+              "description": "Профессиональная клининговая компания в Москве и МО. Квартиры, дома, офисы. 24/7.",
+              "telephone": "+7-925-555-18-33",
+              "priceRange": "₽₽",
               "address": {
                 "@type": "PostalAddress",
                 "addressLocality": "Москва",
-                "addressCountry": "RU",
-                "addressRegion": "Москва"
+                "addressRegion": "Москва",
+                "addressCountry": "RU"
               },
-              "contactPoint": {
-                "@type": "ContactPoint",
-                "telephone": "+7-925-555-18-33",
-                "contactType": "customer service",
-                "availableLanguage": "Russian",
-                "hoursAvailable": {
-                  "@type": "OpeningHoursSpecification",
-                  "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-                  "opens": "00:00",
-                  "closes": "23:59"
-                }
+              "areaServed": {
+                "@type": "City",
+                "name": "Москва"
               },
+              "openingHoursSpecification": [{
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+                "opens": "00:00",
+                "closes": "23:59"
+              }],
               "sameAs": [
                 "https://t.me/k_liningru",
                 "https://wa.me/79255551833"
@@ -235,100 +239,30 @@ export default function RootLayout({
                 "@type": "OfferCatalog",
                 "name": "Услуги клининга",
                 "itemListElement": [
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Уборка квартир",
-                      "description": "Профессиональная уборка квартир в Москве"
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Уборка офисов",
-                      "description": "Комплексная уборка офисных помещений"
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Химчистка мебели",
-                      "description": "Профессиональная химчистка диванов и ковров"
-                    }
-                  }
+                  {"@type":"Offer","itemOffered":{"@type":"Service","name":"Уборка квартир"}},
+                  {"@type":"Offer","itemOffered":{"@type":"Service","name":"Уборка офисов"}},
+                  {"@type":"Offer","itemOffered":{"@type":"Service","name":"Химчистка мебели"}}
                 ]
-              },
-              "potentialAction": {
-                "@type": "SearchAction",
-                "target": {
-                  "@type": "EntryPoint",
-                  "urlTemplate": "https://k-lining.ru/services"
-                },
-                "query-input": "required name=search_term_string"
-              },
-              "mainEntity": {
-                "@type": "WebSite",
-                "name": "K-lining",
-                "url": "https://k-lining.ru",
-                "potentialAction": {
-                  "@type": "SearchAction",
-                  "target": "https://k-lining.ru/services?q={search_term_string}",
-                  "query-input": "required name=search_term_string"
-                }
-              },
-              "breadcrumb": {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                  {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Главная",
-                    "item": "https://k-lining.ru"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Услуги",
-                    "item": "https://k-lining.ru/services"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 3,
-                    "name": "Цены",
-                    "item": "https://k-lining.ru/prices"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 4,
-                    "name": "Контакты",
-                    "item": "https://k-lining.ru/contacts"
-                  }
-                ]
-              },
-              "hasPart": [
-                {
-                  "@type": "SiteNavigationElement",
-                  "name": "Услуги",
-                  "url": "https://k-lining.ru/services",
-                  "description": "Услуги клининговой компании K-lining"
-                },
-                {
-                  "@type": "SiteNavigationElement",
-                  "name": "Цены",
-                  "url": "https://k-lining.ru/prices",
-                  "description": "Цены на услуги клининга"
-                },
-                {
-                  "@type": "SiteNavigationElement",
-                  "name": "Контакты",
-                  "url": "https://k-lining.ru/contacts",
-                  "description": "Связаться с клининговой компанией K-lining"
-                }
-              ]
+              }
             })
+          }}
+        />
+
+        {/* WebSite + Sitelinks Search Box */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'K-lining',
+              url: 'https://k-lining.ru',
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: 'https://k-lining.ru/services?q={search_term_string}',
+                'query-input': 'required name=search_term_string',
+              },
+            }),
           }}
         />
       </head>

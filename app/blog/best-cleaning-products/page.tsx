@@ -3,27 +3,27 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Топ-10 профессиональных средств для уборки 2025 года | Блог KliningPro',
+  title: 'Топ-10 профессиональных средств для уборки 2025 года | Блог K-lining',
   description: 'Обзор лучших чистящих средств от профессионалов клининга. Что действительно работает, а что нет. Рекомендации экспертов по выбору средств для уборки квартир, офисов, химчистки.',
   keywords: 'средства для уборки, профессиональная химия, чистящие средства, уборка квартиры, клининг средства, лучшие средства уборки, профессиональная химия клининг, средства для химчистки, уборка офисов средства',
   openGraph: {
     title: 'Топ-10 профессиональных средств для уборки 2025 года',
     description: 'Обзор лучших чистящих средств от профессионалов клининга. Что действительно работает, а что нет.',
     url: 'https://k-lining.ru/blog/best-cleaning-products',
-    siteName: 'KliningPro',
-    images: [{ url: '/blog/cleaning-products.jpg', width: 1200, height: 630, alt: 'Средства для уборки' }],
+    siteName: 'K-lining',
+    images: [{ url: '/blog/cleaning-tools.jpg', width: 1200, height: 630, alt: 'Средства для уборки' }],
     locale: 'ru_RU',
     type: 'article',
     publishedTime: '2025-01-10T10:00:00Z',
     modifiedTime: '2025-01-10T10:00:00Z',
-    authors: ['KliningPro'],
+    authors: ['K-lining'],
     tags: ['средства для уборки', 'профессиональная химия', 'клининг', 'уборка квартир']
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Топ-10 профессиональных средств для уборки 2025 года',
     description: 'Обзор лучших чистящих средств от профессионалов клининга',
-    images: ['/blog/cleaning-products.jpg'],
+    images: ['/blog/cleaning-tools.jpg'],
   },
   alternates: {
     canonical: 'https://k-lining.ru/blog/best-cleaning-products',
@@ -44,24 +44,24 @@ export const metadata: Metadata = {
 export default function BestCleaningProductsPage() {
   return (
     <>
-      {/* Article Schema */}
+      {/* BlogPosting Schema */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+      __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Article",
+        "@type": "BlogPosting",
             "headline": "Топ-10 профессиональных средств для уборки",
             "description": "Обзор лучших чистящих средств от профессионалов клининга. Что действительно работает, а что нет.",
             "image": "https://k-lining.ru/blog/cleaning-products.jpg",
             "author": {
               "@type": "Organization",
-              "name": "KliningPro",
+          "name": "K-lining",
               "url": "https://k-lining.ru"
             },
             "publisher": {
               "@type": "Organization",
-              "name": "KliningPro",
+          "name": "K-lining",
               "logo": {
                 "@type": "ImageObject",
                 "url": "https://k-lining.ru/logo.png"

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     title: 'График уборки офиса: что и когда чистить',
     description: 'Оптимальный план уборки для офисных помещений. Ежедневные и еженедельные задачи.',
     url: 'https://k-lining.ru/blog/office-cleaning-schedule',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [{ url: '/blog/office-cleaning.jpg', width: 1200, height: 630, alt: 'Уборка офисов' }],
     locale: 'ru_RU',
     type: 'article',
@@ -44,6 +44,24 @@ export const metadata: Metadata = {
 export default function OfficeCleaningSchedulePage() {
   return (
     <div className="section-padding bg-gradient-to-br from-gray-50 to-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": "График уборки офиса: что и когда чистить",
+            "description": "Оптимальный план уборки для офисных помещений. Ежедневные и еженедельные задачи.",
+            "image": ["https://k-lining.ru/blog/office-cleaning.jpg"],
+            "author": { "@type": "Organization", "name": "K-lining", "url": "https://k-lining.ru" },
+            "publisher": { "@type": "Organization", "name": "K-lining", "logo": { "@type": "ImageObject", "url": "https://k-lining.ru/logo.png" } },
+            "datePublished": new Date().toISOString().split('T')[0],
+            "dateModified": new Date().toISOString().split('T')[0],
+            "mainEntityOfPage": { "@type": "WebPage", "@id": "https://k-lining.ru/blog/office-cleaning-schedule" },
+            "inLanguage": "ru-RU"
+          })
+        }}
+      />
       <div className="container-custom">
         <nav className="mb-8">
           <ol className="flex items-center space-x-2 text-sm text-gray-500">

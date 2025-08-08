@@ -36,11 +36,11 @@ export async function POST(request: NextRequest) {
       if (!res.ok) {
         const errTxt = await res.text().catch(() => '');
         console.error('Admin leads POST failed:', res.status, errTxt);
-        // Не возвращаем 502, а продолжаем выполнение для отправки в TG
+        return NextResponse.json({ error: 'Failed to create lead in admin', details: errTxt }, { status: 502 });
       }
     } catch (error) {
       console.error('Error adding lead to admin:', error);
-      // Не возвращаем 502, а продолжаем выполнение для отправки в TG
+      return NextResponse.json({ error: 'Upstream error while creating lead' }, { status: 502 });
     }
 
     // Здесь будет интеграция с amoCRM API

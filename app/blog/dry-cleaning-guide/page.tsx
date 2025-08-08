@@ -4,20 +4,20 @@ import Link from 'next/link';
 import { Calendar, Clock, User, ArrowLeft } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Химчистка мебели: полное руководство 2025 года | Блог KliningPro',
+  title: 'Химчистка мебели: полное руководство 2025 года | Блог K-lining',
   description: 'Все о химчистке диванов, ковров и мебели. Как выбрать правильную услугу. Химчистка мебели на дому, химчистка дивана, ковров, штор. Профессиональная химчистка.',
   keywords: 'химчистка мебели, химчистка дивана, химчистка ковров, химчистка на дому, профессиональная химчистка, химчистка штор, химчистка мягкой мебели, химчистка ковролина',
   openGraph: {
     title: 'Химчистка мебели: полное руководство 2025 года',
     description: 'Все о химчистке диванов, ковров и мебели. Как выбрать правильную услугу.',
     url: 'https://k-lining.ru/blog/dry-cleaning-guide',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [{ url: '/blog/dry-cleaning.jpg', width: 1200, height: 630, alt: 'Химчистка мебели' }],
     locale: 'ru_RU',
     type: 'article',
     publishedTime: '2025-01-05T10:00:00Z',
     modifiedTime: '2025-01-05T10:00:00Z',
-    authors: ['KliningPro'],
+    authors: ['K-lining'],
     tags: ['химчистка мебели', 'химчистка дивана', 'химчистка ковров', 'профессиональная химчистка']
   },
   twitter: {
@@ -45,6 +45,24 @@ export const metadata: Metadata = {
 export default function DryCleaningGuidePage() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": "Химчистка мебели и текстиля: профессиональные услуги",
+            "description": "Все о химчистке диванов, ковров и мебели. Как выбрать правильную услугу.",
+            "image": ["https://k-lining.ru/blog/dry-cleaning.jpg"],
+            "author": { "@type": "Organization", "name": "K-lining", "url": "https://k-lining.ru" },
+            "publisher": { "@type": "Organization", "name": "K-lining", "logo": { "@type": "ImageObject", "url": "https://k-lining.ru/logo.png" } },
+            "datePublished": "2025-01-05",
+            "dateModified": "2025-01-05",
+            "mainEntityOfPage": { "@type": "WebPage", "@id": "https://k-lining.ru/blog/dry-cleaning-guide" },
+            "inLanguage": "ru-RU"
+          })
+        }}
+      />
       <div className="container-custom py-8">
         {/* Breadcrumbs */}
         <nav className="mb-8">

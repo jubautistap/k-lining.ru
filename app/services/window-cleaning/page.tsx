@@ -2,7 +2,27 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { Metadata } from 'next';
 import { CheckCircle, Shield, Clock, Users, Star, Zap, Square } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Мытьё окон в Москве — от 500 ₽, безопасно и без разводов | K-lining',
+  description: 'Профессиональное мытьё окон в квартирах, домах и офисах. Полировка стекла, рам и подоконников. Работаем 24/7, выезд в день обращения.',
+  openGraph: {
+    title: 'Мытьё окон — профессионально, быстро, без разводов',
+    description: 'Мытьё окон и витражей в Москве. Балконы, лоджии, высотные работы. Честные цены — от 500 ₽.',
+    url: 'https://k-lining.ru/services/window-cleaning',
+    siteName: 'K-lining',
+    images: [
+      { url: '/og-image.webp', width: 1200, height: 630, alt: 'Мытьё окон в Москве' }
+    ],
+    locale: 'ru_RU',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://k-lining.ru/services/window-cleaning',
+  },
+};
 
 export default function WindowCleaningPage() {
   return (

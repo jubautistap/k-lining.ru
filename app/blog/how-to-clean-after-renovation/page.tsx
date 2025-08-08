@@ -44,6 +44,24 @@ export const metadata: Metadata = {
 export default function BlogPostPage() {
   return (
     <div className="section-padding bg-gradient-to-br from-gray-50 to-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": "Уборка после ремонта: пошаговое руководство",
+            "description": "Пошаговый план уборки строительной пыли и мусора после ремонта.",
+            "image": ["https://k-lining.ru/blog/after-renovation.jpg"],
+            "author": { "@type": "Organization", "name": "K-lining", "url": "https://k-lining.ru" },
+            "publisher": { "@type": "Organization", "name": "K-lining", "logo": { "@type": "ImageObject", "url": "https://k-lining.ru/logo.png" } },
+            "datePublished": new Date().toISOString().split('T')[0],
+            "dateModified": new Date().toISOString().split('T')[0],
+            "mainEntityOfPage": { "@type": "WebPage", "@id": "https://k-lining.ru/blog/how-to-clean-after-renovation" },
+            "inLanguage": "ru-RU"
+          })
+        }}
+      />
       <div className="container-custom">
         {/* Breadcrumbs */}
         <nav className="mb-8">

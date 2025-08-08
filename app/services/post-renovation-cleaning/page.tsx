@@ -2,7 +2,27 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { Metadata } from 'next';
 import { CheckCircle, Shield, Clock, Users, Star, Zap, Hammer } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Уборка после ремонта в Москве — от 8 000 ₽, выезд сегодня | K-lining',
+  description: 'Профессиональная уборка после ремонта: удаление строительной пыли, мытьё окон, финишная очистка. Быстрый выезд, работаем 24/7. Честные цены от 8 000 ₽.',
+  openGraph: {
+    title: 'Уборка после ремонта — профессионально, быстро, без пыли',
+    description: 'Комплексная послеремонтная уборка в Москве. Удаляем пыль, мусор, следы краски и клея. Выезд сегодня.',
+    url: 'https://k-lining.ru/services/post-renovation-cleaning',
+    siteName: 'K-lining',
+    images: [
+      { url: '/og-image.webp', width: 1200, height: 630, alt: 'Уборка после ремонта в Москве' }
+    ],
+    locale: 'ru_RU',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://k-lining.ru/services/post-renovation-cleaning',
+  },
+};
 
 export default function PostRenovationCleaningPage() {
   return (

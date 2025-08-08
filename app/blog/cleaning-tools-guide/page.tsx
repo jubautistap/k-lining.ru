@@ -3,20 +3,20 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Инструменты для уборки: полный гид профессионала | Блог KliningPro',
+  title: 'Инструменты для уборки: полный гид профессионала | Блог K-lining',
   description: 'Полный гид по инструментам для профессиональной уборки. Лучшие инструменты для уборки квартир, офисов. Инструменты для клининга, профессиональное оборудование для уборки.',
   keywords: 'инструменты для уборки, профессиональные инструменты уборки, оборудование для клининга, инструменты клининга, профессиональная уборка инструменты, пылесосы для уборки, швабры, губки',
   openGraph: {
     title: 'Инструменты для уборки: полный гид профессионала',
     description: 'Полный гид по инструментам для профессиональной уборки. Лучшие инструменты для уборки квартир, офисов.',
     url: 'https://k-lining.ru/blog/cleaning-tools-guide',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [{ url: '/blog/cleaning-tools.jpg', width: 1200, height: 630, alt: 'Инструменты для уборки' }],
     locale: 'ru_RU',
     type: 'article',
     publishedTime: '2024-12-10T10:00:00Z',
     modifiedTime: '2024-12-10T10:00:00Z',
-    authors: ['KliningPro'],
+    authors: ['K-lining'],
     tags: ['инструменты для уборки', 'профессиональные инструменты', 'оборудование клининга', 'инструменты клининга']
   },
   twitter: {
@@ -44,6 +44,24 @@ export const metadata: Metadata = {
 export default function CleaningToolsGuidePage() {
   return (
     <div className="section-padding bg-gradient-to-br from-gray-50 to-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": "Инструменты для уборки: полный гид профессионала",
+            "description": "Полный гид по инструментам для профессиональной уборки: пылесосы, швабры, пароочистители и другое оборудование.",
+            "image": ["https://k-lining.ru/blog/cleaning-tools.jpg"],
+            "author": { "@type": "Organization", "name": "K-lining", "url": "https://k-lining.ru" },
+            "publisher": { "@type": "Organization", "name": "K-lining", "logo": { "@type": "ImageObject", "url": "https://k-lining.ru/logo.png" } },
+            "datePublished": new Date().toISOString().split('T')[0],
+            "dateModified": new Date().toISOString().split('T')[0],
+            "mainEntityOfPage": { "@type": "WebPage", "@id": "https://k-lining.ru/blog/cleaning-tools-guide" },
+            "inLanguage": "ru-RU"
+          })
+        }}
+      />
       <div className="container-custom">
         <nav className="mb-8">
           <ol className="flex items-center space-x-2 text-sm text-gray-500">

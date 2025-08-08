@@ -69,6 +69,24 @@ export default function OfficeCleaningMoscow247Page() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": "Уборка офисов в Москве 24/7 - клининг офисных помещений",
+            "description": "Профессиональная уборка офисов в Москве круглосуточно. Поддерживающая и генеральная уборка офисных помещений.",
+            "image": ["https://k-lining.ru/blog/office-cleaning.jpg"],
+            "author": { "@type": "Organization", "name": "K-lining", "url": "https://k-lining.ru" },
+            "publisher": { "@type": "Organization", "name": "K-lining", "logo": { "@type": "ImageObject", "url": "https://k-lining.ru/logo.png" } },
+            "datePublished": new Date().toISOString().split('T')[0],
+            "dateModified": new Date().toISOString().split('T')[0],
+            "mainEntityOfPage": { "@type": "WebPage", "@id": "https://k-lining.ru/blog/office-cleaning-moscow-24-7" },
+            "inLanguage": "ru-RU"
+          })
+        }}
+      />
       {/* Article Schema */}
       <script
         type="application/ld+json"

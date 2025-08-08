@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { MapPin, ArrowRight, Home, Building2, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Уборка по районам Москвы - выезд клининговой службы | KliningPro',
+  title: 'Уборка по районам Москвы — быстрый выезд, 24/7 | K-lining',
   description: 'Уборка квартир и офисов по всем районам Москвы ⭐ Профессиональный клининг с выездом ⭐ Быстрая подача, работаем 24/7 ⭐ Цены от 2,500₽ ⭐ Обслуживаем все округа столицы',
   keywords: 'уборка по районам москвы, клининг районы москва, уборка округа москвы, клининговая компания выезд',
   openGraph: {

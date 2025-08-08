@@ -4,14 +4,14 @@ import Link from 'next/link';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Уборка домов в Москве: коттеджи, таунхаусы, дачи | KliningPro',
+  title: 'Уборка домов и коттеджей в Москве — от 5 000 ₽, гарантия | K-lining',
   description: 'Профессиональная уборка частных домов, коттеджей и таунхаусов в Москве и МО. Уборка после ремонта, поддерживающая уборка. Гарантия качества, выезд в день заказа. Цены от 5000₽.',
   keywords: 'уборка домов Москва, уборка коттеджей, уборка таунхаусов, уборка дач, клининг домов, уборка частного дома, уборка после ремонта дома, поддерживающая уборка дома',
   openGraph: {
     title: 'Уборка домов в Москве: коттеджи, таунхаусы, дачи',
     description: 'Профессиональная уборка частных домов, коттеджей и таунхаусов в Москве и МО.',
     url: 'https://k-lining.ru/services/house-cleaning',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [{ url: '/images/house-cleaning.jpg', width: 1200, height: 630, alt: 'Уборка домов в Москве' }],
     locale: 'ru_RU',
     type: 'website',

@@ -5,7 +5,7 @@ import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Уборка офисов в Москве: коммерческие помещения, ежедневная уборка | K-lining',
+  title: 'Уборка офисов в Москве — ежедневная/генеральная, КП за 10 мин | K-lining',
   description: 'Профессиональная уборка офисов и коммерческих помещений в Москве. Ежедневная уборка, генеральная уборка, уборка после ремонта. Дезинфекция, мытье окон. Цены от 3000₽.',
   keywords: 'уборка офисов Москва, клининг офисов, уборка коммерческих помещений, ежедневная уборка офиса, генеральная уборка офиса, дезинфекция офиса, мытье окон в офисе',
   openGraph: {

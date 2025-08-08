@@ -4,14 +4,14 @@ import Link from 'next/link';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Дополнительные услуги клининга в Москве: санузлы, кухни, балконы | KliningPro',
+  title: 'Дополнительные услуги клининга в Москве — кухни, санузлы, балконы | K-lining',
   description: 'Специализированные услуги клининга в Москве. Уборка санузлов, кухонь, балконов, механизированная уборка, уборка территории. Цены от 500₽.',
   keywords: 'дополнительные услуги клининга, уборка санузлов, уборка кухни, уборка балконов, механизированная уборка, уборка территории, клининг услуги Москва',
   openGraph: {
-    title: 'Дополнительные услуги клининга в Москве: санузлы, кухни, балконы',
+    title: 'Дополнительные услуги клининга — кухни, санузлы, балконы',
     description: 'Специализированные услуги клининга в Москве. Уборка санузлов, кухонь, балконов.',
     url: 'https://k-lining.ru/services/additional-services',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [{ url: '/images/additional-services.jpg', width: 1200, height: 630, alt: 'Дополнительные услуги клининга' }],
     locale: 'ru_RU',
     type: 'website',

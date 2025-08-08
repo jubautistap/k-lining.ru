@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Calculator, Clock, CheckCircle, Phone, ArrowRight, Home } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Уборка квартир в Москве недорого - цены 2025, рейтинг компаний | KliningPro',
+  title: 'Уборка квартир в Москве недорого — цены 2025, рейтинг компаний | K-lining',
   description: 'Уборка квартир в Москве недорого ⭐ Актуальные цены 2025 года ⭐ От 2,500₽ за 1-комнатную ⭐ Сравнение тарифов ⭐ KliningPro - качественная уборка по честным ценам ⭐ Работаем 24/7',
   keywords: 'уборка квартир москва недорого, уборка квартир москва цена, клининг москва цены, уборка квартиры недорого, генеральная уборка цена москва, стоимость уборки квартиры',
   openGraph: {
@@ -12,13 +12,13 @@ export const metadata: Metadata = {
     description: 'Уборка квартир в Москве недорого. Актуальные цены 2025 года от 2,500₽. Сравнение тарифов клининговых компаний.',
     type: 'article',
     publishedTime: '2025-01-16T00:00:00.000Z',
-    authors: ['KliningPro'],
+    authors: ['K-lining'],
     section: 'Цены и тарифы',
     tags: ['уборка квартир', 'цены', 'москва', 'недорого'],
     url: 'https://k-lining.ru/blog/apartment-cleaning-price-moscow',
     images: [
       {
-        url: 'https://k-lining.ru/blog/apartment-cleaning-price.jpg',
+        url: 'https://k-lining.ru/blog/office-cleaning.jpg',
         width: 1200,
         height: 630,
         alt: 'Уборка квартир в Москве - цены'
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Уборка квартир в Москве недорого - цены 2025',
     description: 'Актуальные цены на уборку квартир в Москве. От 2,500₽ за 1-комнатную.',
-    images: ['https://k-lining.ru/blog/apartment-cleaning-price.jpg']
+    images: ['https://k-lining.ru/blog/office-cleaning.jpg']
   },
   alternates: {
     canonical: 'https://k-lining.ru/blog/apartment-cleaning-price-moscow',
@@ -83,24 +83,24 @@ export default function ApartmentCleaningPriceMoscowPage() {
 
   return (
     <>
-      {/* Article Schema */}
+      {/* Article/BlogPosting Schema */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Article",
+            "@type": "BlogPosting",
             "headline": "Уборка квартир в Москве недорого - цены 2025, рейтинг компаний",
             "description": "Полный гид по ценам на уборку квартир в Москве. Актуальные тарифы, как сэкономить, сравнение компаний.",
-            "image": "https://k-lining.ru/blog/apartment-cleaning-price.jpg",
+            "image": "https://k-lining.ru/blog/office-cleaning.jpg",
             "author": {
               "@type": "Organization",
-              "name": "KliningPro",
+              "name": "K-lining",
               "url": "https://k-lining.ru"
             },
             "publisher": {
               "@type": "Organization",
-              "name": "KliningPro",
+              "name": "K-lining",
               "logo": {
                 "@type": "ImageObject",
                 "url": "https://k-lining.ru/logo.png"
