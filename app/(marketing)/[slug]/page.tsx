@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import landings from '@/data/seo-landings.json';
 
 interface LandingConfig {
@@ -126,16 +127,7 @@ export default function MarketingLandingPage({ params }: { params: { slug: strin
         detailsLink: '/services',
       }
     : STATIC_LANDINGS[params.slug];
-  if (!config) {
-    return (
-      <section className="section-padding">
-        <div className="container-custom">
-          <h1 className="text-2xl font-bold">Страница не найдена</h1>
-          <p className="text-gray-600">Перейдите на <Link href="/services" className="text-primary-600 underline">страницу услуг</Link>.</p>
-        </div>
-      </section>
-    );
-  }
+  if (!config) return notFound();
 
   return (
     <section className="section-padding bg-gradient-to-br from-gray-50 to-white">
