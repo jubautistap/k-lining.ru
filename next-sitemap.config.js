@@ -33,6 +33,25 @@ module.exports = {
   autoLastmod: true,
   // предпочтительные расширения locales уже в путях, поэтому alternateRefs не нужен
   sitemapSize: 5000,
+  additionalPaths: async (config) => {
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const jsonPath = path.resolve(process.cwd(), 'data', 'seo-landings.json');
+      if (!fs.existsSync(jsonPath)) return [];
+      const raw = fs.readFileSync(jsonPath, 'utf8');
+      const landings = JSON.parse(raw);
+      const urls = Object.keys(landings || {}).map((slug) => ({
+        loc: `/${slug}`,
+        changefreq: 'weekly',
+        priority: 0.85,
+        lastmod: new Date().toISOString(),
+      }));
+      return urls;
+    } catch (_) {
+      return [];
+    }
+  },
   transform: async (config, path) => {
     // Настройка приоритетов для разных страниц
     let priority = 0.7;
