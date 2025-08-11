@@ -49,8 +49,10 @@ function toSlug(raw) {
 
 function main() {
   if (!fs.existsSync(CSV_PATH)) {
-    console.error('CSV not found at', CSV_PATH);
-    process.exit(1);
+    console.warn('[seo-landings] CSV not found at', CSV_PATH, '→ generating empty landings JSON');
+    fs.mkdirSync(path.dirname(OUT_PATH), { recursive: true });
+    fs.writeFileSync(OUT_PATH, JSON.stringify({}, null, 2), 'utf8');
+    return;
   }
 
   const csv = fs.readFileSync(CSV_PATH, 'utf8');
