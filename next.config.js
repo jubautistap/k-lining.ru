@@ -125,6 +125,40 @@ const nextConfig = {
         destination: '/',
         permanent: true,
       },
+      // SEO: high-priority Russian slugs → existing pages
+      { source: '/klining-moskva', destination: '/', permanent: true },
+      { source: '/kliningovaya-kompaniya-moskva', destination: '/', permanent: true },
+      { source: '/kliningovye-uslugi-moskva', destination: '/services', permanent: true },
+      { source: '/poslestroitelnyy-klining-moskva', destination: '/services/post-renovation-cleaning', permanent: true },
+      { source: '/vysotnyy-klining-moskva', destination: '/services/window-cleaning', permanent: true },
+      { source: '/klining-prays-moskva', destination: '/prices', permanent: true },
+      { source: '/kliningovaya-kompaniya-moskva-centr', destination: '/services', permanent: true },
+      { source: '/klining-moskva-cao', destination: '/districts', permanent: true },
+      { source: '/klining-moskva-sao', destination: '/districts', permanent: true },
+      { source: '/klining-moskva-svao', destination: '/districts', permanent: true },
+      { source: '/klining-moskva-vao', destination: '/districts', permanent: true },
+      { source: '/klining-moskva-yuvao', destination: '/districts', permanent: true },
+      { source: '/klining-moskva-yuao', destination: '/districts', permanent: true },
+      { source: '/klining-moskva-yuzao', destination: '/districts', permanent: true },
+      { source: '/klining-moskva-zao', destination: '/districts', permanent: true },
+
+      // Pricing & calculator
+      { source: '/klining-cena-moskva', destination: '/prices', permanent: true },
+      { source: '/klining-stoimost-moskva', destination: '/prices', permanent: true },
+      { source: '/uborka-kvartiry-cena-moskva', destination: '/prices', permanent: true },
+      { source: '/uborka-ofisov-cena-moskva', destination: '/prices', permanent: true },
+      { source: '/moyka-okon-cena-moskva', destination: '/prices', permanent: true },
+      { source: '/uborka-cena-za-chas-moskva', destination: '/prices', permanent: true },
+      { source: '/uborka-stoimost-za-m2-moskva', destination: '/prices', permanent: true },
+      { source: '/besplatnyy-vyezd-ocenschika-moskva', destination: '/contacts', permanent: true },
+      { source: '/raschet-stoimosti-uborki-moskva', destination: '/calculator', permanent: true },
+
+      // Core services
+      { source: '/uborka-kvartiry-moskva', destination: '/services/apartment-cleaning', permanent: true },
+      { source: '/uborka-posle-remonta-moskva', destination: '/services/post-renovation-cleaning', permanent: true },
+      { source: '/myte-okon-moskva', destination: '/services/window-cleaning', permanent: true },
+      { source: '/himchistka-mebeli-moskva', destination: '/services/furniture-dry-cleaning', permanent: true },
+      { source: '/uborka-ofisa-moskva', destination: '/services/office-cleaning', permanent: true },
     ];
   },
 };
