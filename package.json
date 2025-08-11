@@ -11,6 +11,7 @@
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "postbuild": "next-sitemap",
+    "postbuild:yandex": "node scripts/generate-yandex-sitemap.js",
     "analyze": "ANALYZE=true npm run build",
     "lighthouse": "lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html",
     "performance": "npm run build && npm run start & sleep 10 && npm run lighthouse && pkill -f 'next start'",

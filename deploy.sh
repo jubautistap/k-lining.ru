@@ -81,7 +81,7 @@ fi
 
 # Собираем проект
 print_status "Собираем проект..."
-ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && npm run build"
+ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && npm run build && npm run postbuild && npm run postbuild:yandex"
 
 if [ $? -eq 0 ]; then
     print_status "Проект успешно собран!"
