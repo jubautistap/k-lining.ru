@@ -15,6 +15,8 @@ export default function Canonical() {
         link.setAttribute('rel', 'canonical');
         link.setAttribute('href', href);
         document.head.appendChild(link);
+      } else if (existing.href !== href) {
+        existing.setAttribute('href', href);
       }
     } catch (_) {
       // noop

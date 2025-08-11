@@ -154,11 +154,12 @@ const nextConfig = {
       { source: '/raschet-stoimosti-uborki-moskva', destination: '/calculator', permanent: true },
 
       // Core services
-      { source: '/uborka-kvartiry-moskva', destination: '/services/apartment-cleaning', permanent: true },
-      { source: '/uborka-posle-remonta-moskva', destination: '/services/post-renovation-cleaning', permanent: true },
-      { source: '/myte-okon-moskva', destination: '/services/window-cleaning', permanent: true },
-      { source: '/himchistka-mebeli-moskva', destination: '/services/furniture-dry-cleaning', permanent: true },
-      { source: '/uborka-ofisa-moskva', destination: '/services/office-cleaning', permanent: true },
+      // Новые посадочные — убираем редиректы, страницы существуют
+      // { source: '/uborka-kvartiry-moskva', destination: '/services/apartment-cleaning', permanent: true },
+      // { source: '/uborka-posle-remonta-moskva', destination: '/services/post-renovation-cleaning', permanent: true },
+      // { source: '/myte-okon-moskva', destination: '/services/window-cleaning', permanent: true },
+      // { source: '/himchistka-mebeli-moskva', destination: '/services/furniture-dry-cleaning', permanent: true },
+      // { source: '/uborka-ofisa-moskva', destination: '/services/office-cleaning', permanent: true },
     ];
   },
 };
