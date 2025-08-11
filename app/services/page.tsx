@@ -198,6 +198,43 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Internal SEO Links to Landing Pages */}
+      <section className="py-16 bg-white">
+        <div className="container-custom">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+            Популярные направления клининга в Москве
+          </h2>
+          <p className="text-gray-600 mb-6 max-w-3xl">
+            Быстрые ссылки на часто заказываемые услуги и лендинги. Это поможет быстрее найти нужную услугу и улучшит навигацию.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {[
+              { href: '/uborka-kvartiry-moskva', text: 'Уборка квартиры Москва' },
+              { href: '/uborka-posle-remonta-moskva', text: 'Уборка после ремонта Москва' },
+              { href: '/myte-okon-moskva', text: 'Мытьё окон Москва' },
+              { href: '/himchistka-mebeli-moskva', text: 'Химчистка мебели Москва' },
+              { href: '/uborka-ofisa-moskva', text: 'Уборка офиса Москва' },
+              { href: '/klining-cena-moskva', text: 'Клининг цена Москва' },
+              { href: '/uborka-odnushki-moskva', text: 'Уборка однушки Москва' },
+              { href: '/uborka-dvushki-moskva', text: 'Уборка двушки Москва' },
+              { href: '/uborka-pered-sdachey-kvartiry-moskva', text: 'Уборка перед сдачей квартиры' },
+              { href: '/klining-24-7-moskva', text: 'Клининг 24/7' },
+              { href: '/klining-nedorogo-moskva', text: 'Клининг недорого' },
+              { href: '/uborka-doma-moskva', text: 'Уборка дома Москва' },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="inline-flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 text-gray-800 hover:border-primary-300 hover:bg-primary-50 transition-colors"
+              >
+                <span>{link.text}</span>
+                <span className="text-primary-600">→</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Advantages */}
       <section className="py-20 bg-white">
         <div className="container-custom">
