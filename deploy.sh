@@ -68,6 +68,14 @@ else
     exit 1
 fi
 
+# Копируем локальные CSV (если скрипт запускается с мака и папка существует)
+if [ -d "./SEo" ]; then
+  print_status "Загружаем SEo/ (CSV) на сервер..."
+  scp -r ./SEo $SERVER_USER@$SERVER_HOST:$SERVER_PATH/SEo || print_warning "Не удалось загрузить SEo/, продолжаем без CSV"
+else
+  print_warning "Локальная папка ./SEo не найдена — пропускаю загрузку CSV"
+fi
+
 # Устанавливаем зависимости
 print_status "Устанавливаем зависимости..."
 ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && npm install"
