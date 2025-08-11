@@ -70,8 +70,14 @@ fi
 
 # Копируем локальные CSV (если скрипт запускается с мака и папка существует)
 if [ -d "./SEo" ]; then
-  print_status "Загружаем SEo/ (CSV) на сервер..."
-  scp -r ./SEo $SERVER_USER@$SERVER_HOST:$SERVER_PATH/SEo || print_warning "Не удалось загрузить SEo/, продолжаем без CSV"
+  print_status "Загружаем SEo/ (CSV) на сервер через rsync..."
+  ssh $SERVER_USER@$SERVER_HOST "mkdir -p $SERVER_PATH/SEo"
+  rsync -az --delete \
+    --exclude '.DS_Store' \
+    --exclude '._*' \
+    --exclude '.git*' \
+    -e "ssh" ./SEo/ $SERVER_USER@$SERVER_HOST:$SERVER_PATH/SEo/ || \
+    print_warning "Не удалось загрузить SEo/ (rsync), продолжаем без CSV"
 else
   print_warning "Локальная папка ./SEo не найдена — пропускаю загрузку CSV"
 fi
@@ -89,7 +95,8 @@ fi
 
 # Собираем проект
 print_status "Собираем проект..."
-ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && npm run build && npm run postbuild && npm run postbuild:yandex"
+# postbuild (next-sitemap) запустится автоматически как lifecycle-скрипт после build
+ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && npm run build && npm run postbuild:yandex"
 
 if [ $? -eq 0 ]; then
     print_status "Проект успешно собран!"
@@ -100,7 +107,7 @@ fi
 
 # Перезапускаем PM2 процесс
 print_status "Перезапускаем PM2 процесс..."
-ssh $SERVER_USER@$SERVER_HOST "pm2 restart $PM2_APP_NAME"
+ssh $SERVER_USER@$SERVER_HOST "pm2 restart $PM2_APP_NAME --update-env"
 
 if [ $? -eq 0 ]; then
     print_status "PM2 процесс перезапущен!"
