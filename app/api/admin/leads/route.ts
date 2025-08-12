@@ -202,15 +202,17 @@ export async function POST(request: NextRequest) {
       if (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID) {
         candidates.push({ token: String(process.env.TELEGRAM_BOT_TOKEN), chat: String(process.env.TELEGRAM_CHAT_ID) });
       }
+      // Читаем токены напрямую из БД (без публичного эндпойнта)
       try {
-        const sRes = await fetch(`${origin}/api/admin/settings`, { cache: 'no-store' });
-        if (sRes.ok) {
-          const sData = await sRes.json();
-          const t = sData?.settings?.telegramBotToken as string | undefined;
-          const c = sData?.settings?.telegramChatId as string | undefined;
-          if (t && c) candidates.push({ token: t, chat: c });
-        }
-      } catch {}
+        const rows = await prisma.settings.findMany({
+          where: { key: { in: ['telegramBotToken', 'telegramChatId'] } },
+        });
+        const t = rows.find((r: any) => r.key === 'telegramBotToken')?.value as string | undefined;
+        const c = rows.find((r: any) => r.key === 'telegramChatId')?.value as string | undefined;
+        if (t && c) candidates.push({ token: t, chat: c });
+      } catch (e) {
+        console.warn('Settings read failed (telegram):', e);
+      }
 
       // Уникализируем пары, чтобы не слать дубль
       const unique = new Map<string, { token: string; chat: string }>();
@@ -239,6 +241,8 @@ export async function POST(request: NextRequest) {
             console.warn('Telegram send error:', e);
           }
         }));
+      } else {
+        console.warn('Telegram not configured: no candidates for sending');
       }
     } catch (error) {
       console.error('Telegram notification error:', error);
