@@ -101,11 +101,18 @@ function main() {
     console.warn('[seo-landings] Failed to scan streets CSVs:', e);
   }
 
-  if (total === 0) {
-    console.warn('[seo-landings] No CSV rows found → generating empty landings JSON');
-  }
-
   fs.mkdirSync(path.dirname(OUT_PATH), { recursive: true });
+  if (total === 0) {
+    // Нет CSV-строк: НЕ затираем существующий JSON — оставляем как есть
+    if (fs.existsSync(OUT_PATH)) {
+      console.warn('[seo-landings] No CSV rows found → keep existing', OUT_PATH);
+      const existing = JSON.parse(fs.readFileSync(OUT_PATH, 'utf8') || '{}');
+      console.log('Generated', OUT_PATH, 'items:', Object.keys(existing).length, '(kept)');
+      return;
+    } else {
+      console.warn('[seo-landings] No CSV rows found and no existing JSON → generating empty');
+    }
+  }
   fs.writeFileSync(OUT_PATH, JSON.stringify(bySlug, null, 2), 'utf8');
   console.log('Generated', OUT_PATH, 'items:', Object.keys(bySlug).length);
 }

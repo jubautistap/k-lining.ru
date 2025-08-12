@@ -4,7 +4,11 @@ import React from 'react';
 
 type QA = { question: string; answer: string };
 
-export default function FAQSchema({ items, faqs }: { items?: QA[]; faqs?: QA[] }) {
+// Backward-compat: accept both props names
+type Props = { items?: QA[]; faqs?: QA[] } & Record<string, unknown>;
+
+export default function FAQSchema(props: Props) {
+  const items = (props.items as QA[] | undefined) ?? (props.faqs as QA[] | undefined) ?? [];
   const list = items ?? faqs ?? [];
   if (!list.length) return null;
   const data = {
