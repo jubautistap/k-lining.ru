@@ -13,7 +13,9 @@ import {
   Star,
   Zap,
   Phone,
-  ArrowRight
+  ArrowRight,
+  RotateCcw,
+  X
 } from 'lucide-react';
 import { useAmoCRM } from '../providers/AmoCRMProvider';
 
@@ -33,6 +35,7 @@ export default function CleaningCalculator() {
   const [cleaningType, setCleaningType] = useState<'maintenance' | 'general' | 'postRenovation' | 'eco' | 'vip'>('maintenance');
   const [additionalServices, setAdditionalServices] = useState<string[]>([]);
   const [result, setResult] = useState<CalculationResult | null>(null);
+  const [servicesSearch, setServicesSearch] = useState<string>('');
 
   // Базовые цены за м²
   const basePrices = useMemo(() => ({
@@ -77,6 +80,12 @@ export default function CleaningCalculator() {
     { id: 'disinfection', name: 'Дезинфекция', price: 3000, icon: Shield },
     { id: 'carpet', name: 'Химчистка ковра', price: 2500, icon: Sparkles }
   ], []);
+
+  const filteredAdditionalServices = useMemo(() => {
+    if (!servicesSearch.trim()) return additionalServicesList;
+    const q = servicesSearch.trim().toLowerCase();
+    return additionalServicesList.filter((s) => s.name.toLowerCase().includes(q));
+  }, [additionalServicesList, servicesSearch]);
 
   // Расчет времени работы
   const calculateDuration = (area: number, cleaningType: string, propertyType: string) => {
@@ -182,8 +191,40 @@ export default function CleaningCalculator() {
     );
   };
 
+  const handleReset = () => {
+    setPropertyType('apartment');
+    setArea(50);
+    setCustomArea('');
+    setCleaningType('maintenance');
+    setAdditionalServices([]);
+  };
+
   return (
     <div className="max-w-6xl mx-auto">
+      {/* Header */}
+      <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Рассчитать стоимость уборки</h2>
+          <p className="text-gray-600">Подберите параметры — увидите итоговую цену и время работ</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleReset}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border text-gray-700 hover:bg-gray-50"
+            type="button"
+          >
+            <RotateCcw className="w-4 h-4" /> Сбросить
+          </button>
+          <button
+            onClick={openModal}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+            type="button"
+          >
+            <Phone className="w-4 h-4" /> Заказать
+          </button>
+        </div>
+      </div>
+
       {/* Современный дизайн с карточками */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
@@ -191,7 +232,7 @@ export default function CleaningCalculator() {
         <div className="lg:col-span-2 space-y-6">
           
           {/* Тип помещения */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
 className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
@@ -233,7 +274,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
           </motion.div>
 
           {/* Площадь */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -293,7 +334,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
           </motion.div>
 
           {/* Тип уборки */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -336,7 +377,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
           </motion.div>
 
           {/* Дополнительные услуги */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -348,9 +389,28 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Дополнительные услуги</h3>
             </div>
-            
+
+            {/* Поиск по услугам */}
+            <div className="mb-3 relative">
+              <input
+                value={servicesSearch}
+                onChange={(e) => setServicesSearch(e.target.value)}
+                placeholder="Поиск услуги…"
+                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              {servicesSearch && (
+                <button
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700"
+                  onClick={() => setServicesSearch('')}
+                  type="button"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-64 overflow-y-auto [mask-image:linear-gradient(to_bottom,transparent,black_12px,black_calc(100%-12px),transparent)]">
-              {additionalServicesList.map((service) => (
+              {filteredAdditionalServices.map((service) => (
                 <button
                   key={service.id}
                   onClick={() => handleServiceToggle(service.id)}
@@ -371,7 +431,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                       </div>
                       <span className="text-sm font-medium">{service.name}</span>
                     </div>
-                    <span className="text-sm font-bold">{service.price} ₽</span>
+                    <span className="text-sm font-bold whitespace-nowrap">{service.price} ₽</span>
                   </div>
                 </button>
               ))}
@@ -383,7 +443,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
         </div>
 
         {/* Правая колонка - Результат */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5 }}
@@ -403,6 +463,13 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                 animate={{ opacity: 1, scale: 1 }}
                 className="space-y-4"
               >
+                {/* Бейджи состояния */}
+                <div className="flex flex-wrap gap-2">
+                  <span className="inline-flex items-center rounded-full bg-white/15 px-2 py-1 text-xs">{serviceNames[cleaningType]}</span>
+                  <span className="inline-flex items-center rounded-full bg-white/15 px-2 py-1 text-xs">{propertyType === 'apartment' ? 'Квартира' : propertyType === 'house' ? 'Дом' : propertyType === 'office' ? 'Офис' : 'Коммерческое'}</span>
+                  <span className="inline-flex items-center rounded-full bg-white/15 px-2 py-1 text-xs">{area} м²</span>
+                </div>
+
                 {/* Основная услуга */}
                 <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
                   <div className="flex items-center justify-between mb-2">
@@ -448,7 +515,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                   )}
                 </div>
 
-                {/* Кнопка заказа */}
+                {/* Кнопки действия */}
                 <button 
                   onClick={openModal}
                   className="w-full bg-white text-blue-600 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg"
@@ -456,6 +523,13 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                   <Phone className="w-5 h-5" />
                   <span>Заказать уборку</span>
                   <ArrowRight className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={handleReset}
+                  className="w-full bg-white/10 text-white py-3 rounded-xl font-medium hover:bg-white/20 transition"
+                  type="button"
+                >
+                  Сбросить параметры
                 </button>
 
                 {/* Информация */}
