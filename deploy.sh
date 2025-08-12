@@ -108,7 +108,7 @@ fi
 
 # Перезапускаем PM2 процесс
 print_status "Перезапускаем PM2 процесс..."
-ssh $SERVER_USER@$SERVER_HOST "pm2 restart $PM2_APP_NAME --update-env && sleep 2 && curl -fsS -o /dev/null http://localhost:3000/"
+ssh $SERVER_USER@$SERVER_HOST "pm2 restart $PM2_APP_NAME --update-env && sleep 2 && bash scripts/warmup-urls.sh http://localhost:3000 || true"
 
 if [ $? -eq 0 ]; then
     print_status "PM2 процесс перезапущен!"

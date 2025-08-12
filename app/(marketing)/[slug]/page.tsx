@@ -1,8 +1,10 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import landings from '@/data/seo-landings.json';
+import FAQSchema from '@/components/ui/FAQSchema';
 
 interface LandingConfig {
   title: string;
@@ -135,6 +137,8 @@ export default function MarketingLandingPage({ params }: { params: { slug: strin
     : STATIC_LANDINGS[params.slug];
   if (!config) return notFound();
 
+  const StickyPromo = dynamic(() => import('@/components/ui/StickyPromo'), { ssr: false });
+
   return (
     <section className="section-padding bg-gradient-to-br from-gray-50 to-white">
       <div className="container-custom space-y-8">
@@ -191,6 +195,18 @@ export default function MarketingLandingPage({ params }: { params: { slug: strin
           </div>
         )}
       </div>
+      {/* FAQ JSON-LD для уличных страниц */}
+      {config.cluster === 'улицы' && (
+        <FAQSchema
+          items={[
+            { question: 'Можно вызвать на сегодня?', answer: 'Да, работаем 24/7. Выезд за 60–120 минут.' },
+            { question: 'Как считается цена?', answer: 'Зависит от метража и состояния. Смета за 10–15 минут.' },
+            { question: 'Оплата и гарантия?', answer: 'Оплата после выполнения. Даем гарантию качества.' },
+          ]}
+        />
+      )}
+      {/* Sticky CTA для конверсии */}
+      <StickyPromo enabled={config.cluster === 'улицы'} />
     </section>
   );
 }
