@@ -122,7 +122,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default function MarketingLandingPage({ params }: { params: { slug: string } }) {
   const dynamic = (landings as Record<string, any>)[params.slug];
-  const config = dynamic
+  const config: LandingConfig | undefined = dynamic
     ? {
         title: dynamic.title || 'K-lining',
         description: dynamic.description || 'Профессиональная уборка в Москве',
@@ -133,6 +133,9 @@ export default function MarketingLandingPage({ params }: { params: { slug: strin
         secondaryText: 'Рассчитать',
         breadcrumb: dynamic.h1 || 'Клининг',
         detailsLink: '/services',
+        cluster: dynamic.cluster,
+        metro: dynamic.metro,
+        okrug: dynamic.okrug,
       }
     : STATIC_LANDINGS[params.slug];
   if (!config) return notFound();
