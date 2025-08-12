@@ -96,7 +96,7 @@ fi
 # Собираем проект
 print_status "Собираем проект..."
 # postbuild (next-sitemap) запустится автоматически как lifecycle-скрипт после build
-ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && npx prisma migrate deploy && npm run build && npm run postbuild:yandex"
+ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && if ls prisma/migrations/*/migration.sql >/dev/null 2>&1; then echo 'Found migrations → running migrate deploy'; npx prisma migrate deploy; else echo 'No migrations found → running prisma generate only'; npx prisma generate; fi && npm run build && npm run postbuild:yandex"
 
 if [ $? -eq 0 ]; then
     print_status "Проект успешно собран!"
