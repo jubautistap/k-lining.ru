@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const CSV_PATH = path.resolve(__dirname, '..', 'SEo', '______________SEO__________________.csv');
-const STREETS_CSV_PATH = path.resolve(__dirname, '..', 'SEo', 'streets.csv');
+const STREETS_DIR = path.resolve(__dirname, '..', 'SEo');
 const OUT_PATH = path.resolve(__dirname, '..', 'data', 'seo-landings.json');
 
 function parseCSV(content) {
@@ -79,7 +79,17 @@ function main() {
 
   let total = 0;
   total += ingestCsv(CSV_PATH);
-  total += ingestCsv(STREETS_CSV_PATH);
+  // Подхватываем все файлы вида streets*.csv
+  try {
+    if (fs.existsSync(STREETS_DIR)) {
+      const files = fs.readdirSync(STREETS_DIR)
+        .filter((f) => /^streets.*\.csv$/i.test(f))
+        .map((f) => path.join(STREETS_DIR, f));
+      for (const f of files) total += ingestCsv(f);
+    }
+  } catch (e) {
+    console.warn('[seo-landings] Failed to scan streets CSVs:', e);
+  }
 
   if (total === 0) {
     console.warn('[seo-landings] No CSV rows found → generating empty landings JSON');
@@ -87,7 +97,7 @@ function main() {
 
   fs.mkdirSync(path.dirname(OUT_PATH), { recursive: true });
   fs.writeFileSync(OUT_PATH, JSON.stringify(bySlug, null, 2), 'utf8');
-  console.log('Generated', OUT_PATH, 'items:', Object.keys(bySlug).length, `(from CSVs: ${CSV_PATH}${fs.existsSync(STREETS_CSV_PATH) ? ', '+STREETS_CSV_PATH : ''})`);
+  console.log('Generated', OUT_PATH, 'items:', Object.keys(bySlug).length);
 }
 
 main();
