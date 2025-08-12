@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface User {
   id: string;
@@ -24,6 +24,16 @@ export function useAuth() {
   });
   
   const router = useRouter();
+  const pathname = usePathname();
+
+  const resetAuthState = useCallback(() => {
+    setAuthState({
+      user: null,
+      accessToken: null,
+      isLoading: false,
+      isAuthenticated: false,
+    });
+  }, []);
 
   // Логаут (объявляем первым)
   const logout = useCallback(async () => {
@@ -35,15 +45,12 @@ export function useAuth() {
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
-      setAuthState({
-        user: null,
-        accessToken: null,
-        isLoading: false,
-        isAuthenticated: false,
-      });
-      router.push('/admin/login');
+      resetAuthState();
+      if (pathname?.startsWith('/admin') && pathname !== '/admin/login') {
+        router.push('/admin/login');
+      }
     }
-  }, [router]);
+  }, [router, pathname, resetAuthState]);
 
   // Обновление токена
   const refreshToken = useCallback(async () => {
@@ -69,14 +76,14 @@ export function useAuth() {
           });
         }
       } else {
-        // Не удалось обновить токен
-        logout();
+        // Не удалось обновить токен — сбрасываем состояние без редиректа (редиректом заведует admin layout)
+        resetAuthState();
       }
     } catch (error) {
       console.error('Token refresh error:', error);
-      logout();
+      resetAuthState();
     }
-  }, [logout]);
+  }, [resetAuthState]);
 
   // Логин
   const login = useCallback(async (email: string, password: string) => {
