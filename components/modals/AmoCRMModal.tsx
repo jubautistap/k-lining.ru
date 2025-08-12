@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Phone, MessageCircle } from 'lucide-react';
+import { X, Phone, Sparkles, Gift, Percent } from 'lucide-react';
 import { useAmoCRM } from '../providers/AmoCRMProvider';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -35,9 +35,11 @@ export default function AmoCRMModal() {
         try {
           if ((window as any).ym) {
             (window as any).ym(103567092, 'reachGoal', 'form_submit');
+            (window as any).ym(103567092, 'reachGoal', 'discount_submit');
           }
           if ((window as any).gtag) {
             (window as any).gtag('event', 'form_submit');
+            (window as any).gtag('event', 'discount_submit');
           }
         } catch (error) {
           console.warn('Ошибка отслеживания:', error);
@@ -45,9 +47,9 @@ export default function AmoCRMModal() {
       }
 
       await submitLead({
-        name: 'Заявка на звонок',
+        name: 'Заявка на звонок (скидка -10%)',
         phone: data.phone,
-        service: 'Обратный звонок'
+        service: 'Обратный звонок — скидка -10% на первый заказ'
       });
       
       toast.success('Спасибо! Мы перезвоним вам в ближайшее время.');
@@ -91,8 +93,13 @@ export default function AmoCRMModal() {
           </button>
           
           <div className="text-center">
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-              <Phone className="w-6 h-6 text-blue-600" />
+            <div className="relative mx-auto mb-4">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
+                <Phone className="w-6 h-6 text-blue-600" />
+              </div>
+              <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center">
+                <Sparkles className="w-4 h-4 text-amber-500" />
+              </div>
             </div>
             <h2 className="text-xl font-bold text-gray-900 mb-2">
               Получить консультацию
@@ -100,11 +107,23 @@ export default function AmoCRMModal() {
             <p className="text-sm text-gray-600">
               Оставьте номер телефона, и мы перезвоним вам в течение 5 минут
             </p>
+            <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-pink-500 to-amber-500 shadow">
+              <Percent className="w-4 h-4" />
+              <span>Скидка −10% на первый заказ</span>
+            </div>
           </div>
         </div>
 
         {/* Form */}
         <div className="px-6 pb-6">
+          <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50/70 p-3 text-amber-800 text-sm flex items-start gap-3">
+            <Gift className="w-5 h-5 text-amber-500 mt-0.5" />
+            <div>
+              <div className="font-medium">Подарок к первому заказу</div>
+              <div className="opacity-90">−10% действует сегодня. Без предоплаты и скрытых условий.</div>
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4">
               <div>
@@ -134,10 +153,11 @@ export default function AmoCRMModal() {
                 ) : (
                   <>
                     <Phone className="w-4 h-4" />
-                    <span>Заказать звонок</span>
+                    <span>Заказать звонок и получить −10%</span>
                   </>
                 )}
               </button>
+              <p className="text-[11px] text-gray-500 text-center -mt-1">Скидка применяется при оформлении первого заказа</p>
             </div>
           </form>
 
