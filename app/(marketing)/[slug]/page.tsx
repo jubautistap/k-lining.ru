@@ -137,6 +137,24 @@ export default function MarketingLandingPage({ params }: { params: { slug: strin
     : STATIC_LANDINGS[params.slug];
   if (!config) return notFound();
 
+  // Похожие улицы (тот же кластер/округ)
+  const similar: Array<{ slug: string; h1: string }> = Object.entries(landings as Record<string, any>)
+    .filter(([slug, v]) => slug !== params.slug && v?.cluster === 'улицы' && (!config.okrug || v?.okrug === config.okrug))
+    .slice(0, 6)
+    .map(([slug, v]) => ({ slug, h1: v.h1 || v.title || 'Страница' }));
+
+  const serviceJsonLd = config.cluster === 'улицы'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: config.h1,
+        serviceType: 'Клининговые услуги',
+        areaServed: { '@type': 'City', name: 'Москва' },
+        provider: { '@type': 'Organization', name: 'K-lining', url: 'https://k-lining.ru' },
+        offers: { '@type': 'AggregateOffer', priceCurrency: 'RUB', lowPrice: '2500', highPrice: '15000', url: `https://k-lining.ru/${params.slug}` },
+      }
+    : null;
+
   const StickyPromo = dynamic(() => import('@/components/ui/StickyPromo'), { ssr: false });
 
   return (
@@ -194,7 +212,28 @@ export default function MarketingLandingPage({ params }: { params: { slug: strin
             <p className="text-gray-700">Подробнее: <Link href={config.detailsLink} className="text-primary-600 underline">перейти к услуге</Link>.</p>
           </div>
         )}
+
+        {/* Похожие улицы */}
+        {config.cluster === 'улицы' && similar.length > 0 && (
+          <div className="bg-white rounded-xl shadow p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">Рядом с вами</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {similar.map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/${s.slug}`}
+                  className="block rounded-lg border border-gray-200 p-3 text-sm text-gray-700 hover:border-primary-300 hover:text-primary-700"
+                >
+                  {s.h1}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
+      {serviceJsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
+      )}
       {/* FAQ JSON-LD для уличных страниц */}
       {config.cluster === 'улицы' && (
         <FAQSchema
