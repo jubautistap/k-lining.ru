@@ -9,7 +9,7 @@ type Props = { items?: QA[]; faqs?: QA[] } & Record<string, unknown>;
 
 export default function FAQSchema(props: Props) {
   const items = (props.items as QA[] | undefined) ?? (props.faqs as QA[] | undefined) ?? [];
-  const list = items ?? faqs ?? [];
+  const list = items;
   if (!list.length) return null;
   const data = {
     '@context': 'https://schema.org',
