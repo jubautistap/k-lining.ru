@@ -102,17 +102,17 @@ export default function AmoCRMModal() {
           <button
             onClick={closeModal}
             aria-label="Закрыть"
-            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white ring-1 ring-gray-200 hover:bg-gray-50 flex items-center justify-center transition-colors shadow-sm"
+            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white ring-1 ring-gray-200 hover:bg-gray-50 flex items-center justify-center transition-colors shadow-sm z-20"
           >
             <X className="w-4 h-4 text-gray-700" />
           </button>
           
           <div className="text-center">
             <div className="relative mx-auto mb-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto z-10 relative">
                 <Phone className="w-6 h-6 text-blue-600" />
               </div>
-              <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center">
+              <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center pointer-events-none z-0">
                 <Sparkles className="w-4 h-4 text-amber-500" />
               </div>
             </div>
