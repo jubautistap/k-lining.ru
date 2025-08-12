@@ -4,11 +4,13 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
   const pathname = request.nextUrl.pathname;
+  const search = request.nextUrl.searchParams;
   const referer = request.headers.get('referer') || '';
 
-  const isYandexViewer = /https?:\/\/([^\/]+\.)?(metrika\.yandex\.(ru|by)|metrica\.yandex\.(com|com\.tr)|webvisor\.com)/i.test(
-    referer
-  );
+  // Определяем просмотр Яндексом: либо по Referer, либо по спец-параметру _ym_status-check
+  const isYandexRef = /https?:\/\/([^\/]+\.)?(metrika\.yandex\.(ru|by)|metrica\.yandex\.(com|com\.tr)|webvisor\.com)/i.test(referer);
+  const isYmStatusCheck = search.has('_ym_status-check');
+  const isYandexViewer = isYandexRef || isYmStatusCheck;
 
   // КРИТИЧНО: Запрет индексации админских страниц
   if (pathname.startsWith('/admin')) {
@@ -55,11 +57,11 @@ export function middleware(request: NextRequest) {
   // CSP: ужесточенная; без nonce пока, но без лишних источников
   const csp = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://www.googletagmanager.com",
+    "script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://metrika.yandex.ru https://www.googletagmanager.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: https: blob:",
-    "connect-src 'self' https://mc.yandex.ru https://www.google-analytics.com https://analytics.google.com",
+    "connect-src 'self' https://mc.yandex.ru https://metrika.yandex.ru https://metrica.yandex.com https://metrica.yandex.com.tr https://mc.webvisor.org https://mc.webvisor.com https://www.google-analytics.com https://analytics.google.com wss:",
     isYandexViewer
       ? "frame-ancestors 'self' https://metrika.yandex.ru https://metrika.yandex.by https://metrica.yandex.com https://metrica.yandex.com.tr https://webvisor.com https://*.webvisor.com"
       : "frame-ancestors 'self'",
