@@ -76,12 +76,16 @@ export default function ProcessSection() {
               className="relative"
             >
               {/* Step Number */}
-              <div className="absolute -top-4 -left-4 w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold z-10">
+              <div className="absolute md:-top-4 md:-left-4 top-3 left-3 w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold z-10">
                 {index + 1}
               </div>
 
               {/* Card */}
-              <div className="card p-6 h-full">
+              <div className="card p-6 h-full relative overflow-hidden">
+                {/* Mobile connector line (vertical) */}
+                {index < steps.length - 1 && (
+                  <div className="md:hidden absolute left-1/2 bottom-0 translate-x-[-50%] h-8 w-0.5 bg-primary-200" />
+                )}
                 {/* Icon */}
                 <div className="w-16 h-16 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
                   <step.icon className="w-8 h-8 text-primary-600" />
@@ -106,7 +110,7 @@ export default function ProcessSection() {
                 </ul>
               </div>
 
-              {/* Connector Line */}
+              {/* Connector Line (desktop) */}
               {index < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-primary-200 transform -translate-y-1/2"></div>
               )}
