@@ -71,8 +71,9 @@ fi
 # Копируем локальные CSV (если скрипт запускается с мака и папка существует)
 if [ -d "./SEo" ]; then
   print_status "Загружаем SEo/ (CSV) на сервер через rsync..."
-  ssh $SERVER_USER@$SERVER_HOST "mkdir -p $SERVER_PATH/SEo"
-  rsync -az --delete \
+  # Чистим удалённую папку один раз, чтобы устранить рекурсивные вложения прошлых заливок
+  ssh $SERVER_USER@$SERVER_HOST "rm -rf $SERVER_PATH/SEo && mkdir -p $SERVER_PATH/SEo"
+  rsync -az --delete-after \
     --exclude '.DS_Store' \
     --exclude '._*' \
     --exclude '.git*' \
@@ -107,7 +108,7 @@ fi
 
 # Перезапускаем PM2 процесс
 print_status "Перезапускаем PM2 процесс..."
-ssh $SERVER_USER@$SERVER_HOST "pm2 restart $PM2_APP_NAME --update-env && sleep 2 && curl -fsS http://localhost:3000/ | head -c 0"
+ssh $SERVER_USER@$SERVER_HOST "pm2 restart $PM2_APP_NAME --update-env && sleep 2 && curl -fsS -o /dev/null http://localhost:3000/"
 
 if [ $? -eq 0 ]; then
     print_status "PM2 процесс перезапущен!"
