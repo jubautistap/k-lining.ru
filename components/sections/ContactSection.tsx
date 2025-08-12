@@ -12,6 +12,7 @@ const contactSchema = z.object({
   phone: z.string().min(10, 'Введите корректный номер телефона'),
   email: z.string().email('Введите корректный email').optional().or(z.literal('')),
   message: z.string().min(10, 'Сообщение должно содержать минимум 10 символов'),
+  wantDiscount: z.boolean().optional()
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -61,7 +62,10 @@ export default function ContactSection() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          service: data.wantDiscount ? 'Заявка (хочу скидку −10%)' : undefined,
+        }),
       });
 
       if (response.ok) {
@@ -160,6 +164,10 @@ export default function ContactSection() {
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <form onSubmit={handleSubmit(onSubmit)} data-form-type="contact">
                 <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <input id="wantDiscount" type="checkbox" className="w-4 h-4" {...register('wantDiscount')}/>
+                    <label htmlFor="wantDiscount" className="text-sm text-gray-700">Хочу скидку −10% на первый заказ</label>
+                  </div>
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                       Имя *

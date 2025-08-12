@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useAmoCRM } from '@/components/providers/AmoCRMProvider';
 import { ArrowRight, Home, Building2, Sofa, Droplets, Calculator, Phone } from 'lucide-react';
 
 /**
@@ -8,6 +9,7 @@ import { ArrowRight, Home, Building2, Sofa, Droplets, Calculator, Phone } from '
  * Оптимизирован согласно требованиям формирования сайтлинков
  */
 export default function PopularServicesSection() {
+  const { openModal } = useAmoCRM();
   const popularServices = [
     {
       icon: Home,
@@ -100,9 +102,20 @@ export default function PopularServicesSection() {
                     {service.price}
                   </div>
                   
-                  <div className="flex items-center text-primary-600 text-sm font-medium group-hover:text-primary-700">
-                    <span>Заказать услугу</span>
-                    <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                  <div className="flex items-center gap-2 mt-2 w-full">
+                    <button
+                      onClick={(e) => { e.preventDefault(); openModal(); }}
+                      className="flex-1 inline-flex items-center justify-center rounded-lg bg-primary-600 text-white py-2 text-sm font-semibold hover:bg-primary-700"
+                      type="button"
+                    >
+                      Заказать
+                    </button>
+                    <Link
+                      href={service.href}
+                      className="inline-flex items-center justify-center rounded-lg border border-primary-600 text-primary-600 py-2 px-3 text-sm font-semibold hover:bg-primary-50"
+                    >
+                      Подробнее <ArrowRight className="w-4 h-4 ml-1" />
+                    </Link>
                   </div>
                 </div>
               </Link>

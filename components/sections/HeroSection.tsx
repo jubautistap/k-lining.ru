@@ -2,6 +2,7 @@
 
 import React from 'react';
 import OrderButton from '@/components/ui/OrderButton';
+import { Phone, MessageCircle } from 'lucide-react';
 
 export default function HeroSection() {
   return (
@@ -37,15 +38,23 @@ export default function HeroSection() {
                 href="tel:+79255551833"
                 className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-primary-600 text-primary-600 font-semibold rounded-lg hover:bg-primary-600 hover:text-white transition-colors duration-200 text-base sm:text-lg"
               >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
+                <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 +7 (925) 555-18-33
+              </a>
+
+              <a
+                href="https://wa.me/79255551833?text=%D0%A5%D0%BE%D1%87%D1%83%20%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BF%D0%BE%20%D1%83%D1%81%D0%BB%D1%83%D0%B3%D0%B0%D0%BC%20%D1%83%D0%B1%D0%BE%D1%80%D0%BA%D0%B8"
+                target="_blank"
+                rel="noopener"
+                className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-green-600 text-green-600 font-semibold rounded-lg hover:bg-green-600 hover:text-white transition-colors duration-200 text-base sm:text-lg"
+              >
+                <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                WhatsApp
               </a>
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-sm text-gray-600">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 <span>Работаем 24/7</span>
@@ -57,6 +66,14 @@ export default function HeroSection() {
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 <span>Бесплатная консультация</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                <span>Без предоплаты</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                <span>Ответ за 5–10 минут</span>
               </div>
             </div>
           </div>
