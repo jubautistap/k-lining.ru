@@ -60,8 +60,9 @@ ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && if [ -n \"$(git status --porce
 
 # Обновляем git
 print_status "Обновляем git репозиторий (ветка: $BRANCH)..."
-ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && git fetch origin"
-ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && git checkout -B $BRANCH origin/$BRANCH"
+# Жестко синхронизируем локальную ветку с origin/$BRANCH
+ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && git fetch --all --prune"
+ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && if git rev-parse --verify $BRANCH >/dev/null 2>&1; then git checkout $BRANCH; else git checkout -b $BRANCH; fi && git reset --hard origin/$BRANCH"
 
 if [ $? -eq 0 ]; then
     print_status "Git успешно обновлен! Текущая ветка: $BRANCH"
