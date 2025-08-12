@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const CSV_PATH = path.resolve(__dirname, '..', 'SEo', '______________SEO__________________.csv');
+const STREETS_CSV_PATH = path.resolve(__dirname, '..', 'SEo', 'streets.csv');
 const OUT_PATH = path.resolve(__dirname, '..', 'data', 'seo-landings.json');
 
 function parseCSV(content) {
@@ -48,46 +49,45 @@ function toSlug(raw) {
 }
 
 function main() {
-  if (!fs.existsSync(CSV_PATH)) {
-    console.warn('[seo-landings] CSV not found at', CSV_PATH, '→ generating empty landings JSON');
-    fs.mkdirSync(path.dirname(OUT_PATH), { recursive: true });
-    fs.writeFileSync(OUT_PATH, JSON.stringify({}, null, 2), 'utf8');
-    return;
-  }
-
-  const csv = fs.readFileSync(CSV_PATH, 'utf8');
-  const { header, rows } = parseCSV(csv);
-
-  const idx = {
-    slug: header.findIndex((h) => /URL\s*\(slug\)/i.test(h)),
-    title: header.findIndex((h) => /Title/i.test(h)),
-    h1: header.findIndex((h) => /^H1$/i.test(h)),
-    desc: header.findIndex((h) => /Meta\s*Description/i.test(h)),
-    cluster: header.findIndex((h) => /Кластер/i.test(h)),
-  };
-
-  const items = [];
-  for (const row of rows) {
-    const slugCell = row[idx.slug] || '';
-    const slug = toSlug(slugCell);
-    if (!slug) continue;
-
-    const title = (row[idx.title] || '').trim();
-    const h1 = (row[idx.h1] || '').trim() || title;
-    const description = (row[idx.desc] || '').trim();
-    const cluster = (row[idx.cluster] || '').trim();
-
-    items.push({ slug, title, h1, description, cluster });
-  }
-
   const bySlug = {};
-  for (const it of items) {
-    bySlug[it.slug] = it;
+
+  function ingestCsv(filePath) {
+    if (!fs.existsSync(filePath)) return 0;
+    const csv = fs.readFileSync(filePath, 'utf8');
+    const { header, rows } = parseCSV(csv);
+    const idx = {
+      slug: header.findIndex((h) => /URL\s*\(slug\)/i.test(h)),
+      title: header.findIndex((h) => /Title/i.test(h)),
+      h1: header.findIndex((h) => /^H1$/i.test(h)),
+      desc: header.findIndex((h) => /Meta\s*Description/i.test(h)),
+      cluster: header.findIndex((h) => /Кластер/i.test(h)),
+    };
+    let added = 0;
+    for (const row of rows) {
+      const slugCell = row[idx.slug] || '';
+      const slug = toSlug(slugCell);
+      if (!slug) continue;
+      const title = (row[idx.title] || '').trim();
+      const h1 = (row[idx.h1] || '').trim() || title;
+      const description = (row[idx.desc] || '').trim();
+      const cluster = (row[idx.cluster] || '').trim();
+      bySlug[slug] = { slug, title, h1, description, cluster };
+      added++;
+    }
+    return added;
+  }
+
+  let total = 0;
+  total += ingestCsv(CSV_PATH);
+  total += ingestCsv(STREETS_CSV_PATH);
+
+  if (total === 0) {
+    console.warn('[seo-landings] No CSV rows found → generating empty landings JSON');
   }
 
   fs.mkdirSync(path.dirname(OUT_PATH), { recursive: true });
   fs.writeFileSync(OUT_PATH, JSON.stringify(bySlug, null, 2), 'utf8');
-  console.log('Generated', OUT_PATH, 'items:', Object.keys(bySlug).length);
+  console.log('Generated', OUT_PATH, 'items:', Object.keys(bySlug).length, `(from CSVs: ${CSV_PATH}${fs.existsSync(STREETS_CSV_PATH) ? ', '+STREETS_CSV_PATH : ''})`);
 }
 
 main();
