@@ -698,5 +698,929 @@
     "h1": "Уборка подъездов москва",
     "description": "Уборка подъездов москва с гарантией качества в Москве. Профессионально, быстро, с материалами. Онлайн-расчёт и выезд в день обращения. Звоните!",
     "cluster": "Улица и территории"
+  },
+  "uborka-na-ulitse-tverskaya-moskva": {
+    "slug": "uborka-na-ulitse-tverskaya-moskva",
+    "title": "Уборка на Тверской улице, Москва — цены | K-lining",
+    "h1": "Уборка на Тверской улице",
+    "description": "Профессиональная уборка на Тверской улице в Москве. Быстрый выезд, честные цены, скидка −10% на первый заказ. Ближайшее метро: Тверская/Пушкинская.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-arbat-moskva": {
+    "slug": "uborka-na-ulitse-arbat-moskva",
+    "title": "Уборка на Арбате, Москва — клининг квартир и офисов | K-lining",
+    "h1": "Уборка на Арбате",
+    "description": "Клининг на ул. Арбат: квартиры, офисы, после ремонта. Работаем 24/7, без предоплаты. Метро Арбатская/Смоленская.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-novyj-arbat-moskva": {
+    "slug": "uborka-na-ulitse-novyj-arbat-moskva",
+    "title": "Клининг на Новом Арбате — генеральная уборка | K-lining",
+    "h1": "Клининг на Новом Арбате",
+    "description": "Генеральная и поддерживающая уборка на Новом Арбате. Прозрачные цены, быстрый расчёт, выезд день-в-день.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-leningradskiy-prospekt-moskva": {
+    "slug": "uborka-na-ulitse-leningradskiy-prospekt-moskva",
+    "title": "Уборка на Ленинградском проспекте — цены | K-lining",
+    "h1": "Уборка на Ленинградском проспекте",
+    "description": "Профессиональная уборка на Ленинградском проспекте: квартиры/офисы, окна, после ремонта. Метро Динамо/Аэропорт.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-kutuzovskiy-prospekt-moskva": {
+    "slug": "uborka-na-ulitse-kutuzovskiy-prospekt-moskva",
+    "title": "Клининг на Кутузовском проспекте — 24/7 | K-lining",
+    "h1": "Клининr на Кутузовском проспекте",
+    "description": "Клининговые услуги на Кутузовском проспекте: жилищный и офисный клининг, химчистка, окна. Выезд в день обращения.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-sadovoe-koltso-moskva": {
+    "slug": "uborka-na-ulitse-sadovoe-koltso-moskva",
+    "title": "Уборка на Садовом кольце — профессионально | K-lining",
+    "h1": "Уборка на Садовом кольце",
+    "description": "Профессиональная уборка и клининг на Садовом кольце. Честные цены, скидка −10% на первый заказ. Метро по кольцу.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-prospekt-mira-moskva": {
+    "slug": "uborka-na-ulitse-prospekt-mira-moskva",
+    "title": "Уборка на проспекте Мира — цены | K-lining",
+    "h1": "Уборка на проспекте Мира",
+    "description": "Профессиональная уборка на проспекте Мира в Москве. Быстрый выезд, честные цены, −10% на первый заказ. Работаем 24/7.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-leninskiy-prospekt-moskva": {
+    "slug": "uborka-na-ulitse-leninskiy-prospekt-moskva",
+    "title": "Уборка на Ленинском проспекте — цены | K-lining",
+    "h1": "Уборка на Ленинском проспекте",
+    "description": "Клининг квартир и офисов на Ленинском проспекте. Генеральная/поддерживающая уборка, окна, после ремонта.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-prospekt-vernadskogo-moskva": {
+    "slug": "uborka-na-ulitse-prospekt-vernadskogo-moskva",
+    "title": "Клининг на проспекте Вернадского — 24/7 | K-lining",
+    "h1": "Клининг на проспекте Вернадского",
+    "description": "Уборка на проспекте Вернадского: квартиры, офисы, окна. Выезд день-в-день, честные цены, скидка −10% новичкам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-prospekt-andropova-moskva": {
+    "slug": "uborka-na-ulitse-prospekt-andropova-moskva",
+    "title": "Уборка на проспекте Андропова — цены | K-lining",
+    "h1": "Уборка на проспекте Андропова",
+    "description": "Профессиональная уборка на проспекте Андропова: квартиры/офисы, после ремонта. Работаем без предоплаты.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-lomonosovskiy-prospekt-moskva": {
+    "slug": "uborka-na-ulitse-lomonosovskiy-prospekt-moskva",
+    "title": "Клининг на Ломоносовском проспекте — 24/7 | K-lining",
+    "h1": "Клининг на Ломоносовском проспекте",
+    "description": "Генеральная и регулярная уборка на Ломоносовском проспекте. Быстро, аккуратно, с гарантией.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-michurinskiy-prospekt-moskva": {
+    "slug": "uborka-na-ulitse-michurinskiy-prospekt-moskva",
+    "title": "Уборка на Мичуринском проспекте — цены | K-lining",
+    "h1": "Уборка на Мичуринском проспекте",
+    "description": "Квартиры, офисы, после ремонта на Мичуринском проспекте. Честные цены, скидки новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-prospekt-marshala-zhukova-moskva": {
+    "slug": "uborka-na-ulitse-prospekt-marshala-zhukova-moskva",
+    "title": "Клининг на проспекте Маршала Жукова — 24/7 | K-lining",
+    "h1": "Клининг на проспекте Маршала Жукова",
+    "description": "Профессиональная уборка любой сложности на проспекте Маршала Жукова. Выезд сегодня.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-shosse-entuziastov-moskva": {
+    "slug": "uborka-na-ulitse-shosse-entuziastov-moskva",
+    "title": "Уборка на шоссе Энтузиастов — цены | K-lining",
+    "h1": "Уборка на шоссе Энтузиастов",
+    "description": "Клининг квартир и офисов на шоссе Энтузиастов. Срочный выезд, адекватные цены, −10% на первый заказ.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-volgogradskiy-prospekt-moskva": {
+    "slug": "uborka-na-ulitse-volgogradskiy-prospekt-moskva",
+    "title": "Клининг на Волгоградском проспекте — 24/7 | K-lining",
+    "h1": "Клининг на Волгоградском проспекте",
+    "description": "Генеральная/поддерживающая уборка на Волгоградском проспекте. Работаем без предоплаты.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-ryazanskiy-prospekt-moskva": {
+    "slug": "uborka-na-ulitse-ryazanskiy-prospekt-moskva",
+    "title": "Уборка на Рязанском проспекте — цены | K-lining",
+    "h1": "Уборка на Рязанском проспекте",
+    "description": "Профессиональная уборка на Рязанском проспекте: квартиры/офисы, окна, после ремонта. Быстро и аккуратно.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-kashirskoe-shosse-moskva": {
+    "slug": "uborka-na-ulitse-kashirskoe-shosse-moskva",
+    "title": "Клининг на Каширском шоссе — 24/7 | K-lining",
+    "h1": "Клининг на Каширском шоссе",
+    "description": "Уборка на Каширском шоссе. Честные цены, быстрый выезд, скидка −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-varshavskoe-shosse-moskva": {
+    "slug": "uborka-na-ulitse-varshavskoe-shosse-moskva",
+    "title": "Уборка на Варшавском шоссе — цены | K-lining",
+    "h1": "Уборка на Варшавском шоссе",
+    "description": "Клининг квартир/офисов на Варшавском шоссе. Генеральная, после ремонта, окна. Работаем 24/7.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-dmitrovskoe-shosse-moskva": {
+    "slug": "uborka-na-ulitse-dmitrovskoe-shosse-moskva",
+    "title": "Клининг на Дмитровском шоссе — 24/7 | K-lining",
+    "h1": "Клининг на Дмитровском шоссе",
+    "description": "Профессиональная уборка на Дмитровском шоссе. Прозрачные цены, выезд в день обращения.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-yaroslavskoe-shosse-moskva": {
+    "slug": "uborka-na-ulitse-yaroslavskoe-shosse-moskva",
+    "title": "Уборка на Ярославском шоссе — цены | K-lining",
+    "h1": "Уборка на Ярославском шоссе",
+    "description": "Квартиры, офисы, после ремонта на Ярославском шоссе. Быстрый старт работ, без предоплаты.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-leningradskoe-shosse-moskva": {
+    "slug": "uborka-na-ulitse-leningradskoe-shosse-moskva",
+    "title": "Клининг на Ленинградском шоссе — 24/7 | K-lining",
+    "h1": "Клининг на Ленинградском шоссе",
+    "description": "Уборка на Ленинградском шоссе. Честные цены, −10% на первый заказ. Выезд день-в-день.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-volokolamskoe-shosse-moskva": {
+    "slug": "uborka-na-ulitse-volokolamskoe-shosse-moskva",
+    "title": "Уборка на Волоколамском шоссе — цены | K-lining",
+    "h1": "Уборка на Волоколамском шоссе",
+    "description": "Профессиональная уборка на Волоколамском шоссе: квартиры, офисы, окна.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-rublyovskoe-shosse-moskva": {
+    "slug": "uborka-na-ulitse-rublyovskoe-shosse-moskva",
+    "title": "Клининг на Рублёвском шоссе — 24/7 | K-lining",
+    "h1": "Клининг на Рублёвском шоссе",
+    "description": "Генеральная/поддерживающая уборка на Рублёвском шоссе. Срочный выезд.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-zvenigorodskoe-shosse-moskva": {
+    "slug": "uborka-na-ulitse-zvenigorodskoe-shosse-moskva",
+    "title": "Уборка на Звенигородском шоссе — цены | K-lining",
+    "h1": "Уборка на Звенигородском шоссе",
+    "description": "Клининг на Звенигородском шоссе. Прозрачные цены, −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-khoroshevskoe-shosse-moskva": {
+    "slug": "uborka-na-ulitse-khoroshevskoe-shosse-moskva",
+    "title": "Клининг на Хорошёвском шоссе — 24/7 | K-lining",
+    "h1": "Клининг на Хорошёвском шоссе",
+    "description": "Профессиональная уборка на Хорошёвском шоссе. Быстрый выезд, без предоплаты.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-altufevskoe-shosse-moskva": {
+    "slug": "uborka-na-ulitse-altufevskoe-shosse-moskva",
+    "title": "Уборка на Алтуфьевском шоссе — цены | K-lining",
+    "h1": "Уборка на Алтуфьевском шоссе",
+    "description": "Квартиры, офисы, окна на Алтуфьевском шоссе. Работаем круглосуточно.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-sevastopolskiy-prospekt-moskva": {
+    "slug": "uborka-na-ulitse-sevastopolskiy-prospekt-moskva",
+    "title": "Клининг на Севастопольском проспекте — 24/7 | K-lining",
+    "h1": "Клининr на Севастопольском проспекте",
+    "description": "Профессиональная уборка на Севастопольском проспекте. Честные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-balaklavskiy-prospekt-moskva": {
+    "slug": "uborka-na-ulitse-balaklavskiy-prospekt-moskva",
+    "title": "Уборка на Балаклавском проспекте — цены | K-lining",
+    "h1": "Уборка на Балаклавском проспекте",
+    "description": "Клининг на Балаклавском проспекте: квартиры, офисы, после ремонта. −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-nakhimovskiy-prospekt-moskva": {
+    "slug": "uborka-na-ulitse-nakhimovskiy-prospekt-moskva",
+    "title": "Клининг на Нахимовском проспекте — 24/7 | K-lining",
+    "h1": "Клининг на Нахимовском проспекте",
+    "description": "Генеральная и регулярная уборка на Нахимовском проспекте. Выезд сегодня.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-komsomolskiy-prospekt-moskva": {
+    "slug": "uborka-na-ulitse-komsomolskiy-prospekt-moskva",
+    "title": "Уборка на Комсомольском проспекте — цены | K-lining",
+    "h1": "Уборка на Комсомольском проспекте",
+    "description": "Профессиональная уборка на Комсомольском проспекте. Быстро, аккуратно, выгодно.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-prospekt-budennogo-moskva": {
+    "slug": "uborka-na-ulitse-prospekt-budennogo-moskva",
+    "title": "Клининг на проспекте Будённого — 24/7 | K-lining",
+    "h1": "Клининг на проспекте Будённого",
+    "description": "Уборка на проспекте Будённого: квартиры/офисы, окна, после ремонта. Срочный выезд.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-novoslobodskaya-moskva": {
+    "slug": "uborka-na-ulitse-novoslobodskaya-moskva",
+    "title": "Уборка на ул. Новослободская — цены | K-lining",
+    "h1": "Уборка на ул. Новослободская",
+    "description": "Клининг на ул. Новослободская: квартиры, офисы, окна. Выезд день-в-день.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-butyrskaya-moskva": {
+    "slug": "uborka-na-ulitse-butyrskaya-moskva",
+    "title": "Клининг на ул. Бутырская — 24/7 | K-lining",
+    "h1": "Клининг на ул. Бутырская",
+    "description": "Профессиональная уборка на ул. Бутырская. Честные цены, −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-sushchevskiy-val-moskva": {
+    "slug": "uborka-na-ulitse-sushchevskiy-val-moskva",
+    "title": "Уборка на Сущёвском Валу — цены | K-lining",
+    "h1": "Уборка на Сущёвском Валу",
+    "description": "Генеральная и поддерживающая уборка на Сущёвском Валу. Без предоплаты.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-zemlyanoy-val-moskva": {
+    "slug": "uborka-na-ulitse-zemlyanoy-val-moskva",
+    "title": "Клининг на Земляном Валу — 24/7 | K-lining",
+    "h1": "Клининг на Земляном Валу",
+    "description": "Профессиональная уборка на Земляном Валу. Быстро и аккуратно.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-valovaya-moskva": {
+    "slug": "uborka-na-ulitse-valovaya-moskva",
+    "title": "Уборка на ул. Валовая — цены | K-lining",
+    "h1": "Уборка на ул. Валовая",
+    "description": "Клининг на ул. Валовая: квартиры, офисы, окна. Выезд день-в-день.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-zatsepskiy-val-moskva": {
+    "slug": "uborka-na-ulitse-zatsepskiy-val-moskva",
+    "title": "Клининг на Зацепском Валу — 24/7 | K-lining",
+    "h1": "Клининг на Зацепском Валу",
+    "description": "Профессиональная уборка на Зацепском Валу. Честные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-taganskaya-moskva": {
+    "slug": "uborka-na-ulitse-taganskaya-moskva",
+    "title": "Уборка на ул. Таганская — цены | K-lining",
+    "h1": "Уборка на ул. Таганская",
+    "description": "Клининг на ул. Таганская: квартиры/офисы, после ремонта. −10% первым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-marksistskaya-moskva": {
+    "slug": "uborka-na-ulitse-marksistskaya-moskva",
+    "title": "Клининг на ул. Марксистская — 24/7 | K-lining",
+    "h1": "Клининг на ул. Марксистская",
+    "description": "Профессиональная уборка на ул. Марксистская. Выезд в день обращения.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-pyatnitskaya-moskva": {
+    "slug": "uborka-na-ulitse-pyatnitskaya-moskva",
+    "title": "Уборка на ул. Пятницкая — цены | K-lining",
+    "h1": "Уборка на ул. Пятницкая",
+    "description": "Клининг на ул. Пятницкая: квартиры, офисы, окна. Честные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-ordynka-moskva": {
+    "slug": "uborka-na-ulitse-bolshaya-ordynka-moskva",
+    "title": "Клининг на ул. Большая Ордынка — 24/7 | K-lining",
+    "h1": "Клининг на ул. Большая Ордынка",
+    "description": "Уборка на Большой Ордынке. Генеральная/поддерживающая, без предоплаты.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-polyanka-moskva": {
+    "slug": "uborka-na-ulitse-bolshaya-polyanka-moskva",
+    "title": "Уборка на ул. Большая Полянка — цены | K-lining",
+    "h1": "Уборка на ул. Большая Полянка",
+    "description": "Профессиональный клининг на Большой Полянке. Срочный выезд.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-serpukhovskaya-moskva": {
+    "slug": "uborka-na-ulitse-bolshaya-serpukhovskaya-moskva",
+    "title": "Клининг на ул. Большая Серпуховская — 24/7 | K-lining",
+    "h1": "Клининг на ул. Большая Серпуховская",
+    "description": "Уборка на Большой Серпуховской: квартиры/офисы, окна, после ремонта.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-dubininskaya-moskva": {
+    "slug": "uborka-na-ulitse-dubininskaya-moskva",
+    "title": "Уборка на ул. Дубининская — цены | K-lining",
+    "h1": "Уборка на ул. Дубининская",
+    "description": "Клининг на ул. Дубининская. Выезд день-в-день, честные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-yakimanka-moskva": {
+    "slug": "uborka-na-ulitse-bolshaya-yakimanka-moskva",
+    "title": "Клининг на ул. Большая Якиманка — 24/7 | K-lining",
+    "h1": "Клининг на ул. Большая Якиманка",
+    "description": "Профессиональная уборка на Большой Якиманке. Работаем круглосуточно.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-prechistenka-moskva": {
+    "slug": "uborka-na-ulitse-prechistenka-moskva",
+    "title": "Уборка на ул. Пречистенка — цены | K-lining",
+    "h1": "Уборка на ул. Пречистенка",
+    "description": "Клининг на Пречистенке: квартиры, офисы, окна. Скидка −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-ostozhenka-moskva": {
+    "slug": "uborka-na-ulitse-ostozhenka-moskva",
+    "title": "Клининг на ул. Остоженка — 24/7 | K-lining",
+    "h1": "Клининг на ул. Остоженка",
+    "description": "Профессиональная уборка на Остоженке. Выезд сегодня, честные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-znamenka-moskva": {
+    "slug": "uborka-na-ulitse-znamenka-moskva",
+    "title": "Уборка на ул. Знаменка — цены | K-lining",
+    "h1": "Уборка на ул. Знаменка",
+    "description": "Клининг на ул. Знаменка: квартиры/офисы, после ремонта. Без предоплаты.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-volkhonka-moskva": {
+    "slug": "uborka-na-ulitse-volkhonka-moskva",
+    "title": "Клининг на ул. Волхонка — 24/7 | K-lining",
+    "h1": "Клининг на ул. Волхонка",
+    "description": "Уборка на ул. Волхонка. Генеральная и регулярная, окна.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-nikolskaya-moskva": {
+    "slug": "uborka-na-ulitse-nikolskaya-moskva",
+    "title": "Уборка на ул. Никольская — цены | K-lining",
+    "h1": "Уборка на ул. Никольская",
+    "description": "Профессиональный клининг на Никольской улице. Выезд день-в-день.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-varvarka-moskva": {
+    "slug": "uborka-na-ulitse-varvarka-moskva",
+    "title": "Клининг на ул. Варварка — 24/7 | K-lining",
+    "h1": "Клининг на ул. Варварка",
+    "description": "Уборка на Варварке: квартиры/офисы, окна. Честные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-ilyinka-moskva": {
+    "slug": "uborka-na-ulitse-ilyinka-moskva",
+    "title": "Уборка на ул. Ильинка — цены | K-lining",
+    "h1": "Уборка на ул. Ильинка",
+    "description": "Клининг на Ильинке. Быстрый выезд, −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-petrovka-moskva": {
+    "slug": "uborka-na-ulitse-petrovka-moskva",
+    "title": "Клининг на ул. Петровка — 24/7 | K-lining",
+    "h1": "Клининг на ул. Петровка",
+    "description": "Профессиональная уборка на Петровке. Работаем без предоплаты.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-dmitrovka-moskva": {
+    "slug": "uborka-na-ulitse-bolshaya-dmitrovka-moskva",
+    "title": "Уборка на ул. Большая Дмитровка — цены | K-lining",
+    "h1": "Уборка на ул. Большая Дмитровка",
+    "description": "Клининг на Большой Дмитровке. Генеральная/поддерживающая, окна.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-malaya-dmitrovka-moskva": {
+    "slug": "uborka-na-ulitse-malaya-dmitrovka-moskva",
+    "title": "Клининг на ул. Малая Дмитровка — 24/7 | K-lining",
+    "h1": "Клининг на ул. Малая Дмитровка",
+    "description": "Уборка на Малой Дмитровке. Честные цены, выезд сегодня.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-nikitskaya-moskva": {
+    "slug": "uborka-na-ulitse-bolshaya-nikitskaya-moskva",
+    "title": "Уборка на ул. Большая Никитская — цены | K-lining",
+    "h1": "Уборка на ул. Большая Никитская",
+    "description": "Профессиональная уборка на Большой Никитской. −10% первым заказам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-nikitskiy-bulvar-moskva": {
+    "slug": "uborka-na-ulitse-nikitskiy-bulvar-moskva",
+    "title": "Клининг на Никитском бульваре — 24/7 | K-lining",
+    "h1": "Клининг на Никитском бульваре",
+    "description": "Уборка на Никитском бульваре. Квартиры, офисы, окна.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-tverskoy-bulvar-moskva": {
+    "slug": "uborka-na-ulitse-tverskoy-bulvar-moskva",
+    "title": "Уборка на Тверском бульваре — цены | K-lining",
+    "h1": "Уборка на Тверском бульваре",
+    "description": "Клининг на Тверском бульваре. Срочный выезд, честные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-gogolevskiy-bulvar-moskva": {
+    "slug": "uborka-na-ulitse-gogolevskiy-bulvar-moskva",
+    "title": "Клининг на Гоголевском бульваре — 24/7 | K-lining",
+    "h1": "Клининг на Гоголевском бульваре",
+    "description": "Профессиональная уборка на Гоголевском бульваре. Работаем круглосуточно.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-strastnoy-bulvar-moskva": {
+    "slug": "uborka-na-ulitse-strastnoy-bulvar-moskva",
+    "title": "Уборка на Страстном бульваре — цены | K-lining",
+    "h1": "Уборка на Страстном бульваре",
+    "description": "Клининг на Страстном бульваре: квартиры/офисы, окна.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-rozhdestvenskiy-bulvar-moskva": {
+    "slug": "uborka-na-ulitse-rozhdestvenskiy-bulvar-moskva",
+    "title": "Клининг на Рождественском бульваре — 24/7 | K-lining",
+    "h1": "Клининг на Рождественском бульваре",
+    "description": "Уборка на Рождественском бульваре. −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-sretenskiy-bulvar-moskva": {
+    "slug": "uborka-na-ulitse-sretenskiy-bulvar-moskva",
+    "title": "Уборка на Сретенском бульваре — цены | K-lining",
+    "h1": "Уборка на Сретенском бульваре",
+    "description": "Клининг на Сретенском бульваре. Выезд в день обращения.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-chistoprudnyj-bulvar-moskva": {
+    "slug": "uborka-na-ulitse-chistoprudnyj-bulvar-moskva",
+    "title": "Клининг на Чистопрудном бульваре — 24/7 | K-lining",
+    "h1": "Клининг на Чистопрудном бульваре",
+    "description": "Профессиональная уборка на Чистопрудном бульваре.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-yauzskiy-bulvar-moskva": {
+    "slug": "uborka-na-ulitse-yauzskiy-bulvar-moskva",
+    "title": "Уборка на Яузском бульваре — цены | K-lining",
+    "h1": "Уборка на Яузском бульваре",
+    "description": "Клининг на Яузском бульваре. Честные цены, быстрый выезд.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-pokrovskiy-bulvar-moskva": {
+    "slug": "uborka-na-ulitse-pokrovskiy-bulvar-moskva",
+    "title": "Клининг на Покровском бульваре — 24/7 | K-lining",
+    "h1": "Клининг на Покровском бульваре",
+    "description": "Уборка на Покровском бульваре: квартиры, офисы, окна.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-myasnitskaya-moskva": {
+    "slug": "uborka-na-ulitse-myasnitskaya-moskva",
+    "title": "Уборка на ул. Мясницкая — цены | K-lining",
+    "h1": "Уборка на ул. Мясницкая",
+    "description": "Клининг на Мясницкой улице. Выезд день-в-день.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-pokrovka-moskva": {
+    "slug": "uborka-na-ulitse-pokrovka-moskva",
+    "title": "Клининг на ул. Покровка — 24/7 | K-lining",
+    "h1": "Клининг на ул. Покровка",
+    "description": "Профессиональная уборка на Покровке. Честные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-sretenka-moskva": {
+    "slug": "uborka-na-ulitse-sretenka-moskva",
+    "title": "Уборка на ул. Сретенка — цены | K-lining",
+    "h1": "Уборка на ул. Сретенка",
+    "description": "Клининг на Сретенке: квартиры/офисы, после ремонта. −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-trubnaya-moskva": {
+    "slug": "uborka-na-ulitse-trubnaya-moskva",
+    "title": "Клининг на ул. Трубная — 24/7 | K-lining",
+    "h1": "Клининг на ул. Трубная",
+    "description": "Уборка на Трубной улице. Быстрый выезд, без предоплаты.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-mokhovaya-moskva": {
+    "slug": "uborka-na-ulitse-mokhovaya-moskva",
+    "title": "Уборка на ул. Моховая — цены | K-lining",
+    "h1": "Уборка на ул. Моховая",
+    "description": "Клининг на Моховой улице. Генеральная и поддерживающая уборка.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-lubyanka-moskva": {
+    "slug": "uborka-na-ulitse-bolshaya-lubyanka-moskva",
+    "title": "Клининг на ул. Большая Лубянка — 24/7 | K-lining",
+    "h1": "Клининг на ул. Большая Лубянка",
+    "description": "Профессиональная уборка на Большой Лубянке. Честные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-vavilova-moskva": {
+    "slug": "uborka-na-ulitse-vavilova-moskva",
+    "title": "Уборка на ул. Вавилова — цены | K-lining",
+    "h1": "Уборка на ул. Вавилова",
+    "description": "Клининг на ул. Вавилова: квартиры/офисы, окна, после ремонта.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-akademika-koroleva-moskva": {
+    "slug": "uborka-na-ulitse-akademika-koroleva-moskva",
+    "title": "Клининг на ул. Академика Королёва — 24/7 | K-lining",
+    "h1": "Клининг на ул. Академика Королёва",
+    "description": "Уборка на ул. Академика Королёва. Выезд сегодня.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-akademika-pilyugina-moskva": {
+    "slug": "uborka-na-ulitse-akademika-pilyugina-moskva",
+    "title": "Уборка на ул. Академика Пилюгина — цены | K-lining",
+    "h1": "Уборка на ул. Академика Пилюгина",
+    "description": "Профессиональная уборка на ул. Академика Пилюгина. Честные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-kremlevskaya-naberezhnaya-moskva": {
+    "slug": "uborka-na-ulitse-kremlevskaya-naberezhnaya-moskva",
+    "title": "Клининг на Кремлёвской набережной — 24/7 | K-lining",
+    "h1": "Клининг на Кремлёвской набережной",
+    "description": "Уборка на Кремлёвской набережной. Квартиры, офисы, окна.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-berezhkovskaya-naberezhnaya-moskva": {
+    "slug": "uborka-na-ulitse-berezhkovskaya-naberezhnaya-moskva",
+    "title": "Уборка на Бережковской набережной — цены | K-lining",
+    "h1": "Уборка на Бережковской набережной",
+    "description": "Клининг на Бережковской набережной. Выезд день-в-день.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-frunzenskaya-naberezhnaya-moskva": {
+    "slug": "uborka-na-ulitse-frunzenskaya-naberezhnaya-moskva",
+    "title": "Клининг на Фрунзенской набережной — 24/7 | K-lining",
+    "h1": "Клининг на Фрунзенской набережной",
+    "description": "Профессиональная уборка на Фрунзенской набережной. Честные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-savvinskaya-naberezhnaya-moskva": {
+    "slug": "uborka-na-ulitse-savvinskaya-naberezhnaya-moskva",
+    "title": "Уборка на Саввинской набережной — цены | K-lining",
+    "h1": "Уборка на Саввинской набережной",
+    "description": "Клининг на Саввинской набережной. −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-presnenskaya-naberezhnaya-moskva": {
+    "slug": "uborka-na-ulitse-presnenskaya-naberezhnaya-moskva",
+    "title": "Клининг на Пресненской набережной — 24/7 | K-lining",
+    "h1": "Клининг на Пресненской набережной",
+    "description": "Уборка на Пресненской набережной (Москва-Сити). Срочный выезд.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-sofiyskaya-naberezhnaya-moskva": {
+    "slug": "uborka-na-ulitse-sofiyskaya-naberezhnaya-moskva",
+    "title": "Уборка на Софийской набережной — цены | K-lining",
+    "h1": "Уборка на Софийской набережной",
+    "description": "Профессиональная уборка на Софийской набережной. Выгодные условия.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-raushskaya-naberezhnaya-moskva": {
+    "slug": "uborka-na-ulitse-raushskaya-naberezhnaya-moskva",
+    "title": "Клининг на Раушской набережной — 24/7 | K-lining",
+    "h1": "Клининг на Раушской набережной",
+    "description": "Уборка на Раушской набережной. Квартиры/офисы, окна.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-kosmodamianskaya-naberezhnaya-moskva": {
+    "slug": "uborka-na-ulitse-kosmodamianskaya-naberezhnaya-moskva",
+    "title": "Уборка на Космодамианской набережной — цены | K-lining",
+    "h1": "Уборка на Космодамианской набережной",
+    "description": "Клининг на Космодамианской набережной. Честные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-zubovskiy-bulvar-moskva": {
+    "slug": "uborka-na-ulitse-zubovskiy-bulvar-moskva",
+    "title": "Клининг на Зубовском бульваре — 24/7 | K-lining",
+    "h1": "Клининг на Зубовском бульваре",
+    "description": "Профессиональная уборка на Зубовском бульваре. Выезд сегодня.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-pleshchikha-moskva": {
+    "slug": "uborka-na-ulitse-pleshchikha-moskva",
+    "title": "Уборка на ул. Плющиха — цены | K-lining",
+    "h1": "Уборка на ул. Плющиха",
+    "description": "Клининг на ул. Плющиха: квартиры/офисы, окна. −10% первым заказам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-spiridonovka-moskva": {
+    "slug": "uborka-na-ulitse-spiridonovka-moskva",
+    "title": "Клининг на ул. Спиридоновка — 24/7 | K-lining",
+    "h1": "Клининг на ул. Спиридоновка",
+    "description": "Уборка на ул. Спиридоновка. Прозрачные цены, быстрый выезд.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-sadovaya-moskva": {
+    "slug": "uborka-na-ulitse-bolshaya-sadovaya-moskva",
+    "title": "Уборка на ул. Большая Садовая — цены | K-lining",
+    "h1": "Уборка на ул. Большая Садовая",
+    "description": "Профессиональная уборка на Большой Садовой. Окна, квартиры, офисы.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-krasnaya-presnya-moskva": {
+    "slug": "uborka-na-ulitse-krasnaya-presnya-moskva",
+    "title": "Клининг на ул. Красная Пресня — 24/7 | K-lining",
+    "h1": "Клининг на ул. Красная Пресня",
+    "description": "Уборка на Красной Пресне. Генеральная/поддерживающая уборка.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-nikolo-yamskaya-moskva": {
+    "slug": "uborka-na-ulitse-nikolo-yamskaya-moskva",
+    "title": "Уборка на ул. Николоямская — цены | K-lining",
+    "h1": "Уборка на ул. Николоямская",
+    "description": "Клининг на Николоямской улице. Честные цены, быстрый выезд.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-pirogovskaya-moskva": {
+    "slug": "uborka-na-ulitse-bolshaya-pirogovskaya-moskva",
+    "title": "Клининг на ул. Большая Пироговская — 24/7 | K-lining",
+    "h1": "Клининг на ул. Большая Пироговская",
+    "description": "Профессиональная уборка на Большой Пироговской. Окна/после ремонта.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-malaya-pirogovskaya-moskva": {
+    "slug": "uborka-na-ulitse-malaya-pirogovskaya-moskva",
+    "title": "Уборка на ул. Малая Пироговская — цены | K-lining",
+    "h1": "Уборка на ул. Малая Пироговская",
+    "description": "Клининг на Малой Пироговской. Выезд день-в-день.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-khoroshevskoye-shosse-moskva": {
+    "slug": "uborka-na-ulitse-khoroshevskoye-shosse-moskva",
+    "title": "Клининг на Хорошёвском шоссе — 24/7 | K-lining",
+    "h1": "Клининг на Хорошёвском шоссе",
+    "description": "Уборка на Хорошёвском шоссе. Прозрачные цены, −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-yakimanka-moskva-2": {
+    "slug": "uborka-na-ulitse-bolshaya-yakimanka-moskva-2",
+    "title": "Уборка на ул. Якиманка — цены | K-lining",
+    "h1": "Уборка на ул. Якиманка",
+    "description": "Клининг на ул. Якиманка. Квартиры, офисы, окна. Работаем 24/7.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-trubnaya-ploshchad-moskva": {
+    "slug": "uborka-na-ulitse-trubnaya-ploshchad-moskva",
+    "title": "Клининг на Трубной площади — 24/7 | K-lining",
+    "h1": "Клининг на Трубной площади",
+    "description": "Профессиональная уборка на Трубной площади. Срочный выезд.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-paveletskaya-ploshchad-moskva": {
+    "slug": "uborka-na-ulitse-paveletskaya-ploshchad-moskva",
+    "title": "Уборка на Павелецкой площади — цены | K-lining",
+    "h1": "Уборка на Павелецкой площади",
+    "description": "Клининг на Павелецкой площади. Генеральная и поддерживающая.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-presnenskiy-val-moskva": {
+    "slug": "uborka-na-ulitse-presnenskiy-val-moskva",
+    "title": "Клининг на Пресненском Валу — 24/7 | K-lining",
+    "h1": "Клининг на Пресненском Валу",
+    "description": "Уборка на Пресненском Валу. Честные цены, быстрый выезд.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-spiridonovskiy-pereulok-moskva": {
+    "slug": "uborka-na-ulitse-spiridonovskiy-pereulok-moskva",
+    "title": "Уборка в Спиридоновском переулке — цены | K-lining",
+    "h1": "Уборка в Спиридоновском переулке",
+    "description": "Клининг в Спиридоновском пер.: квартиры, офисы, окна.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-patriarshie-prudy-moskva": {
+    "slug": "uborka-na-ulitse-patriarshie-prudy-moskva",
+    "title": "Клининг у Патриарших прудов — 24/7 | K-lining",
+    "h1": "Клининг у Патриарших прудов",
+    "description": "Уборка рядом с Патриаршими прудами. Быстро, аккуратно, выгодно.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-chistye-prudy-moskva": {
+    "slug": "uborka-na-ulitse-chistye-prudy-moskva",
+    "title": "Уборка у Чистых прудов — цены | K-lining",
+    "h1": "Уборка у Чистых прудов",
+    "description": "Клининг у Чистых прудов. Выезд сегодня, без предоплаты.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-sokolniki-moskva": {
+    "slug": "uborka-na-ulitse-sokolniki-moskva",
+    "title": "Клининг в Сокольниках — 24/7 | K-lining",
+    "h1": "Клининг в Сокольниках",
+    "description": "Уборка в районе Сокольники: квартиры, офисы, после ремонта. −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-krasnaya-ploshchad-moskva": {
+    "slug": "uborka-na-ulitse-krasnaya-ploshchad-moskva",
+    "title": "Уборка на Красной площади — цены | K-lining",
+    "h1": "Уборка на Красной площади",
+    "description": "Профессиональная уборка на Красной площади и рядом. Работаем 24/7.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-bronnaya-moskva": {
+    "slug": "uborka-na-ulitse-bolshaya-bronnaya-moskva",
+    "title": "Уборка на Большой Бронной — цены | K-lining",
+    "h1": "Уборка на Большой Бронной",
+    "description": "Профессиональная уборка на Большой Бронной улице: квартиры/офисы, окна, после ремонта. Выезд день‑в‑день.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-malaya-bronnaya-moskva": {
+    "slug": "uborka-na-ulitse-malaya-bronnaya-moskva",
+    "title": "Клининг на Малой Бронной — 24/7 | K-lining",
+    "h1": "Клининг на Малой Бронной",
+    "description": "Генеральная и поддерживающая уборка на Малой Бронной. Честные цены, −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-gruzinskaya-moskva": {
+    "slug": "uborka-na-ulitse-bolshaya-gruzinskaya-moskva",
+    "title": "Уборка на Большой Грузинской — цены | K-lining",
+    "h1": "Уборка на Большой Грузинской",
+    "description": "Клининг квартир и офисов на Большой Грузинской улице. Работаем без предоплаты.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-malaya-gruzinskaya-moskva": {
+    "slug": "uborka-na-ulitse-malaya-gruzinskaya-moskva",
+    "title": "Клининг на Малой Грузинской — 24/7 | K-lining",
+    "h1": "Клининг на Малой Грузинской",
+    "description": "Профессиональная уборка на Малой Грузинской. Быстрый выезд.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-ulitsa-1905-goda-moskva": {
+    "slug": "uborka-na-ulitse-ulitsa-1905-goda-moskva",
+    "title": "Уборка на улице 1905 года — цены | K-lining",
+    "h1": "Уборка на улице 1905 года",
+    "description": "Клининг на ул. 1905 года: квартиры/офисы, окна. Прозрачные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-marossejka-moskva": {
+    "slug": "uborka-na-ulitse-marossejka-moskva",
+    "title": "Клининг на Маросейке — 24/7 | K-lining",
+    "h1": "Клининг на Маросейке",
+    "description": "Профессиональная уборка на ул. Маросейка. Скидка −10% на первый заказ.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-nikitinskaya-moskva": {
+    "slug": "uborka-na-ulitse-bolshaya-nikitinskaya-moskva",
+    "title": "Уборка на Большой Никитской — цены | K-lining",
+    "h1": "Уборка на Большой Никитской",
+    "description": "Профессиональная уборка на Большой Никитской улице. Выезд сегодня.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-sadovaya-kudrinskaya-moskva": {
+    "slug": "uborka-na-ulitse-sadovaya-kudrinskaya-moskva",
+    "title": "Клининг на Садовой‑Кудринской — 24/7 | K-lining",
+    "h1": "Клининг на Садовой‑Кудринской",
+    "description": "Генеральная/поддерживающая уборка на Садовой‑Кудринской. Честные цены, 24/7.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-sadovaya-samotechnaya-moskva": {
+    "slug": "uborka-na-ulitse-sadovaya-samotechnaya-moskva",
+    "title": "Уборка на Садовой‑Самотёчной — цены | K-lining",
+    "h1": "Уборка на Садовой‑Самотёчной",
+    "description": "Профессиональная уборка на Садовой‑Самотёчной. −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-sadovaya-spasskaya-moskva": {
+    "slug": "uborka-na-ulitse-sadovaya-spasskaya-moskva",
+    "title": "Клининг на Садовой‑Спасской — 24/7 | K-lining",
+    "h1": "Клининг на Садовой‑Спасской",
+    "description": "Уборка на Садовой‑Спасской: квартиры/офисы, окна.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-sadovaya-triumfalnaya-moskva": {
+    "slug": "uborka-na-ulitse-sadovaya-triumfalnaya-moskva",
+    "title": "Уборка на Садовой‑Триумфальной — цены | K-lining",
+    "h1": "Уборка на Садовой‑Триумфальной",
+    "description": "Профессиональная уборка на Садовой‑Триумфальной. Выезд день‑в‑день.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-sadovaya-chernogryazskaya-moskva": {
+    "slug": "uborka-na-ulitse-sadovaya-chernogryazskaya-moskva",
+    "title": "Клининг на Садовой‑Черногрязской — 24/7 | K-lining",
+    "h1": "Клининг на Садовой‑Черногрязской",
+    "description": "Клининг на Садовой‑Черногрязской: квартиры, офисы, окна.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-tatarskaya-moskva": {
+    "slug": "uborka-na-ulitse-bolshaya-tatarskaya-moskva",
+    "title": "Уборка на Большой Татарской — цены | K-lining",
+    "h1": "Уборка на Большой Татарской",
+    "description": "Профессиональная уборка на Большой Татарской улице. Без предоплаты.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-malaya-ordynka-moskva": {
+    "slug": "uborka-na-ulitse-malaya-ordynka-moskva",
+    "title": "Клининг на Малой Ордынке — 24/7 | K-lining",
+    "h1": "Клининг на Малой Ордынке",
+    "description": "Клининг квартир и офисов на Малой Ордынке. Срочный выезд.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-krymskiy-val-moskva": {
+    "slug": "uborka-na-ulitse-krymskiy-val-moskva",
+    "title": "Уборка на Крымском Валу — цены | K-lining",
+    "h1": "Уборка на Крымском Валу",
+    "description": "Профессиональная уборка на Крымском Валу. Честные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-profsouzhnaya-moskva": {
+    "slug": "uborka-na-ulitse-profsouzhnaya-moskva",
+    "title": "Уборка на Профсоюзной улице — цены | K-lining",
+    "h1": "Уборка на Профсоюзной улице",
+    "description": "Клининг на Профсоюзной: квартиры, офисы, после ремонта. 24/7.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-lublinskaya-moskva": {
+    "slug": "uborka-na-ulitse-lublinskaya-moskva",
+    "title": "Уборка на Люблинской улице — цены | K-lining",
+    "h1": "Уборка на Люблинской улице",
+    "description": "Профессиональная уборка на Люблинской улице. −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-shchelkovskoe-shosse-moskva": {
+    "slug": "uborka-na-ulitse-shchelkovskoe-shosse-moskva",
+    "title": "Клининг на Щёлковском шоссе — 24/7 | K-lining",
+    "h1": "Клининг на Щёлковском шоссе",
+    "description": "Уборка на Щёлковском шоссе. Выезд в день обращения.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-timiryazevskaya-moskva": {
+    "slug": "uborka-na-ulitse-timiryazevskaya-moskva",
+    "title": "Уборка на Тимирязевской улице — цены | K-lining",
+    "h1": "Уборка на Тимирязевской улице",
+    "description": "Клининг на Тимирязевской: квартиры, офисы, окна.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-tekstilshchiki-moskva": {
+    "slug": "uborka-na-ulitse-tekstilshchiki-moskva",
+    "title": "Клининг в Текстильщиках — 24/7 | K-lining",
+    "h1": "Клининг в Текстильщиках",
+    "description": "Уборка в районе Текстильщики: квартиры/офисы, после ремонта.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-avtozavodskaya-moskva": {
+    "slug": "uborka-na-ulitse-avtozavodskaya-moskva",
+    "title": "Уборка на Автозаводской улице — цены | K-lining",
+    "h1": "Уборка на Автозаводской улице",
+    "description": "Профессиональная уборка на Автозаводской. Выезд сегодня.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-bolshaya-cheryomushkinskaya-moskva": {
+    "slug": "uborka-na-ulitse-bolshaya-cheryomushkinskaya-moskva",
+    "title": "Клининг на Большой Черёмушкинской — 24/7 | K-lining",
+    "h1": "Клининг на Большой Черёмушкинской",
+    "description": "Генеральная/поддерживающая уборка. Честные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-nagatinskaya-moskva": {
+    "slug": "uborka-na-ulitse-nagatinskaya-moskva",
+    "title": "Уборка на Нагатинской улице — цены | K-lining",
+    "h1": "Уборка на Нагатинской улице",
+    "description": "Клининг на Нагатинской: квартиры, офисы, окна.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-kantemirovskaya-moskva": {
+    "slug": "uborka-na-ulitse-kantemirovskaya-moskva",
+    "title": "Клининг на Кантемировской — 24/7 | K-lining",
+    "h1": "Клининг на Кантемировской",
+    "description": "Уборка на Кантемировской улице. Выгодные условия.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-ozernaya-moskva": {
+    "slug": "uborka-na-ulitse-ozernaya-moskva",
+    "title": "Уборка на Озёрной улице — цены | K-lining",
+    "h1": "Уборка на Озёрной улице",
+    "description": "Профессиональная уборка на Озёрной улице. Быстрый выезд.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-yana-raynisa-bulvar-moskva": {
+    "slug": "uborka-na-ulitse-yana-raynisa-bulvar-moskva",
+    "title": "Клининг на б-ре Яна Райниса — 24/7 | K-lining",
+    "h1": "Клининг на бульваре Яна Райниса",
+    "description": "Уборка на бульваре Яна Райниса. Квартиры/офисы, окна.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-shchukinskaya-moskva": {
+    "slug": "uborka-na-ulitse-shchukinskaya-moskva",
+    "title": "Уборка на Щукинской улице — цены | K-lining",
+    "h1": "Уборка на Щукинской улице",
+    "description": "Клининг на Щукинской: срочный выезд, без предоплаты.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-marshala-biryuzova-moskva": {
+    "slug": "uborka-na-ulitse-marshala-biryuzova-moskva",
+    "title": "Клининг на ул. Маршала Бирюзова — 24/7 | K-lining",
+    "h1": "Клининг на ул. Маршала Бирюзова",
+    "description": "Профессиональная уборка на ул. Маршала Бирюзова. 24/7.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-marshala-tukhachevskogo-moskva": {
+    "slug": "uborka-na-ulitse-marshala-tukhachevskogo-moskva",
+    "title": "Уборка на ул. Маршала Тухачевского — цены | K-lining",
+    "h1": "Уборка на ул. Маршала Тухачевского",
+    "description": "Клининг на ул. Маршала Тухачевского. Прозрачные цены.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-mitinskaya-moskva": {
+    "slug": "uborka-na-ulitse-mitinskaya-moskva",
+    "title": "Клининг на Митинской улице — 24/7 | K-lining",
+    "h1": "Клининг на Митинской улице",
+    "description": "Уборка на Митинской улице. −10% новым клиентам.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-planernaya-moskva": {
+    "slug": "uborka-na-ulitse-planernaya-moskva",
+    "title": "Уборка на Планерной улице — цены | K-lining",
+    "h1": "Уборка на Планерной улице",
+    "description": "Профессиональная уборка на Планерной. Выезд сегодня.",
+    "cluster": "улицы"
+  },
+  "uborka-na-ulitse-hodynskiy-bulvar-moskva": {
+    "slug": "uborka-na-ulitse-hodynskiy-bulvar-moskva",
+    "title": "Клининг на Ходынском бульваре — 24/7 | K-lining",
+    "h1": "Клининг на Ходынском бульваре",
+    "description": "Уборка на Ходынском бульваре. Квартиры/офисы, окна.",
+    "cluster": "улицы"
   }
 }
