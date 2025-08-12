@@ -89,11 +89,7 @@ export default function LoginPage() {
             </button>
           </div>
 
-          <div className="text-sm text-center text-gray-600">
-            <p>Тестовые аккаунты:</p>
-            <p>admin@k-lining.ru / admin123</p>
-            <p>manager@k-lining.ru / manager123</p>
-          </div>
+          {/* Убраны тестовые аккаунты из UI */}
         </form>
       </div>
     </div>
