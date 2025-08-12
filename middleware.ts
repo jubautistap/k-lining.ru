@@ -54,18 +54,19 @@ export function middleware(request: NextRequest) {
   response.headers.set('X-XSS-Protection', '1; mode=block');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-  // CSP: ужесточенная; без nonce пока, но без лишних источников
+  // CSP: ужесточенная; добавлены источники для Яндекс.Метрики/Вебвизора
   const csp = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://metrika.yandex.ru https://www.googletagmanager.com",
+    "script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://metrika.yandex.ru https://mc.webvisor.org https://mc.webvisor.com https://www.googletagmanager.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: https: blob:",
-    "connect-src 'self' https://mc.yandex.ru https://metrika.yandex.ru https://metrica.yandex.com https://metrica.yandex.com.tr https://mc.webvisor.org https://mc.webvisor.com https://www.google-analytics.com https://analytics.google.com wss:",
+    "connect-src 'self' https://mc.yandex.ru https://metrika.yandex.ru https://metrica.yandex.com https://metrica.yandex.com.tr https://*.yandex.ru https://*.yandex.com https://mc.webvisor.org https://mc.webvisor.com https://www.google-analytics.com https://analytics.google.com wss:",
     isYandexViewer
       ? "frame-ancestors 'self' https://metrika.yandex.ru https://metrika.yandex.by https://metrica.yandex.com https://metrica.yandex.com.tr https://webvisor.com https://*.webvisor.com"
       : "frame-ancestors 'self'",
-    "frame-src 'self' https://mc.yandex.ru",
+    "frame-src 'self' https://mc.yandex.ru https://metrika.yandex.ru https://mc.webvisor.org https://mc.webvisor.com",
+    "worker-src 'self' blob: https://mc.yandex.ru https://metrika.yandex.ru https://mc.webvisor.org https://mc.webvisor.com",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
