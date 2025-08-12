@@ -12,7 +12,7 @@ export default function PricingSection() {
       icon: Home,
       title: 'Поддерживающая уборка',
       description: 'Регулярная уборка для поддержания чистоты',
-      price: 'от 3,000 ₽',
+      price: 'от 6,000 ₽',
       duration: '2-3 часа',
       features: [
         'Пылесосим полы и ковры',
@@ -28,7 +28,7 @@ export default function PricingSection() {
       icon: Building,
       title: 'Генеральная уборка',
       description: 'Тщательная уборка всех поверхностей',
-      price: 'от 5,000 ₽',
+      price: 'от 6,000 ₽',
       duration: '3-4 часа',
       features: [
         'Все из поддерживающей',
@@ -156,7 +156,7 @@ export default function PricingSection() {
               -10% новым клиентам
             </span>
             <span className="inline-flex items-center rounded-full bg-amber-50 text-amber-700 px-3 py-1 border border-amber-100">
-              Пакет «Генеральная + окна» −15%
+              Пакет «Генеральная + окна» -15%
             </span>
           </div>
         </motion.div>

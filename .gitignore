@@ -43,3 +43,6 @@ next-env.d.ts
 # OS
 Thumbs.db 
 /generated/prisma
+
+# backups
+kliningpro-backup-*.tgz

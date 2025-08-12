@@ -286,7 +286,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                   <span className="text-sm text-gray-500 font-medium">м²</span>
                 </div>
                 <div className="text-xs text-gray-500 mt-2">
-                  Максимум: 5,000 м²
+                  Максимум: 5,000 м² • Минимальная стоимость заказа: 6,000 ₽
                 </div>
               </div>
             </div>
