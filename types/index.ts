@@ -1,4 +1,4 @@
-// Основные типы для проекта KliningPro
+// Основные типы для проекта K-lining
 
 export interface LeadData {
   name: string;

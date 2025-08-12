@@ -102,6 +102,9 @@ export default function Header() {
               <Phone className="w-4 h-4" />
               <span className="hidden lg:inline">+7 (925) 555-18-33</span>
             </a>
+            <div className="hidden lg:block text-xs text-gray-600 whitespace-nowrap">
+              Минимальный заказ — 6 000 ₽; услуги — от 2 500 ₽
+            </div>
             
             <button
               onClick={handleModalOpen}
@@ -160,6 +163,9 @@ export default function Header() {
                 <div className="flex items-center space-x-2 text-gray-600 text-sm">
                   <Clock className="w-4 h-4" />
                   <span>Работаем 24/7</span>
+                </div>
+                <div className="text-xs text-gray-600">
+                  Минимальный заказ — 6 000 ₽; услуги — от 2 500 ₽
                 </div>
               </div>
 

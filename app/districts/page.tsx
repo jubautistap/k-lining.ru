@@ -96,7 +96,7 @@ export default function DistrictsPage() {
           </h1>
           
           <p className="text-xl text-gray-600 leading-relaxed mb-8">
-            <strong>KliningPro</strong> предоставляет услуги профессионального клининга 
+            <strong>K-lining</strong> предоставляет услуги профессионального клининга 
             во всех районах Москвы. Быстрый выезд, работаем круглосуточно, 
             знаем особенности каждого района.
           </p>

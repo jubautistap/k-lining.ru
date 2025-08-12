@@ -213,7 +213,7 @@ export default function AdditionalServicesPage() {
         <div className="container-custom">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Почему выбирают KliningPro для дополнительных услуг?
+              Почему выбирают K-lining для дополнительных услуг?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Мы гарантируем качество и соблюдаем все обещания

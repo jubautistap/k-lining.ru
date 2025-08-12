@@ -77,6 +77,10 @@ export default function HeroSection() {
                 <span>Ответ за 5–10 минут</span>
               </div>
             </div>
+
+            <div className="text-sm text-gray-500">
+              Минимальный заказ — 6 000 ₽; отдельные услуги — от 2 500 ₽
+            </div>
           </div>
 
           {/* Visual - только CSS градиент для LCP */}

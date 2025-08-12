@@ -157,7 +157,7 @@ export default function FurnitureDryCleaningPage() {
               <div className="text-center">
                 <Users className="w-12 h-12 text-purple-600 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold mb-2">Опытные мастера</h3>
-                <p className="text-gray-600">Специалисты с опытом работы от 5 лет</p>
+                <p className="text-gray-600">Специалисты с релевантным опытом</p>
               </div>
             </div>
           </div>

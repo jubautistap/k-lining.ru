@@ -5,7 +5,7 @@ import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 
 
 export const metadata: Metadata = {
   title: 'Химчистка мебели и ковров в Москве на дому — от 1 000 ₽, 24/7 | K-lining',
-  description: 'Профессиональная химчистка мебели, ковров, диванов, матрасов в Москве и МО. Химчистка на дому, выезд специалиста. Гарантия качества, цены от 1000₽.',
+  description: 'Профессиональная химчистка мебели, ковров, диванов, матрасов в Москве и МО. Химчистка на дому, выезд специалиста. Гарантия качества. Услуги от 1 000₽. Мин. заказ — 6 000 ₽.',
   keywords: 'химчистка Москва, химчистка мебели, химчистка ковров, химчистка диванов, химчистка матрасов, химчистка на дому, химчистка штор, химчистка стульев',
   openGraph: {
     title: 'Химчистка мебели и ковров в Москве — на дому, 24/7',
@@ -117,7 +117,7 @@ export default function DryCleaningPage() {
     {
       icon: <Users className="w-6 h-6" />,
       title: 'Опытные мастера',
-      description: 'Профессиональная команда с опытом от 5 лет'
+      description: 'Профессиональная команда с релевантным опытом'
     },
     {
       icon: <Star className="w-6 h-6" />,
@@ -213,7 +213,7 @@ export default function DryCleaningPage() {
         <div className="container-custom">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-              Почему выбирают KliningPro для химчистки?
+              Почему выбирают K-lining для химчистки?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Мы гарантируем качество и соблюдаем все обещания

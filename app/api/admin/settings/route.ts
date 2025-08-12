@@ -10,7 +10,7 @@ let siteSettings = {
   address: 'Москва, ул. Бакунинская, 69, стр. 1',
   
   // SEO настройки
-  siteTitle: 'KliningPro - Профессиональная уборка в Москве',
+  siteTitle: 'K-lining - Профессиональная уборка в Москве',
   siteDescription: 'Профессиональная клининговая компания в Москве',
   googleAnalyticsId: '',
   yandexMetrikaId: '',

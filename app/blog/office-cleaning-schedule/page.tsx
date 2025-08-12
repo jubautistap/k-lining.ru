@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'График уборки офиса: что и когда чистить | Блог KliningPro',
+  title: 'График уборки офиса: что и когда чистить | Блог K-lining',
   description: 'Оптимальный план уборки для офисных помещений. Ежедневные и еженедельные задачи. Уборка офисов, график уборки, профессиональная уборка офисов, клининг офисов.',
   keywords: 'уборка офисов, график уборки офиса, профессиональная уборка офисов, клининг офисов, уборка офисных помещений, ежедневная уборка офиса, еженедельная уборка офиса',
   openGraph: {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: 'article',
     publishedTime: '2024-12-15T10:00:00Z',
     modifiedTime: '2024-12-15T10:00:00Z',
-    authors: ['KliningPro'],
+    authors: ['K-lining'],
     tags: ['уборка офисов', 'график уборки', 'клининг офисов', 'профессиональная уборка']
   },
   twitter: {
@@ -243,7 +243,7 @@ export default function OfficeCleaningSchedulePage() {
                   <span className="text-white font-bold">K</span>
                 </div>
                 <div>
-                  <div className="font-semibold text-gray-900">Команда KliningPro</div>
+                  <div className="font-semibold text-gray-900">Команда K-lining</div>
                   <div className="text-sm text-gray-500">Профессиональные клинеры</div>
                 </div>
               </div>

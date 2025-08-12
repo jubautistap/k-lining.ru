@@ -75,8 +75,7 @@ export default function WhyChooseUsSection() {
             Почему выбирают нас
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Мы новая компания, но это не значит, что мы делаем работу хуже. 
-            Наоборот — мы делаем её <strong>лучше, честнее и профессиональнее</strong>.
+            Компания молодая, команда опытная — делаем <strong>качественно и прозрачно</strong>.
           </p>
         </motion.div>
 
@@ -161,9 +160,7 @@ export default function WhyChooseUsSection() {
               </h3>
             </div>
             <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Мы не обещаем того, что не можем выполнить. Мы новая компания, 
-              но у нас есть опыт, профессионализм и желание делать свою работу качественно. 
-              <strong>Попробуйте нас один раз — и вы поймете разницу.</strong>
+              Мы не обещаем лишнего. Делаем работу качественно, фиксируем цену заранее и отвечаем за результат.
             </p>
           </div>
         </motion.div>

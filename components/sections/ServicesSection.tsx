@@ -11,7 +11,7 @@ export default function ServicesSection() {
       title: 'Уборка квартир',
       description: 'Поддерживающая, генеральная и после ремонта. Делаем качественно и быстро.',
       features: ['Пылесосим', 'Моем полы', 'Убираем санузел', 'Протираем пыль'],
-      price: 'от 2,375 ₽',
+      price: 'от 2,500 ₽',
       href: '/services/apartment-cleaning'
     },
     {
@@ -19,7 +19,7 @@ export default function ServicesSection() {
       title: 'Уборка домов',
       description: 'Коттеджи, таунхаусы, дачи. Специализируемся на больших площадях.',
       features: ['Все помещения', 'Моем окна', 'Убираем участок', 'Химчистка мебели'],
-      price: 'от 4,750 ₽',
+      price: 'от 5,000 ₽',
       href: '/services/house-cleaning'
     },
     {
@@ -27,7 +27,7 @@ export default function ServicesSection() {
       title: 'Уборка офисов',
       description: 'Коммерческие помещения любого размера. Работаем в нерабочее время.',
       features: ['Офисные помещения', 'Переговорные', 'Кухни и санузлы', 'Ресепшн'],
-      price: 'от 3,325 ₽',
+      price: 'от 3,000 ₽',
       href: '/services/office-cleaning'
     },
     {
@@ -35,7 +35,7 @@ export default function ServicesSection() {
       title: 'Химчистка',
       description: 'Профессиональная чистка мебели, ковров, матрасов и текстиля.',
       features: ['Диваны и кресла', 'Ковры и ковролин', 'Матрасы', 'Шторы'],
-      price: 'от 1,425 ₽',
+      price: 'от 1,000 ₽',
       href: '/services/dry-cleaning'
     },
     {
@@ -43,7 +43,7 @@ export default function ServicesSection() {
       title: 'Мытье окон',
       description: 'Внутри и снаружи. Работаем на высоте с профессиональным оборудованием.',
       features: ['Внутренние окна', 'Внешние окна', 'Балконы', 'Витражи'],
-      price: 'от 475 ₽',
+      price: 'от 600 ₽',
       href: '/services/window-cleaning'
     },
     {
@@ -51,7 +51,7 @@ export default function ServicesSection() {
       title: 'После ремонта',
       description: 'Убираем строительную пыль и мусор. Возвращаем помещению чистоту.',
       features: ['Строительная пыль', 'Мусор', 'Пятна', 'Защита поверхностей'],
-      price: 'от 3,800 ₽',
+      price: 'от 7,000 ₽',
       href: '/services/post-renovation-cleaning'
     }
   ];
@@ -129,6 +129,11 @@ export default function ServicesSection() {
               </Link>
             </motion.div>
           ))}
+        </div>
+
+        {/* Pricing note */}
+        <div className="text-center text-xs text-gray-500 mt-6">
+          Минимальный заказ — 6 000 ₽; отдельные услуги — от 2 500 ₽
         </div>
 
         {/* Bottom CTA */}

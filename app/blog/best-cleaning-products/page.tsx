@@ -262,7 +262,7 @@ export default function BestCleaningProductsPage() {
                     <span className="text-white font-bold">K</span>
                   </div>
                   <div>
-                    <div className="font-semibold text-gray-900">Команда KliningPro</div>
+                    <div className="font-semibold text-gray-900">Команда K-lining</div>
                     <div className="text-sm text-gray-500">Профессиональные клинеры</div>
                   </div>
                 </div>

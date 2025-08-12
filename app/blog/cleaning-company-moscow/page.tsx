@@ -5,11 +5,11 @@ import { CheckCircle, Star, Phone, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Клининговая компания в Москве - рейтинг лучших, цены 2025 | K-lining',
-  description: 'Выбираете клининговую компанию в Москве? ⭐ Рейтинг лучших, сравнение цен, отзывы клиентов ⭐ KliningPro - качественная уборка квартир и офисов от 2,500₽ ⭐ Работаем 24/7',
+  description: 'Выбираете клининговую компанию в Москве? ⭐ Рейтинг лучших, сравнение цен, отзывы клиентов ⭐ K-lining — уборка квартир и офисов. Услуги от 2,500₽. Работаем 24/7',
   keywords: 'клининговая компания москва, клининг москва, уборка квартир москва, лучшие клининговые компании, рейтинг клининговых компаний, цены на клининг москва',
   openGraph: {
     title: 'Клининговая компания в Москве - рейтинг лучших, цены 2025',
-    description: 'Выбираете клининговую компанию в Москве? Рейтинг лучших, цены, отзывы. KliningPro - качественная уборка от 2,500₽',
+    description: 'Выбираете клининговую компанию в Москве? Рейтинг лучших, цены, отзывы. K-lining — качественная уборка от 2,500₽',
     type: 'article',
     publishedTime: '2025-01-16T00:00:00.000Z',
     authors: ['K-lining'],
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
 export default function CleaningCompanyMoscowPage() {
   const topCompanies = [
     {
-      name: 'KliningPro',
+      name: 'K-lining',
       rating: 5.0,
       price: 'от 2,500₽',
       features: ['24/7', 'Страховка', 'Гарантия', 'Басманный район'],
@@ -314,7 +314,7 @@ export default function CleaningCompanyMoscowPage() {
               <div className="bg-primary-50 p-6 rounded-lg mt-8">
                 <h3 className="text-xl font-bold mb-4">Нужна качественная уборка?</h3>
                 <p className="mb-4">
-                  KliningPro - надежная клининговая компания в Москве. Работаем 24/7, 
+                  K-lining — надёжная клининговая компания в Москве. Работаем 24/7, 
                   предоставляем гарантию качества и используем только профессиональные средства.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">

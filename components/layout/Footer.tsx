@@ -17,8 +17,9 @@ export default function Footer() {
 
   const company = [
     { name: 'О компании', href: '/about' },
-    { name: 'Наша команда', href: '/about/team' },
-    { name: 'Вакансии', href: '/careers' },
+    // Скрываем пока страницы не готовы
+    // { name: 'Наша команда', href: '/about/team' },
+    // { name: 'Вакансии', href: '/careers' },
     { name: 'Блог', href: '/blog' },
   ];
 

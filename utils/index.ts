@@ -1,4 +1,4 @@
-// Утилиты для проекта KliningPro
+// Утилиты для проекта K-lining
 
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';

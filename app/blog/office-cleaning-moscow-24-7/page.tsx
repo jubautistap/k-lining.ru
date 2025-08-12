@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Building2, Clock, CheckCircle, Phone, ArrowRight, Users, Star } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Уборка офисов в Москве 24/7 - клининг офисных помещений | KliningPro',
+  title: 'Уборка офисов в Москве 24/7 - клининг офисных помещений | K-lining',
   description: 'Профессиональная уборка офисов в Москве 24/7 ⭐ Клининг офисных помещений любой сложности ⭐ Поддерживающая и генеральная уборка ⭐ Работаем в удобное время ⭐ Договор, гарантия качества',
   keywords: 'уборка офисов москва, клининг офисов москва, уборка офисных помещений, генеральная уборка офиса москва, профессиональная уборка офисов, клининговые услуги для офисов',
   openGraph: {
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description: 'Профессиональная уборка офисов в Москве 24/7. Поддерживающая и генеральная уборка офисных помещений.',
     type: 'article',
     publishedTime: '2025-01-16T00:00:00.000Z',
-    authors: ['KliningPro'],
+    authors: ['K-lining'],
     section: 'Офисная уборка',
     tags: ['уборка офисов', 'клининг', 'москва', '24/7'],
     url: 'https://k-lining.ru/blog/office-cleaning-moscow-24-7',
@@ -99,12 +99,12 @@ export default function OfficeCleaningMoscow247Page() {
             "image": "https://k-lining.ru/blog/office-cleaning.jpg",
             "author": {
               "@type": "Organization",
-              "name": "KliningPro",
+              "name": "K-lining",
               "url": "https://k-lining.ru"
             },
             "publisher": {
               "@type": "Organization",
-              "name": "KliningPro",
+              "name": "K-lining",
               "logo": {
                 "@type": "ImageObject",
                 "url": "https://k-lining.ru/logo.png"
@@ -149,7 +149,7 @@ export default function OfficeCleaningMoscow247Page() {
             </h1>
             
             <p className="text-xl text-gray-600 leading-relaxed mb-8">
-              Нужна <strong>профессиональная уборка офиса в Москве</strong>? KliningPro предоставляет 
+              Нужна <strong>профессиональная уборка офиса в Москве</strong>? K-lining предоставляет 
               услуги <strong>клининга офисных помещений</strong> круглосуточно. Работаем в удобное 
               для вас время, не нарушая рабочий процесс.
             </p>
@@ -170,7 +170,7 @@ export default function OfficeCleaningMoscow247Page() {
               <p>
                 Чистота офисного пространства напрямую влияет на продуктивность сотрудников, 
                 имидж компании и здоровье коллектива. <strong>Уборка офисов в Москве</strong> 
-                от KliningPro - это гарантия поддержания идеального порядка в вашем офисе.
+                от K-lining — это гарантия поддержания идеального порядка в вашем офисе.
               </p>
 
               <p>
@@ -215,7 +215,7 @@ export default function OfficeCleaningMoscow247Page() {
               <div className="bg-blue-50 p-6 rounded-lg mb-8">
                 <h3 className="text-lg font-semibold mb-4 flex items-center">
                   <Star className="w-5 h-5 text-yellow-500 mr-2" />
-                  Преимущества KliningPro для офисов:
+                  Преимущества K-lining для офисов:
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {advantages.map((advantage, index) => (
@@ -387,7 +387,7 @@ export default function OfficeCleaningMoscow247Page() {
                   <div>
                     <h3 className="text-xl font-bold mb-2">Нужна уборка офиса в Москве?</h3>
                     <p className="mb-4">
-                      KliningPro - профессиональный клининг офисных помещений круглосуточно. 
+                      K-lining — профессиональный клининг офисных помещений круглосуточно. 
                       Работаем по договору, предоставляем гарантию качества.
                     </p>
                     <div className="text-lg font-semibold text-primary-600 mb-4">

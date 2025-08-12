@@ -51,7 +51,7 @@ export default function AdminSettingsPage() {
     phone: '+7-925-555-18-33',
             email: 'info@k-lining.ru',
     address: 'Москва, ул. Бакунинская, 69, стр. 1',
-    siteTitle: 'KliningPro - Профессиональная уборка в Москве',
+    siteTitle: 'K-lining - Профессиональная уборка в Москве',
     siteDescription: 'Профессиональная клининговая компания в Москве',
     googleAnalyticsId: '',
     yandexMetrikaId: '',

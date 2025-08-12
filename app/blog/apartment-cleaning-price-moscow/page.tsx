@@ -5,7 +5,7 @@ import { Calculator, Clock, CheckCircle, Phone, ArrowRight, Home } from 'lucide-
 
 export const metadata: Metadata = {
   title: 'Уборка квартир в Москве недорого — цены 2025, рейтинг компаний | K-lining',
-  description: 'Уборка квартир в Москве недорого ⭐ Актуальные цены 2025 года ⭐ От 2,500₽ за 1-комнатную ⭐ Сравнение тарифов ⭐ KliningPro - качественная уборка по честным ценам ⭐ Работаем 24/7',
+  description: 'Уборка квартир в Москве недорого ⭐ Актуальные цены 2025 года ⭐ Услуги от 2,500₽; минимальный заказ — 6,000₽ ⭐ Сравнение тарифов ⭐ K-lining — честные цены, работаем 24/7',
   keywords: 'уборка квартир москва недорого, уборка квартир москва цена, клининг москва цены, уборка квартиры недорого, генеральная уборка цена москва, стоимость уборки квартиры',
   openGraph: {
     title: 'Уборка квартир в Москве недорого - цены 2025, рейтинг компаний',
@@ -329,7 +329,7 @@ export default function ApartmentCleaningPriceMoscowPage() {
                   </thead>
                   <tbody>
                     <tr className="border-t bg-primary-50">
-                      <td className="px-4 py-3 font-semibold">KliningPro</td>
+                      <td className="px-4 py-3 font-semibold">K-lining</td>
                       <td className="px-4 py-3 text-center text-green-600 font-bold">3,500₽</td>
                       <td className="px-4 py-3 text-center text-blue-600 font-bold">4,500₽</td>
                       <td className="px-4 py-3 text-center text-sm">24/7, гарантия</td>
@@ -392,8 +392,8 @@ export default function ApartmentCleaningPriceMoscowPage() {
                   <div>
                     <h3 className="text-xl font-bold mb-2">Нужна недорогая уборка квартиры?</h3>
                     <p className="mb-4">
-                      KliningPro предлагает честные цены без скрытых доплат. 
-                      Работаем круглосуточно, даем гарантию качества.
+                      K-lining предлагает честные цены без скрытых доплат. 
+                      Работаем круглосуточно, даём гарантию качества.
                     </p>
                     <div className="text-lg font-semibold text-primary-600 mb-4">
                       ⚡ Уборка 1-комнатной от 2,500₽ ⚡

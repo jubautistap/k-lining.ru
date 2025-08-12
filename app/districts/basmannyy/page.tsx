@@ -72,7 +72,7 @@ export default function BasmannyDistrictPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
-            "name": "KliningPro - Уборка в Басманном районе",
+            "name": "K-lining - Уборка в Басманном районе",
             "description": "Профессиональная уборка квартир и офисов в Басманном районе Москвы",
             "address": {
               "@type": "PostalAddress",
@@ -137,7 +137,7 @@ export default function BasmannyDistrictPage() {
             </h1>
             
             <p className="text-xl text-gray-600 leading-relaxed mb-8">
-              <strong>Профессиональный клининг в Басманном районе</strong> от компании KliningPro. 
+              <strong>Профессиональный клининг в Басманном районе</strong> от компании K-lining.
               Наш офис находится прямо в районе по адресу <strong>ул. Бакунинская, 69, стр. 1</strong>, 
               что позволяет нам быстро выезжать к клиентам.
             </p>
@@ -163,7 +163,7 @@ export default function BasmannyDistrictPage() {
                   
                   <p>
                     Басманный район - один из центральных районов Москвы, где сосредоточено множество 
-                    жилых домов, офисных центров и коммерческих объектов. <strong>KliningPro</strong> 
+                    жилых домов, офисных центров и коммерческих объектов. <strong>K-lining</strong> 
                     предоставляет полный спектр клининговых услуг для жителей и организаций района.
                   </p>
 

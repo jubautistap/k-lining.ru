@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'О компании KliningPro - профессиональная клининговая компания в Москве',
-  description: 'Узнайте больше о компании KliningPro - профессиональная клининговая компания в Москве. Наша миссия, ценности и подход к работе. Уборка квартир, офисов, химчистка, мытье окон.',
-  keywords: 'о компании, клининговая компания, уборка москва, профессиональная уборка, kliningpro отзывы, клининговая компания москва, уборка квартир москва',
+  title: 'О компании K-lining - профессиональная клининговая компания в Москве',
+  description: 'Узнайте больше о компании K-lining — профессиональная клининговая компания в Москве. Наша миссия, ценности и подход к работе. Уборка квартир, офисов, химчистка, мытьё окон.',
+  keywords: 'о компании, клининговая компания, уборка москва, профессиональная уборка, k-lining отзывы, клининговая компания москва, уборка квартир москва',
   openGraph: {
     title: 'О компании K-lining - Профессиональная уборка в Москве',
     description: 'Узнайте больше о компании K-lining - профессиональная клининговая компания в Москве. Наша команда специалистов с многолетним опытом работы.',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'О компании K-lining - Профессиональная уборка в Москве',
-    description: 'Узнайте больше о компании K-lining. Профессиональная клининговая компания в Москве с опытом более 5 лет.',
+    description: 'Узнайте больше о компании K-lining. Профессиональная клининговая компания в Москве.',
           images: ['/og-image.webp'],
   },
   alternates: {
@@ -51,8 +51,8 @@ export default function AboutPage() {
             О компании
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Мы новая компания, но это не значит, что мы делаем работу хуже. 
-            Наоборот — мы делаем её <strong>лучше, честнее и профессиональнее</strong>.
+            Мы честно говорим: компания молодая, команда опытная. 
+            Фокус на <strong>качестве и прозрачности</strong> вместо громких обещаний.
           </p>
         </div>
 
@@ -67,8 +67,7 @@ export default function AboutPage() {
               Наша цель — не просто убирать, а создавать комфортную среду для жизни и работы.
             </p>
             <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              Мы честно говорим: мы новая компания, но у нас есть опыт, профессионализм и желание 
-              делать свою работу качественно. Попробуйте нас один раз — и вы поймете разницу.
+              Мы новая компания, а команда — с профильным опытом. Делаем работу качественно и без лишнего пафоса.
             </p>
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center p-4 bg-white rounded-lg shadow-lg">
@@ -87,7 +86,7 @@ export default function AboutPage() {
               <div className="w-24 h-24 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="text-white text-3xl font-bold">K</span>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">KliningPro</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">K-lining</h3>
               <p className="text-gray-600 mb-6">
                 Профессиональная клининговая компания в Москве
               </p>

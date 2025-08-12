@@ -3,20 +3,20 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Уборка после ремонта: пошаговое руководство | Блог KliningPro',
+  title: 'Уборка после ремонта: пошаговое руководство | Блог K-lining',
   description: 'Пошаговое руководство по уборке строительной пыли и мусора после ремонта. Секреты профессионалов. Уборка квартиры после ремонта, очистка от строительной пыли, финальная уборка.',
   keywords: 'уборка после ремонта, уборка квартиры после ремонта, строительная пыль, уборка строительного мусора, финальная уборка, очистка после ремонта, уборка пыли после ремонта, клининг после ремонта',
   openGraph: {
     title: 'Уборка после ремонта: пошаговое руководство',
     description: 'Пошаговое руководство по уборке строительной пыли и мусора после ремонта. Секреты профессионалов.',
     url: 'https://k-lining.ru/blog/how-to-clean-after-renovation',
-    siteName: 'KliningPro',
+    siteName: 'K-lining',
     images: [{ url: '/blog/after-renovation.jpg', width: 1200, height: 630, alt: 'Уборка после ремонта' }],
     locale: 'ru_RU',
     type: 'article',
     publishedTime: '2025-01-15T10:00:00Z',
     modifiedTime: '2025-01-15T10:00:00Z',
-    authors: ['KliningPro'],
+    authors: ['K-lining'],
     tags: ['уборка после ремонта', 'строительная пыль', 'финальная уборка', 'клининг после ремонта']
   },
   twitter: {
@@ -212,7 +212,7 @@ export default function BlogPostPage() {
                   <span className="text-white font-bold">K</span>
                 </div>
                 <div>
-                  <div className="font-semibold text-gray-900">Команда KliningPro</div>
+                  <div className="font-semibold text-gray-900">Команда K-lining</div>
                   <div className="text-sm text-gray-500">Профессиональные клинеры</div>
                 </div>
               </div>

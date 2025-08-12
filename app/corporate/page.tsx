@@ -201,7 +201,7 @@ export default function CorporatePage() {
               Преимущества для бизнеса
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Почему корпоративные клиенты выбирают KliningPro
+              Почему корпоративные клиенты выбирают K-lining
             </p>
           </div>
 
