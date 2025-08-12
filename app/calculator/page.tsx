@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 import CleaningCalculator from '@/components/calculators/CleaningCalculator';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Калькулятор уборки — рассчитать стоимость онлайн за 30 сек | K-lining',
@@ -112,7 +113,10 @@ export default function CalculatorPage() {
           </p>
         </div>
 
-        <CleaningCalculator />
+        {/* Оборачиваем клиентский калькулятор в Suspense для корректного SSR bail-out */}
+        <Suspense fallback={<div className="h-96 bg-gray-100 animate-pulse rounded-xl" />}> 
+          <CleaningCalculator />
+        </Suspense>
 
         {/* Дополнительная информация */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import LazyProviders from '@/components/providers/LazyProviders';
 import dynamic from 'next/dynamic';
+import Script from 'next/script';
 import SiteChrome from '@/components/providers/SiteChrome';
 
 const inter = Inter({ 
@@ -254,20 +255,11 @@ export default function RootLayout({
             }),
           }}
         />
-        {/* Яндекс.Метрика: официальный скрипт + init в <head> */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(m,e,t,r,i,k,a){
-                m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                m[i].l=1*new Date();
-                for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
-                k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-              })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
-              try { ym(${YM_ID}, 'init', { webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true }); } catch(e) {}
-            `
-          }}
-        />
+        {/* Яндекс.Метрика через next/script */}
+        <Script src="https://mc.yandex.ru/metrika/tag.js" strategy="afterInteractive" />
+        <Script id="ym-init" strategy="afterInteractive">{`
+          try { window.ym && ym(${YM_ID}, 'init', { webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true }); } catch(e) {}
+        `}</Script>
       </head>
       <body className={`${inter.className} ${inter.variable} overflow-x-hidden`} suppressHydrationWarning>
         <LazyProviders>
@@ -285,52 +277,17 @@ export default function RootLayout({
           </div>
         </noscript>
         
-        {/* Google Analytics 4 - загружаем асинхронно */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-64S5B5HBCR"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              const initGA = async () => {
-                try {
-                  // Проверяем блокировку GA
-                  const isGABlocked = () => {
-                    return new Promise((resolve) => {
-                      const testImg = new Image();
-                      testImg.onload = () => resolve(false);
-                      testImg.onerror = () => resolve(true);
-                      testImg.src = 'https://www.google-analytics.com/collect';
-                      setTimeout(() => resolve(true), 2000);
-                    });
-                  };
-
-                  const blocked = await isGABlocked();
-                  if (blocked) {
-                    console.warn('Google Analytics заблокирован браузером');
-                    return;
-                  }
-
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', 'G-64S5B5HBCR', {
-                    page_title: document.title,
-                    page_location: window.location.href,
-                    anonymize_ip: true,
-                    allow_google_signals: false,
-                    allow_ad_personalization_signals: false
-                  });
-                } catch (error) {
-                  console.warn('Ошибка инициализации Google Analytics:', error);
-                }
-              };
-
-              setTimeout(initGA, 2500);
-            `
-          }}
-        />
+        {/* Google Analytics 4 через next/script */}
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-64S5B5HBCR" strategy="afterInteractive" />
+        <Script id="ga-init" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);} gtag('js', new Date());
+          gtag('config', 'G-64S5B5HBCR', {
+            anonymize_ip: true,
+            allow_google_signals: false,
+            allow_ad_personalization_signals: false
+          });
+        `}</Script>
 
         <script
           type="application/ld+json"

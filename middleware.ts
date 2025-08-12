@@ -53,11 +53,16 @@ export function middleware(request: NextRequest) {
   }
   response.headers.set('X-XSS-Protection', '1; mode=block');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  // HSTS + Permissions-Policy
+  response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  response.headers.set('Permissions-Policy', 'geolocation=(), microphone=(), camera=(), payment=()');
 
-  // CSP: ужесточенная; добавлены источники для Яндекс.Метрики/Вебвизора
+  // CSP: ужесточенная; переведены инлайны на next/script, запрещены script-src-attr
   const csp = [
     "default-src 'self'",
+    // Разрешаем inline для JSON-LD, но запрещаем inline-атрибуты через script-src-attr 'none'
     "script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://metrika.yandex.ru https://mc.webvisor.org https://mc.webvisor.com https://www.googletagmanager.com",
+    "script-src-attr 'none'",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: https: blob:",

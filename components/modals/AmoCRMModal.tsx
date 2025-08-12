@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { X, Phone, Sparkles, Gift, Percent } from 'lucide-react';
 import { useAmoCRM } from '../providers/AmoCRMProvider';
 import { useForm } from 'react-hook-form';
@@ -18,6 +18,9 @@ export default function AmoCRMModal() {
   const { isModalOpen, closeModal, submitLead } = useAmoCRM();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const YM_ID = Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID) || 103567092;
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const firstFocusableRef = useRef<HTMLButtonElement>(null);
+  const lastFocusableRef = useRef<HTMLButtonElement>(null);
 
   const {
     register,
@@ -33,9 +36,32 @@ export default function AmoCRMModal() {
     if (!isModalOpen) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') closeModal();
+      if (e.key === 'Tab') {
+        const focusable = dialogRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusable || focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (document.activeElement === last && !e.shiftKey) {
+          e.preventDefault();
+          (first as HTMLElement).focus();
+        } else if (document.activeElement === first && e.shiftKey) {
+          e.preventDefault();
+          (last as HTMLElement).focus();
+        }
+      }
     };
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    const prev = document.activeElement as HTMLElement | null;
+    // начальный фокус
+    setTimeout(() => {
+      (dialogRef.current?.querySelector('input, button') as HTMLElement | null)?.focus();
+    }, 0);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      prev?.focus();
+    };
   }, [isModalOpen, closeModal]);
 
   const onSubmit = async (data: FormData) => {
@@ -93,7 +119,9 @@ export default function AmoCRMModal() {
       <div 
         role="dialog"
         aria-modal="true"
-        aria-label="Заказать звонок"
+        aria-labelledby="amocrm-modal-title"
+        tabIndex={-1}
+        ref={dialogRef}
         className="bg-white rounded-2xl shadow-xl max-w-sm w-full"
         onClick={(e) => e.stopPropagation()}
         style={{ paddingTop: 'max(env(safe-area-inset-top), 0px)' }}
@@ -117,7 +145,7 @@ export default function AmoCRMModal() {
                 <Sparkles className="w-4 h-4 text-amber-500" />
               </div>
             </div>
-            <h2 className="text-xl font-bold text-gray-900 mb-2">
+            <h2 id="amocrm-modal-title" className="text-xl font-bold text-gray-900 mb-2">
               Получить консультацию
             </h2>
             <p className="text-sm text-gray-600">
@@ -140,7 +168,7 @@ export default function AmoCRMModal() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4">
               <div>
                 <input

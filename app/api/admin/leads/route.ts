@@ -226,12 +226,15 @@ export async function POST(request: NextRequest) {
         const text = `🆕 Новая заявка!\n\n👤 ${newLead.name}\n📞 ${newLead.phone}\n${newLead.email ? `📧 ${newLead.email}\n` : ''}${newLead.service ? `🔧 ${newLead.service}\n` : ''}${newLead.message ? `💬 ${newLead.message}\n` : ''}${utmText ? `\n🧭 UTM:\n${utmText}\n` : ''}${referrer ? `\n↩️ Referrer: ${referrer}\n` : ''}${url ? `\n🔗 Страница: ${url}\n` : ''}⏰ ${new Date().toLocaleString('ru-RU')}\n\n➡️ Админка: ${adminLink}`;
 
         // Пытаемся отправить хотя бы по одной паре; ошибки не валят ответ
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 5000);
         await Promise.all(list.map(async ({ token, chat }) => {
           try {
             const resp = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ chat_id: chat, text, parse_mode: 'HTML' })
+              body: JSON.stringify({ chat_id: chat, text, parse_mode: 'HTML' }),
+              signal: controller.signal
             });
             if (!resp.ok) {
               const errTxt = await resp.text().catch(() => '');
@@ -241,6 +244,7 @@ export async function POST(request: NextRequest) {
             console.warn('Telegram send error:', e);
           }
         }));
+        clearTimeout(timeout);
       } else {
         console.warn('Telegram not configured: no candidates for sending');
       }
