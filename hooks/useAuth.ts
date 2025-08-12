@@ -35,7 +35,6 @@ export function useAuth() {
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
-      localStorage.removeItem('accessToken');
       setAuthState({
         user: null,
         accessToken: null,
@@ -56,18 +55,15 @@ export function useAuth() {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('accessToken', data.accessToken);
         
         // Получаем данные пользователя
-        const userResponse = await fetch('/api/auth/me', {
-          headers: { Authorization: `Bearer ${data.accessToken}` }
-        });
+        const userResponse = await fetch('/api/auth/me', { credentials: 'include' });
         
         if (userResponse.ok) {
           const userData = await userResponse.json();
           setAuthState({
             user: userData.user,
-            accessToken: data.accessToken,
+            accessToken: null,
             isLoading: false,
             isAuthenticated: true,
           });
@@ -89,15 +85,15 @@ export function useAuth() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+        credentials: 'include',
       });
 
       if (response.ok) {
         const responseData = await response.json();
-        localStorage.setItem('accessToken', responseData.accessToken);
         
         setAuthState({
           user: responseData.user,
-          accessToken: responseData.accessToken,
+          accessToken: null,
           isLoading: false,
           isAuthenticated: true,
         });
@@ -117,22 +113,14 @@ export function useAuth() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = localStorage.getItem('accessToken');
-        if (!token) {
-          setAuthState(prev => ({ ...prev, isLoading: false }));
-          return;
-        }
-
-        // Проверяем токен через API
-        const response = await fetch('/api/auth/me', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        // Проверяем авторизацию через cookie-based сессию
+        const response = await fetch('/api/auth/me', { credentials: 'include' });
 
         if (response.ok) {
           const data = await response.json();
           setAuthState({
             user: data.user,
-            accessToken: token,
+            accessToken: null,
             isLoading: false,
             isAuthenticated: true,
           });

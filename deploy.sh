@@ -84,7 +84,7 @@ fi
 
 # Устанавливаем зависимости
 print_status "Устанавливаем зависимости..."
-ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && npm install"
+ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && npm ci"
 
 if [ $? -eq 0 ]; then
     print_status "Зависимости установлены!"
@@ -96,7 +96,7 @@ fi
 # Собираем проект
 print_status "Собираем проект..."
 # postbuild (next-sitemap) запустится автоматически как lifecycle-скрипт после build
-ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && npm run build && npm run postbuild:yandex"
+ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && npx prisma migrate deploy && npm run build && npm run postbuild:yandex"
 
 if [ $? -eq 0 ]; then
     print_status "Проект успешно собран!"
@@ -107,7 +107,7 @@ fi
 
 # Перезапускаем PM2 процесс
 print_status "Перезапускаем PM2 процесс..."
-ssh $SERVER_USER@$SERVER_HOST "pm2 restart $PM2_APP_NAME --update-env"
+ssh $SERVER_USER@$SERVER_HOST "pm2 restart $PM2_APP_NAME --update-env && sleep 2 && curl -fsS http://localhost:3000/ | head -c 0"
 
 if [ $? -eq 0 ]; then
     print_status "PM2 процесс перезапущен!"

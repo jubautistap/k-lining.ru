@@ -12,12 +12,16 @@ export interface AuthenticatedRequest extends NextRequest {
 
 export async function authMiddleware(request: NextRequest): Promise<NextResponse | null> {
   try {
-    const authHeader = request.headers.get('authorization');
-    if (!authHeader?.startsWith('Bearer ')) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    // Предпочитаем httpOnly cookie accessToken, затем Authorization: Bearer
+    const cookieToken = request.cookies.get('accessToken')?.value;
+    let token = cookieToken;
+    if (!token) {
+      const authHeader = request.headers.get('authorization');
+      if (!authHeader?.startsWith('Bearer ')) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+      token = authHeader.substring(7);
     }
-
-    const token = authHeader.substring(7);
     const payload = AuthService.verifyAccessToken(token);
     
     if (!payload) {

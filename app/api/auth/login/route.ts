@@ -11,9 +11,11 @@ const loginSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
-    // Rate limiting
-    const ip = request.ip || 'unknown';
-    await authRateLimit.check(5, ip); // 5 попыток за 15 минут
+    // Rate limiting (пер-эндпойнт + нормализация IP)
+    const fwd = request.headers.get('x-forwarded-for') || '';
+    const xRealIp = request.headers.get('x-real-ip') || '';
+    const clientIp = (fwd.split(',')[0] || xRealIp || request.ip || 'unknown').trim();
+    await authRateLimit.check(5, `${request.nextUrl.pathname}|${clientIp}`); // 5 попыток/15м
 
     const body = await request.json();
     const { email, password } = loginSchema.parse(body);
@@ -71,15 +73,23 @@ export async function POST(request: NextRequest) {
         name: user.name,
         role: user.role,
       },
+      // backward compatibility: оставляем accessToken в теле, но клиент может его не использовать
       accessToken: tokens.accessToken,
     });
 
-    // Устанавливаем refresh token в httpOnly cookie
+    // Устанавливаем оба токена в httpOnly cookie
     response.cookies.set('refreshToken', tokens.refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       maxAge: 7 * 24 * 60 * 60, // 7 дней
+    });
+    response.cookies.set('accessToken', tokens.accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 15 * 60, // 15 минут
+      path: '/',
     });
 
     return response;
@@ -92,10 +102,12 @@ export async function POST(request: NextRequest) {
     }
 
     if (error instanceof Error && error.message === 'Rate limit exceeded') {
-      return NextResponse.json(
+      const res = NextResponse.json(
         { error: 'Too many login attempts. Try again later.' },
         { status: 429 }
       );
+      res.headers.set('Retry-After', (15 * 60).toString());
+      return res;
     }
 
     console.error('Login error:', error);

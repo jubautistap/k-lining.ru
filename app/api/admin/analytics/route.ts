@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireManager } from '@/lib/auth/middleware';
 
 // Генерация тестовых данных для аналитики
 function generateAnalyticsData(range: number) {
@@ -69,6 +70,8 @@ function generateAnalyticsData(range: number) {
 
 export async function GET(request: NextRequest) {
   try {
+    const auth = await requireManager(request);
+    if (auth) return auth;
     const { searchParams } = new URL(request.url);
     const range = parseInt(searchParams.get('range') || '30');
     

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { requireAdmin } from '@/lib/auth/middleware';
 
 // Временное хранилище настроек (в реальном проекте - база данных)
 let siteSettings = {
@@ -32,8 +33,10 @@ let siteSettings = {
   vk: 'https://vk.com/kliningpro'
 };
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const auth = await requireAdmin(request);
+    if (auth) return auth;
     // Читаем настройки из БД и перекрываем дефолты
     const rows = await prisma.settings.findMany();
     const fromDb: Record<string, string> = {};
@@ -58,6 +61,8 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    const auth = await requireAdmin(request);
+    if (auth) return auth;
     const body = await request.json();
     
     // Обновляем настройки

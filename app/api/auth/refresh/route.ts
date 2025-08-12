@@ -46,12 +46,19 @@ export async function POST(request: NextRequest) {
       accessToken: tokens.accessToken,
     });
 
-    // Обновляем refresh token в cookie
+    // Обновляем refresh token и access token в cookie
     response.cookies.set('refreshToken', tokens.refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       maxAge: 7 * 24 * 60 * 60, // 7 дней
+    });
+    response.cookies.set('accessToken', tokens.accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 15 * 60, // 15 минут
+      path: '/',
     });
 
     return response;

@@ -11,6 +11,14 @@ export async function POST(request: NextRequest) {
       sameSite: 'strict',
       maxAge: 0, // Немедленное удаление
     });
+    // Очищаем access token cookie
+    response.cookies.set('accessToken', '', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 0,
+      path: '/',
+    });
 
     return response;
   } catch (error) {

@@ -23,7 +23,7 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   generateEtags: false,
-  reactStrictMode: false, // Отключено для устранения hydration ошибок #425, #418, #423
+  reactStrictMode: true,
   swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
@@ -83,10 +83,7 @@ const nextConfig = {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin',
           },
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=3600, s-maxage=86400',
-          },
+          // Не кэшируем HTML по умолчанию (управляем кэшем точечно ниже)
         ],
       },
       {
@@ -99,7 +96,8 @@ const nextConfig = {
         ],
       },
       {
-        source: '/:path*.(ico|png|jpg|jpeg|gif|svg|webp|avif)',
+        // Кэшируем изображения/ассеты агрессивно
+        source: '/:path*.(ico|png|jpg|jpeg|gif|svg|webp|avif|woff|woff2|ttf|eot|css|js)',
         headers: [
           {
             key: 'Cache-Control',
@@ -109,6 +107,16 @@ const nextConfig = {
       },
       {
         source: '/api/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+        ],
+      },
+      {
+        // Явно отключаем кэширование для HTML
+        source: '/((?!_next/static|_next/image|favicon.ico).*)',
         headers: [
           {
             key: 'Cache-Control',

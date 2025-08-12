@@ -21,6 +21,9 @@ export function middleware(request: NextRequest) {
   // Кеширование статических ресурсов
   if (pathname.match(/\.(ico|png|jpg|jpeg|gif|svg|webp|avif|woff|woff2|ttf|eot|css|js)$/)) {
     response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+  } else {
+    // Для HTML и прочего — отключаем кэш
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
   }
 
   // Кеширование API ответов (кроме динамических)
@@ -49,22 +52,25 @@ export function middleware(request: NextRequest) {
   response.headers.set('X-XSS-Protection', '1; mode=block');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-  // Обновленный CSP для лучшей совместимости с трекерами
+  // CSP: ужесточенная; без nonce пока, но без лишних источников
   const csp = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://mc.yandex.ru https://yandex.st https://yastatic.net https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com",
+    "script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://www.googletagmanager.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
-    "img-src 'self' data: https: blob: https://mc.yandex.ru https://www.google-analytics.com https://www.google.com",
-    "connect-src 'self' https://mc.yandex.ru https://mc.yandex.com https://mc.yandex.md https://www.google-analytics.com https://analytics.google.com https://www.google.com",
-    // Разрешаем встраивание сайта Яндексом для карт кликов/вебвизора
-    "frame-ancestors 'self' https://metrika.yandex.ru https://metrika.yandex.by https://metrica.yandex.com https://metrica.yandex.com.tr https://webvisor.com https://*.webvisor.com",
-    "frame-src 'self' https://mc.yandex.ru https://mc.yandex.md",
+    "img-src 'self' data: https: blob:",
+    "connect-src 'self' https://mc.yandex.ru https://www.google-analytics.com https://analytics.google.com",
+    isYandexViewer
+      ? "frame-ancestors 'self' https://metrika.yandex.ru https://metrika.yandex.by https://metrica.yandex.com https://metrica.yandex.com.tr https://webvisor.com https://*.webvisor.com"
+      : "frame-ancestors 'self'",
+    "frame-src 'self' https://mc.yandex.ru",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
     'upgrade-insecure-requests',
-  ].join('; ');
+  ]
+    .filter(Boolean)
+    .join('; ');
   response.headers.set('Content-Security-Policy', csp);
 
   return response;
