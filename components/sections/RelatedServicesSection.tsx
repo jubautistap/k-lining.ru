@@ -30,7 +30,7 @@ export default function RelatedServicesSection({
       title: 'Уборка квартир',
       description: 'Генеральная и поддерживающая уборка жилых помещений',
       href: '/services/apartment-cleaning',
-      price: 'от 3,000₽'
+      price: 'от 6,000₽'
     },
     {
       title: 'Уборка офисов',
@@ -48,7 +48,7 @@ export default function RelatedServicesSection({
       title: 'Мытье окон',
       description: 'Качественное мытье окон в квартирах и офисах',
       href: '/services/window-cleaning',
-      price: 'от 150₽/м²'
+      price: 'от 600 ₽ за створку'
     },
     {
       title: 'Уборка после ремонта',

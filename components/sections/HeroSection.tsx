@@ -79,7 +79,7 @@ export default function HeroSection() {
             </div>
 
             <div className="text-sm text-gray-500">
-              Минимальный заказ — 6 000 ₽; отдельные услуги — от 2 500 ₽
+            Минимальный заказ — 6 000 ₽
             </div>
           </div>
 

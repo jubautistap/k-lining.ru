@@ -5,8 +5,8 @@ import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Уборка квартир в Москве — мин. заказ 6 000 ₽; услуги от 2 500 ₽ | K-lining',
-  description: 'Профессиональная уборка квартир в Москве и МО. Генеральная уборка, уборка после ремонта, поддерживающая уборка. Гарантия качества, выезд в день заказа. Услуги от 3000₽. Мин. заказ — 6 000 ₽.',
+  title: 'Уборка квартир в Москве — мин. заказ 6 000 ₽ | K-lining',
+  description: 'Профессиональная уборка квартир в Москве и МО. Генеральная уборка, уборка после ремонта, поддерживающая уборка. Гарантия качества, выезд в день заказа. Минимальная стоимость заказа — 6 000 ₽.',
   keywords: 'уборка квартир Москва, генеральная уборка квартиры, уборка после ремонта, поддерживающая уборка, клининг квартир, уборка квартиры цена, эко уборка квартиры, VIP уборка квартиры',
   openGraph: {
     title: 'Уборка квартир в Москве: генеральная, после ремонта, поддерживающая',
@@ -56,7 +56,7 @@ export default function ApartmentCleaningPage() {
                 "@type": "Offer",
                 "name": "Генеральная уборка квартиры",
                 "description": "Комплексная уборка всех помещений с тщательной очисткой труднодоступных мест",
-                "priceRange": "от 5000₽",
+                "priceRange": "от 6000₽",
                 "priceCurrency": "RUB"
               },
               {
@@ -70,7 +70,7 @@ export default function ApartmentCleaningPage() {
                 "@type": "Offer",
                 "name": "Поддерживающая уборка",
                 "description": "Регулярная уборка для поддержания чистоты в квартире",
-                "priceRange": "от 3000₽", 
+                "priceRange": "от 6000₽", 
                 "priceCurrency": "RUB"
               }
             ],
@@ -116,7 +116,7 @@ function ApartmentCleaningContent() {
     {
       title: 'Генеральная уборка квартиры',
       description: 'Комплексная уборка всех помещений с тщательной очисткой труднодоступных мест',
-      price: 'от 5000₽',
+      price: 'от 6000₽',
       features: [
         'Мытье всех поверхностей',
         'Очистка сантехники',
@@ -142,7 +142,7 @@ function ApartmentCleaningContent() {
     {
       title: 'Поддерживающая уборка',
       description: 'Регулярная уборка для поддержания чистоты в квартире',
-      price: 'от 3000₽',
+      price: 'от 6000₽',
       features: [
         'Мытье полов',
         'Очистка сантехники',
@@ -181,7 +181,7 @@ function ApartmentCleaningContent() {
     {
       title: 'Срочная уборка квартиры',
       description: 'Быстрая уборка в день заказа',
-      price: 'от 2500₽',
+      price: 'от 6000₽',
       features: [
         'Выезд в течение 2 часов',
         'Быстрая уборка',
@@ -348,7 +348,7 @@ function ApartmentCleaningContent() {
           <div className="max-w-4xl mx-auto space-y-6">
             <div className="bg-white rounded-lg p-6 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Сколько стоит уборка квартиры?</h3>
-              <p className="text-gray-600">Стоимость зависит от площади квартиры, вида уборки и количества комнат. Поддерживающая уборка от 3000₽, генеральная от 5000₽.</p>
+              <p className="text-gray-600">Стоимость зависит от площади квартиры, вида уборки и количества комнат. Поддерживающая уборка от 60–110 ₽/м²; генеральная от 160–220 ₽/м². Минимальный заказ — 6 000 ₽.</p>
             </div>
 
             <div className="bg-white rounded-lg p-6 shadow-sm">

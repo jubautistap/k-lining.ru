@@ -194,9 +194,9 @@ export default function MarketingLandingPage({ params }: { params: { slug: strin
             <div className="bg-white rounded-xl shadow p-6">
               <h3 className="font-semibold text-gray-900 mb-2">Ориентиры по ценам</h3>
               <ul className="text-sm text-gray-700 space-y-1">
-                <li>1‑к квартира: от 3 000 ₽</li>
-                <li>2‑к квартира: от 4 500 ₽</li>
-                <li>Генеральная: от 5 000 ₽</li>
+                <li>Поддерживающая: 60–110 ₽/м²</li>
+                <li>Генеральная: 160–220 ₽/м²</li>
+                <li>После ремонта: 220–300 ₽/м²</li>
               </ul>
             </div>
             <div className="bg-white rounded-xl shadow p-6">

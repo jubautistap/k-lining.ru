@@ -11,8 +11,25 @@ const contactSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { name, phone, email, message, service } = contactSchema.parse(body);
+    const contentType = request.headers.get('content-type') || '';
+    let parsed: any = {};
+    if (contentType.includes('application/json')) {
+      parsed = await request.json();
+    } else if (contentType.includes('application/x-www-form-urlencoded') || contentType.includes('multipart/form-data')) {
+      const form = await request.formData();
+      parsed = {
+        name: String(form.get('name') || ''),
+        phone: String(form.get('phone') || ''),
+        email: String(form.get('email') || ''),
+        message: String(form.get('message') || ''),
+        service: String(form.get('service') || ''),
+      };
+    } else {
+      // попытка json по умолчанию
+      try { parsed = await request.json(); } catch { parsed = {}; }
+    }
+
+    const { name, phone, email, message, service } = contactSchema.parse(parsed);
 
     // Проксируем в админский endpoint для единой логики (включая Telegram)
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://k-lining.ru'}/api/admin/leads`, {

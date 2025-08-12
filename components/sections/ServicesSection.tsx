@@ -10,8 +10,8 @@ export default function ServicesSection() {
       icon: Home,
       title: 'Уборка квартир',
       description: 'Поддерживающая, генеральная и после ремонта. Делаем качественно и быстро.',
-      features: ['Пылесосим', 'Моем полы', 'Убираем санузел', 'Протираем пыль'],
-      price: 'от 2,500 ₽',
+          features: ['Пылесосим', 'Моем полы', 'Убираем санузел', 'Протираем пыль'],
+          price: 'от 6,000 ₽',
       href: '/services/apartment-cleaning'
     },
     {
@@ -27,7 +27,7 @@ export default function ServicesSection() {
       title: 'Уборка офисов',
       description: 'Коммерческие помещения любого размера. Работаем в нерабочее время.',
       features: ['Офисные помещения', 'Переговорные', 'Кухни и санузлы', 'Ресепшн'],
-      price: 'от 3,000 ₽',
+          price: 'от 5,000 ₽',
       href: '/services/office-cleaning'
     },
     {
@@ -43,7 +43,7 @@ export default function ServicesSection() {
       title: 'Мытье окон',
       description: 'Внутри и снаружи. Работаем на высоте с профессиональным оборудованием.',
       features: ['Внутренние окна', 'Внешние окна', 'Балконы', 'Витражи'],
-      price: 'от 600 ₽',
+          price: 'от 600 ₽ за створку',
       href: '/services/window-cleaning'
     },
     {
@@ -133,7 +133,7 @@ export default function ServicesSection() {
 
         {/* Pricing note */}
         <div className="text-center text-xs text-gray-500 mt-6">
-          Минимальный заказ — 6 000 ₽; отдельные услуги — от 2 500 ₽
+          Минимальный заказ — 6 000 ₽
         </div>
 
         {/* Bottom CTA */}

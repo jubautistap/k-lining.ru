@@ -113,7 +113,19 @@ export default function CalculatorPage() {
           </p>
         </div>
 
-        {/* Оборачиваем клиентский калькулятор в Suspense для корректного SSR bail-out */}
+        {/* Оборачиваем клиентский калькулятор и даем SEO/доступности фолбэк без JS */}
+        <noscript>
+          <div className="mb-6 p-4 border rounded-lg bg-white">
+            <h2 className="text-lg font-semibold mb-2">Быстрый запрос расчета (без JavaScript)</h2>
+            <form method="POST" action="/api/contact" className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <input name="name" placeholder="Имя" className="border p-2 rounded" required />
+              <input name="phone" placeholder="Телефон" className="border p-2 rounded" required />
+              <input name="service" placeholder="Тип: поддерживающая/генеральная/после ремонта" className="border p-2 rounded md:col-span-2" />
+              <input name="message" placeholder="Площадь (м²), кол-во створок, пожелания" className="border p-2 rounded md:col-span-2" />
+              <button type="submit" className="btn-primary md:col-span-2">Отправить запрос</button>
+            </form>
+          </div>
+        </noscript>
         <Suspense fallback={<div className="h-96 bg-gray-100 animate-pulse rounded-xl" />}> 
           <CleaningCalculator />
         </Suspense>

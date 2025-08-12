@@ -161,7 +161,7 @@ export default function Header() {
                   <span>Работаем 24/7</span>
                 </div>
                 <div className="text-xs text-gray-600">
-                  Минимальный заказ — 6 000 ₽; услуги — от 2 500 ₽
+                  Минимальный заказ — 6 000 ₽
                 </div>
               </div>
 

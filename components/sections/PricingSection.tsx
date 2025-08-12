@@ -91,7 +91,7 @@ export default function PricingSection() {
   ];
 
   const additionalServices = [
-    { service: 'Мытье окон', price: 'от 600 ₽' },
+    { service: 'Мытье окон', price: 'от 600 ₽ за створку' },
     { service: 'Химчистка дивана', price: 'от 3,000 ₽' },
     { service: 'Химчистка ковра', price: 'от 1,800 ₽' },
     { service: 'Уборка балкона', price: 'от 1,200 ₽' },
@@ -109,7 +109,7 @@ export default function PricingSection() {
   ];
 
   const commercialServices = [
-    { service: 'Уборка офисов', price: 'от 4,000 ₽' },
+    { service: 'Уборка офисов', price: 'от 5,000 ₽' },
     { service: 'Уборка торговых центров', price: 'от 3,500 ₽' },
     { service: 'Уборка ресторанов', price: 'от 3,500 ₽' },
     { service: 'Уборка салонов красоты', price: 'от 3,500 ₽' },
@@ -336,6 +336,38 @@ export default function PricingSection() {
                 <span className="text-primary-600 font-semibold">{service.price}</span>
               </motion.div>
             ))}
+          </div>
+        </motion.div>
+
+        {/* Discounts and Surcharges */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="bg-white rounded-2xl shadow-lg p-8 mb-8"
+        >
+          <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Скидки и надбавки</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-2">Скидки</h4>
+              <ul className="space-y-1 text-gray-700">
+                <li>— Новым клиентам −10%</li>
+                <li>— Пакет «Генеральная + окна» −15%</li>
+              </ul>
+              <p className="text-xs text-gray-500 mt-2">Скидки не суммируются — применяется лучшая.</p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-2">Надбавки</h4>
+              <ul className="space-y-1 text-gray-700">
+                <li>— Срочно (24 ч): +20%</li>
+                <li>— Ночная уборка (23:00–07:00): +15%</li>
+                <li>— За МКАД (до 20 км): +15%</li>
+              </ul>
+            </div>
+          </div>
+          <div className="text-xs text-gray-500 mt-4 text-center">
+            Как считаем: Итого = (площадь × ставка) + (окна × цена за створку) × надбавки − скидка. Округляем до 10 ₽. Итоговая сумма не ниже 6 000 ₽.
           </div>
         </motion.div>
 

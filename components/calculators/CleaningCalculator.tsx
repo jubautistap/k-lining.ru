@@ -42,44 +42,56 @@ export default function CleaningCalculator() {
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [servicesSearch, setServicesSearch] = useState<string>('');
   const [animatedTotal, setAnimatedTotal] = useState<number>(0);
+  const [breakdown, setBreakdown] = useState<{
+    base: number;
+    windows: number;
+    extrasFactor: number;
+    discountFactor: number;
+  } | null>(null);
   const prevTotalRef = useRef<number>(0);
   const didInitRef = useRef<boolean>(false);
 
-  // Базовые цены за м²
-  const basePrices = useMemo(() => ({
+  // Диапазоны цен за м² и окно (согласованно с прайсом)
+  const RATES = useMemo(() => ({
     apartment: {
-      maintenance: 60,
-      general: 100,
-      postRenovation: 140,
-      eco: 120,
-      vip: 200
+      maintenance: { min: 60, mid: 85, max: 110 },
+      general: { min: 160, mid: 190, max: 220 },
+      postRenovation: { min: 220, mid: 260, max: 300 },
+      eco: { min: 160, mid: 190, max: 220 },
+      vip: { min: 300, mid: 350, max: 400 }
     },
     house: {
-      maintenance: 120,
-      general: 200,
-      postRenovation: 280,
-      eco: 240,
-      vip: 400
+      maintenance: { min: 80, mid: 100, max: 130 },
+      general: { min: 180, mid: 220, max: 260 },
+      postRenovation: { min: 240, mid: 280, max: 320 },
+      eco: { min: 180, mid: 220, max: 260 },
+      vip: { min: 350, mid: 400, max: 450 }
     },
     office: {
-      maintenance: 80,
-      general: 140,
-      postRenovation: 200,
-      eco: 160,
-      vip: 300
+      maintenance: { min: 80, mid: 95, max: 110 },
+      general: { min: 100, mid: 120, max: 140 },
+      postRenovation: { min: 160, mid: 180, max: 200 },
+      eco: { min: 120, mid: 140, max: 160 },
+      vip: { min: 200, mid: 250, max: 300 }
     },
     commercial: {
-      maintenance: 70,
-      general: 120,
-      postRenovation: 180,
-      eco: 140,
-      vip: 250
+      maintenance: { min: 70, mid: 90, max: 110 },
+      general: { min: 120, mid: 150, max: 180 },
+      postRenovation: { min: 180, mid: 200, max: 220 },
+      eco: { min: 120, mid: 150, max: 180 },
+      vip: { min: 220, mid: 260, max: 300 }
     }
   }), []);
 
+  const WINDOW_PRICE_PER_SASH = 600; // ₽ за створку
+  const MIN_ORDER = 6000;
+  const RATE_POINT: 'min' | 'mid' | 'max' = 'mid';
+  const SURCHARGES = { urgent: 1.20, night: 1.15, outside: 1.15 } as const;
+  const DISCOUNTS = { new: 0.90, bundle: 0.85 } as const; // берем лучшую
+
   // Дополнительные услуги
   const additionalServicesList = useMemo(() => [
-    { id: 'windows', name: 'Мытье окон', price: 1500, icon: Sparkles },
+    // окна считаем отдельно по створкам ниже, эта позиция убирается чтобы не дублировать
     { id: 'kitchen', name: 'Уборка кухни', price: 2000, icon: Home },
     { id: 'bathroom', name: 'Уборка санузла', price: 1500, icon: Shield },
     { id: 'balcony', name: 'Уборка балкона', price: 1000, icon: Building },
@@ -111,7 +123,7 @@ export default function CleaningCalculator() {
           setPropertyType(pt as any);
         }
         const numA = parseInt(a || '');
-        if (!Number.isNaN(numA) && numA > 0 && numA <= 5000) {
+        if (!Number.isNaN(numA) && numA >= 15 && numA <= 500) {
           setArea(numA);
           setCustomArea(String(numA));
         }
@@ -132,7 +144,7 @@ export default function CleaningCalculator() {
       if (raw) {
         const st = JSON.parse(raw);
         if (st?.propertyType && ['apartment','house','office','commercial'].includes(st.propertyType)) setPropertyType(st.propertyType);
-        if (typeof st?.area === 'number' && st.area > 0 && st.area <= 5000) { setArea(st.area); setCustomArea(String(st.area)); }
+        if (typeof st?.area === 'number' && st.area >= 15 && st.area <= 500) { setArea(st.area); setCustomArea(String(st.area)); }
         if (st?.cleaningType && ['maintenance','general','postRenovation','eco','vip'].includes(st.cleaningType)) setCleaningType(st.cleaningType);
         if (Array.isArray(st?.additionalServices)) {
           const allowed = new Set(additionalServicesList.map(x => x.id));
@@ -225,42 +237,71 @@ export default function CleaningCalculator() {
   const handleAreaChange = (value: string) => {
     setCustomArea(value);
     const numValue = parseInt(value) || 0;
-    if (numValue > 0 && numValue <= 5000) {
+    if (numValue >= 15 && numValue <= 500) {
       setArea(numValue);
     }
   };
 
+  // Доп. параметры калькулятора
+  const [windowsCount, setWindowsCount] = useState<number>(0); // створки
+  const [urgent, setUrgent] = useState<boolean>(false);
+  const [night, setNight] = useState<boolean>(false);
+  const [outside, setOutside] = useState<boolean>(false);
+  const [isNewClient, setIsNewClient] = useState<boolean>(false);
+  const [bundle, setBundle] = useState<boolean>(false); // «генеральная + окна»
+
+  const pickRate = useCallback(() => {
+    const prop = RATES[propertyType] ?? RATES.apartment;
+    const r = (prop as any)[cleaningType] ?? (RATES.apartment as any).general;
+    return r[RATE_POINT] as number;
+  }, [RATES, propertyType, cleaningType]);
+
+  const extrasFactor = useCallback(() => {
+    let factor = 1.0;
+    if (urgent) factor *= SURCHARGES.urgent;
+    if (night) factor *= SURCHARGES.night;
+    if (outside) factor *= SURCHARGES.outside;
+    return factor;
+  }, [urgent, night, outside]);
+
+  const bestDiscount = useCallback(() => {
+    const opts = [1.0];
+    if (isNewClient) opts.push(DISCOUNTS.new);
+    if (bundle) opts.push(DISCOUNTS.bundle);
+    return Math.min(...opts);
+  }, [isNewClient, bundle]);
+
+  const round10 = (n: number) => Math.round(n / 10) * 10;
+
   // Расчет стоимости
   useEffect(() => {
-    const basePrice = basePrices[propertyType][cleaningType] * area;
-    const additionalPrice = additionalServices.reduce((sum, serviceId) => {
+    const rate = pickRate();
+    const base = area * rate;
+    const windowsCost = windowsCount * WINDOW_PRICE_PER_SASH;
+    const subTotal = base + windowsCost + additionalServices.reduce((sum, serviceId) => {
       const service = additionalServicesList.find(s => s.id === serviceId);
       return sum + (service?.price || 0);
     }, 0);
 
-    // Базовая цена без спецрежимов
-    let baseTotal = basePrice + additionalPrice;
-    
-    if (baseTotal < 6000) {
-      baseTotal = 6000;
-    }
+    const withExtras = subTotal * extrasFactor();
+    const withDiscount = withExtras * bestDiscount();
+    const rawTotal = round10(withDiscount);
+    const total = Math.max(rawTotal, MIN_ORDER);
 
-    const totalPrice = baseTotal;
     const duration = calculateDuration(area, cleaningType, propertyType);
+    setBreakdown({ base: round10(base), windows: round10(windowsCost), extrasFactor: extrasFactor(), discountFactor: bestDiscount() });
 
     setResult({
-      basePrice: basePrice < 6000 ? 6000 : basePrice,
-      additionalServices: additionalPrice,
-      totalPrice,
+      basePrice: round10(base),
+      additionalServices: round10(windowsCost + (subTotal - base - windowsCost)),
+      totalPrice: total,
       duration,
       services: [
         serviceNames[cleaningType],
-        ...additionalServices.map(id => 
-          additionalServicesList.find(s => s.id === id)?.name || ''
-        ).filter(Boolean)
+        ...additionalServices.map(id => additionalServicesList.find(s => s.id === id)?.name || '').filter(Boolean)
       ]
     });
-  }, [propertyType, area, cleaningType, additionalServices, additionalServicesList, basePrices, serviceNames]);
+  }, [area, windowsCount, propertyType, cleaningType, additionalServices, additionalServicesList, pickRate, extrasFactor, bestDiscount, serviceNames]);
 
   // Анимация totalPrice
   useEffect(() => {
@@ -435,9 +476,9 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                   />
                   <span className="text-sm text-gray-500 font-medium">м²</span>
                 </div>
-                <div className="text-xs text-gray-500 mt-2">
-                  Максимум: 5,000 м² • Минимальная стоимость заказа: 6,000 ₽
-                </div>
+                  <div className="text-xs text-gray-500 mt-2">
+                    Диапазон: 15–500 м² • Минимальная стоимость заказа: 6,000 ₽
+                  </div>
               </div>
             </div>
           </motion.div>
@@ -554,6 +595,81 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
             </div>
           </motion.div>
 
+          {/* Окна (за створку) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
+          >
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary-50 border border-primary-200 text-primary-600">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Окна</h3>
+            </div>
+            <div className="space-y-4">
+              <div className="bg-gray-50 rounded-xl p-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Количество створок (от 0)
+                </label>
+                <div className="flex items-center space-x-3">
+                  <input
+                    type="number"
+                    min="0"
+                    max="200"
+                    value={windowsCount}
+                    onChange={(e) => setWindowsCount(Math.max(0, parseInt(e.target.value) || 0))}
+                    placeholder="Например: 4"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  />
+                  <span className="text-sm text-gray-500 font-medium">× {WINDOW_PRICE_PER_SASH} ₽</span>
+                </div>
+                <div className="text-xs text-gray-500 mt-2">
+                  Единая метрика: «за створку». Москитная сетка/решётка: +200–300 ₽/шт
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Надбавки и скидки */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
+          >
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary-50 border border-primary-200 text-primary-600">
+                <Shield className="w-5 h-5" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">Надбавки и скидки</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" checked={urgent} onChange={(e) => setUrgent(e.target.checked)} />
+                Срочно (24 ч) +20%
+              </label>
+              <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" checked={night} onChange={(e) => setNight(e.target.checked)} />
+                Ночная уборка (23:00–07:00) +15%
+              </label>
+              <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" checked={outside} onChange={(e) => setOutside(e.target.checked)} />
+                За МКАД (до 20 км) +15%
+              </label>
+              <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" checked={isNewClient} onChange={(e) => setIsNewClient(e.target.checked)} />
+                Новый клиент −10%
+              </label>
+              <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" checked={bundle} onChange={(e) => setBundle(e.target.checked)} />
+                Пакет «Генеральная + окна» −15%
+              </label>
+            </div>
+            <div className="text-xs text-gray-500 mt-2">Скидки не суммируются — применяется лучшая</div>
+          </motion.div>
+
           {/* Специальные режимы */}
           {/* Убрали специальные режимы - у конкурентов их нет */}
         </div>
@@ -613,6 +729,16 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                   </div>
                 ))}
 
+                {/* Разбивка */}
+                <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
+                  <div className="text-sm opacity-90 space-y-1">
+                    <div className="flex justify-between"><span>Базовая услуга</span><span>{breakdown ? breakdown.base.toLocaleString() : 0} ₽</span></div>
+                    <div className="flex justify-between"><span>Окна</span><span>{breakdown ? breakdown.windows.toLocaleString() : 0} ₽</span></div>
+                    <div className="flex justify-between"><span>Надбавки</span><span>{breakdown && breakdown.extrasFactor !== 1 ? `× ${breakdown.extrasFactor.toFixed(2)}` : 'нет'}</span></div>
+                    <div className="flex justify-between"><span>Скидка</span><span>{breakdown && breakdown.discountFactor < 1 ? `− ${(100 - breakdown.discountFactor*100).toFixed(0)}%` : 'нет'}</span></div>
+                  </div>
+                </div>
+
                 {/* Итого */}
                 <div className="bg-white/20 rounded-xl p-4 backdrop-blur-sm border border-white/30">
                   <div className="flex items-center justify-between mb-2">
@@ -624,7 +750,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                   <motion.div key={result.duration} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm opacity-90">
                     Время работы: {result.duration}
                   </motion.div>
-                  {result.totalPrice === 6000 && (
+                  {result.totalPrice === MIN_ORDER && (
                     <div className="text-xs opacity-90 mt-1">
                       * Минимальная стоимость заказа
                     </div>
@@ -652,7 +778,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                 <div className="space-y-3 text-sm opacity-90">
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 bg-white rounded-full"></div>
-                    <span>Расчет примерный</span>
+                    <span>Расчет примерный. Округление до 10 ₽</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 bg-white rounded-full"></div>
@@ -660,7 +786,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 bg-white rounded-full"></div>
-                    <span>Минимальный заказ: 6,000 ₽</span>
+                    <span>Минимальный заказ: {MIN_ORDER.toLocaleString()} ₽</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 bg-white rounded-full"></div>

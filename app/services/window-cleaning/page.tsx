@@ -4,11 +4,11 @@ import { Metadata } from 'next';
 import { CheckCircle, Shield, Clock, Users, Star, Zap, Square } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Мытьё окон в Москве — от 500 ₽, безопасно и без разводов | K-lining',
-  description: 'Профессиональное мытьё окон в квартирах, домах и офисах. Полировка стекла, рам и подоконников. Работаем 24/7, выезд в день обращения.',
+  title: 'Мытьё окон в Москве — от 600 ₽ за створку, безопасно и без разводов | K-lining',
+  description: 'Профессиональное мытьё окон в квартирах, домах и офисах. Полировка стекла, рам и подоконников. Работаем 24/7, выезд в день обращения. Тариф — от 600 ₽ за створку.',
   openGraph: {
     title: 'Мытьё окон — профессионально, быстро, без разводов',
-    description: 'Мытьё окон и витражей в Москве. Балконы, лоджии, высотные работы. Честные цены — от 500 ₽.',
+    description: 'Мытьё окон и витражей в Москве. Балконы, лоджии, высотные работы. Честные цены — от 600 ₽ за створку.',
     url: 'https://k-lining.ru/services/window-cleaning',
     siteName: 'K-lining',
     images: [
@@ -105,36 +105,28 @@ export default function WindowCleaningPage() {
 
               {/* Pricing */}
               <div className="bg-white p-8 rounded-lg shadow-lg">
-                <h3 className="text-2xl font-bold mb-6 text-gray-800">Стоимость</h3>
+            <h3 className="text-2xl font-bold mb-6 text-gray-800">Стоимость (единая метрика — за створку)</h3>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Окно стандартное</span>
-                    <span className="font-bold text-xl">от 500 ₽</span>
+                <span className="text-gray-600">Створка (внутри/снаружи)</span>
+                <span className="font-bold text-xl">от 600 ₽</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Окно с балконной дверью</span>
-                    <span className="font-bold text-xl">от 800 ₽</span>
+                <span className="text-gray-600">Балконный блок</span>
+                <span className="font-bold text-xl">от 1 000 ₽</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Лоджия (м²)</span>
-                    <span className="font-bold text-xl">от 200 ₽</span>
+                <span className="text-gray-600">Москитная сетка/решётка</span>
+                <span className="font-bold text-xl">+200–300 ₽</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Балкон (м²)</span>
-                    <span className="font-bold text-xl">от 250 ₽</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Москитная сетка</span>
-                    <span className="font-bold text-xl">от 200 ₽</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Высота от 3 этажа</span>
-                    <span className="font-bold text-xl">+30%</span>
+                <span className="text-gray-600">Вышка/этажность (с 3-го этажа)</span>
+                <span className="font-bold text-xl">+30%</span>
                   </div>
                 </div>
                 <div className="mt-6 p-4 bg-cyan-50 rounded-lg">
                   <p className="text-sm text-cyan-800">
-                    💡 Цена зависит от количества окон, высоты и сложности доступа
+                💡 Цена зависит от количества створок, высоты и сложности доступа
                   </p>
                 </div>
               </div>

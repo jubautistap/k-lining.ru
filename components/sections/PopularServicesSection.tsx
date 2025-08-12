@@ -17,7 +17,7 @@ export default function PopularServicesSection() {
       description: 'Генеральная и поддерживающая уборка',
       href: '/services/apartment-cleaning',
       color: 'bg-gradient-to-br from-blue-500 to-blue-600',
-      price: 'от 3,000₽'
+          price: 'от 6,000₽'
     },
     {
       icon: Building2,
@@ -41,7 +41,7 @@ export default function PopularServicesSection() {
       description: 'Мытье окон в квартирах и офисах',
       href: '/services/window-cleaning',
       color: 'bg-gradient-to-br from-sky-500 to-blue-500',
-      price: 'от 150₽/м²'
+          price: 'от 600 ₽ за створку'
     }
   ];
 
