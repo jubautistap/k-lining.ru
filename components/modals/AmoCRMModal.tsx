@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { X, Phone, Sparkles, Gift, Percent } from 'lucide-react';
 import { useAmoCRM } from '../providers/AmoCRMProvider';
 import { useForm } from 'react-hook-form';
@@ -26,6 +26,16 @@ export default function AmoCRMModal() {
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
+
+  // Закрытие по ESC
+  useEffect(() => {
+    if (!isModalOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeModal();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isModalOpen, closeModal]);
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
@@ -78,18 +88,23 @@ export default function AmoCRMModal() {
   if (!isModalOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={closeModal}>
       <div 
+        role="dialog"
+        aria-modal="true"
+        aria-label="Заказать звонок"
         className="bg-white rounded-2xl shadow-xl max-w-sm w-full"
         onClick={(e) => e.stopPropagation()}
+        style={{ paddingTop: 'max(env(safe-area-inset-top), 0px)' }}
       >
         {/* Header */}
         <div className="relative p-6 pb-4">
           <button
             onClick={closeModal}
-            className="absolute top-4 right-4 w-6 h-6 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+            aria-label="Закрыть"
+            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white ring-1 ring-gray-200 hover:bg-gray-50 flex items-center justify-center transition-colors shadow-sm"
           >
-            <X className="w-4 h-4 text-gray-600" />
+            <X className="w-4 h-4 text-gray-700" />
           </button>
           
           <div className="text-center">
