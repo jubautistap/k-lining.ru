@@ -49,3 +49,7 @@ kliningpro-backup-*.tgz
 
 # local reports
 lighthouse-report.html
+
+# generated sitemaps (generated on build, не храним в git)
+public/sitemap.xml
+public/yandex-sitemap.xml
