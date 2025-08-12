@@ -347,26 +347,68 @@ export default function PricingSection() {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="bg-white rounded-2xl shadow-lg p-8 mb-8"
         >
-          <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Скидки и надбавки</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-2">Скидки</h4>
-              <ul className="space-y-1 text-gray-700">
-                <li>— Новым клиентам −10%</li>
-                <li>— Пакет «Генеральная + окна» −15%</li>
-              </ul>
-              <p className="text-xs text-gray-500 mt-2">Скидки не суммируются — применяется лучшая.</p>
+          <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Надбавки и скидки</h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Надбавки */}
+            <div className="rounded-xl border border-amber-100 bg-amber-50/40 p-5">
+              <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                <span className="inline-flex items-center rounded-full bg-amber-100 text-amber-800 px-2 py-0.5 text-xs border border-amber-200">Надбавки</span>
+              </h4>
+
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center justify-between p-3 bg-white rounded-md border border-amber-100">
+                  <span className="flex items-center gap-2 text-gray-900">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full"></span>
+                    Срочно (24 ч)
+                  </span>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-100 text-xs font-semibold">+20%</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-white rounded-md border border-amber-100">
+                  <span className="flex items-center gap-2 text-gray-900">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full"></span>
+                    Ночная уборка (23:00–07:00)
+                  </span>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-100 text-xs font-semibold">+15%</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-white rounded-md border border-amber-100">
+                  <span className="flex items-center gap-2 text-gray-900">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full"></span>
+                    За МКАД (до 20 км)
+                  </span>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-100 text-xs font-semibold">+15%</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-2">Надбавки</h4>
-              <ul className="space-y-1 text-gray-700">
-                <li>— Срочно (24 ч): +20%</li>
-                <li>— Ночная уборка (23:00–07:00): +15%</li>
-                <li>— За МКАД (до 20 км): +15%</li>
-              </ul>
+
+            {/* Скидки */}
+            <div className="rounded-xl border border-green-100 bg-green-50/40 p-5">
+              <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                <span className="inline-flex items-center rounded-full bg-green-100 text-green-800 px-2 py-0.5 text-xs border border-green-200">Скидки</span>
+              </h4>
+
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center justify-between p-3 bg-white rounded-md border border-green-100">
+                  <span className="flex items-center gap-2 text-gray-900">
+                    <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
+                    Новый клиент
+                  </span>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-100 text-xs font-semibold">−10%</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-white rounded-md border border-green-100">
+                  <span className="flex items-center gap-2 text-gray-900">
+                    <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
+                    Пакет «Генеральная + окна»
+                  </span>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-100 text-xs font-semibold">−15%</span>
+                </div>
+              </div>
+
+              <p className="text-xs text-gray-600 mt-3">Скидки не суммируются — применяется лучшая.</p>
             </div>
           </div>
-          <div className="text-xs text-gray-500 mt-4 text-center">
+
+          <div className="text-xs text-gray-500 mt-6 text-center">
             Как считаем: Итого = (площадь × ставка) + (окна × цена за створку) × надбавки − скидка. Округляем до 10 ₽. Итоговая сумма не ниже 6 000 ₽.
           </div>
         </motion.div>
