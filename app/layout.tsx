@@ -99,6 +99,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://mc.yandex.ru" />
+        <link rel="preconnect" href="https://mc.webvisor.org" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//mc.yandex.ru" />
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
@@ -265,15 +266,7 @@ export default function RootLayout({
             }),
           }}
         />
-      </head>
-      <body className={`${inter.className} ${inter.variable} overflow-x-hidden`} suppressHydrationWarning>
-        <LazyProviders>
-          <SiteChrome>
-            {children}
-          </SiteChrome>
-        </LazyProviders>
-        
-        {/* Яндекс.Метрика: официальный скрипт в <head>, чтобы Вебвизор стартовал раньше */}
+        {/* Яндекс.Метрика: официальный скрипт + init в <head> для корректной проверки счетчика и старта Вебвизора */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -283,9 +276,26 @@ export default function RootLayout({
                 for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
                 k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
               })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+              ym(103567092, 'init', { webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true });
             `
           }}
         />
+      </head>
+      <body className={`${inter.className} ${inter.variable} overflow-x-hidden`} suppressHydrationWarning>
+        <LazyProviders>
+          <SiteChrome>
+            {children}
+          </SiteChrome>
+        </LazyProviders>
+
+        {/* SPA-hit для роутинга */}
+        <YandexMetrika />
+        {/* Noscript fallback */}
+        <noscript>
+          <div>
+            <img src="https://mc.yandex.ru/watch/103567092" style={{position:'absolute', left:'-9999px'}} alt="" />
+          </div>
+        </noscript>
         
         {/* Google Analytics 4 - загружаем асинхронно */}
         <script
