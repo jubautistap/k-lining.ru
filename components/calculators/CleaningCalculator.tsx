@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Calculator, 
@@ -18,6 +18,8 @@ import {
   X
 } from 'lucide-react';
 import { useAmoCRM } from '../providers/AmoCRMProvider';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { useDebounce } from '@/hooks/usePerformance';
 
 interface CalculationResult {
   basePrice: number;
@@ -29,6 +31,9 @@ interface CalculationResult {
 
 export default function CleaningCalculator() {
   const { openModal } = useAmoCRM();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [propertyType, setPropertyType] = useState<'apartment' | 'house' | 'office' | 'commercial'>('apartment');
   const [area, setArea] = useState<number>(50);
   const [customArea, setCustomArea] = useState<string>('');
@@ -36,6 +41,9 @@ export default function CleaningCalculator() {
   const [additionalServices, setAdditionalServices] = useState<string[]>([]);
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [servicesSearch, setServicesSearch] = useState<string>('');
+  const [animatedTotal, setAnimatedTotal] = useState<number>(0);
+  const prevTotalRef = useRef<number>(0);
+  const didInitRef = useRef<boolean>(false);
 
   // Базовые цены за м²
   const basePrices = useMemo(() => ({
@@ -86,6 +94,77 @@ export default function CleaningCalculator() {
     const q = servicesSearch.trim().toLowerCase();
     return additionalServicesList.filter((s) => s.name.toLowerCase().includes(q));
   }, [additionalServicesList, servicesSearch]);
+
+  // Инициализация из URL или localStorage (однократно)
+  useEffect(() => {
+    if (didInitRef.current) return;
+    didInitRef.current = true;
+
+    try {
+      const pt = searchParams?.get('pt');
+      const a = searchParams?.get('a');
+      const ct = searchParams?.get('ct');
+      const s = searchParams?.get('s');
+
+      if (pt || a || ct || s) {
+        if (pt && ['apartment','house','office','commercial'].includes(pt)) {
+          setPropertyType(pt as any);
+        }
+        const numA = parseInt(a || '');
+        if (!Number.isNaN(numA) && numA > 0 && numA <= 5000) {
+          setArea(numA);
+          setCustomArea(String(numA));
+        }
+        if (ct && ['maintenance','general','postRenovation','eco','vip'].includes(ct)) {
+          setCleaningType(ct as any);
+        }
+        if (s) {
+          const split = s.split(',').map(v => v.trim()).filter(Boolean);
+          const allowed = additionalServicesList.map(x => x.id);
+          const valid = split.filter(id => allowed.includes(id));
+          if (valid.length) setAdditionalServices(valid);
+        }
+        return; // если инициализировали из URL — не трогаем localStorage
+      }
+
+      // fallback: localStorage
+      const raw = typeof window !== 'undefined' ? window.localStorage.getItem('calc-state-v1') : null;
+      if (raw) {
+        const st = JSON.parse(raw);
+        if (st?.propertyType && ['apartment','house','office','commercial'].includes(st.propertyType)) setPropertyType(st.propertyType);
+        if (typeof st?.area === 'number' && st.area > 0 && st.area <= 5000) { setArea(st.area); setCustomArea(String(st.area)); }
+        if (st?.cleaningType && ['maintenance','general','postRenovation','eco','vip'].includes(st.cleaningType)) setCleaningType(st.cleaningType);
+        if (Array.isArray(st?.additionalServices)) {
+          const allowed = new Set(additionalServicesList.map(x => x.id));
+          setAdditionalServices(st.additionalServices.filter((id: string) => allowed.has(id)));
+        }
+      }
+    } catch {}
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Обновление URL + localStorage (дебаунсом)
+  const updateUrlState = useCallback(() => {
+    try {
+      const params = new URLSearchParams(searchParams?.toString() || '');
+      params.set('pt', propertyType);
+      params.set('a', String(area));
+      params.set('ct', cleaningType);
+      if (additionalServices.length) params.set('s', additionalServices.join(',')); else params.delete('s');
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+
+      if (typeof window !== 'undefined') {
+        const st = { propertyType, area, cleaningType, additionalServices };
+        window.localStorage.setItem('calc-state-v1', JSON.stringify(st));
+      }
+    } catch {}
+  }, [propertyType, area, cleaningType, additionalServices, router, pathname, searchParams]);
+
+  const updateUrlStateDebounced = useDebounce(updateUrlState, 300);
+
+  useEffect(() => {
+    updateUrlStateDebounced();
+  }, [propertyType, area, cleaningType, additionalServices, updateUrlStateDebounced]);
 
   // Расчет времени работы
   const calculateDuration = (area: number, cleaningType: string, propertyType: string) => {
@@ -183,6 +262,33 @@ export default function CleaningCalculator() {
     });
   }, [propertyType, area, cleaningType, additionalServices, additionalServicesList, basePrices, serviceNames]);
 
+  // Анимация totalPrice
+  useEffect(() => {
+    const next = result?.totalPrice ?? 0;
+    const start = prevTotalRef.current || 0;
+    const diff = next - start;
+    const durationMs = 350;
+    const startTime = typeof performance !== 'undefined' ? performance.now() : Date.now();
+
+    if (diff === 0) {
+      setAnimatedTotal(next);
+      return;
+    }
+
+    let raf: number | null = null;
+    const step = () => {
+      const now = (typeof performance !== 'undefined' ? performance.now() : Date.now()) - startTime;
+      const t = Math.min(1, now / durationMs);
+      // easeOutCubic
+      const eased = 1 - Math.pow(1 - t, 3);
+      setAnimatedTotal(Math.round(start + diff * eased));
+      if (t < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    prevTotalRef.current = next;
+    return () => { if (raf) cancelAnimationFrame(raf); };
+  }, [result?.totalPrice]);
+
   const handleServiceToggle = (serviceId: string) => {
     setAdditionalServices(prev => 
       prev.includes(serviceId) 
@@ -226,7 +332,7 @@ export default function CleaningCalculator() {
       </div>
 
       {/* Современный дизайн с карточками */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-24 md:pb-0">
         
         {/* Левая колонка - Настройки */}
         <div className="lg:col-span-2 space-y-6">
@@ -244,7 +350,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
               <h3 className="text-lg font-semibold text-gray-900">Тип помещения</h3>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3" role="radiogroup" aria-label="Тип помещения">
               {[
                 { id: 'apartment', name: 'Квартира', icon: Home, color: 'blue' },
                 { id: 'house', name: 'Дом', icon: Building, color: 'green' },
@@ -254,11 +360,14 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                 <button
                   key={type.id}
                   onClick={() => setPropertyType(type.id as any)}
-                  className={`px-4 py-3 rounded-lg border transition flex flex-col items-center justify-center min-h-[72px] ${
+                  className={`px-4 py-3 rounded-lg border transition flex flex-col items-center justify-center min-h-[72px] focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     propertyType === type.id
                       ? 'border-primary-600 bg-primary-50 text-primary-700'
                       : 'border-gray-200 hover:border-primary-300'
                   }`}
+                  role="radio"
+                  aria-checked={propertyType === type.id}
+                  type="button"
                 >
                   <div className={`w-6 h-6 mx-auto mb-1 rounded-lg flex items-center justify-center overflow-hidden ${
                     propertyType === type.id 
@@ -347,7 +456,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
               <h3 className="text-lg font-semibold text-gray-900">Тип уборки</h3>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3" role="radiogroup" aria-label="Тип уборки">
               {[
                 { id: 'maintenance', name: 'Поддерживающая', icon: Home, desc: 'Регулярная уборка' },
                 { id: 'general', name: 'Генеральная', icon: Shield, desc: 'Глубокая уборка' },
@@ -358,11 +467,14 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                 <button
                   key={type.id}
                   onClick={() => setCleaningType(type.id as any)}
-                  className={`p-4 rounded-lg border transition text-left ${
+                  className={`p-4 rounded-lg border transition text-left focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     cleaningType === type.id
                       ? 'border-primary-600 bg-primary-50 text-primary-700'
                       : 'border-gray-200 hover:border-primary-300'
                   }`}
+                  role="radio"
+                  aria-checked={cleaningType === type.id}
+                  type="button"
                 >
                   <div className="flex items-center space-x-3">
                     <type.icon className="w-5 h-5" />
@@ -397,12 +509,14 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                 onChange={(e) => setServicesSearch(e.target.value)}
                 placeholder="Поиск услуги…"
                 className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                aria-label="Поиск по дополнительным услугам"
               />
               {servicesSearch && (
                 <button
                   className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700"
                   onClick={() => setServicesSearch('')}
                   type="button"
+                  aria-label="Очистить поиск"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -414,11 +528,13 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                 <button
                   key={service.id}
                   onClick={() => handleServiceToggle(service.id)}
-                  className={`p-3 rounded-xl border-2 transition-all duration-200 text-left hover:shadow-md ${
+                  className={`p-3 rounded-xl border-2 transition-all duration-200 text-left hover:shadow-md focus:outline-none focus:ring-2 focus:ring-orange-500 ${
                     additionalServices.includes(service.id)
                       ? 'border-orange-500 bg-gradient-to-br from-orange-50 to-orange-100 text-orange-700'
                       : 'border-gray-200 hover:border-orange-300'
                   }`}
+                  aria-pressed={additionalServices.includes(service.id)}
+                  type="button"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
@@ -501,13 +617,13 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                 <div className="bg-white/20 rounded-xl p-4 backdrop-blur-sm border border-white/30">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-lg font-semibold">Итого:</span>
-                    <span className="text-3xl font-bold">
-                      {result.totalPrice.toLocaleString()} ₽
+                    <span className="text-3xl font-bold" aria-live="polite">
+                      {animatedTotal.toLocaleString()} ₽
                     </span>
                   </div>
-                  <div className="text-sm opacity-90">
+                  <motion.div key={result.duration} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm opacity-90">
                     Время работы: {result.duration}
-                  </div>
+                  </motion.div>
                   {result.totalPrice === 6000 && (
                     <div className="text-xs opacity-90 mt-1">
                       * Минимальная стоимость заказа
@@ -564,6 +680,29 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
           </div>
         </motion.div>
       </div>
+
+      {/* Sticky mobile summary bar */}
+      {result && (
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-40" style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 0px)' }}>
+          <div className="mx-auto max-w-6xl">
+            <div className="m-3 rounded-2xl shadow-lg bg-white border border-gray-200 p-3 flex items-center justify-between">
+              <div>
+                <div className="text-xs text-gray-500">Итого</div>
+                <div className="text-xl font-bold text-gray-900" aria-live="polite">{animatedTotal.toLocaleString()} ₽</div>
+                <div className="text-[11px] text-gray-500">{result.duration}</div>
+              </div>
+              <button
+                onClick={openModal}
+                className="px-4 py-3 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700"
+                type="button"
+                aria-label="Заказать уборку"
+              >
+                Заказать
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 } 
