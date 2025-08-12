@@ -19,6 +19,7 @@ type ContactFormData = z.infer<typeof contactSchema>;
 
 export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const YM_ID = Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID) || 103567092;
   
   const {
     register,
@@ -37,7 +38,7 @@ export default function ContactSection() {
       try {
         // Яндекс.Метрика
         if (typeof window !== 'undefined' && (window as any).ym) {
-          (window as any).ym(103567092, 'reachGoal', 'form_submit', {
+          (window as any).ym(YM_ID, 'reachGoal', 'form_submit', {
             form_type: 'contact',
             has_email: !!data.email,
             page_url: window.location.href

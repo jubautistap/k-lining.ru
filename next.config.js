@@ -30,14 +30,6 @@ const nextConfig = {
   },
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
   },
   webpack: (config, { dev, isServer }) => {
     // Оптимизация для production
@@ -59,7 +51,13 @@ const nextConfig = {
         },
       };
     }
-    
+    // Поддержка импорта SVG как React-компонентов
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: ['@svgr/webpack'],
+    });
+
     return config;
   },
   async headers() {

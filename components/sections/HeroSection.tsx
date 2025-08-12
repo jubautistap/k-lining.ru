@@ -3,6 +3,7 @@
 import React from 'react';
 import OrderButton from '@/components/ui/OrderButton';
 import { Phone, MessageCircle } from 'lucide-react';
+import Image from 'next/image';
 
 export default function HeroSection() {
   return (
@@ -82,16 +83,17 @@ export default function HeroSection() {
           <div className="relative overflow-hidden">
             {/* Main Visual - только CSS градиент */}
             <div className="relative bg-gradient-to-br from-primary-100 to-secondary-100 rounded-2xl p-4 shadow-2xl">
-              <div className="aspect-[3/2] bg-gradient-to-br from-primary-200 to-secondary-200 rounded-xl overflow-hidden relative">
-                {/* Красивый CSS градиент как основной элемент */}
-                <div className="absolute inset-0 hero-visual"></div>
-                
-                {/* Fallback изображение для SEO */}
-                <img 
-                  src="/og-image.webp" 
+              <div className="relative aspect-[3/2] rounded-xl overflow-hidden">
+                {/* Градиентный фон для момента до загрузки LCP */}
+                <div className="absolute inset-0 hero-visual" />
+                {/* LCP изображение через next/image */}
+                <Image
+                  src="/og-image.webp"
                   alt="Профессиональная уборка в Москве - K-lining"
-                  className="absolute inset-0 w-full h-full object-cover opacity-100"
-                  loading="eager"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
                 />
               </div>
             </div>

@@ -20,6 +20,7 @@ export default function OrderButton({
   href
 }: OrderButtonProps) {
   const router = useRouter();
+  const YM_ID = Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID) || 103567092;
   
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ export default function OrderButton({
     try {
       // Яндекс.Метрика
       if (typeof window !== 'undefined' && (window as any).ym) {
-        (window as any).ym(103567092, 'reachGoal', 'order_button_click', {
+        (window as any).ym(YM_ID, 'reachGoal', 'order_button_click', {
           service: service,
           button_text: children,
           page_url: window.location.href

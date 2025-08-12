@@ -37,6 +37,13 @@ export default function Header() {
     return () => window.removeEventListener('scroll', throttledHandleScroll);
   }, [throttledHandleScroll, isMounted]);
 
+  // Блокируем скролл страницы при открытом мобильном меню
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isMobileMenuOpen]);
+
   const navigation = useMemo(() => [
     { name: 'Главная', href: '/' },
     { name: 'Услуги', href: '/services' },
@@ -109,6 +116,8 @@ export default function Header() {
             onClick={handleMobileMenuToggle}
             className="md:hidden p-2 text-gray-700 hover:text-primary-600 transition-colors duration-200"
             aria-label="Открыть меню"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -116,7 +125,7 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 bg-white">
+          <div id="mobile-menu" className="md:hidden border-t border-gray-200 bg-white">
             <div className="px-4 py-6 space-y-4">
               {/* Mobile Navigation */}
               <nav className="space-y-2">

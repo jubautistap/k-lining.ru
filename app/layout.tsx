@@ -93,11 +93,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const YandexMetrika = dynamic(() => import('@/components/providers/YandexMetrika'), { ssr: false });
+  const YM_ID = Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID) || 103567092;
   return (
     <html lang="ru" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        
         <link rel="preconnect" href="https://mc.yandex.ru" />
         <link rel="preconnect" href="https://mc.webvisor.org" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
@@ -110,7 +110,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#2563eb" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="application-name" content="K-lining" />
         <meta name="apple-mobile-web-app-title" content="K-lining" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -121,19 +121,7 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#2563eb" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
         
-        {/* Критический JavaScript только для предотвращения ошибок */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Минимальная обработка ошибок для LCP
-              window.addEventListener('error', function(e) {
-                if (e.message.includes('Minified React error')) {
-                  e.preventDefault();
-                }
-              });
-            `
-          }}
-        />
+        
         
         {/* Критический CSS инлайн для устранения блокирующих запросов (web.dev optimized) */}
         <style
@@ -266,7 +254,7 @@ export default function RootLayout({
             }),
           }}
         />
-        {/* Яндекс.Метрика: официальный скрипт + init в <head> для корректной проверки счетчика и старта Вебвизора */}
+        {/* Яндекс.Метрика: официальный скрипт + init в <head> */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -276,7 +264,7 @@ export default function RootLayout({
                 for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
                 k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
               })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
-              ym(103567092, 'init', { webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true });
+              try { ym(${YM_ID}, 'init', { webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true, trackHash:true }); } catch(e) {}
             `
           }}
         />
@@ -293,7 +281,7 @@ export default function RootLayout({
         {/* Noscript fallback */}
         <noscript>
           <div>
-            <img src="https://mc.yandex.ru/watch/103567092" style={{position:'absolute', left:'-9999px'}} alt="" />
+            <img src={`https://mc.yandex.ru/watch/${YM_ID}`} style={{position:'absolute', left:'-9999px'}} alt="" />
           </div>
         </noscript>
         

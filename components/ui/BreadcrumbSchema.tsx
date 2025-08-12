@@ -19,6 +19,11 @@ interface BreadcrumbSchemaProps {
 }
 
 export default function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
+  const toAbs = (href?: string) => {
+    if (!href) return 'https://k-lining.ru/';
+    return href.startsWith('http') ? href : `https://k-lining.ru${href}`;
+  };
+
   // Формируем JSON-LD схему для хлебных крошек
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -27,7 +32,7 @@ export default function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
       "@type": "ListItem",
       "position": index + 1,
       "name": item.name,
-      "item": item.href || item.url || `https://k-lining.ru${item.href || item.url}`
+      "item": toAbs(item.href || item.url)
     }))
   };
 

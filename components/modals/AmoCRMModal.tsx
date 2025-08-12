@@ -17,6 +17,7 @@ type FormData = z.infer<typeof formSchema>;
 export default function AmoCRMModal() {
   const { isModalOpen, closeModal, submitLead } = useAmoCRM();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const YM_ID = Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID) || 103567092;
 
   const {
     register,
@@ -44,8 +45,8 @@ export default function AmoCRMModal() {
       if (typeof window !== 'undefined') {
         try {
           if ((window as any).ym) {
-            (window as any).ym(103567092, 'reachGoal', 'form_submit');
-            (window as any).ym(103567092, 'reachGoal', 'discount_submit');
+            (window as any).ym(YM_ID, 'reachGoal', 'form_submit');
+            (window as any).ym(YM_ID, 'reachGoal', 'discount_submit');
           }
           if ((window as any).gtag) {
             (window as any).gtag('event', 'form_submit');
