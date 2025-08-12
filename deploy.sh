@@ -10,6 +10,8 @@ SERVER_HOST="80.87.201.107"
 SERVER_USER="root"
 SERVER_PATH="/var/www/kliningpro"
 PM2_APP_NAME="kliningpro"
+# Ветка для деплоя (по умолчанию main). Можно переопределить: BRANCH=my-branch ./deploy.sh
+BRANCH="${BRANCH:-main}"
 
 # Цвета для вывода
 RED='\033[0;31m'
@@ -53,16 +55,16 @@ ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH" || {
 }
 
 # Сохраняем текущие изменения если есть
-print_status "Сохраняем текущие изменения..."
-ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && git stash push -m 'Автосохранение перед деплоем'"
+print_status "Сохраняем текущие изменения (если есть)..."
+ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && if [ -n \"$(git status --porcelain)\" ]; then git stash push -m 'Автосохранение перед деплоем'; fi"
 
 # Обновляем git
-print_status "Обновляем git репозиторий..."
+print_status "Обновляем git репозиторий (ветка: $BRANCH)..."
 ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && git fetch origin"
-ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && git reset --hard origin/main"
+ssh $SERVER_USER@$SERVER_HOST "cd $SERVER_PATH && git checkout -B $BRANCH origin/$BRANCH"
 
 if [ $? -eq 0 ]; then
-    print_status "Git успешно обновлен!"
+    print_status "Git успешно обновлен! Текущая ветка: $BRANCH"
 else
     print_error "Ошибка при обновлении git"
     exit 1
