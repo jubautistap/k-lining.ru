@@ -4,12 +4,13 @@ import React from 'react';
 
 type QA = { question: string; answer: string };
 
-export default function FAQSchema({ items }: { items: QA[] }) {
-  if (!items?.length) return null;
+export default function FAQSchema({ items, faqs }: { items?: QA[]; faqs?: QA[] }) {
+  const list = items ?? faqs ?? [];
+  if (!list.length) return null;
   const data = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: items.map((it) => ({
+    mainEntity: list.map((it) => ({
       '@type': 'Question',
       name: it.question,
       acceptedAnswer: { '@type': 'Answer', text: it.answer },
