@@ -101,11 +101,7 @@ export default function Header() {
             >
               <Phone className="w-4 h-4" />
               <span className="hidden lg:inline">+7 (925) 555-18-33</span>
-            </a>
-            <div className="hidden lg:block text-xs text-gray-600 whitespace-nowrap">
-              Минимальный заказ — 6 000 ₽; услуги — от 2 500 ₽
-            </div>
-            
+            </a>         
             <button
               onClick={handleModalOpen}
               className="btn-primary text-sm px-4 py-2"
