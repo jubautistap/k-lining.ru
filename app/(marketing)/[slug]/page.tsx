@@ -14,6 +14,9 @@ interface LandingConfig {
   secondaryText?: string;
   breadcrumb: string;
   detailsLink?: string;
+  cluster?: string;
+  metro?: string;
+  okrug?: string;
 }
 
 const STATIC_LANDINGS: Record<string, LandingConfig> = {
@@ -90,6 +93,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         secondaryText: 'Рассчитать',
         breadcrumb: dynamic.h1 || 'Клининг',
         detailsLink: '/services',
+        cluster: dynamic.cluster,
+        metro: dynamic.metro,
+        okrug: dynamic.okrug,
       }
     : STATIC_LANDINGS[params.slug];
   if (!config) {
@@ -152,6 +158,32 @@ export default function MarketingLandingPage({ params }: { params: { slug: strin
             )}
           </div>
         </header>
+
+        {/* Уличный микро‑контент для конверсии и уникальности */}
+        {config.cluster === 'улицы' && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-xl shadow p-6">
+              <h3 className="font-semibold text-gray-900 mb-2">Быстрый выезд</h3>
+              <p className="text-sm text-gray-700">Работаем рядом{config.metro ? `, метро ${config.metro}` : ''}{config.okrug ? `, ${config.okrug}` : ''}. Выезд за 60–120 минут.</p>
+            </div>
+            <div className="bg-white rounded-xl shadow p-6">
+              <h3 className="font-semibold text-gray-900 mb-2">Ориентиры по ценам</h3>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>1‑к квартира: от 3 000 ₽</li>
+                <li>2‑к квартира: от 4 500 ₽</li>
+                <li>Генеральная: от 5 000 ₽</li>
+              </ul>
+            </div>
+            <div className="bg-white rounded-xl shadow p-6">
+              <h3 className="font-semibold text-gray-900 mb-2">FAQ</h3>
+              <ul className="text-sm text-gray-700 space-y-1 list-disc pl-4">
+                <li>Можно сегодня? — Да, работаем 24/7</li>
+                <li>Оплата? — После выполнения работ</li>
+                <li>Смета? — За 10–15 минут</li>
+              </ul>
+            </div>
+          </div>
+        )}
 
         {config.detailsLink && (
           <div className="bg-white rounded-xl shadow p-6">

@@ -71,7 +71,17 @@ function main() {
       const h1 = (row[idx.h1] || '').trim() || title;
       const description = (row[idx.desc] || '').trim();
       const cluster = (row[idx.cluster] || '').trim();
-      bySlug[slug] = { slug, title, h1, description, cluster };
+      const record = { slug, title, h1, description, cluster };
+      // Допполя: Metro/Метро, Okrug/Округ (если есть в заголовке)
+      header.forEach((h, i) => {
+        const key = String(h).trim().toLowerCase();
+        if (!key) return;
+        const val = (row[i] || '').trim();
+        if (!val) return;
+        if (/(^metro$|^метро$)/i.test(h)) record.metro = val;
+        if (/(^okrug$|^округ$)/i.test(h)) record.okrug = val;
+      });
+      bySlug[slug] = record;
       added++;
     }
     return added;
