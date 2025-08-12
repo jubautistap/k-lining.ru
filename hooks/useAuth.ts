@@ -116,11 +116,15 @@ export function useAuth() {
     }
   }, []);
 
-  // Проверяем авторизацию при загрузке
+  // Проверяем авторизацию при загрузке ТОЛЬКО в админке
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        // Проверяем авторизацию через cookie-based сессию
+        // На публичных страницах не дергаем auth
+        if (!pathname?.startsWith('/admin')) {
+          setAuthState(prev => ({ ...prev, isLoading: false }));
+          return;
+        }
         const response = await fetch('/api/auth/me', { credentials: 'include' });
 
         if (response.ok) {
@@ -132,7 +136,7 @@ export function useAuth() {
             isAuthenticated: true,
           });
         } else {
-          // Токен недействителен, пробуем обновить
+          // Токен недействителен, пробуем обновить (только в админке)
           await refreshToken();
         }
       } catch (error) {
@@ -142,7 +146,7 @@ export function useAuth() {
     };
 
     checkAuth();
-  }, [refreshToken]);
+  }, [refreshToken, pathname]);
 
   // Проверка роли
   const hasRole = useCallback((roles: string[]) => {

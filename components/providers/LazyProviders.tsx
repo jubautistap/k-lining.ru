@@ -16,34 +16,32 @@ export default function LazyProviders({ children }: LazyProvidersProps) {
   const isAdmin = pathname?.startsWith('/admin');
 
   return (
-    <AuthProvider>
-      {isAdmin ? (
-        <>
-          {children}
-          <Toaster 
-            position="top-right"
-            toastOptions={{
-              duration: 3000,
-              style: { background: '#363636', color: '#fff' },
-            }}
-          />
-        </>
-      ) : (
-        <AmoCRMProvider>
-          {children}
-          <AmoCRMModal />
-          <Toaster 
-            position="top-right"
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: '#363636',
-                color: '#fff',
-              },
-            }}
-          />
-        </AmoCRMProvider>
-      )}
-    </AuthProvider>
+    isAdmin ? (
+      <AuthProvider>
+        {children}
+        <Toaster 
+          position="top-right"
+          toastOptions={{
+            duration: 3000,
+            style: { background: '#363636', color: '#fff' },
+          }}
+        />
+      </AuthProvider>
+    ) : (
+      <AmoCRMProvider>
+        {children}
+        <AmoCRMModal />
+        <Toaster 
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: '#363636',
+              color: '#fff',
+            },
+          }}
+        />
+      </AmoCRMProvider>
+    )
   );
 } 
