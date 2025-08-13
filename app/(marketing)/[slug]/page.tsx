@@ -83,21 +83,21 @@ const STATIC_LANDINGS: Record<string, LandingConfig> = {
 };
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const dynamic = (landings as Record<string, any>)[params.slug];
-  const config = dynamic
+  const landing = (landings as Record<string, any>)[params.slug];
+  const config = landing
     ? {
-        title: dynamic.title || 'K-lining',
-        description: dynamic.description || 'Профессиональная уборка в Москве',
-        h1: dynamic.h1 || dynamic.title || 'Услуги клининга',
+        title: landing.title || 'K-lining',
+        description: landing.description || 'Профессиональная уборка в Москве',
+        h1: landing.h1 || landing.title || 'Услуги клининга',
         primaryHref: '/contacts',
         primaryText: 'Заказать',
         secondaryHref: '/calculator',
         secondaryText: 'Рассчитать',
-        breadcrumb: dynamic.h1 || 'Клининг',
+        breadcrumb: landing.h1 || 'Клининг',
         detailsLink: '/services',
-        cluster: dynamic.cluster,
-        metro: dynamic.metro,
-        okrug: dynamic.okrug,
+        cluster: landing.cluster,
+        metro: landing.metro,
+        okrug: landing.okrug,
       }
     : STATIC_LANDINGS[params.slug];
   if (!config) {
@@ -121,21 +121,21 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default function MarketingLandingPage({ params }: { params: { slug: string } }) {
-  const dynamic = (landings as Record<string, any>)[params.slug];
-  const config: LandingConfig | undefined = dynamic
+  const landing = (landings as Record<string, any>)[params.slug];
+  const config: LandingConfig | undefined = landing
     ? {
-        title: dynamic.title || 'K-lining',
-        description: dynamic.description || 'Профессиональная уборка в Москве',
-        h1: dynamic.h1 || dynamic.title || 'Услуги клининга',
+        title: landing.title || 'K-lining',
+        description: landing.description || 'Профессиональная уборка в Москве',
+        h1: landing.h1 || landing.title || 'Услуги клининга',
         primaryHref: '/contacts',
         primaryText: 'Заказать',
         secondaryHref: '/calculator',
         secondaryText: 'Рассчитать',
-        breadcrumb: dynamic.h1 || 'Клининг',
+        breadcrumb: landing.h1 || 'Клининг',
         detailsLink: '/services',
-        cluster: dynamic.cluster,
-        metro: dynamic.metro,
-        okrug: dynamic.okrug,
+        cluster: landing.cluster,
+        metro: landing.metro,
+        okrug: landing.okrug,
       }
     : STATIC_LANDINGS[params.slug];
   if (!config) return notFound();

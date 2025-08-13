@@ -22,12 +22,16 @@ interface LeadData {
 
 const AmoCRMContext = createContext<AmoCRMContextType | undefined>(undefined);
 
-export function useAmoCRM() {
+export function useAmoCRM(): AmoCRMContextType {
   const context = useContext(AmoCRMContext);
-  if (!context) {
-    throw new Error('useAmoCRM must be used within AmoCRMProvider');
-  }
-  return context;
+  if (context) return context;
+  // Безопасный no-op фолбэк, чтобы не падать на страницах без провайдера
+  return {
+    isModalOpen: false,
+    openModal: () => {},
+    closeModal: () => {},
+    submitLead: async () => {},
+  };
 }
 
 export default function AmoCRMProvider({ children }: { children: React.ReactNode }) {
