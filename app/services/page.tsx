@@ -3,6 +3,12 @@
 import React from 'react';
 import Link from 'next/link';
 import { CheckCircle, Shield, Clock, Users, Star, Zap } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+const ProcessSection = dynamic(() => import('@/components/sections/ProcessSection'), {
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
+  ssr: true,
+});
 
 export default function ServicesPage() {
   const services = [
@@ -262,6 +268,9 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
+      {/* Как мы работаем */}
+      <ProcessSection />
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-primary-600 to-primary-700">

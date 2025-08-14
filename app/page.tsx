@@ -8,10 +8,7 @@ import LoftCentersCaseSection from '@/components/sections/LoftCentersCaseSection
 import BlogTeaserSection from '@/components/sections/BlogTeaserSection';
 
 // Динамические импорты для ленивой загрузки
-const ProcessSection = dynamic(() => import('@/components/sections/ProcessSection'), {
-  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
-  ssr: true,
-});
+// (убрали ProcessSection с главной)
 
 const PricingSection = dynamic(() => import('@/components/sections/PricingSection'), {
   loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
@@ -166,7 +163,6 @@ export default function HomePage() {
       <CaseStudiesSection />
       <LoftCentersCaseSection />
       <BlogTeaserSection />
-      <ProcessSection />
       <CleaningCalculator />
       <ContactSection />
       <StickyPromo enabled={true} />
