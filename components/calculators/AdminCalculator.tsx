@@ -93,6 +93,11 @@ export default function AdminCalculator() {
   const [commercialServices, setCommercialServices] = useState<string[]>([]);
   const [specialModes, setSpecialModes] = useState<string[]>([]);
   const [distance, setDistance] = useState<number>(10); // км
+  // Параметры для выравнивания с публичным калькулятором
+  const [windowsCount, setWindowsCount] = useState<number>(0); // створки
+  const [urgent, setUrgent] = useState<boolean>(false);
+  const [night, setNight] = useState<boolean>(false);
+  const [outside, setOutside] = useState<boolean>(false);
   const [employees, setEmployees] = useState<Employee[]>([
     { 
       id: '1', 
@@ -206,37 +211,41 @@ export default function AdminCalculator() {
   const [showPresetModal, setShowPresetModal] = useState(false);
   const [newPresetName, setNewPresetName] = useState('');
 
-  // Базовые цены за м² (как на сайте)
-  const basePrices = useMemo(() => ({
+  // Тарифы как в публичном калькуляторе (используем mid-точку)
+  const RATES = useMemo(() => ({
     apartment: {
-      maintenance: 60,
-      general: 100,
-      postRenovation: 140,
-      eco: 120,
-      vip: 200
+      maintenance: { min: 60, mid: 85, max: 110 },
+      general: { min: 160, mid: 190, max: 220 },
+      postRenovation: { min: 220, mid: 260, max: 300 },
+      eco: { min: 160, mid: 190, max: 220 },
+      vip: { min: 300, mid: 350, max: 400 }
     },
     house: {
-      maintenance: 120,
-      general: 200,
-      postRenovation: 280,
-      eco: 240,
-      vip: 400
+      maintenance: { min: 80, mid: 100, max: 130 },
+      general: { min: 180, mid: 220, max: 260 },
+      postRenovation: { min: 240, mid: 280, max: 320 },
+      eco: { min: 180, mid: 220, max: 260 },
+      vip: { min: 350, mid: 400, max: 450 }
     },
     office: {
-      maintenance: 80,
-      general: 140,
-      postRenovation: 200,
-      eco: 160,
-      vip: 300
+      maintenance: { min: 80, mid: 95, max: 110 },
+      general: { min: 100, mid: 120, max: 140 },
+      postRenovation: { min: 160, mid: 180, max: 200 },
+      eco: { min: 120, mid: 140, max: 160 },
+      vip: { min: 200, mid: 250, max: 300 }
     },
     commercial: {
-      maintenance: 70,
-      general: 120,
-      postRenovation: 180,
-      eco: 140,
-      vip: 250
+      maintenance: { min: 70, mid: 90, max: 110 },
+      general: { min: 120, mid: 150, max: 180 },
+      postRenovation: { min: 180, mid: 200, max: 220 },
+      eco: { min: 120, mid: 150, max: 180 },
+      vip: { min: 220, mid: 260, max: 300 }
     }
   }), []);
+  const RATE_POINT: 'min' | 'mid' | 'max' = 'mid';
+  const WINDOW_PRICE_PER_SASH = 600;
+  const MIN_ORDER = 6000;
+  const SURCHARGES = { urgent: 1.20, night: 1.15, outside: 1.15 } as const;
 
   // Дополнительные услуги
   const additionalServicesList = useMemo(() => [
@@ -470,35 +479,33 @@ export default function AdminCalculator() {
     const selectedEmployeeData = employees.find(e => e.id === selectedEmployee);
     if (!selectedEmployeeData) return;
 
-    const basePrice = basePrices[propertyType][cleaningType] * area;
-    const additionalPrice = additionalServices.reduce((sum, serviceId) => {
+    // Прайс для клиента — как на сайте
+    const pickRate = () => {
+      const prop: any = RATES[propertyType] ?? RATES.apartment;
+      const r = prop[cleaningType] ?? (RATES.apartment as any).general;
+      return r[RATE_POINT] as number;
+    };
+    const extrasFactor = () => {
+      let f = 1.0;
+      if (urgent) f *= SURCHARGES.urgent;
+      if (night) f *= SURCHARGES.night;
+      if (outside) f *= SURCHARGES.outside;
+      return f;
+    };
+    const round10 = (n: number) => Math.round(n / 10) * 10;
+
+    const basePublic = area * pickRate();
+    const windowsCost = windowsCount * WINDOW_PRICE_PER_SASH;
+    const publicAdditionalIds = new Set(['kitchen','bathroom','balcony','fridge','disinfection','carpet']);
+    const additionalPricePublic = additionalServices.reduce((sum, serviceId) => {
+      if (!publicAdditionalIds.has(serviceId)) return sum;
       const service = additionalServicesList.find(s => s.id === serviceId);
       return sum + (service?.price || 0);
     }, 0);
 
-    const commercialPrice = commercialServices.reduce((sum, serviceId) => {
-      const service = commercialServicesList.find(s => s.id === serviceId);
-      return sum + (service?.price || 0);
-    }, 0);
-
-    // Базовая цена без спецрежимов
-    let baseTotal = basePrice + additionalPrice + commercialPrice;
-    
-    // Минимальный заказ 6000 руб
-    if (baseTotal < 6000) {
-      baseTotal = 6000;
-    }
-
-    // Применяем специальные режимы (процентные надбавки)
-    let specialModeMultiplier = 1;
-    specialModes.forEach(modeId => {
-      const mode = specialModesList.find(m => m.id === modeId);
-      if (mode) {
-        specialModeMultiplier *= mode.multiplier;
-      }
-    });
-
-    const totalPrice = baseTotal * specialModeMultiplier;
+    const subTotalPublic = basePublic + windowsCost + additionalPricePublic;
+    const rawClientTotal = round10(subTotalPublic * extrasFactor());
+    const totalPrice = Math.max(rawClientTotal, MIN_ORDER);
 
     const maxHoursPerDay = selectedEmployeeData.maxHoursPerDay || 12;
     const teamData = calculateTeamAndDuration(area, cleaningType, propertyType, selectedEmployeeData.efficiency, maxHoursPerDay);
@@ -522,21 +529,24 @@ export default function AdminCalculator() {
       totalLaborCost: costs.labor
     };
 
+    const servicesList: string[] = [
+      serviceNames[cleaningType],
+      ...additionalServices.map(id => 
+        additionalServicesList.find(s => s.id === id)?.name || ''
+      ).filter(Boolean),
+      ...commercialServices.map(id =>
+        commercialServicesList.find(s => s.id === id)?.name || ''
+      ).filter(Boolean)
+    ];
+    if (windowsCount > 0) servicesList.push(`Мытье окон (${windowsCount} створ.)`);
+
     setResult({
-      basePrice: basePrice < 6000 ? 6000 : basePrice,
-      additionalServices: additionalPrice,
-      commercialServices: commercialPrice,
+      basePrice: round10(basePublic),
+      additionalServices: round10(windowsCost + additionalPricePublic),
+      commercialServices: 0,
       totalPrice,
       duration: teamData.duration,
-      services: [
-        serviceNames[cleaningType],
-        ...additionalServices.map(id => 
-          additionalServicesList.find(s => s.id === id)?.name || ''
-        ).filter(Boolean),
-        ...commercialServices.map(id =>
-          commercialServicesList.find(s => s.id === id)?.name || ''
-        ).filter(Boolean)
-      ],
+      services: servicesList,
       team,
       costs: {
         ...costs,
@@ -545,7 +555,7 @@ export default function AdminCalculator() {
       margins,
       pricing
     });
-  }, [propertyType, area, cleaningType, additionalServices, commercialServices, specialModes, distance, selectedEmployee, employees, additionalServicesList, commercialServicesList, specialModesList, basePrices, serviceNames, calculateCosts]);
+  }, [propertyType, area, cleaningType, additionalServices, commercialServices, specialModes, distance, selectedEmployee, employees, additionalServicesList, commercialServicesList, specialModesList, serviceNames, calculateCosts, windowsCount, urgent, night, outside, RATES]);
 
   const handleServiceToggle = (serviceId: string) => {
     setAdditionalServices(prev => 
