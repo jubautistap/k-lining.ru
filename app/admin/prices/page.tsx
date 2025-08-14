@@ -12,6 +12,7 @@ import {
   ArrowLeft
 } from 'lucide-react';
 import Link from 'next/link';
+import { PRICING_RATES, RATE_POINT } from '@/data/pricing';
 
 interface PriceItem {
   id: string;
@@ -48,7 +49,27 @@ export default function AdminPricesPage() {
       });
       if (response.ok) {
         const data = await response.json();
-        setPrices(data.prices);
+        // Авто‑инициализация: если API вернуло пусто, поднимем тарифы из калькулятора (PRICING_RATES)
+        if (!data.prices || data.prices.length === 0) {
+          const bootstrap: PriceItem[] = [];
+          (Object.keys(PRICING_RATES) as Array<keyof typeof PRICING_RATES>).forEach((prop) => {
+            const tiers = PRICING_RATES[prop];
+            (Object.keys(tiers) as Array<keyof typeof tiers>).forEach((ct) => {
+              const rate = tiers[ct][RATE_POINT];
+              bootstrap.push({
+                id: `${prop}-${ct}`,
+                service: String(prop),
+                type: String(ct),
+                price: rate,
+                description: 'Импорт из калькулятора',
+                isActive: true,
+              });
+            });
+          });
+          setPrices(bootstrap);
+        } else {
+          setPrices(data.prices);
+        }
       }
     } catch (error) {
       console.error('Error loading prices:', error);
@@ -146,6 +167,7 @@ export default function AdminPricesPage() {
         <div className="bg-white rounded-xl shadow-sm">
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900">Тарифы и услуги</h2>
+            <p className="text-xs text-gray-500 mt-1">Базовые ставки подтягиваются из калькулятора (mid‑точка). Изменения здесь не меняют логику калькулятора — это отдельный справочник цен для сайта/прейскуранта.</p>
           </div>
           
           <div className="divide-y divide-gray-200">

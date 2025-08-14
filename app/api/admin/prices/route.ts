@@ -1,50 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireManager } from '@/lib/auth/middleware';
 import { v4 as uuidv4 } from 'uuid';
+import { PRICING_RATES, RATE_POINT } from '@/data/pricing';
 
-// Временное хранилище цен (в реальном проекте - база данных)
-const prices = [
-  {
-    id: '1',
-    service: 'Уборка квартиры',
-    type: 'Генеральная уборка',
-    price: 5000,
-    description: 'Полная уборка квартиры с мытьем всех поверхностей',
-    isActive: true
-  },
-  {
-    id: '2',
-    service: 'Уборка квартиры',
-    type: 'Поддерживающая уборка',
-    price: 3000,
-    description: 'Еженедельная уборка для поддержания чистоты',
-    isActive: true
-  },
-  {
-    id: '3',
-    service: 'Уборка дома',
-    type: 'Генеральная уборка',
-    price: 8000,
-    description: 'Полная уборка частного дома',
-    isActive: true
-  },
-  {
-    id: '4',
-    service: 'Химчистка',
-    type: 'Диван',
-    price: 2500,
-    description: 'Профессиональная химчистка мягкой мебели',
-    isActive: true
-  },
-  {
-    id: '5',
-    service: 'Мытье окон',
-    type: 'Стандарт',
-    price: 1500,
-    description: 'Мытье окон и стеклянных поверхностей',
-    isActive: true
-  }
-];
+// In-memory стор цен (инициализируется из тарифов калькулятора)
+const prices: Array<{ id: string; service: string; type: string; price: number; description: string; isActive: boolean; }> = [];
+if (prices.length === 0) {
+  (Object.keys(PRICING_RATES) as Array<keyof typeof PRICING_RATES>).forEach((prop) => {
+    const tiers = PRICING_RATES[prop];
+    (Object.keys(tiers) as Array<keyof typeof tiers>).forEach((ct) => {
+      const rate = tiers[ct][RATE_POINT];
+      prices.push({
+        id: `${prop}-${ct}`,
+        service: String(prop),
+        type: String(ct),
+        price: rate,
+        description: 'Импорт из калькулятора',
+        isActive: true,
+      });
+    });
+  });
+}
 
 export async function GET(request: NextRequest) {
   const auth = await requireManager(request);
