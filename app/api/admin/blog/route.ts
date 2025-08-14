@@ -1,41 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireEditor } from '@/lib/auth/middleware';
 import { v4 as uuidv4 } from 'uuid';
+import blogIndex from '@/data/blog-index';
 
-// Временное хранилище статей (в реальном проекте - база данных)
-const blogPosts = [
-  {
-    id: '1',
-    title: 'Лучшие средства для уборки квартиры',
-    excerpt: 'Обзор профессиональных средств для эффективной уборки',
-    content: 'Полный текст статьи о лучших средствах для уборки...',
-    category: 'Советы',
-    tags: ['уборка', 'средства', 'советы'],
-    date: '2025-01-15T10:00:00Z',
-    readTime: '5 мин',
-    image: '/blog/cleaning-products.jpg',
+// In-memory объединённый стор для админки: карта slug -> пост
+// Контент для публичных страниц хранится в файловой системе (app/blog/[slug]).
+// В админке отображаем индекс из blogIndex, чтобы совпадало с сайтом.
+const memoryPosts = new Map<string, any>();
+for (const idx of blogIndex) {
+  memoryPosts.set(idx.id, {
+    id: idx.id,
+    title: idx.title,
+    excerpt: idx.excerpt,
+    content: '',
+    category: idx.category,
+    tags: [],
+    date: new Date(idx.date).toISOString(),
+    readTime: idx.readTime,
+    image: idx.image || '',
     isPublished: true,
-    slug: 'best-cleaning-products'
-  },
-  {
-    id: '2',
-    title: 'Как убраться после ремонта',
-    excerpt: 'Пошаговое руководство по уборке после ремонта',
-    content: 'Подробная инструкция по уборке после ремонта...',
-    category: 'Руководства',
-    tags: ['ремонт', 'уборка', 'инструкция'],
-    date: '2025-01-10T14:30:00Z',
-    readTime: '8 мин',
-    image: '/blog/after-renovation.jpg',
-    isPublished: true,
-    slug: 'how-to-clean-after-renovation'
-  }
-];
+    slug: idx.id,
+  });
+}
 
 export async function GET(request: NextRequest) {
   const auth = await requireEditor(request);
   if (auth) return auth;
-  return NextResponse.json({ posts: blogPosts });
+  return NextResponse.json({ posts: Array.from(memoryPosts.values()) });
 }
 
 export async function POST(request: NextRequest) {
@@ -52,21 +43,27 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const slug = (body.slug || body.title || '').toLowerCase()
+      .replace(/[^а-яa-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+
     const newPost = {
-      id: uuidv4(),
+      id: slug || uuidv4(),
       title: body.title,
       excerpt: body.excerpt || '',
-      content: body.content,
+      content: body.content || '',
       category: body.category || 'Общее',
       tags: body.tags || [],
       date: new Date().toISOString(),
       readTime: body.readTime || '5 мин',
       image: body.image || '',
       isPublished: body.isPublished || false,
-      slug: body.slug || body.title.toLowerCase().replace(/[^а-яa-z0-9\s-]/g, '').replace(/\s+/g, '-')
-    };
+      slug: slug || undefined
+    } as any;
 
-    blogPosts.unshift(newPost);
+    memoryPosts.set(newPost.id, newPost);
 
     return NextResponse.json({ 
       success: true, 
@@ -95,31 +92,31 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const postIndex = blogPosts.findIndex(p => p.id === body.id);
-    if (postIndex === -1) {
+    const existing = memoryPosts.get(body.id);
+    if (!existing) {
       return NextResponse.json(
         { error: 'Статья не найдена' },
         { status: 404 }
       );
     }
 
-    // Обновляем статью
-    blogPosts[postIndex] = {
-      ...blogPosts[postIndex],
-      title: body.title || blogPosts[postIndex].title,
-      excerpt: body.excerpt || blogPosts[postIndex].excerpt,
-      content: body.content || blogPosts[postIndex].content,
-      category: body.category || blogPosts[postIndex].category,
-      tags: body.tags || blogPosts[postIndex].tags,
-      readTime: body.readTime || blogPosts[postIndex].readTime,
-      image: body.image || blogPosts[postIndex].image,
-      isPublished: body.isPublished !== undefined ? body.isPublished : blogPosts[postIndex].isPublished,
-      slug: body.slug || blogPosts[postIndex].slug
+    const updated = {
+      ...existing,
+      title: body.title ?? existing.title,
+      excerpt: body.excerpt ?? existing.excerpt,
+      content: body.content ?? existing.content,
+      category: body.category ?? existing.category,
+      tags: body.tags ?? existing.tags,
+      readTime: body.readTime ?? existing.readTime,
+      image: body.image ?? existing.image,
+      isPublished: typeof body.isPublished === 'boolean' ? body.isPublished : existing.isPublished,
+      slug: body.slug ?? existing.slug,
     };
+    memoryPosts.set(body.id, updated);
 
     return NextResponse.json({ 
       success: true, 
-      post: blogPosts[postIndex] 
+      post: updated 
     });
 
   } catch (error) {
