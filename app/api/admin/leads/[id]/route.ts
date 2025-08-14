@@ -17,13 +17,23 @@ export async function PATCH(
   try {
     const auth = await requireManager(request);
     if (auth) return auth;
-    const body = await request.json();
-    const { status } = body;
-    const dbStatus = uiToDbStatus[status] ?? String(status).toUpperCase();
+    const body = await request.json().catch(() => ({}));
+    const { status, price } = body as { status?: string; price?: number };
+
+    const data: any = {};
+    if (status) {
+      data.status = (uiToDbStatus[status] ?? String(status).toUpperCase()) as any;
+    }
+    if (typeof price === 'number') {
+      data.price = price;
+    }
+    if (Object.keys(data).length === 0) {
+      return NextResponse.json({ success: true });
+    }
 
     const updated = await prisma.lead.update({
       where: { id: params.id },
-      data: { status: dbStatus as any },
+      data,
     });
 
     return NextResponse.json({ success: true, lead: updated });
