@@ -61,12 +61,17 @@ export default function AdminAnalyticsPage() {
     leadsByMonth: []
   });
   const [dateRange, setDateRange] = useState('30');
+  const [source, setSource] = useState('');
+  const [service, setService] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadAnalytics = async () => {
       try {
-        const response = await fetch(`/api/admin/analytics?range=${dateRange}`);
+        const params = new URLSearchParams({ range: dateRange });
+        if (source) params.set('source', source);
+        if (service) params.set('service', service);
+        const response = await fetch(`/api/admin/analytics?${params.toString()}`);
         if (response.ok) {
           const data = await response.json();
           setAnalytics(data);
@@ -78,7 +83,7 @@ export default function AdminAnalyticsPage() {
       }
     };
     loadAnalytics();
-  }, [dateRange]);
+  }, [dateRange, source, service]);
 
   const exportData = () => {
     const dataStr = JSON.stringify(analytics, null, 2);
@@ -112,7 +117,7 @@ export default function AdminAnalyticsPage() {
           <h1 className="text-xl font-bold text-gray-900">Аналитика</h1>
         </div>
         
-            <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3">
           <select
             value={dateRange}
             onChange={(e) => setDateRange(e.target.value)}
@@ -123,6 +128,18 @@ export default function AdminAnalyticsPage() {
             <option value="90">90 дней</option>
             <option value="365">Год</option>
           </select>
+          <input
+            value={source}
+            onChange={(e) => setSource(e.target.value)}
+            placeholder="utm_source"
+            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+          />
+          <input
+            value={service}
+            onChange={(e) => setService(e.target.value)}
+            placeholder="Услуга"
+            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+          />
           <button
             onClick={exportData}
             className="btn-secondary flex items-center space-x-2"

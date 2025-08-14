@@ -1320,6 +1320,11 @@ export default function AdminCalculator() {
                             area,
                             price: result.totalPrice,
                             notes: orderManagerNote,
+                            // Автозаполнение COGS из расчёта
+                            cost_labor: result.costs.labor,
+                            cost_materials: result.costs.materials,
+                            cost_transport: result.costs.transport,
+                            cost_overhead: result.costs.overhead,
                           }),
                         });
                         const data = await res.json().catch(() => ({}));

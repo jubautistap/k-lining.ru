@@ -16,17 +16,29 @@ export async function GET(request: NextRequest) {
 
     const { searchParams } = new URL(request.url);
     const rangeDays = Math.max(1, parseInt(searchParams.get('range') || '30'));
+    const sourceFilter = (searchParams.get('source') || '').trim();
+    const serviceFilter = (searchParams.get('service') || '').trim();
     const to = new Date();
     const from = new Date(to.getTime() - rangeDays * 24 * 60 * 60 * 1000);
 
     // 1) Данные
     const [leads, orders] = await Promise.all([
       prisma.lead.findMany({
-        where: { created_at: { gte: from, lte: to } },
+        where: {
+          created_at: { gte: from, lte: to },
+          ...(sourceFilter
+            ? { utm_source: { contains: sourceFilter, mode: 'insensitive' } }
+            : {}),
+        },
         select: { created_at: true, status: true, utm_source: true },
       }),
       prisma.order.findMany({
-        where: { created_at: { gte: from, lte: to } },
+        where: {
+          created_at: { gte: from, lte: to },
+          ...(serviceFilter
+            ? { service_type: { contains: serviceFilter, mode: 'insensitive' } }
+            : {}),
+        },
         select: { created_at: true, status: true, price: true, service_type: true },
       }),
     ]);
@@ -64,6 +76,8 @@ export async function GET(request: NextRequest) {
       .map(([name, v]) => ({ name, count: v.count, revenue: v.revenue }))
       .sort((a, b) => b.revenue - a.revenue)
       .slice(0, 10);
+
+    const availableServices = Array.from(new Set(orders.map(o => o.service_type).filter(Boolean))) as string[];
 
     // 3b) Источники
     const sourceMap = new Map<string, number>();
@@ -115,7 +129,7 @@ export async function GET(request: NextRequest) {
     }
     const leadsByMonth = months.reverse();
 
-    // 6) Прогноз (простая модель: среднесуточные * 30)
+    // 6) Прогноз (EMA и среднесуточные)
     const avgDailyLeads = leadsByDay.length ? leadsByDay.reduce((s, d) => s + d.count, 0) / leadsByDay.length : 0;
     // Дневной доход: по заказам
     const revenueByDayMap = new Map<string, number>();
@@ -130,12 +144,39 @@ export async function GET(request: NextRequest) {
     const revenueByDay = Array.from(revenueByDayMap.values());
     const avgDailyRevenue = revenueByDay.length ? revenueByDay.reduce((s, v) => s + v, 0) / revenueByDay.length : 0;
 
+    // EMA helper
+    const ema = (values: number[], span: number) => {
+      if (!values.length) return { series: [], last: 0 };
+      const alpha = 2 / (span + 1);
+      const s: number[] = [];
+      values.forEach((v, i) => {
+        if (i === 0) s.push(v); else s.push(v * alpha + s[i - 1] * (1 - alpha));
+      });
+      return { series: s, last: s[s.length - 1] };
+    };
+    const leadsEma = ema(leadsByDay.map(d => d.count), 7);
+    const revenueEma = ema(revenueByDay, 7);
+
     const forecast = {
-      leadsNext30: Math.round(avgDailyLeads * 30),
-      revenueNext30: Math.round(avgDailyRevenue * 30),
+      leadsNext30: Math.round((leadsEma.last || avgDailyLeads) * 30),
+      revenueNext30: Math.round((revenueEma.last || avgDailyRevenue) * 30),
       avgDailyLeads: Math.round(avgDailyLeads * 100) / 100,
       avgDailyRevenue: Math.round(avgDailyRevenue),
+      ema: {
+        leads: Math.round(leadsEma.last || 0),
+        revenue: Math.round(revenueEma.last || 0),
+      }
     };
+
+    // 7) Алерты (простые правила)
+    const alerts: string[] = [];
+    const todayRevenue = revenueByDay[revenueByDay.length - 1] || 0;
+    if (leadsByDay.length > 3 && leadsEma.last && leadsByDay[leadsByDay.length - 1].count < leadsEma.last * 0.6) {
+      alerts.push('Резкое падение заявок сегодня относительно EMA');
+    }
+    if (revenueByDay.length > 3 && revenueEma.last && todayRevenue < revenueEma.last * 0.6) {
+      alerts.push('Резкое падение дневного дохода относительно EMA');
+    }
 
     return NextResponse.json({
       totalLeads,
@@ -147,11 +188,13 @@ export async function GET(request: NextRequest) {
       realizedRevenue: Math.round(realizedRevenue),
       averageOrderValue: Math.round(averageOrderValue),
       topServices,
+      availableServices,
       leadsByStatus,
       sources,
       leadsByDay,
       leadsByMonth,
       forecast,
+      alerts,
     });
   } catch (error) {
     console.error('Analytics error:', error);
