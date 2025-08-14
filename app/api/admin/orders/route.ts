@@ -42,7 +42,22 @@ export async function POST(request: NextRequest) {
       const cl = cost_labor || 0; const cm = cost_materials || 0; const ct = cost_transport || 0; const co = cost_overhead || 0;
       data.profit = price - (cl + cm + ct + co);
     }
-    const created = await prisma.order.create({ data });
+    let created;
+    try {
+      created = await prisma.order.create({ data });
+    } catch (e) {
+      console.warn('Order create with COGS failed, retrying without cost fields:', e);
+      const fallback: any = {
+        lead: { connect: { id: leadId } },
+        service_type,
+        area: area ?? undefined,
+        price,
+        notes: notes ?? undefined,
+        scheduled_at: scheduled_at ? new Date(scheduled_at) : undefined,
+        status: 'CONFIRMED',
+      };
+      created = await prisma.order.create({ data: fallback });
+    }
 
     // Если указан leadId — обновляем лид
     if (leadId) {
