@@ -26,27 +26,26 @@ export default function AdminLayoutWrapper({
     ];
     
     metaTags.forEach(({ name, content }) => {
-      // Удаляем существующий meta тег если есть
-      const existingTag = document.querySelector(`meta[name="${name}"]`);
-      if (existingTag) {
-        existingTag.remove();
+      // Не трогаем теги, созданные Next/React. Управляем только своими по data-атрибуту.
+      const selector = `meta[name="${name}"][data-admin="true"]`;
+      let tag = document.querySelector(selector) as HTMLMetaElement | null;
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute('name', name);
+        tag.setAttribute('data-admin', 'true');
+        document.head.appendChild(tag);
       }
-      
-      // Добавляем новый meta тег
-      const meta = document.createElement('meta');
-      meta.name = name;
-      meta.content = content;
-      document.head.appendChild(meta);
+      tag.setAttribute('content', content);
     });
     
     // Меняем title
     document.title = 'Админ панель - K-lining Pro';
     
-    // Cleanup при размонтировании
+    // Cleanup при размонтировании: удаляем только наши, помеченные data-admin
     return () => {
       metaTags.forEach(({ name }) => {
-        const tag = document.querySelector(`meta[name="${name}"]`);
-        if (tag) tag.remove();
+        const tag = document.querySelector(`meta[name="${name}"][data-admin="true"]`);
+        if (tag && tag.parentNode) tag.parentNode.removeChild(tag);
       });
     };
   }, []);
