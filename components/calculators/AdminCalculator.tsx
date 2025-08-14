@@ -1267,13 +1267,13 @@ export default function AdminCalculator() {
                 </div>
               </div>
 
-              {/* Оформление заказа (PRO) */}
+              {/* Лиды: создание и закрытие */}
               <div className="bg-white rounded-xl p-6 border border-gray-200">
-                <h4 className="text-lg font-semibold text-gray-900 mb-4">Оформление заказа</h4>
+                <h4 className="text-lg font-semibold text-gray-900 mb-4">Лиды</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
                   <input
                     type="text"
-                    placeholder="ID лида (опционально)"
+                    placeholder="ID лида (после создания)"
                     value={orderLeadId}
                     onChange={(e) => setOrderLeadId(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
@@ -1292,13 +1292,7 @@ export default function AdminCalculator() {
                     onChange={(e) => setOrderClientPhone(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                   />
-                  <input
-                    type="text"
-                    placeholder="Тип услуги (авто)"
-                    value={serviceNames[cleaningType]}
-                    readOnly
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50"
-                  />
+                  <input type="text" readOnly value={serviceNames[cleaningType]} className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50" />
                 </div>
                 <textarea
                   placeholder="Заметка менеджера"
@@ -1312,10 +1306,33 @@ export default function AdminCalculator() {
                     onClick={async () => {
                       if (!result) return;
                       try {
+                        // Если нет ID лида — создаём его автоматически
+                        let leadId = orderLeadId;
+                        if (!leadId) {
+                          const leadRes = await fetch('/api/admin/leads', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                              name: orderClientName || 'Клиент',
+                              phone: orderClientPhone || '+7',
+                              email: '',
+                              service: serviceNames[cleaningType],
+                              message: orderManagerNote,
+                            }),
+                          });
+                          const leadData = await leadRes.json().catch(() => ({}));
+                          if (!leadRes.ok) {
+                            alert(`Ошибка создания лида: ${leadData.error || leadRes.status}`);
+                            return;
+                          }
+                          leadId = leadData.lead?.id || '';
+                          setOrderLeadId(leadId);
+                        }
+
                         const res = await authorizedFetch('/api/admin/orders', {
                           method: 'POST',
                           body: JSON.stringify({
-                            leadId: orderLeadId || undefined,
+                            leadId: leadId || undefined,
                             service_type: serviceNames[cleaningType],
                             area,
                             price: result.totalPrice,
@@ -1329,7 +1346,7 @@ export default function AdminCalculator() {
                         });
                         const data = await res.json().catch(() => ({}));
                         if (res.ok) {
-                          alert('Заказ оформлен. Лид переведён в WON (если указан).');
+                          alert('Лид закрыт (создан заказ). В аналитике учтён доход.');
                           setOrderLeadId('');
                           setOrderManagerNote('');
                         } else {
@@ -1337,12 +1354,12 @@ export default function AdminCalculator() {
                         }
                       } catch (e) {
                         console.error(e);
-                        alert('Ошибка сети при оформлении заказа');
+                        alert('Ошибка сети при закрытии лида');
                       }
                     }}
                     className="btn-primary"
                   >
-                    Закрыть на {result.totalPrice.toLocaleString()} ₽
+                    Закрыть лид на {result.totalPrice.toLocaleString()} ₽
                   </button>
 
                   <button
