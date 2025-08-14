@@ -1,83 +1,147 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireManager } from '@/lib/auth/middleware';
+import { prisma } from '@/lib/prisma';
 
-// Генерация тестовых данных для аналитики
-function generateAnalyticsData(range: number) {
-  const today = new Date();
-  const daysAgo = new Date(today.getTime() - range * 24 * 60 * 60 * 1000);
-  
-  // Генерация данных по дням
-  const leadsByDay = [];
-  for (let i = 0; i < range; i++) {
-    const date = new Date(daysAgo.getTime() + i * 24 * 60 * 60 * 1000);
-    leadsByDay.push({
-      date: date.toISOString().split('T')[0],
-      count: Math.floor(Math.random() * 10) + 1
-    });
-  }
-
-  // Генерация данных по месяцам
-  const leadsByMonth = [];
-  for (let i = 0; i < Math.ceil(range / 30); i++) {
-    const month = new Date(today.getFullYear(), today.getMonth() - i, 1);
-    leadsByMonth.push({
-      month: month.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' }),
-      count: Math.floor(Math.random() * 100) + 20,
-      revenue: Math.floor(Math.random() * 500000) + 100000
-    });
-  }
-
-  // Популярные услуги
-  const topServices = [
-    { name: 'Уборка квартиры', count: 45, revenue: 225000 },
-    { name: 'Химчистка', count: 32, revenue: 80000 },
-    { name: 'Мытье окон', count: 28, revenue: 42000 },
-    { name: 'Уборка дома', count: 15, revenue: 120000 },
-    { name: 'Уборка офиса', count: 12, revenue: 96000 }
-  ];
-
-  // Заявки по статусам
-  const leadsByStatus = [
-    { status: 'new', count: 25, percentage: 20 },
-    { status: 'contacted', count: 35, percentage: 28 },
-    { status: 'confirmed', count: 30, percentage: 24 },
-    { status: 'completed', count: 25, percentage: 20 },
-    { status: 'cancelled', count: 10, percentage: 8 }
-  ];
-
-  const totalLeads = leadsByDay.reduce((sum, day) => sum + day.count, 0);
-  const todayLeads = leadsByDay[leadsByDay.length - 1]?.count || 0;
-  const weekLeads = leadsByDay.slice(-7).reduce((sum, day) => sum + day.count, 0);
-  const monthLeads = leadsByDay.slice(-30).reduce((sum, day) => sum + day.count, 0);
-  const totalRevenue = topServices.reduce((sum, service) => sum + service.revenue, 0);
-  const averageOrderValue = totalRevenue / totalLeads || 0;
-  const conversionRate = Math.round((leadsByStatus.find(s => s.status === 'completed')?.count || 0) / totalLeads * 100);
-
-  return {
-    totalLeads,
-    todayLeads,
-    weekLeads,
-    monthLeads,
-    conversionRate,
-    totalRevenue,
-    averageOrderValue,
-    topServices,
-    leadsByStatus,
-    leadsByDay,
-    leadsByMonth
-  };
+function formatDate(d: Date): string {
+  const y = d.getFullYear();
+  const m = `${d.getMonth() + 1}`.padStart(2, '0');
+  const day = `${d.getDate()}`.padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
 
 export async function GET(request: NextRequest) {
   try {
     const auth = await requireManager(request);
     if (auth) return auth;
+
     const { searchParams } = new URL(request.url);
-    const range = parseInt(searchParams.get('range') || '30');
-    
-    const analyticsData = generateAnalyticsData(range);
-    
-    return NextResponse.json(analyticsData);
+    const rangeDays = Math.max(1, parseInt(searchParams.get('range') || '30'));
+    const to = new Date();
+    const from = new Date(to.getTime() - rangeDays * 24 * 60 * 60 * 1000);
+
+    // 1) Данные
+    const [leads, orders] = await Promise.all([
+      prisma.lead.findMany({
+        where: { created_at: { gte: from, lte: to } },
+        select: { created_at: true, status: true },
+      }),
+      prisma.order.findMany({
+        where: { created_at: { gte: from, lte: to } },
+        select: { created_at: true, status: true, price: true, service_type: true },
+      }),
+    ]);
+
+    // 2) Метрики
+    const totalLeads = leads.length;
+    const leadsByStatusMap = new Map<string, number>();
+    for (const l of leads) {
+      const key = l.status.toLowerCase();
+      leadsByStatusMap.set(key, (leadsByStatusMap.get(key) || 0) + 1);
+    }
+    const leadsByStatus = Array.from(leadsByStatusMap.entries()).map(([status, count]) => ({
+      status,
+      count,
+      percentage: totalLeads ? Math.round((count / totalLeads) * 100) : 0,
+    }));
+
+    // Доход: подтвержденные + завершенные как «забронированный доход»
+    const bookedOrders = orders.filter(o => ['CONFIRMED', 'COMPLETED'].includes(o.status));
+    const completedOrders = orders.filter(o => o.status === 'COMPLETED');
+
+    const totalRevenue = bookedOrders.reduce((s, o) => s + (o.price || 0), 0);
+    const realizedRevenue = completedOrders.reduce((s, o) => s + (o.price || 0), 0);
+    const averageOrderValue = bookedOrders.length ? totalRevenue / bookedOrders.length : 0;
+    const conversionRate = totalLeads ? Math.round((bookedOrders.length / totalLeads) * 100) : 0;
+
+    // 3) Топ услуг
+    const serviceMap = new Map<string, { count: number; revenue: number }>();
+    for (const o of bookedOrders) {
+      const key = o.service_type || 'Услуга';
+      const prev = serviceMap.get(key) || { count: 0, revenue: 0 };
+      serviceMap.set(key, { count: prev.count + 1, revenue: prev.revenue + (o.price || 0) });
+    }
+    const topServices = Array.from(serviceMap.entries())
+      .map(([name, v]) => ({ name, count: v.count, revenue: v.revenue }))
+      .sort((a, b) => b.revenue - a.revenue)
+      .slice(0, 10);
+
+    // 4) По дням (лиды)
+    const dayIndex = new Map<string, number>();
+    for (let i = 0; i < rangeDays; i++) {
+      const d = new Date(from.getTime() + i * 86400000);
+      dayIndex.set(formatDate(d), 0);
+    }
+    for (const l of leads) {
+      const key = formatDate(new Date(l.created_at));
+      if (dayIndex.has(key)) dayIndex.set(key, (dayIndex.get(key) || 0) + 1);
+    }
+    const leadsByDay = Array.from(dayIndex.entries()).map(([date, count]) => ({ date, count }));
+    const todayLeads = leadsByDay[leadsByDay.length - 1]?.count || 0;
+    const weekLeads = leadsByDay.slice(-7).reduce((s, d) => s + d.count, 0);
+    const monthLeads = leadsByDay.slice(-30).reduce((s, d) => s + d.count, 0);
+
+    // 5) По месяцам (агрегации)
+    const months: { month: string; count: number; revenue: number }[] = [];
+    const monthKey = (d: Date) => `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}`;
+    const monthsRange = Math.max(1, Math.ceil(rangeDays / 30));
+    const monthMap = new Map<string, { count: number; revenue: number }>();
+    for (let i = 0; i < monthsRange; i++) {
+      const mDate = new Date(to.getFullYear(), to.getMonth() - i, 1);
+      const key = monthKey(mDate);
+      monthMap.set(key, { count: 0, revenue: 0 });
+    }
+    for (const l of leads) {
+      const key = monthKey(new Date(l.created_at));
+      if (monthMap.has(key)) monthMap.get(key)!.count += 1;
+    }
+    for (const o of bookedOrders) {
+      const key = monthKey(new Date(o.created_at));
+      if (monthMap.has(key)) monthMap.get(key)!.revenue += o.price || 0;
+    }
+    for (const [key, val] of monthMap.entries()) {
+      const [y, m] = key.split('-');
+      const label = new Date(parseInt(y, 10), parseInt(m, 10) - 1, 1).toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
+      months.push({ month: label, count: val.count, revenue: val.revenue });
+    }
+    const leadsByMonth = months.reverse();
+
+    // 6) Прогноз (простая модель: среднесуточные * 30)
+    const avgDailyLeads = leadsByDay.length ? leadsByDay.reduce((s, d) => s + d.count, 0) / leadsByDay.length : 0;
+    // Дневной доход: по заказам
+    const revenueByDayMap = new Map<string, number>();
+    for (let i = 0; i < rangeDays; i++) {
+      const d = new Date(from.getTime() + i * 86400000);
+      revenueByDayMap.set(formatDate(d), 0);
+    }
+    for (const o of bookedOrders) {
+      const key = formatDate(new Date(o.created_at));
+      revenueByDayMap.set(key, (revenueByDayMap.get(key) || 0) + (o.price || 0));
+    }
+    const revenueByDay = Array.from(revenueByDayMap.values());
+    const avgDailyRevenue = revenueByDay.length ? revenueByDay.reduce((s, v) => s + v, 0) / revenueByDay.length : 0;
+
+    const forecast = {
+      leadsNext30: Math.round(avgDailyLeads * 30),
+      revenueNext30: Math.round(avgDailyRevenue * 30),
+      avgDailyLeads: Math.round(avgDailyLeads * 100) / 100,
+      avgDailyRevenue: Math.round(avgDailyRevenue),
+    };
+
+    return NextResponse.json({
+      totalLeads,
+      todayLeads,
+      weekLeads,
+      monthLeads,
+      conversionRate,
+      totalRevenue: Math.round(totalRevenue),
+      realizedRevenue: Math.round(realizedRevenue),
+      averageOrderValue: Math.round(averageOrderValue),
+      topServices,
+      leadsByStatus,
+      leadsByDay,
+      leadsByMonth,
+      forecast,
+    });
   } catch (error) {
     console.error('Analytics error:', error);
     return NextResponse.json(
@@ -85,4 +149,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-} 
+}

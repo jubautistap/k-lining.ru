@@ -21,6 +21,7 @@ interface AnalyticsData {
   monthLeads: number;
   conversionRate: number;
   totalRevenue: number;
+  realizedRevenue?: number;
   averageOrderValue: number;
   topServices: Array<{
     name: string;
@@ -109,7 +110,7 @@ export default function AdminAnalyticsPage() {
           <h1 className="text-xl font-bold text-gray-900">Аналитика</h1>
         </div>
         
-        <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3">
           <select
             value={dateRange}
             onChange={(e) => setDateRange(e.target.value)}
@@ -180,6 +181,24 @@ export default function AdminAnalyticsPage() {
               </div>
               <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
                 <DollarSign className="w-6 h-6 text-yellow-600" />
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+            className="bg-white rounded-xl shadow-sm p-6"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600">Реализованный доход</p>
+                <p className="text-2xl font-bold text-gray-900">{(analytics.realizedRevenue || 0).toLocaleString()} ₽</p>
+                <p className="text-xs text-green-600">COMPLETED</p>
+              </div>
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                <DollarSign className="w-6 h-6 text-green-600" />
               </div>
             </div>
           </motion.div>
@@ -271,7 +290,7 @@ export default function AdminAnalyticsPage() {
           </motion.div>
         </div>
 
-        {/* Recent Activity */}
+        {/* Recent Activity + Forecast */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -298,6 +317,35 @@ export default function AdminAnalyticsPage() {
             ))}
           </div>
         </motion.div>
+
+        {/* Прогноз */}
+        {'forecast' in analytics && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className="bg-white rounded-xl shadow-sm p-6 mt-8"
+          >
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Прогноз на 30 дней</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <p className="text-sm text-gray-600">Ожидаемые заявки</p>
+                <p className="text-2xl font-bold text-gray-900">{(analytics as any).forecast.leadsNext30}</p>
+                <p className="text-xs text-gray-500">Среднесуточно: {(analytics as any).forecast.avgDailyLeads}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">Прогноз дохода</p>
+                <p className="text-2xl font-bold text-gray-900">{(analytics as any).forecast.revenueNext30.toLocaleString()} ₽</p>
+                <p className="text-xs text-gray-500">Среднесуточно: {(analytics as any).forecast.avgDailyRevenue.toLocaleString()} ₽</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">Конверсия (текущ.)</p>
+                <p className="text-2xl font-bold text-gray-900">{analytics.conversionRate}%</p>
+                <p className="text-xs text-gray-500">На базе текущей воронки</p>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </div>
   );
 }
