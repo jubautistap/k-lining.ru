@@ -19,8 +19,6 @@ export default function AmoCRMModal() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const YM_ID = Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID) || 103567092;
   const dialogRef = useRef<HTMLDivElement>(null);
-  const firstFocusableRef = useRef<HTMLButtonElement>(null);
-  const lastFocusableRef = useRef<HTMLButtonElement>(null);
 
   const {
     register,
@@ -31,7 +29,24 @@ export default function AmoCRMModal() {
     resolver: zodResolver(formSchema),
   });
 
-  // Закрытие по ESC
+  // Универсальный трекер событий (YM + GA)
+  const track = (names: string | string[], params?: Record<string, any>) => {
+    try {
+      const events = Array.isArray(names) ? names : [names];
+      const safeParams = params || {};
+      if (typeof window !== 'undefined') {
+        const w = window as any;
+        events.forEach((eventName) => {
+          w?.ym?.(YM_ID, 'reachGoal', eventName, safeParams);
+          w?.gtag?.('event', eventName, safeParams);
+        });
+      }
+    } catch (error) {
+      console.warn('Ошибка отслеживания:', error);
+    }
+  };
+
+  // Закрытие по ESC и focus-trap
   useEffect(() => {
     if (!isModalOpen) return;
     const onKey = (e: KeyboardEvent) => {
@@ -67,21 +82,10 @@ export default function AmoCRMModal() {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
-      // Отслеживание событий
-      if (typeof window !== 'undefined') {
-        try {
-          if ((window as any).ym) {
-            (window as any).ym(YM_ID, 'reachGoal', 'form_submit');
-            (window as any).ym(YM_ID, 'reachGoal', 'discount_submit');
-          }
-          if ((window as any).gtag) {
-            (window as any).gtag('event', 'form_submit');
-            (window as any).gtag('event', 'discount_submit');
-          }
-        } catch (error) {
-          console.warn('Ошибка отслеживания:', error);
-        }
-      }
+      // Отслеживание событий одной функцией
+      track(['form_submit', 'discount_submit'], {
+        source: 'amocrm_modal',
+      });
 
       await submitLead({
         name: 'Заявка на звонок (скидка -10%)',
@@ -100,15 +104,13 @@ export default function AmoCRMModal() {
     }
   };
 
-  const handleWhatsApp = () => {
+  const handleExternal = (channel: 'whatsapp' | 'telegram') => {
     const message = encodeURIComponent('Здравствуйте! Хочу получить консультацию по услугам клининга.');
-    window.open(`https://wa.me/79255551833?text=${message}`, '_blank');
-    closeModal();
-  };
-
-  const handleTelegram = () => {
-    const message = encodeURIComponent('Здравствуйте! Хочу получить консультацию по услугам клининга.');
-    window.open(`https://t.me/k_liningru?text=${message}`, '_blank');
+    const url = channel === 'whatsapp'
+      ? `https://wa.me/79255551833?text=${message}`
+      : `https://t.me/k_liningru?text=${message}`;
+    track('contact_click', { channel, source: 'amocrm_modal' });
+    window.open(url, '_blank', 'noopener,noreferrer');
     closeModal();
   };
 
@@ -211,7 +213,7 @@ export default function AmoCRMModal() {
             
             <div className="grid grid-cols-2 gap-2">
               <button
-                onClick={handleWhatsApp}
+                onClick={() => handleExternal('whatsapp')}
                 className="flex items-center justify-center space-x-2 bg-green-500 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -221,7 +223,7 @@ export default function AmoCRMModal() {
               </button>
               
               <button
-                onClick={handleTelegram}
+                onClick={() => handleExternal('telegram')}
                 className="flex items-center justify-center space-x-2 bg-blue-500 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
