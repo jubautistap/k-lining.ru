@@ -50,6 +50,18 @@ export default function AdminLayoutWrapper({
     };
   }, []);
 
+  // Сбрасываем прокрутку при любой навигации внутри админки, чтобы не залипала позиция
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        if ('scrollRestoration' in window.history) {
+          window.history.scrollRestoration = 'manual';
+        }
+      } catch {}
+      window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
+    }
+  }, [pathname]);
+
   // Проверяем авторизацию, но не на странице логина
   useEffect(() => {
     if (!isLoading && !isAuthenticated && pathname !== '/admin/login') {
