@@ -175,6 +175,18 @@ export default function Header() {
             </div>
           </div>
         )}
+
+        {/* Фиксированный CTA при скролле (десктоп) */}
+        {isMounted && isScrolled && (
+          <div className="hidden md:block fixed top-2 right-4 z-[60]">
+            <button
+              onClick={handleModalOpen}
+              className="rounded-full bg-primary-600 text-white px-5 py-2 shadow-lg hover:bg-primary-700"
+            >
+              Заказать уборку
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );

@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 
 export const metadata: Metadata = {
   title: 'О компании K-lining - профессиональная клининговая компания в Москве',
@@ -46,6 +47,10 @@ export default function AboutPage() {
   return (
     <div className="section-padding bg-gradient-to-br from-gray-50 to-white">
       <div className="container-custom">
+        {/* Хлебные крошки */}
+        <div className="pt-6">
+          <BreadcrumbSchema items={[{ name: 'О компании', url: '/about' }]} />
+        </div>
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             О компании

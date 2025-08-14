@@ -3,6 +3,9 @@ import dynamic from 'next/dynamic';
 import HeroSection from '@/components/sections/HeroSection';
 import ServicesSection from '@/components/sections/ServicesSection';
 import WhyChooseUsSection from '@/components/sections/WhyChooseUsSection';
+import CaseStudiesSection from '@/components/sections/CaseStudiesSection';
+import TestimonialsSection from '@/components/sections/TestimonialsSection';
+import BlogTeaserSection from '@/components/sections/BlogTeaserSection';
 
 // Динамические импорты для ленивой загрузки
 const ProcessSection = dynamic(() => import('@/components/sections/ProcessSection'), {
@@ -42,8 +45,8 @@ const StickyPromo = dynamic(() => import('@/components/ui/StickyPromo'), { ssr: 
 
 export const metadata: Metadata = {
   title: 'Уборка квартир и офисов в Москве 24/7 — мин. заказ 6 000 ₽ | K-lining',
-  description: 'Профессиональная клининговая компания в Москве. Уборка квартир, домов, офисов. Быстро, качественно, честно. Работаем 24/7. Бесплатная консультация. Химчистка, мытье окон, генеральная уборка, уборка после ремонта.',
-  keywords: 'уборка квартир москва, клининговая компания, уборка офисов, химчистка, мытье окон, генеральная уборка, уборка после ремонта, химчистка мебели, профессиональная уборка, клининг москва, уборка квартиры цена, химчистка дивана',
+  description: 'Уборка квартир Москва, уборка офисов, генеральная уборка, уборка после ремонта, химчистка мебели, мытьё окон. Профессиональная клининговая компания в Москве и МО. Работаем 24/7. Бесплатная консультация. Прозрачные цены.',
+  keywords: 'уборка квартир москва, уборка квартиры москва цена, клининговая компания москва, уборка офисов москва, генеральная уборка москва, уборка после ремонта москва, химчистка мебели москва, мытьё окон москва, клининг 24/7 москва, профессиональная уборка, химчистка дивана на дому',
   openGraph: {
     title: 'Профессиональная уборка квартир и офисов в Москве - K-lining 24/7',
     description: 'Профессиональная уборка квартир и офисов в Москве ⭐ Клининговая компания K-lining ⭐ Химчистка мебели, мытьё окон, генеральная уборка ⭐ Работаем 24/7 ⭐ Минимальный заказ — 6,000₽ ⭐ Выезд в любой район Москвы и МО',
@@ -160,6 +163,9 @@ export default function HomePage() {
         </div>
       </section>
       <WhyChooseUsSection />
+      <CaseStudiesSection />
+      <TestimonialsSection />
+      <BlogTeaserSection />
       <ProcessSection />
       <CleaningCalculator />
       <ContactSection />

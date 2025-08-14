@@ -2,7 +2,7 @@
 
 import React from 'react';
 import OrderButton from '@/components/ui/OrderButton';
-import { Phone, MessageCircle } from 'lucide-react';
+import { Phone, MessageCircle, Clock, Shield, Lock, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 
 export default function HeroSection() {
@@ -54,26 +54,26 @@ export default function HeroSection() {
               </a>
             </div>
 
-            {/* Trust Indicators */}
-            <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-sm text-gray-600">
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+            {/* Trust Indicators (иконки для лучшей читаемости) */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 text-sm text-gray-700">
+              <div className="inline-flex items-center gap-2 bg-white/70 border border-gray-200 rounded-lg px-3 py-2">
+                <Clock className="w-4 h-4 text-green-600" />
                 <span>Работаем 24/7</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <div className="inline-flex items-center gap-2 bg-white/70 border border-gray-200 rounded-lg px-3 py-2">
+                <Shield className="w-4 h-4 text-green-600" />
                 <span>Гарантия качества</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <div className="inline-flex items-center gap-2 bg-white/70 border border-gray-200 rounded-lg px-3 py-2">
+                <Sparkles className="w-4 h-4 text-green-600" />
                 <span>Бесплатная консультация</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <div className="inline-flex items-center gap-2 bg-white/70 border border-gray-200 rounded-lg px-3 py-2">
+                <Lock className="w-4 h-4 text-green-600" />
                 <span>Без предоплаты</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <div className="inline-flex items-center gap-2 bg-white/70 border border-gray-200 rounded-lg px-3 py-2">
+                <Phone className="w-4 h-4 text-green-600" />
                 <span>Ответ за 5–10 минут</span>
               </div>
             </div>
