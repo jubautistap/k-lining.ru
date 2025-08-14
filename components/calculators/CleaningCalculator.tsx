@@ -250,6 +250,9 @@ export default function CleaningCalculator() {
   const [isNewClient, setIsNewClient] = useState<boolean>(false);
   const [bundle, setBundle] = useState<boolean>(false); // «генеральная + окна»
 
+  // Рекомендованные допы для мобильного быстрого выбора
+  const mobileRecommendedExtras = useMemo(() => ['kitchen','bathroom','balcony','fridge','disinfection','carpet'] as const, []);
+
   const pickRate = useCallback(() => {
     const prop = RATES[propertyType] ?? RATES.apartment;
     const r = (prop as any)[cleaningType] ?? (RATES.apartment as any).general;
@@ -391,6 +394,29 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
               <h3 className="text-lg font-semibold text-gray-900">Тип помещения</h3>
             </div>
             
+            {/* Мобильные чипы */}
+            <div className="md:hidden -mx-1 mb-3 overflow-x-auto">
+              <div className="flex gap-2 px-1">
+                {[
+                  { id: 'apartment', name: 'Квартира', icon: Home },
+                  { id: 'house', name: 'Дом', icon: Building },
+                  { id: 'office', name: 'Офис', icon: Building },
+                  { id: 'commercial', name: 'Коммерч.', icon: Store }
+                ].map(type => (
+                  <button
+                    key={type.id}
+                    onClick={() => setPropertyType(type.id as any)}
+                    className={`px-3 py-2 rounded-full text-sm border whitespace-nowrap ${propertyType === type.id ? 'border-primary-600 bg-primary-50 text-primary-700' : 'border-gray-200'}`}
+                    type="button"
+                  >
+                    <span className="inline-flex items-center gap-1">
+                      <type.icon className="w-4 h-4" /> {type.name}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3" role="radiogroup" aria-label="Тип помещения">
               {[
                 { id: 'apartment', name: 'Квартира', icon: Home, color: 'blue' },
@@ -475,6 +501,19 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                     className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
                   />
                   <span className="text-sm text-gray-500 font-medium">м²</span>
+                </div>
+                {/* Мобильный слайдер */}
+                <div className="md:hidden mt-4">
+                  <input
+                    type="range"
+                    min={15}
+                    max={500}
+                    step={5}
+                    value={area}
+                    onChange={(e) => { const v = parseInt(e.target.value) || 15; setArea(v); setCustomArea(String(v)); }}
+                    className="w-full"
+                  />
+                  <div className="text-xs text-gray-500 mt-1">{area} м²</div>
                 </div>
                   <div className="text-xs text-gray-500 mt-2">
                     Диапазон: 15–500 м² • Минимальная стоимость заказа: 6,000 ₽
@@ -564,6 +603,27 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
               )}
             </div>
 
+            {/* Мобильные быстрые теги */}
+            <div className="md:hidden mb-3 -mx-1 overflow-x-auto">
+              <div className="flex gap-2 px-1">
+                {mobileRecommendedExtras.map(id => {
+                  const svc = additionalServicesList.find(s => s.id === id);
+                  if (!svc) return null;
+                  const active = additionalServices.includes(id);
+                  return (
+                    <button
+                      key={id}
+                      onClick={() => handleServiceToggle(id)}
+                      className={`px-3 py-1 rounded-full text-sm border whitespace-nowrap ${active ? 'border-orange-500 bg-orange-50 text-orange-700' : 'border-gray-200'}`}
+                      type="button"
+                    >
+                      {svc.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-64 overflow-y-auto [mask-image:linear-gradient(to_bottom,transparent,black_12px,black_calc(100%-12px),transparent)]">
               {filteredAdditionalServices.map((service) => (
                 <button
@@ -614,6 +674,11 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                   Количество створок (от 0)
                 </label>
                 <div className="flex items-center space-x-3">
+                  <div className="md:hidden inline-flex items-center border rounded-lg overflow-hidden">
+                    <button type="button" className="px-3 py-2 text-lg" onClick={() => setWindowsCount(w => Math.max(0, w - 1))}>−</button>
+                    <div className="px-4 py-2 min-w-[48px] text-center">{windowsCount}</div>
+                    <button type="button" className="px-3 py-2 text-lg" onClick={() => setWindowsCount(w => Math.min(200, w + 1))}>+</button>
+                  </div>
                   <input
                     type="number"
                     min="0"
@@ -621,7 +686,7 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                     value={windowsCount}
                     onChange={(e) => setWindowsCount(Math.max(0, parseInt(e.target.value) || 0))}
                     placeholder="Например: 4"
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    className="hidden md:block flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   />
                   <span className="text-sm text-gray-500 font-medium">× {WINDOW_PRICE_PER_SASH} ₽</span>
                 </div>
@@ -666,6 +731,14 @@ className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm"
                 <input type="checkbox" checked={bundle} onChange={(e) => setBundle(e.target.checked)} />
                 Пакет «Генеральная + окна» −15%
               </label>
+            </div>
+            {/* Мобильные чипы надбавок */}
+            <div className="md:hidden mt-3 -mx-1 overflow-x-auto">
+              <div className="flex gap-2 px-1">
+                <button type="button" onClick={() => setUrgent(v => !v)} className={`px-3 py-1 rounded-full text-sm border ${urgent ? 'border-primary-600 bg-primary-50 text-primary-700' : 'border-gray-200'}`}>Срочно +20%</button>
+                <button type="button" onClick={() => setNight(v => !v)} className={`px-3 py-1 rounded-full text-sm border ${night ? 'border-primary-600 bg-primary-50 text-primary-700' : 'border-gray-200'}`}>Ночь +15%</button>
+                <button type="button" onClick={() => setOutside(v => !v)} className={`px-3 py-1 rounded-full text-sm border ${outside ? 'border-primary-600 bg-primary-50 text-primary-700' : 'border-gray-200'}`}>За МКАД +15%</button>
+              </div>
             </div>
             <div className="text-xs text-gray-500 mt-2">Скидки не суммируются — применяется лучшая</div>
           </motion.div>
