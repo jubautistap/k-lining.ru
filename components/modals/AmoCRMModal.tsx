@@ -151,7 +151,7 @@ export default function AmoCRMModal() {
               Получить консультацию
             </h2>
             <p className="text-sm text-gray-600">
-              Оставьте номер телефона, и мы перезвоним вам в течение 5 минут
+              Оставьте номер — перезвоним в течение 5 минут
             </p>
             <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-pink-500 to-amber-500 shadow">
               <Percent className="w-4 h-4" />
@@ -162,14 +162,6 @@ export default function AmoCRMModal() {
 
         {/* Form */}
         <div className="px-6 pb-6">
-          <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50/70 p-3 text-amber-800 text-sm flex items-start gap-3">
-            <Gift className="w-5 h-5 text-amber-500 mt-0.5" />
-            <div>
-              <div className="font-medium">Подарок к первому заказу</div>
-              <div className="opacity-90">−10% действует сегодня. Без предоплаты и скрытых условий.</div>
-            </div>
-          </div>
-
            <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4">
               <div>
@@ -199,11 +191,10 @@ export default function AmoCRMModal() {
                 ) : (
                   <>
                     <Phone className="w-4 h-4" />
-                    <span>Заказать звонок и получить −10%</span>
+                    <span>Заказать звонок</span>
                   </>
                 )}
               </button>
-              <p className="text-[11px] text-gray-500 text-center -mt-1">Скидка применяется при оформлении первого заказа</p>
             </div>
           </form>
 
@@ -239,15 +230,11 @@ export default function AmoCRMModal() {
             <div className="flex items-center justify-center space-x-3 text-xs text-gray-500">
               <div className="flex items-center space-x-1">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span>Бесплатно</span>
+                <span>Без предоплаты</span>
               </div>
               <div className="flex items-center space-x-1">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span>Без спама</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span>5 минут</span>
+                <span>Ответ за 5 минут</span>
               </div>
             </div>
           </div>
