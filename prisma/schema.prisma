@@ -38,6 +38,19 @@ model Lead {
   status        LeadStatus  @default(NEW)
   source        String      @default("website")
   price         Float?
+  // Атрибуция и источник
+  utm_source    String?
+  utm_medium    String?
+  utm_campaign  String?
+  utm_content   String?
+  utm_term      String?
+  gclid         String?
+  yclid         String?
+  ymclid        String?
+  fbclid        String?
+  openstat      String?
+  referrer      String?
+  page_url      String?
   created_at    DateTime    @default(now())
   updated_at    DateTime    @updatedAt
   
@@ -60,6 +73,12 @@ model Order {
   scheduled_at    DateTime?
   completed_at    DateTime?
   notes           String?
+  // Unit-экономика
+  cost_labor      Float?
+  cost_materials  Float?
+  cost_transport  Float?
+  cost_overhead   Float?
+  profit          Float?
   created_at      DateTime    @default(now())
   updated_at      DateTime    @updatedAt
   

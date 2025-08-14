@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     const [leads, orders] = await Promise.all([
       prisma.lead.findMany({
         where: { created_at: { gte: from, lte: to } },
-        select: { created_at: true, status: true },
+        select: { created_at: true, status: true, utm_source: true },
       }),
       prisma.order.findMany({
         where: { created_at: { gte: from, lte: to } },
@@ -64,6 +64,16 @@ export async function GET(request: NextRequest) {
       .map(([name, v]) => ({ name, count: v.count, revenue: v.revenue }))
       .sort((a, b) => b.revenue - a.revenue)
       .slice(0, 10);
+
+    // 3b) Источники
+    const sourceMap = new Map<string, number>();
+    for (const l of leads) {
+      const key = (l.utm_source || 'direct').toLowerCase();
+      sourceMap.set(key, (sourceMap.get(key) || 0) + 1);
+    }
+    const sources = Array.from(sourceMap.entries())
+      .map(([source, count]) => ({ source, count, percentage: totalLeads ? Math.round((count / totalLeads) * 100) : 0 }))
+      .sort((a, b) => b.count - a.count);
 
     // 4) По дням (лиды)
     const dayIndex = new Map<string, number>();
@@ -138,6 +148,7 @@ export async function GET(request: NextRequest) {
       averageOrderValue: Math.round(averageOrderValue),
       topServices,
       leadsByStatus,
+      sources,
       leadsByDay,
       leadsByMonth,
       forecast,

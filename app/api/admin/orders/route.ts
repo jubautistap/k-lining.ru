@@ -10,6 +10,11 @@ const createOrderSchema = z.object({
   price: z.number().min(0),
   notes: z.string().optional(),
   scheduled_at: z.string().datetime().optional(),
+  // unit‑экономика (опционально)
+  cost_labor: z.number().optional(),
+  cost_materials: z.number().optional(),
+  cost_transport: z.number().optional(),
+  cost_overhead: z.number().optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -18,19 +23,26 @@ export async function POST(request: NextRequest) {
     if (auth) return auth;
 
     const body = await request.json();
-    const { leadId, service_type, area, price, notes, scheduled_at } = createOrderSchema.parse(body);
+    const { leadId, service_type, area, price, notes, scheduled_at, cost_labor, cost_materials, cost_transport, cost_overhead } = createOrderSchema.parse(body);
 
-    const created = await prisma.order.create({
-      data: {
-        lead: { connect: { id: leadId } },
-        service_type,
-        area: area ?? undefined,
-        price,
-        notes: notes ?? undefined,
-        scheduled_at: scheduled_at ? new Date(scheduled_at) : undefined,
-        status: 'CONFIRMED',
-      },
-    });
+    const data: any = {
+      lead: { connect: { id: leadId } },
+      service_type,
+      area: area ?? undefined,
+      price,
+      notes: notes ?? undefined,
+      scheduled_at: scheduled_at ? new Date(scheduled_at) : undefined,
+      status: 'CONFIRMED',
+    };
+    if (typeof cost_labor === 'number') data.cost_labor = cost_labor;
+    if (typeof cost_materials === 'number') data.cost_materials = cost_materials;
+    if (typeof cost_transport === 'number') data.cost_transport = cost_transport;
+    if (typeof cost_overhead === 'number') data.cost_overhead = cost_overhead;
+    if (typeof price === 'number') {
+      const cl = cost_labor || 0; const cm = cost_materials || 0; const ct = cost_transport || 0; const co = cost_overhead || 0;
+      data.profit = price - (cl + cm + ct + co);
+    }
+    const created = await prisma.order.create({ data });
 
     // Если указан leadId — обновляем лид
     if (leadId) {

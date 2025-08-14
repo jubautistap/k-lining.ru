@@ -42,6 +42,8 @@ interface AnalyticsData {
     count: number;
     revenue: number;
   }>;
+  sources?: Array<{ source: string; count: number; percentage: number }>;
+  forecast?: { leadsNext30: number; revenueNext30: number; avgDailyLeads: number; avgDailyRevenue: number };
 }
 
 export default function AdminAnalyticsPage() {
@@ -288,6 +290,29 @@ export default function AdminAnalyticsPage() {
               ))}
             </div>
           </motion.div>
+
+          {/* Sources */}
+          {analytics.sources && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.55 }}
+              className="bg-white rounded-xl shadow-sm p-6"
+            >
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Источники (utm_source)</h3>
+              <div className="space-y-3">
+                {analytics.sources.map((s) => (
+                  <div key={s.source} className="flex items-center justify-between">
+                    <div className="text-sm font-medium text-gray-900">{s.source}</div>
+                    <div className="text-right">
+                      <div className="text-sm font-semibold text-gray-900">{s.count}</div>
+                      <div className="text-xs text-gray-500">{s.percentage}%</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
         </div>
 
         {/* Recent Activity + Forecast */}

@@ -161,6 +161,7 @@ export async function POST(request: NextRequest) {
 
     let newLead: any;
     try {
+      const utmObj = utm || {};
       newLead = await prisma.lead.create({
         data: {
           name,
@@ -168,7 +169,19 @@ export async function POST(request: NextRequest) {
           email: email || null,
           service: service || '',
           message: message || null,
-          source: 'website'
+          source: 'website',
+          utm_source: utmObj.utm_source || null,
+          utm_medium: utmObj.utm_medium || null,
+          utm_campaign: utmObj.utm_campaign || null,
+          utm_content: utmObj.utm_content || null,
+          utm_term: utmObj.utm_term || null,
+          gclid: utmObj.gclid || null,
+          yclid: utmObj.yclid || null,
+          ymclid: utmObj.ymclid || null,
+          fbclid: utmObj.fbclid || null,
+          openstat: utmObj._openstat || null,
+          referrer: referrer || null,
+          page_url: page || null,
         },
         include: {
           assigned_to: {
