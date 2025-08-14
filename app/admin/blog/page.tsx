@@ -42,7 +42,8 @@ export default function AdminBlogPage() {
     category: '',
     tags: [],
     readTime: '5 мин',
-    isPublished: false
+    isPublished: false,
+    image: ''
   });
 
   useEffect(() => {
@@ -83,6 +84,25 @@ export default function AdminBlogPage() {
       }
     } catch (error) {
       console.error('Error saving post:', error);
+    }
+  };
+
+  const handleImageUpload = async (file: File, onUrl: (url: string) => void) => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      const form = new FormData();
+      form.append('file', file);
+      const res = await fetch('/api/admin/blog/upload', {
+        method: 'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } as any : undefined,
+        body: form,
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'upload failed');
+      onUrl(data.url);
+    } catch (e) {
+      console.error('Upload failed', e);
+      alert('Ошибка загрузки изображения');
     }
   };
 
@@ -241,6 +261,33 @@ export default function AdminBlogPage() {
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                           placeholder="5 мин"
                         />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Обложка (URL)
+                        </label>
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="text"
+                            value={editingPost?.image || ''}
+                            onChange={(e) => setEditingPost({ ...editingPost!, image: e.target.value })}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                            placeholder="/uploads/blog/....jpg"
+                          />
+                        </div>
+                        <div className="mt-2">
+                          <label className="inline-flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                            <input
+                              type="file"
+                              accept="image/png,image/jpeg,image/webp"
+                              onChange={(e) => {
+                                const f = e.target.files?.[0];
+                                if (f) handleImageUpload(f, (url) => setEditingPost({ ...editingPost!, image: url }));
+                              }}
+                            />
+                            Загрузить файл
+                          </label>
+                        </div>
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -469,6 +516,33 @@ export default function AdminBlogPage() {
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
                       placeholder="уборка, советы, клининг"
                     />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Обложка (URL)
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={newPost.image}
+                        onChange={(e) => setNewPost({ ...newPost, image: e.target.value })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                        placeholder="/uploads/blog/....jpg"
+                      />
+                    </div>
+                    <div className="mt-2">
+                      <label className="inline-flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                        <input
+                          type="file"
+                          accept="image/png,image/jpeg,image/webp"
+                          onChange={(e) => {
+                            const f = e.target.files?.[0];
+                            if (f) handleImageUpload(f, (url) => setNewPost({ ...newPost, image: url }));
+                          }}
+                        />
+                        Загрузить файл
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>
