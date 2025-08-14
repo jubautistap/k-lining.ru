@@ -4,7 +4,7 @@ import HeroSection from '@/components/sections/HeroSection';
 import ServicesSection from '@/components/sections/ServicesSection';
 import WhyChooseUsSection from '@/components/sections/WhyChooseUsSection';
 import CaseStudiesSection from '@/components/sections/CaseStudiesSection';
-import TestimonialsSection from '@/components/sections/TestimonialsSection';
+import LoftCentersCaseSection from '@/components/sections/LoftCentersCaseSection';
 import BlogTeaserSection from '@/components/sections/BlogTeaserSection';
 
 // Динамические импорты для ленивой загрузки
@@ -164,7 +164,7 @@ export default function HomePage() {
       </section>
       <WhyChooseUsSection />
       <CaseStudiesSection />
-      <TestimonialsSection />
+      <LoftCentersCaseSection />
       <BlogTeaserSection />
       <ProcessSection />
       <CleaningCalculator />
