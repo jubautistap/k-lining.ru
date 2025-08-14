@@ -39,6 +39,11 @@ export async function PATCH(
     return NextResponse.json({ success: true, lead: updated });
 
   } catch (error) {
+    // Обрабатываем "record not found" как 404, а не 500
+    const anyErr = error as any;
+    if (anyErr?.code === 'P2025') {
+      return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
+    }
     console.error('Error updating lead:', error);
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
