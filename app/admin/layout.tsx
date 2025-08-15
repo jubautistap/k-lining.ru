@@ -107,12 +107,15 @@ export default function AdminLayoutWrapper({
         #__admin_root { display: flex; flex-direction: column; min-height: 100vh; }
         #__admin_root > * { flex: 0 0 auto; }
         #_rht_toaster { display: none !important; }
-        /* На всякий случай обнуляем верхние отступы в админке */
-        #__admin_root main { padding-top: 0 !important; margin-top: 0 !important; }
-        #__admin_root [class*="pt-"] { padding-top: 0 !important; }
-        /* Снимаем margin-top у первого блока контента на страницах админки */
-        #__admin_root main > *:first-child { margin-top: 0 !important; }
+        /* Жёсткий ресет любых верхних отступов у первого блока */
+        #__admin_root main { padding-top: 0 !important; margin-top: 0 !important; min-height: 0 !important; }
+        #__admin_root main > *:first-child { margin-top: 0 !important; padding-top: 0 !important; }
         #__admin_root main > * { scroll-margin-top: 0 !important; }
+        /* Ресет utility-классов верхнего отступа/паддинга Tailwind (только в админке) */
+        #__admin_root [class^="pt-"],
+        #__admin_root [class*=" pt-"] { padding-top: 0 !important; }
+        #__admin_root [class^="mt-"],
+        #__admin_root [class*=" mt-"] { margin-top: 0 !important; }
         /* На десктопе исключаем липкий хедер для предотвращения скачка */
         @media (min-width: 1024px) {
           #__admin_root header.sticky { position: static !important; }

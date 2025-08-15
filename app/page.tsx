@@ -5,7 +5,6 @@ import ServicesSection from '@/components/sections/ServicesSection';
 import WhyChooseUsSection from '@/components/sections/WhyChooseUsSection';
 import CaseStudiesSection from '@/components/sections/CaseStudiesSection';
 import LoftCentersCaseSection from '@/components/sections/LoftCentersCaseSection';
-import BlogTeaserSection from '@/components/sections/BlogTeaserSection';
 
 // Динамические импорты для ленивой загрузки
 // (убрали ProcessSection с главной)
@@ -162,7 +161,6 @@ export default function HomePage() {
       <WhyChooseUsSection />
       <CaseStudiesSection />
       <LoftCentersCaseSection />
-      <BlogTeaserSection />
       <CleaningCalculator />
       <ContactSection />
       <StickyPromo enabled={true} />

@@ -73,7 +73,7 @@ export default function LoftCentersCaseSection() {
         </div>
 
         <div className="text-center">
-          <a href="/contacts" className="btn-primary px-8 py-4 text-lg">Обсудить подключение лофт‑центра</a>
+          <a href="/contacts" className="btn-primary px-4 sm:px-8 py-3 sm:py-4 text-base sm:text-lg w-full sm:w-auto inline-block">Обсудить подключение лофт‑центра</a>
           <div className="text-sm text-gray-600 mt-3">Подскажем график, расчёт штата и регламенты под ваш объект</div>
         </div>
       </div>
