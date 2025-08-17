@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
+import nextDynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import landings from '@/data/seo-landings.json';
 import FAQSchema from '@/components/ui/FAQSchema';
@@ -82,6 +82,17 @@ const STATIC_LANDINGS: Record<string, LandingConfig> = {
   },
 };
 
+// Пререндерим все маркетинговые лендинги, чтобы исключить случайные 500 на SSR
+export const dynamic = 'force-static';
+export const revalidate = 86400; // 24h ISR
+
+export async function generateStaticParams() {
+  const jsonSlugs = Object.keys(landings as Record<string, unknown>);
+  const staticSlugs = Object.keys(STATIC_LANDINGS);
+  const unique = Array.from(new Set([...jsonSlugs, ...staticSlugs]));
+  return unique.map((slug) => ({ slug }));
+}
+
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const landing = (landings as Record<string, any>)[params.slug];
   const config = landing
@@ -158,7 +169,7 @@ export default function MarketingLandingPage({ params }: { params: { slug: strin
       }
     : null;
 
-  const StickyPromo = dynamic(() => import('@/components/ui/StickyPromo'), { ssr: false });
+  const StickyPromo = nextDynamic(() => import('@/components/ui/StickyPromo'), { ssr: false });
 
   return (
     <section className="section-padding bg-gradient-to-br from-gray-50 to-white">

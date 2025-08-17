@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const landings = require('./data/seo-landings.json');
+const existingSlugs = new Set(Object.keys(landings || {}));
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -130,7 +132,7 @@ const nextConfig = {
     ];
   },
   async redirects() {
-    return [
+    const list = [
       {
         source: '/home',
         destination: '/',
@@ -172,6 +174,11 @@ const nextConfig = {
       // { source: '/himchistka-mebeli-moskva', destination: '/services/furniture-dry-cleaning', permanent: true },
       // { source: '/uborka-ofisa-moskva', destination: '/services/office-cleaning', permanent: true },
     ];
+    // Убираем 308 для слагов, которые реально существуют как посадочные
+    return list.filter((r) => {
+      const slug = r.source.replace(/^\//, '').replace(/\/?$/, '');
+      return !existingSlugs.has(slug);
+    });
   },
 };
 
