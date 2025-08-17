@@ -6,6 +6,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import DynamicSchemas from '@/components/ui/DynamicSchemas';
 import Canonical from '@/components/ui/Canonical';
+import SiteNavigationSchema from '@/components/ui/SiteNavigationSchema';
 
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -25,6 +26,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
   return (
     <div className="min-h-screen flex flex-col">
       <DynamicSchemas />
+      <SiteNavigationSchema />
       <Canonical />
       <Header />
       <main className="flex-grow pt-20 md:pt-24">
