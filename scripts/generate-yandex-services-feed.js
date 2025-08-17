@@ -20,13 +20,16 @@ function esc(str) {
 
 function main() {
   // Базовый набор услуг
+  // Значения синхронизированы с контентом страниц услуг ("от … ₽")
   const services = [
-    { name: 'Уборка квартиры', url: 'https://k-lining.ru/services/apartment-cleaning', priceFrom: 2500 },
-    { name: 'Генеральная уборка', url: 'https://k-lining.ru/services/apartment-cleaning', priceFrom: 6000 },
+    { name: 'Уборка квартиры', url: 'https://k-lining.ru/services/apartment-cleaning', priceFrom: 6000 },
+    { name: 'Генеральная уборка квартиры', url: 'https://k-lining.ru/services/apartment-cleaning', priceFrom: 7000 },
     { name: 'Уборка после ремонта', url: 'https://k-lining.ru/services/post-renovation-cleaning', priceFrom: 8000 },
-    { name: 'Мытьё окон', url: 'https://k-lining.ru/services/window-cleaning', priceFrom: 500 },
+    { name: 'Мытьё окон', url: 'https://k-lining.ru/services/window-cleaning', priceFrom: 600 },
     { name: 'Химчистка мебели', url: 'https://k-lining.ru/services/furniture-dry-cleaning', priceFrom: 1000 },
-    { name: 'Уборка офиса', url: 'https://k-lining.ru/services/office-cleaning', priceFrom: 10000 },
+    { name: 'Уборка офиса', url: 'https://k-lining.ru/services/office-cleaning', priceFrom: 5000 },
+    { name: 'Уборка дома/коттеджа', url: 'https://k-lining.ru/services/house-cleaning', priceFrom: 5000 },
+    { name: 'Дезинфекция помещений', url: 'https://k-lining.ru/services/disinfection', priceFrom: 3500 },
   ];
 
   const xml = [
