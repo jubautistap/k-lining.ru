@@ -144,12 +144,18 @@ export default function HomePage() {
         <div className="container-custom">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-sm">
             {[
-              { href: '/uborka-kvartiry-moskva', text: 'Уборка квартиры' },
-              { href: '/uborka-posle-remonta-moskva', text: 'После ремонта' },
-              { href: '/myte-okon-moskva', text: 'Мытьё окон' },
-              { href: '/himchistka-mebeli-moskva', text: 'Химчистка мебели' },
-              { href: '/uborka-ofisa-moskva', text: 'Уборка офиса' },
-              { href: '/klining-cena-moskva', text: 'Цены на клининг' },
+              // Ключевые внутренние — прямые сервисные URL
+              { href: '/services/post-renovation-cleaning', text: 'Уборка после ремонта' },
+              { href: '/services/window-cleaning', text: 'Мытьё окон' },
+              { href: '/services/house-cleaning', text: 'Уборка домов' },
+              { href: '/services/furniture-dry-cleaning', text: 'Химчистка мебели' },
+              { href: '/services/disinfection', text: 'Дезинфекция' },
+              // и SEO-лендинги
+              { href: '/uborka-kvartiry-moskva', text: 'Уборка квартиры (лендинг)' },
+              { href: '/uborka-posle-remonta-moskva', text: 'После ремонта (лендинг)' },
+              { href: '/myte-okon-moskva', text: 'Мытьё окон (лендинг)' },
+              { href: '/himchistka-mebeli-moskva', text: 'Химчистка (лендинг)' },
+              { href: '/uborka-ofisa-moskva', text: 'Уборка офиса (лендинг)' },
             ].map((l) => (
               <a key={l.href} href={l.href} className="rounded-md border border-gray-200 px-3 py-2 hover:border-primary-300 hover:bg-primary-50 text-gray-700">
                 {l.text}

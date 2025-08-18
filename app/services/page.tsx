@@ -204,6 +204,32 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* Ключевые услуги — прямые ссылки */}
+      <section className="py-12 bg-white">
+        <div className="container-custom">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Ключевые услуги</h2>
+          <p className="text-gray-600 mb-6 max-w-3xl">Быстрый переход к наиболее востребованным услугам:</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {[
+              { href: '/services/post-renovation-cleaning', text: 'Уборка после ремонта' },
+              { href: '/services/window-cleaning', text: 'Мытьё окон' },
+              { href: '/services/house-cleaning', text: 'Уборка домов и коттеджей' },
+              { href: '/services/furniture-dry-cleaning', text: 'Химчистка мебели' },
+              { href: '/services/disinfection', text: 'Дезинфекция помещений' },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="inline-flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 text-gray-800 hover:border-primary-300 hover:bg-primary-50 transition-colors"
+              >
+                <span>{link.text}</span>
+                <span className="text-primary-600">→</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Internal SEO Links to Landing Pages */}
       <section className="py-16 bg-white">
         <div className="container-custom">
