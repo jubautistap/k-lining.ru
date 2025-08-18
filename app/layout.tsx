@@ -273,6 +273,7 @@ export default function RootLayout({
         {/* Noscript fallback */}
         <noscript>
           <div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`https://mc.yandex.ru/watch/${YM_ID}`} style={{position:'absolute', left:'-9999px'}} alt="" />
           </div>
         </noscript>
@@ -288,6 +289,53 @@ export default function RootLayout({
             allow_ad_personalization_signals: false
           });
         `}</Script>
+
+        {/* LocalBusiness / Organization с полным адресом и контактами */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'LocalBusiness',
+              name: 'K-lining',
+              url: 'https://k-lining.ru',
+              logo: 'https://k-lining.ru/logo.png',
+              image: 'https://k-lining.ru/og-image.webp',
+              telephone: '+7-925-555-18-33',
+              priceRange: '₽₽',
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: 'ул. Докукина, 8с2, этаж 6, офис 412',
+                addressLocality: 'Москва',
+                addressRegion: 'Москва',
+                addressCountry: 'RU',
+              },
+              openingHoursSpecification: [{
+                '@type': 'OpeningHoursSpecification',
+                dayOfWeek: [
+                  'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'
+                ],
+                opens: '00:00',
+                closes: '23:59',
+              }],
+              areaServed: [
+                { '@type': 'City', name: 'Москва' },
+                { '@type': 'AdministrativeArea', name: 'Московская область' }
+              ],
+              contactPoint: [{
+                '@type': 'ContactPoint',
+                telephone: '+7-925-555-18-33',
+                contactType: 'customer service',
+                areaServed: 'RU',
+                availableLanguage: ['ru']
+              }],
+              sameAs: [
+                'https://t.me/k_liningru',
+                'https://wa.me/79255551833'
+              ]
+            })
+          }}
+        />
 
         <script
           type="application/ld+json"

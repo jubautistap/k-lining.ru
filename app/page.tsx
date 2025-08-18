@@ -139,6 +139,12 @@ export default function HomePage() {
 
       <HeroSection />
       <PopularServicesSection />
+      {/* Мини-калькулятор сразу под hero для конверсии */}
+      <section className="py-8">
+        <div className="container-custom">
+          <CleaningCalculator />
+        </div>
+      </section>
       {/* Quick internal links to boost crawl/indexation */}
       <section className="py-8">
         <div className="container-custom">
@@ -167,7 +173,7 @@ export default function HomePage() {
       <WhyChooseUsSection />
       <CaseStudiesSection />
       <LoftCentersCaseSection />
-      <CleaningCalculator />
+      {/* Убрали дублирующий калькулятор снизу */}
       <ContactSection />
       <StickyPromo enabled={true} />
       <AmoCRMModal />
