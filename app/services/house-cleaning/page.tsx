@@ -5,6 +5,7 @@ import RelatedServicesSection from '@/components/sections/RelatedServicesSection
 import FAQSchema from '@/components/ui/FAQSchema';
 import Link from 'next/link';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
+import MiniCalculator from '@/components/calculators/MiniCalculator';
 
 export const metadata: Metadata = {
   title: 'Уборка домов и коттеджей в Москве — от 5 000 ₽, гарантия | K-lining',
@@ -150,27 +151,15 @@ export default function HouseCleaningPage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary-600 to-primary-700 text-white py-20">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 items-center gap-8">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               Уборка домов в Москве
             </h1>
             <p className="text-xl md:text-2xl text-primary-100 mb-8">
               Профессиональная уборка частных домов, коттеджей и таунхаусов. Уборка после ремонта, поддерживающая уборка.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
-                href="/calculator" 
-                className="bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-              >
-                Рассчитать стоимость
-              </Link>
-              <Link 
-                href="/contacts" 
-                className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors"
-              >
-                Заказать уборку
-              </Link>
-            </div>
+            <div className="hidden md:block"></div>
+            <MiniCalculator defaultArea={120} propertyType="house" cleaningType="general" className="md:justify-self-end" />
           </div>
         </div>
       </section>

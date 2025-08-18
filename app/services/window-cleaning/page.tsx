@@ -5,6 +5,7 @@ import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 import RelatedServicesSection from '@/components/sections/RelatedServicesSection';
 import FAQSchema from '@/components/ui/FAQSchema';
 import { CheckCircle, Shield, Clock, Users, Star, Zap, Square } from 'lucide-react';
+import MiniCalculator from '@/components/calculators/MiniCalculator';
 
 export const metadata: Metadata = {
   title: 'Мытьё окон в Москве — от 600 ₽ за створку, безопасно и без разводов | K-lining',
@@ -40,21 +41,15 @@ export default function WindowCleaningPage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-cyan-600 to-cyan-800 text-white py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 items-center gap-8">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               Мытье окон в Москве
             </h1>
             <p className="text-xl mb-8">
               Профессиональное мытье окон в квартирах, домах и офисах. Выезд в день заказа
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contacts" className="btn-primary text-lg px-8 py-4">
-                Заказать мытье окон
-              </Link>
-              <Link href="/prices" className="btn-secondary text-lg px-8 py-4">
-                Узнать цены
-              </Link>
-            </div>
+            <div className="hidden md:block"></div>
+            <MiniCalculator defaultArea={50} propertyType="apartment" cleaningType="general" windowsCount={4} className="md:justify-self-end" />
           </div>
         </div>
       </section>
