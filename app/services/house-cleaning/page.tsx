@@ -1,5 +1,8 @@
 import React from 'react';
 import { Metadata } from 'next';
+import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
+import RelatedServicesSection from '@/components/sections/RelatedServicesSection';
+import FAQSchema from '@/components/ui/FAQSchema';
 import Link from 'next/link';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
 
@@ -138,6 +141,12 @@ export default function HouseCleaningPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Хлебные крошки для быстрых ссылок */}
+      <div className="container-custom pt-6">
+        <BreadcrumbSchema 
+          items={[{ name: 'Услуги', url: '/services' }, { name: 'Уборка домов', url: '/services/house-cleaning' }]} 
+        />
+      </div>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary-600 to-primary-700 text-white py-20">
         <div className="container-custom">
@@ -296,6 +305,18 @@ export default function HouseCleaningPage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ JSON-LD */}
+      <FAQSchema
+        items={[
+          { question: 'Сколько стоит уборка дома?', answer: 'Поддерживающая уборка — от 5000₽, генеральная — от 8000₽. Итог зависит от площади и этажности.' },
+          { question: 'Убираете ли коттеджи после ремонта?', answer: 'Да, специализируемся на послеремонтной уборке домов — от 12 000 ₽.' },
+          { question: 'Выезжаете в область?', answer: 'Да, работаем по Москве и МО. Возможна доплата за дальность выезда.' },
+        ]}
+      />
+
+      {/* Перелинковка на смежные услуги */}
+      <RelatedServicesSection currentService="/services/house-cleaning" />
     </div>
   );
 } 

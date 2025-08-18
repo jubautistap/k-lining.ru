@@ -1,6 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
+import RelatedServicesSection from '@/components/sections/RelatedServicesSection';
+import FAQSchema from '@/components/ui/FAQSchema';
 import { CheckCircle, Shield, Clock, Users, Star, Zap, Square } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -25,6 +28,15 @@ export const metadata: Metadata = {
 export default function WindowCleaningPage() {
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Хлебные крошки для быстрых ссылок */}
+      <div className="container mx-auto px-4 pt-6">
+        <BreadcrumbSchema
+          items={[
+            { name: 'Услуги', url: '/services' },
+            { name: 'Мытьё окон', url: '/services/window-cleaning' },
+          ]}
+        />
+      </div>
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-cyan-600 to-cyan-800 text-white py-20">
         <div className="container mx-auto px-4">
@@ -177,6 +189,18 @@ export default function WindowCleaningPage() {
           </Link>
         </div>
       </section>
+
+      {/* FAQ JSON-LD */}
+      <FAQSchema
+        items={[
+          { question: 'Сколько стоит мытьё окон?', answer: 'Базовый тариф — от 600 ₽ за створку. Балконный блок — от 1 000 ₽. Доплаты за высоту с 3-го этажа и сложный доступ.' },
+          { question: 'Когда можете приехать?', answer: 'Работаем 24/7. Выезд возможен в день обращения, при срочном заказе — в течение 2 часов.' },
+          { question: 'Вы работаете на высоте?', answer: 'Да, выполняем высотные работы с соблюдением техники безопасности и страховкой.' },
+        ]}
+      />
+
+      {/* Перелинковка на смежные услуги */}
+      <RelatedServicesSection currentService="/services/window-cleaning" />
     </div>
   );
 } 

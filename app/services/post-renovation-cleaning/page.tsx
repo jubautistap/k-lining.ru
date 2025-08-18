@@ -1,6 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
+import RelatedServicesSection from '@/components/sections/RelatedServicesSection';
+import FAQSchema from '@/components/ui/FAQSchema';
 import { CheckCircle, Shield, Clock, Users, Star, Zap, Hammer } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -25,6 +28,15 @@ export const metadata: Metadata = {
 export default function PostRenovationCleaningPage() {
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Хлебные крошки для быстрых ссылок */}
+      <div className="container mx-auto px-4 pt-6">
+        <BreadcrumbSchema
+          items={[
+            { name: 'Услуги', url: '/services' },
+            { name: 'Уборка после ремонта', url: '/services/post-renovation-cleaning' },
+          ]}
+        />
+      </div>
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-orange-600 to-orange-800 text-white py-20">
         <div className="container mx-auto px-4">
@@ -181,6 +193,18 @@ export default function PostRenovationCleaningPage() {
           </Link>
         </div>
       </section>
+
+      {/* FAQ JSON-LD */}
+      <FAQSchema
+        items={[
+          { question: 'Сколько стоит уборка после ремонта?', answer: 'Студия (до 30 м²) — от 8 000 ₽, 1‑комнатная (до 50 м²) — от 12 000 ₽, 2‑комнатная (до 70 м²) — от 16 000 ₽. Итог зависит от площади и сложности.' },
+          { question: 'Что входит в уборку?', answer: 'Удаление строительной пыли, вынос мусора, очистка стекол и подоконников, мытьё полов и стен, финишная уборка.' },
+          { question: 'Когда можете приехать?', answer: 'Часто — в день обращения. На крупные объекты выезжает усиленная бригада.' },
+        ]}
+      />
+
+      {/* Перелинковка на смежные услуги */}
+      <RelatedServicesSection currentService="/services/post-renovation-cleaning" />
     </div>
   );
 } 
