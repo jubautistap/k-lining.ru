@@ -1,6 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -138,6 +139,12 @@ export default function AdditionalServicesPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Хлебные крошки */}
+      <div className="container-custom pt-6">
+        <BreadcrumbSchema 
+          items={[{ name: 'Услуги', url: '/services' }, { name: 'Дополнительные услуги', url: '/services/additional-services' }]} 
+        />
+      </div>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary-600 to-primary-700 text-white py-20">
         <div className="container-custom">

@@ -2,11 +2,16 @@
 
 import React from 'react';
 import Link from 'next/link';
+import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 import { CheckCircle, Shield, Clock, Users, Star, Zap, Building } from 'lucide-react';
 
 export default function GeneralOfficeCleaningPage() {
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Хлебные крошки */}
+      <div className="container mx-auto px-4 pt-6">
+        <BreadcrumbSchema items={[{ name: 'Услуги', url: '/services' }, { name: 'Уборка офиса', url: '/services/office-cleaning' }, { name: 'Генеральная', url: '/services/office-cleaning/general-cleaning' }]} />
+      </div>
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
         <div className="container mx-auto px-4">
