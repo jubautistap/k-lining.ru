@@ -1,12 +1,33 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
+import FAQSchema from '@/components/ui/FAQSchema';
+import RelatedServicesSection from '@/components/sections/RelatedServicesSection';
 import { CheckCircle, Shield, Clock, Users, Star, Zap } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Дезинфекция помещений в Москве — квартиры, офисы | K-lining',
+  description: 'Профессиональная дезинфекция квартир, офисов, медучреждений. Сертифицированные средства, сертификат обработки. Цены: от 3 500 ₽ (студия).',
+  openGraph: {
+    title: 'Дезинфекция — квартиры, офисы, медучреждения',
+    description: 'Профессиональная санобработка помещений. Генераторы тумана, сертифицированные дезсредства.',
+    url: 'https://k-lining.ru/services/disinfection',
+    images: [{ url: '/og-image.webp', width: 1200, height: 630 }],
+    siteName: 'K-lining',
+    locale: 'ru_RU',
+    type: 'website',
+  },
+  alternates: { canonical: 'https://k-lining.ru/services/disinfection' },
+};
 
 export default function DisinfectionPage() {
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Хлебные крошки */}
+      <div className="container mx-auto px-4 pt-6">
+        <BreadcrumbSchema items={[{ name: 'Услуги', url: '/services' }, { name: 'Дезинфекция', url: '/services/disinfection' }]} />
+      </div>
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-green-600 to-green-800 text-white py-20">
         <div className="container mx-auto px-4">
@@ -167,6 +188,18 @@ export default function DisinfectionPage() {
           </Link>
         </div>
       </section>
+
+      {/* FAQ JSON-LD */}
+      <FAQSchema
+        items={[
+          { question: 'Сколько стоит дезинфекция?', answer: 'Студия — от 3 500 ₽, 1‑комнатная — от 5 000 ₽, 2‑комнатная — от 7 000 ₽, 3‑комнатная — от 9 000 ₽. Офисы — от 80 ₽/м².' },
+          { question: 'Какие средства используете?', answer: 'Сертифицированные дезсредства, одобренные Роспотребнадзором. Безопасность подтверждается документально.' },
+          { question: 'Вы выдаёте сертификат?', answer: 'Да, по итогам обработки выдаём сертификат о проведенной дезинфекции.' },
+        ]}
+      />
+
+      {/* Перелинковка */}
+      <RelatedServicesSection currentService="/services/disinfection" />
     </div>
   );
 } 

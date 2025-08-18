@@ -1,9 +1,25 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 import { CheckCircle, Shield, Clock, Users, Star, Zap, Sofa } from 'lucide-react';
+import type { Metadata } from 'next';
+import FAQSchema from '@/components/ui/FAQSchema';
+import RelatedServicesSection from '@/components/sections/RelatedServicesSection';
+
+export const metadata: Metadata = {
+  title: 'Химчистка мебели в Москве на дому — от 1 000 ₽ | K-lining',
+  description: 'Профессиональная химчистка мебели на дому: диваны, кресла, матрасы, ковры. Безопасные средства, быстрая сушка. Работаем 24/7. Цены от 1 000 ₽.',
+  openGraph: {
+    title: 'Химчистка мебели — диваны, кресла, матрасы, ковры',
+    description: 'Профессиональная химчистка мебели на дому в Москве. Честные цены, выезд в день обращения.',
+    url: 'https://k-lining.ru/services/furniture-dry-cleaning',
+    images: [{ url: '/og-image.webp', width: 1200, height: 630 }],
+    siteName: 'K-lining',
+    locale: 'ru_RU',
+    type: 'website',
+  },
+  alternates: { canonical: 'https://k-lining.ru/services/furniture-dry-cleaning' },
+};
 
 export default function FurnitureDryCleaningPage() {
   return (
@@ -178,6 +194,18 @@ export default function FurnitureDryCleaningPage() {
           </Link>
         </div>
       </section>
+
+      {/* FAQ JSON-LD */}
+      <FAQSchema
+        items={[
+          { question: 'Сколько стоит химчистка мебели?', answer: 'Диван 2‑местный — от 2 500 ₽, 3‑местный — от 3 500 ₽, угловой — от 4 500 ₽, кресло — от 1 500 ₽, матрас — от 2 000 ₽, ковёр — от 300 ₽/м².' },
+          { question: 'Сколько сохнет мебель?', answer: 'Обычно 2–4 часа в зависимости от материала и толщины наполнителя. Используем ускоренную сушку.' },
+          { question: 'Безопасны ли средства?', answer: 'Да, применяем сертифицированные и безопасные для людей и животных составы.' },
+        ]}
+      />
+
+      {/* Перелинковка на смежные услуги */}
+      <RelatedServicesSection currentService="/services/furniture-dry-cleaning" />
     </div>
   );
 } 
