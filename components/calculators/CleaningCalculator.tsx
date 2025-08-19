@@ -43,9 +43,9 @@ export default function CleaningCalculator() {
         <div className="max-w-6xl mx-auto">
           {/* Заголовок */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               Калькулятор уборки
-            </h1>
+            </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Рассчитайте стоимость уборки вашего помещения. Выберите тип недвижимости, 
               площадь и дополнительные услуги для точного расчета.
