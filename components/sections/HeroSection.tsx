@@ -38,6 +38,7 @@ export default function HeroSection() {
               <a
                 href="tel:+79255551833"
                 className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-primary-600 text-primary-600 font-semibold rounded-lg hover:bg-primary-600 hover:text-white transition-colors duration-200 text-base sm:text-lg"
+                aria-label="Позвонить по телефону +7 (925) 555-18-33"
               >
                 <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 +7 (925) 555-18-33
@@ -46,8 +47,9 @@ export default function HeroSection() {
               <a
                 href="https://wa.me/79255551833?text=%D0%A5%D0%BE%D1%87%D1%83%20%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BF%D0%BE%20%D1%83%D1%81%D0%BB%D1%83%D0%B3%D0%B0%D0%BC%20%D1%83%D0%B1%D0%BE%D1%80%D0%BA%D0%B8"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-green-600 text-green-600 font-semibold rounded-lg hover:bg-green-600 hover:text-white transition-colors duration-200 text-base sm:text-lg"
+                aria-label="Написать в WhatsApp"
               >
                 <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 WhatsApp
@@ -57,23 +59,23 @@ export default function HeroSection() {
             {/* Trust Indicators (иконки для лучшей читаемости) */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 text-sm text-gray-700">
               <div className="inline-flex items-center gap-2 bg-white/70 border border-gray-200 rounded-lg px-3 py-2">
-                <Clock className="w-4 h-4 text-green-600" />
+                <Clock className="w-4 h-4 text-green-600" aria-hidden="true" />
                 <span>Работаем 24/7</span>
               </div>
               <div className="inline-flex items-center gap-2 bg-white/70 border border-gray-200 rounded-lg px-3 py-2">
-                <Shield className="w-4 h-4 text-green-600" />
+                <Shield className="w-4 h-4 text-green-600" aria-hidden="true" />
                 <span>Гарантия качества</span>
               </div>
               <div className="inline-flex items-center gap-2 bg-white/70 border border-gray-200 rounded-lg px-3 py-2">
-                <Sparkles className="w-4 h-4 text-green-600" />
+                <Sparkles className="w-4 h-4 text-green-600" aria-hidden="true" />
                 <span>Бесплатная консультация</span>
               </div>
               <div className="inline-flex items-center gap-2 bg-white/70 border border-gray-200 rounded-lg px-3 py-2">
-                <Lock className="w-4 h-4 text-green-600" />
+                <Lock className="w-4 h-4 text-green-600" aria-hidden="true" />
                 <span>Без предоплаты</span>
               </div>
               <div className="inline-flex items-center gap-2 bg-white/70 border border-gray-200 rounded-lg px-3 py-2">
-                <Phone className="w-4 h-4 text-green-600" />
+                <Phone className="w-4 h-4 text-green-600" aria-hidden="true" />
                 <span>Ответ за 5–10 минут</span>
               </div>
             </div>
@@ -98,6 +100,8 @@ export default function HeroSection() {
                   priority
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxAAPwCdABmX/9k="
                 />
               </div>
             </div>
@@ -105,7 +109,7 @@ export default function HeroSection() {
             {/* Floating Elements */}
             <div className="absolute -top-4 -right-4 bg-white rounded-lg shadow-lg p-4">
               <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-green-500 rounded-full" aria-hidden="true"></div>
                 <span className="text-sm font-medium">Онлайн</span>
               </div>
             </div>

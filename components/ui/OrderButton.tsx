@@ -10,6 +10,8 @@ interface OrderButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   href?: string;
+  disabled?: boolean;
+  'aria-label'?: string;
 }
 
 export default function OrderButton({ 
@@ -17,13 +19,17 @@ export default function OrderButton({
   className = "", 
   children, 
   onClick,
-  href
+  href,
+  disabled = false,
+  'aria-label': ariaLabel
 }: OrderButtonProps) {
   const router = useRouter();
   const YM_ID = Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID) || 103567092;
   
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    
+    if (disabled) return;
     
     // Отслеживание событий с обработкой ошибок
     try {
@@ -62,15 +68,31 @@ export default function OrderButton({
     }
   };
 
+  const buttonProps = {
+    className: `btn-primary ${className} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`,
+    onClick: handleClick,
+    'data-order-button': 'true',
+    'data-service': service,
+    type: 'button' as const,
+    disabled,
+    'aria-label': ariaLabel || `Заказать услугу: ${service}`,
+    'aria-disabled': disabled,
+    role: 'button'
+  };
+
+  if (disabled) {
+    return (
+      <button {...buttonProps}>
+        {children}
+      </button>
+    );
+  }
+
   return (
     <motion.button
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      className={`btn-primary ${className}`}
-      onClick={handleClick}
-      data-order-button="true"
-      data-service={service}
-      type="button"
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      {...buttonProps}
     >
       {children}
     </motion.button>

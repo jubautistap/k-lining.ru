@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<yandex-services>
+  <company>
+    <name>K-lining</name>
+    <url>https://k-lining.ru</url>
+    <phone>+7-925-555-18-33</phone>
+    <city>Москва</city>
+  </company>
+  <offers>
+    <offer>
+      <id>1</id>
+      <name>Уборка квартиры</name>
+      <url>https://k-lining.ru/services/apartment-cleaning</url>
+      <price>6000</price>
+      <currency>RUB</currency>
+      <category>Клининговые услуги</category>
+      <availability>in_stock</availability>
+    </offer>
+    <offer>
+      <id>2</id>
+      <name>Генеральная уборка квартиры</name>
+      <url>https://k-lining.ru/services/apartment-cleaning</url>
+      <price>7000</price>
+      <currency>RUB</currency>
+      <category>Клининговые услуги</category>
+      <availability>in_stock</availability>
+    </offer>
+    <offer>
+      <id>3</id>
+      <name>Уборка после ремонта</name>
+      <url>https://k-lining.ru/services/post-renovation-cleaning</url>
+      <price>8000</price>
+      <currency>RUB</currency>
+      <category>Клининговые услуги</category>
+      <availability>in_stock</availability>
+    </offer>
+    <offer>
+      <id>4</id>
+      <name>Мытьё окон</name>
+      <url>https://k-lining.ru/services/window-cleaning</url>
+      <price>600</price>
+      <currency>RUB</currency>
+      <category>Клининговые услуги</category>
+      <availability>in_stock</availability>
+    </offer>
+    <offer>
+      <id>5</id>
+      <name>Химчистка мебели</name>
+      <url>https://k-lining.ru/services/furniture-dry-cleaning</url>
+      <price>1000</price>
+      <currency>RUB</currency>
+      <category>Клининговые услуги</category>
+      <availability>in_stock</availability>
+    </offer>
+    <offer>
+      <id>6</id>
+      <name>Уборка офиса</name>
+      <url>https://k-lining.ru/services/office-cleaning</url>
+      <price>5000</price>
+      <currency>RUB</currency>
+      <category>Клининговые услуги</category>
+      <availability>in_stock</availability>
+    </offer>
+    <offer>
+      <id>7</id>
+      <name>Уборка дома/коттеджа</name>
+      <url>https://k-lining.ru/services/house-cleaning</url>
+      <price>5000</price>
+      <currency>RUB</currency>
+      <category>Клининговые услуги</category>
+      <availability>in_stock</availability>
+    </offer>
+    <offer>
+      <id>8</id>
+      <name>Дезинфекция помещений</name>
+      <url>https://k-lining.ru/services/disinfection</url>
+      <price>3500</price>
+      <currency>RUB</currency>
+      <category>Клининговые услуги</category>
+      <availability>in_stock</availability>
+    </offer>
+  </offers>
+</yandex-services>

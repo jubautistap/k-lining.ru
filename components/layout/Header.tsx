@@ -63,30 +63,30 @@ export default function Header() {
   }, [openModal]);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-200 ${
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
       isMounted && isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white'
-    } pt-safe-top`}>
+    } pt-4 md:pt-6`}>
       <div className="container-custom">
-        <div className="flex items-center justify-between h-20 md:h-24 min-h-[80px] overflow-hidden">
+        <div className="flex items-center justify-between h-16 md:h-20 min-h-[64px] overflow-hidden">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
             <OptimizedLogo 
-              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 object-contain" 
-              width={64}
-              height={64}
+              className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-contain" 
+              width={56}
+              height={56}
             />
-            <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-primary-600">
+            <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-primary-600">
               K-lining
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
+          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200 whitespace-nowrap text-sm"
+                className="text-gray-700 hover:text-primary-600 font-medium transition-colors duration-200 whitespace-nowrap text-sm xl:text-base"
               >
                 {item.name}
               </Link>
@@ -94,13 +94,13 @@ export default function Header() {
           </nav>
 
           {/* Contact Info & CTA */}
-          <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
+          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             <a 
               href="tel:+79255551833" 
-              className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium whitespace-nowrap"
+              className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium whitespace-nowrap text-sm xl:text-base"
             >
               <Phone className="w-4 h-4" />
-              <span className="hidden lg:inline">+7 (925) 555-18-33</span>
+              <span className="hidden xl:inline">+7 (925) 555-18-33</span>
             </a>         
             <button
               onClick={handleModalOpen}
@@ -113,7 +113,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={handleMobileMenuToggle}
-            className="md:hidden p-2 text-gray-700 hover:text-primary-600 transition-colors duration-200"
+            className="lg:hidden p-2 text-gray-700 hover:text-primary-600 transition-colors duration-200"
             aria-label="Открыть меню"
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-menu"
@@ -124,10 +124,10 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div id="mobile-menu" className="md:hidden border-t border-gray-200 bg-white">
+          <div id="mobile-menu" className="lg:hidden border-t border-gray-200 bg-white">
             <div className="px-4 py-6 space-y-4">
               {/* Mobile Navigation */}
-              <nav className="space-y-2">
+              <nav className="space-y-2" role="navigation" aria-label="Мобильная навигация">
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
@@ -175,8 +175,6 @@ export default function Header() {
             </div>
           </div>
         )}
-
-        {/* Фиксированный CTA при скролле убран по просьбе клиента (дублирование) */}
       </div>
     </header>
   );
