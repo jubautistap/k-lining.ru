@@ -165,12 +165,14 @@ export function useCalculator() {
 
   // Автоматический пересчет при изменении параметров
   useEffect(() => {
-    if (didInitRef.current) {
-      debouncedCalculate();
-    } else {
+    if (!didInitRef.current) {
       didInitRef.current = true;
+      // Первичный расчёт сразу при монтировании, чтобы UI был не пустым
+      calculateResult();
+      return;
     }
-  }, [propertyType, cleaningType, area, additionalServices, windowsCount, urgent, night, outside, isNewClient, bundle, debouncedCalculate]);
+    debouncedCalculate();
+  }, [propertyType, cleaningType, area, additionalServices, windowsCount, urgent, night, outside, isNewClient, bundle, debouncedCalculate, calculateResult]);
 
   // Сброс калькулятора
   const resetCalculator = useCallback(() => {
