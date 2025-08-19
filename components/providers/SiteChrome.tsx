@@ -30,6 +30,8 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
       <DynamicSchemas />
       <SiteNavigationSchema />
       <Canonical />
+      {/* hreflang для ru-RU */}
+      <link rel="alternate" hrefLang="ru-RU" href="https://k-lining.ru" />
       {/* Трекинг кликов по data-cta для Метрики/GA */}
       <Script id="cta-tracker" strategy="afterInteractive">{`
         (function(){

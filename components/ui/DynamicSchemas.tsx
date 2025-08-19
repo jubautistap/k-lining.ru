@@ -68,6 +68,16 @@ export default function DynamicSchemas() {
         //   reviewCount: '312'
         // }
       };
+    } else if (pathname.startsWith('/uborka-')) {
+      // Маркетинговые лендинги под услуги: WebPage + Service
+      specificSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: decodeURIComponent(pathname.replace(/\//g, ' ').trim()),
+        url: `${origin}${pathname}`,
+        inLanguage: 'ru-RU',
+        dateModified: new Date().toISOString().split('T')[0],
+      };
     } else if (pathname.startsWith('/blog/')) {
       specificSchema = {
         '@context': 'https://schema.org',
