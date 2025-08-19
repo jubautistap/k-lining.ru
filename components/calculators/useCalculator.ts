@@ -61,11 +61,8 @@ export function useCalculator() {
     }
   }), []);
 
-  const WINDOW_PRICE_PER_SASH = 600; // ₽ за створку
   const MIN_ORDER = 6000;
   const RATE_POINT: 'min' | 'mid' | 'max' = 'mid';
-  const SURCHARGES = { urgent: 1.20, night: 1.15, outside: 1.15 } as const;
-  const DISCOUNTS = { new: 0.90, bundle: 0.85 } as const;
 
   // Дополнительные услуги
   const additionalServicesList = useMemo(() => [
@@ -163,9 +160,6 @@ export function useCalculator() {
 
     requestAnimationFrame(animate);
   }, [
-    propertyType, 
-    cleaningType, 
-    area, 
     additionalServices, 
     calculateBasePrice, 
     calculateWindowsPrice, 

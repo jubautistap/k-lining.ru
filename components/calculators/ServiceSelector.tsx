@@ -5,7 +5,7 @@ import { Home, Shield, Building, Search } from 'lucide-react';
 
 interface ServiceSelectorProps {
   additionalServices: string[];
-  setAdditionalServices: (services: string[]) => void;
+  setAdditionalServices: (services: string[] | ((prev: string[]) => string[])) => void;
   servicesSearch: string;
   setServicesSearch: (search: string) => void;
 }
@@ -30,7 +30,7 @@ export default function ServiceSelector({
   setServicesSearch
 }: ServiceSelectorProps) {
   const handleServiceToggle = (serviceId: string) => {
-    setAdditionalServices(prev => 
+    setAdditionalServices((prev: string[]) => 
       prev.includes(serviceId)
         ? prev.filter(id => id !== serviceId)
         : [...prev, serviceId]

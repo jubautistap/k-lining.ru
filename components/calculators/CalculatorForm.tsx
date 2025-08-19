@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Home, Building, Store, Calculator } from 'lucide-react';
+import { Home, Building, Store } from 'lucide-react';
 
 interface CalculatorFormProps {
   propertyType: 'apartment' | 'house' | 'office' | 'commercial';

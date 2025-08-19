@@ -23,12 +23,13 @@ export default function Footer() {
     { name: 'Блог', href: '/blog' },
   ];
 
-  const supportLinks = [
-    { name: 'Контакты', href: '/contacts' },
-    { name: 'Часто задаваемые вопросы', href: '/faq' },
-    { name: 'Политика конфиденциальности', href: '/privacy' },
-    { name: 'Условия использования', href: '/terms' },
-  ];
+  // Скрываем пока страницы не готовы
+  // const supportLinks = [
+  //   { name: 'Контакты', href: '/contacts' },
+  //   { name: 'Часто задаваемые вопросы', href: '/faq' },
+  //   { name: 'Политика конфиденциальности', href: '/privacy' },
+  //   { name: 'Условия использования', href: '/terms' },
+  // ];
 
   return (
     <footer className="bg-gray-900 text-white">
