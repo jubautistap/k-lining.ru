@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Home, Building, Store, Calculator, Zap, Moon, Move } from 'lucide-react';
+import { Home, Building, Store, Calculator, AlarmClock, MoonStar, Mountain } from 'lucide-react';
 
 interface CalculatorFormProps {
   propertyType: 'apartment' | 'house' | 'office' | 'commercial';
@@ -212,34 +212,54 @@ export default function CalculatorForm({
       <div>
         <h3 className="text-lg font-semibold text-gray-900 mb-3">Надбавки</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <label className="flex items-center space-x-3 p-3 rounded-xl border-2 border-gray-200 hover:border-primary-300 cursor-pointer transition-colors">
-            <input type="checkbox" checked={urgent} onChange={(e) => setUrgent && setUrgent(e.target.checked)} className="text-primary-600 rounded" />
-            <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center">
-              <Zap className="w-4 h-4 text-orange-600" />
-            </div>
-            <div>
-              <div className="font-medium">Срочно</div>
-              <div className="text-xs text-gray-500">+20%</div>
-            </div>
-          </label>
-          <label className="flex items-center space-x-3 p-3 rounded-xl border-2 border-gray-200 hover:border-primary-300 cursor-pointer transition-colors">
-            <input type="checkbox" checked={night} onChange={(e) => setNight && setNight(e.target.checked)} className="text-primary-600 rounded" />
-            <div className="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center">
-              <Moon className="w-4 h-4 text-indigo-600" />
-            </div>
-            <div>
-              <div className="font-medium">Ночь</div>
-              <div className="text-xs text-gray-500">+15%</div>
+          {/* Срочно */}
+          <label className="cursor-pointer">
+            <input type="checkbox" checked={urgent} onChange={(e) => setUrgent && setUrgent(e.target.checked)} className="peer sr-only" />
+            <div className="flex items-center gap-3 p-4 rounded-2xl border-2 border-gray-200 hover:border-amber-300 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-100 to-rose-100 text-amber-700 ring-1 ring-amber-200 flex items-center justify-center peer-checked:from-amber-200 peer-checked:to-rose-200 peer-checked:text-amber-800 peer-checked:ring-amber-300">
+                <AlarmClock className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-medium">Срочно</div>
+                <div className="text-xs text-gray-500">+20%</div>
+              </div>
+              <div className="ml-auto inline-flex h-6 w-10 items-center rounded-full bg-gray-200 transition-colors peer-checked:bg-amber-400">
+                <span className="inline-block h-5 w-5 translate-x-1 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-4" />
+              </div>
             </div>
           </label>
-          <label className="flex items-center space-x-3 p-3 rounded-xl border-2 border-gray-200 hover:border-primary-300 cursor-pointer transition-colors">
-            <input type="checkbox" checked={outside} onChange={(e) => setOutside && setOutside(e.target.checked)} className="text-primary-600 rounded" />
-            <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
-              <Move className="w-4 h-4 text-emerald-600" />
+
+          {/* Ночь */}
+          <label className="cursor-pointer">
+            <input type="checkbox" checked={night} onChange={(e) => setNight && setNight(e.target.checked)} className="peer sr-only" />
+            <div className="flex items-center gap-3 p-4 rounded-2xl border-2 border-gray-200 hover:border-indigo-300 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-100 to-blue-100 text-indigo-700 ring-1 ring-indigo-200 flex items-center justify-center peer-checked:from-indigo-200 peer-checked:to-blue-200 peer-checked:text-indigo-800 peer-checked:ring-indigo-300">
+                <MoonStar className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-medium">Ночная работа</div>
+                <div className="text-xs text-gray-500">+15%</div>
+              </div>
+              <div className="ml-auto inline-flex h-6 w-10 items-center rounded-full bg-gray-200 transition-colors peer-checked:bg-indigo-400">
+                <span className="inline-block h-5 w-5 translate-x-1 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-4" />
+              </div>
             </div>
-            <div>
-              <div className="font-medium">Сложный доступ</div>
-              <div className="text-xs text-gray-500">+15%</div>
+          </label>
+
+          {/* Сложный доступ */}
+          <label className="cursor-pointer">
+            <input type="checkbox" checked={outside} onChange={(e) => setOutside && setOutside(e.target.checked)} className="peer sr-only" />
+            <div className="flex items-center gap-3 p-4 rounded-2xl border-2 border-gray-200 hover:border-emerald-300 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-100 to-teal-100 text-emerald-700 ring-1 ring-emerald-200 flex items-center justify-center peer-checked:from-emerald-200 peer-checked:to-teal-200 peer-checked:text-emerald-800 peer-checked:ring-emerald-300">
+                <Mountain className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-medium">Сложный доступ</div>
+                <div className="text-xs text-gray-500">+15%</div>
+              </div>
+              <div className="ml-auto inline-flex h-6 w-10 items-center rounded-full bg-gray-200 transition-colors peer-checked:bg-emerald-400">
+                <span className="inline-block h-5 w-5 translate-x-1 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-4" />
+              </div>
             </div>
           </label>
         </div>
