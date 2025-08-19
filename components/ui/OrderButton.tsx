@@ -12,6 +12,7 @@ interface OrderButtonProps {
   href?: string;
   disabled?: boolean;
   'aria-label'?: string;
+  dataCta?: string;
 }
 
 export default function OrderButton({ 
@@ -21,7 +22,8 @@ export default function OrderButton({
   onClick,
   href,
   disabled = false,
-  'aria-label': ariaLabel
+  'aria-label': ariaLabel,
+  dataCta
 }: OrderButtonProps) {
   const router = useRouter();
   const YM_ID = Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID) || 103567092;
@@ -73,6 +75,7 @@ export default function OrderButton({
     onClick: handleClick,
     'data-order-button': 'true',
     'data-service': service,
+    'data-cta': dataCta,
     type: 'button' as const,
     disabled,
     'aria-label': ariaLabel || `Заказать услугу: ${service}`,

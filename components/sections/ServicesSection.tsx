@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Home, Building, Sparkles, Sun, Shield, Check } from 'lucide-react';
 import Link from 'next/link';
+import OpenWizardButton from '@/components/ui/OpenWizardButton';
 
 export default function ServicesSection() {
   const services = [
@@ -153,9 +154,9 @@ export default function ServicesSection() {
               Работаем с любыми объектами и объемами.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contacts" className="btn-primary">
+              <OpenWizardButton className="btn-primary" ctaId="services_section_contact">
                 Связаться с нами
-              </Link>
+              </OpenWizardButton>
               <Link href="/prices" className="btn-secondary">
                 Посмотреть все цены
               </Link>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import OpenWizardButton from '@/components/ui/OpenWizardButton';
 import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 import RelatedServicesSection from '@/components/sections/RelatedServicesSection';
@@ -179,9 +180,9 @@ export default function WindowCleaningPage() {
           <p className="text-xl mb-8">
             Оставьте заявку и получите бесплатную консультацию
           </p>
-          <Link href="/contacts" className="btn-primary text-lg px-8 py-4">
+          <OpenWizardButton className="btn-primary text-lg px-8 py-4" ctaId="windows_cta">
             Заказать мытье окон
-          </Link>
+          </OpenWizardButton>
         </div>
       </section>
 

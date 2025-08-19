@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import OpenWizardButton from '@/components/ui/OpenWizardButton';
 import { CheckCircle, Shield, Clock, Users, Star, Zap } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
@@ -147,12 +148,13 @@ export default function ServicesPage() {
               >
                 Рассчитать стоимость
               </Link>
-              <Link 
-                href="/contacts" 
+              <OpenWizardButton 
                 className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors"
+                ctaId="services_hero_order"
+                ariaLabel="Открыть мастер заказа"
               >
                 Заказать уборку
-              </Link>
+              </OpenWizardButton>
             </div>
           </div>
         </div>
@@ -192,12 +194,12 @@ export default function ServicesPage() {
                 >
                   Подробнее
                 </Link>
-                <Link 
-                  href="/contacts"
+                <OpenWizardButton 
                   className="inline-block bg-white text-primary-600 border-2 border-primary-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors mt-3"
+                  ctaId={`services_card_${index}`}
                 >
                   Заказать
-                </Link>
+                </OpenWizardButton>
               </div>
             ))}
           </div>
@@ -309,12 +311,12 @@ export default function ServicesPage() {
               Наши мастера готовы приехать в любое удобное время и привести ваш дом в идеальное состояние
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
-                href="/contacts" 
+              <OpenWizardButton 
                 className="bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                ctaId="services_bottom_order"
               >
                 Заказать уборку
-              </Link>
+              </OpenWizardButton>
               <Link 
                 href="/calculator" 
                 className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors"

@@ -51,14 +51,22 @@ export default function DynamicSchemas() {
           logo: `${origin}/logo.png`,
         },
         areaServed: { '@type': 'City', name: 'Москва' },
+        brand: { '@type': 'Brand', name: 'K-lining' },
         offers: {
           '@type': 'AggregateOffer',
           priceCurrency: 'RUB',
           lowPrice: '2500',
           highPrice: '15000',
+          offerCount: '12',
           url: `${origin}${pathname}`,
           availability: 'https://schema.org/InStock',
         },
+        // Если появятся реальные данные отзывов, можно заполнять
+        // aggregateRating: {
+        //   '@type': 'AggregateRating',
+        //   ratingValue: '4.9',
+        //   reviewCount: '312'
+        // }
       };
     } else if (pathname.startsWith('/blog/')) {
       specificSchema = {

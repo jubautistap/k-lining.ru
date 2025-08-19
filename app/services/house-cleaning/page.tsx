@@ -4,6 +4,7 @@ import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 import RelatedServicesSection from '@/components/sections/RelatedServicesSection';
 import FAQSchema from '@/components/ui/FAQSchema';
 import Link from 'next/link';
+import OpenWizardButton from '@/components/ui/OpenWizardButton';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
 import MiniCalculator from '@/components/calculators/MiniCalculator';
 
@@ -194,12 +195,12 @@ export default function HouseCleaningPage() {
                   ))}
                 </ul>
 
-                <Link 
-                  href="/contacts"
+                <OpenWizardButton 
                   className="inline-block bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors w-full text-center"
+                  ctaId={`house_card_${index}`}
                 >
                   Заказать
-                </Link>
+                </OpenWizardButton>
               </div>
             ))}
           </div>
@@ -278,12 +279,12 @@ export default function HouseCleaningPage() {
               Наши мастера готовы приехать в любое удобное время и привести ваш дом в идеальное состояние
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
-                href="/contacts" 
+              <OpenWizardButton 
                 className="bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                ctaId="house_bottom_order"
               >
                 Заказать уборку
-              </Link>
+              </OpenWizardButton>
               <Link 
                 href="/calculator" 
                 className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors"

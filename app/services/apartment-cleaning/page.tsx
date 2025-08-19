@@ -396,6 +396,8 @@ function ApartmentCleaningContent() {
           </div>
         </div>
       </section>
+
+      {/* Автоперелинковка будет добавлена глобально через SiteChrome */}
     </div>
   );
 } 
