@@ -204,8 +204,8 @@ export async function POST(request: NextRequest) {
       console.error('DB error creating lead, fallback to memory:', dbError);
       newLead = {
         id: Date.now().toString(),
-        name,
-        phone,
+        name: safeName,
+        phone: safePhone,
         email: email || '',
         service: service || '',
         message: message || '',
