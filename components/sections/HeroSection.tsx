@@ -37,16 +37,7 @@ export default function HeroSection() {
                 cleaningType="general"
                 className="max-w-xl"
               />
-              <div className="flex flex-col sm:flex-row gap-3">
-                <OrderButton 
-                  service="general"
-                  className="text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4"
-                  dataCta="hero_order"
-                  onClick={openModal}
-                >
-                  Заказать уборку
-                </OrderButton>
-              </div>
+              {/* Убрали дополнительный CTA, оставили только кнопку внутри мини-калькулятора */}
             </div>
 
             {/* Trust Indicators (иконки для лучшей читаемости) */}
