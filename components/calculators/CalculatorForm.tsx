@@ -85,13 +85,13 @@ export default function CalculatorForm({
                     : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50'
                 }`}
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center flex-shrink-0">
                     <Icon className="w-5 h-5 text-primary-600" />
                   </div>
-                  <div className="min-w-0">
-                    <div className="font-medium text-sm leading-snug truncate">{type.name}</div>
-                    <div className="text-xs text-gray-500 leading-snug truncate">{type.description}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-semibold text-base text-gray-900 leading-tight break-words">{type.name}</div>
+                    <div className="text-xs text-gray-500 leading-snug break-words mt-0.5">{type.description}</div>
                   </div>
                 </div>
               </button>
@@ -185,8 +185,8 @@ export default function CalculatorForm({
                   : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50'
               }`}
             >
-              <div className="font-medium">{type.name}</div>
-              <div className="text-sm text-gray-500">{type.description}</div>
+              <div className="font-medium leading-snug break-words">{type.name}</div>
+              <div className="text-sm text-gray-500 leading-snug break-words">{type.description}</div>
             </button>
           ))}
         </div>
