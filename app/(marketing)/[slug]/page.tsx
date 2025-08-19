@@ -5,6 +5,7 @@ import nextDynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import landings from '@/data/seo-landings.json';
 import FAQSchema from '@/components/ui/FAQSchema';
+import OpenWizardButton from '@/components/ui/OpenWizardButton';
 
 interface LandingConfig {
   title: string;
@@ -151,23 +152,183 @@ export default function MarketingLandingPage({ params }: { params: { slug: strin
     : STATIC_LANDINGS[params.slug];
   if (!config) return notFound();
 
+  // Деривация уникального контента исходя из slug/кластера
+  function deriveProfile(slug: string, cluster?: string) {
+    const s = slug.toLowerCase();
+    const price: Array<{ label: string; price: string }> = [];
+    const features: string[] = [];
+    let serviceType = 'Клининговые услуги';
+    const faq: Array<{ question: string; answer: string }> = [];
+
+    if (/trehkomnatn|трехкомнат/i.test(s)) {
+      serviceType = 'Уборка 3‑комнатной квартиры';
+      price.push(
+        { label: 'Базовая (до 80 м²)', price: 'от 7 000 ₽' },
+        { label: 'Генеральная', price: 'от 12 000 ₽' },
+        { label: 'После ремонта', price: 'от 16 000 ₽' },
+      );
+      features.push('Кухня, 2 санузла, стекла и зеркала', 'Пыль/полы/плинтусы', 'Внутренние фасады мебели');
+      faq.push(
+        { question: 'Сколько клинеров приедет?', answer: 'Обычно 2–3 клинера, в зависимости от площади и состояния.' },
+        { question: 'Сколько времени займёт?', answer: 'Поддерживающая — 3–5 часов, генеральная — 5–8 часов.' }
+      );
+    } else if (/dvushk/i.test(s)) {
+      serviceType = 'Уборка 2‑комнатной квартиры';
+      price.push(
+        { label: 'Поддерживающая (до 60 м²)', price: 'от 6 000 ₽' },
+        { label: 'Генеральная', price: 'от 10 000 ₽' }
+      );
+      features.push('Кухня, санузел, стекла', 'Удаление пыли и жира', 'Мытьё полов');
+    } else if (/odnushk/i.test(s)) {
+      serviceType = 'Уборка 1‑комнатной квартиры';
+      price.push(
+        { label: 'Поддерживающая (до 40 м²)', price: 'от 6 000 ₽' },
+        { label: 'Генеральная', price: 'от 9 000 ₽' }
+      );
+      features.push('Комната, кухня, санузел', 'Пыль/полы', 'Зеркала и стекла');
+    } else if (/pered-sdach|перед-сдач/i.test(s)) {
+      serviceType = 'Предзаездная/перед сдачей уборка';
+      price.push(
+        { label: 'Студия/1к', price: 'от 7 000 ₽' },
+        { label: '2к', price: 'от 10 000 ₽' },
+        { label: '3к+', price: 'от 12 000 ₽' }
+      );
+      features.push('Детейлинг кухни/санузлов', 'Удаление запахов', 'Проверка труднодоступных мест');
+    } else if (/posle-remonta|после-ремон/i.test(s)) {
+      serviceType = 'Уборка после ремонта';
+      price.push(
+        { label: 'Студия (до 30 м²)', price: 'от 8 000 ₽' },
+        { label: '1к (до 50 м²)', price: 'от 12 000 ₽' },
+        { label: '2к (до 70 м²)', price: 'от 16 000 ₽' }
+      );
+      features.push('Удаление строительной пыли', 'Очистка следов краски/клея', 'Финишная протирка');
+      faq.push(
+        { question: 'Что с мусором?', answer: 'Выносим мелкий мусор. Крупный и вывоз — по договорённости.' },
+        { question: 'Окна включены?', answer: 'Да, можем помыть окна/створки, доплата зависит от количества.' }
+      );
+    } else if (/ofis|офис/i.test(s)) {
+      serviceType = 'Уборка офиса';
+      price.push(
+        { label: 'Поддерживающая (за м²)', price: '80–110 ₽/м²' },
+        { label: 'Генеральная', price: '120–180 ₽/м²' }
+      );
+      features.push('Зоны open‑space/переговорные', 'Кухни/санузлы', 'Стеклянные перегородки');
+    } else if (/bez-himii|без-хими/i.test(s)) {
+      serviceType = 'Эко‑уборка';
+      price.push(
+        { label: 'Квартира', price: 'от 6 000 ₽' },
+        { label: 'Дом', price: 'от 8 000 ₽' }
+      );
+      features.push('Гипоаллергенные составы', 'Безопасно для детей/питомцев', 'Парогенератор по запросу');
+    } else if (/s-parogenerator|парогенератор/i.test(s)) {
+      serviceType = 'Уборка с парогенератором';
+      price.push(
+        { label: 'Квартира', price: 'от 7 000 ₽' },
+        { label: 'Дом', price: 'от 9 000 ₽' }
+      );
+      features.push('Глубокая дезинфекция паром', 'Сложные загрязнения/швы', 'Меньше химии');
+    } else if (/kottedzh|коттедж|doma|дом/i.test(s)) {
+      serviceType = 'Уборка дома/коттеджа';
+      price.push(
+        { label: 'До 120 м²', price: 'от 8 000 ₽' },
+        { label: '120–200 м²', price: 'от 12 000 ₽' }
+      );
+      features.push('Многоуровневые пространства', 'Лестницы/второй свет', 'Мытьё окон/высота');
+    } else if (/kvartir|квартир/i.test(s)) {
+      serviceType = 'Уборка квартиры';
+      price.push(
+        { label: 'Поддерживающая', price: '60–110 ₽/м²' },
+        { label: 'Генеральная', price: '160–220 ₽/м²' }
+      );
+      features.push('Кухня/санузлы', 'Пыль/полы', 'Зеркала/стекла');
+    }
+
+    if (cluster === 'улицы') {
+      // усиливаем локальность
+      faq.push(
+        { question: 'Сколько ждать выезда?', answer: 'Обычно 60–120 минут в пределах МКАД, без предоплаты.' }
+      );
+    }
+
+    // дефолтный FAQ
+    if (faq.length === 0) {
+      faq.push(
+        { question: 'Как рассчитывается стоимость?', answer: 'Смотрим на метраж, состояние и тип уборки. Точный расчёт выдаём за 10–15 минут.' },
+        { question: 'Чем убираете?', answer: 'Профессиональная химия, по запросу — гипоаллергенные составы и парогенератор.' },
+        { question: 'Оплата и гарантия?', answer: 'Оплата после выполнения работ, даём гарантию качества.' }
+      );
+    }
+
+    return { serviceType, price, features, faq };
+  }
+
+  const profile = deriveProfile(params.slug, config?.cluster);
+
   // Похожие улицы (тот же кластер/округ)
   const similar: Array<{ slug: string; h1: string }> = Object.entries(landings as Record<string, any>)
-    .filter(([slug, v]) => slug !== params.slug && v?.cluster === 'улицы' && (!config.okrug || v?.okrug === config.okrug))
+    .filter(([slug, v]) => slug !== params.slug && v?.cluster === 'улицы' && (!config?.okrug || v?.okrug === config?.okrug))
     .slice(0, 6)
     .map(([slug, v]) => ({ slug, h1: v.h1 || v.title || 'Страница' }));
 
-  const serviceJsonLd = config.cluster === 'улицы'
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'Service',
-        name: config.h1,
-        serviceType: 'Клининговые услуги',
-        areaServed: { '@type': 'City', name: 'Москва' },
-        provider: { '@type': 'Organization', name: 'K-lining', url: 'https://k-lining.ru' },
-        offers: { '@type': 'AggregateOffer', priceCurrency: 'RUB', lowPrice: '2500', highPrice: '15000', url: `https://k-lining.ru/${params.slug}` },
-      }
-    : null;
+  // Универсальные внутренние ссылки для всех кластеров (6–12 шт.)
+  function buildRelatedLinks(): Array<{ href: string; label: string }> {
+    const result: Array<{ href: string; label: string }> = [];
+    const entries = Object.entries(landings as Record<string, any>);
+
+    // 1) Сначала — из того же кластера
+    if (config?.cluster) {
+      const sameCluster = entries
+        .filter(([slug, v]) => slug !== params.slug && v?.cluster === config?.cluster)
+        .slice(0, 8)
+        .map(([slug, v]) => ({ href: `/${slug}`, label: v.h1 || v.title || slug }));
+      result.push(...sameCluster);
+    }
+
+    // 2) Дополняем ценовыми/калькуляторными лендингами
+    const priceClusters = ['Цены и калькулятор'];
+    const priceLinks = entries
+      .filter(([slug, v]) => slug !== params.slug && priceClusters.includes(v?.cluster))
+      .slice(0, 4)
+      .map(([slug, v]) => ({ href: `/${slug}`, label: v.h1 || v.title || slug }));
+    result.push(...priceLinks);
+
+    // 3) Добавляем основные сервисные страницы
+    const serviceLinks = [
+      { href: '/services/apartment-cleaning', label: 'Уборка квартир' },
+      { href: '/services/post-renovation-cleaning', label: 'Уборка после ремонта' },
+      { href: '/services/window-cleaning', label: 'Мытьё окон' },
+      { href: '/services/house-cleaning', label: 'Уборка домов' },
+      { href: '/prices', label: 'Цены на клининг' },
+      { href: '/calculator', label: 'Калькулятор уборки' },
+    ];
+    result.push(...serviceLinks);
+
+    // Уникализируем и ограничиваем
+    const seen = new Set<string>();
+    const unique = result.filter((r) => {
+      if (seen.has(r.href) || r.href === `/${params.slug}`) return false;
+      seen.add(r.href);
+      return true;
+    });
+    return unique.slice(0, 12);
+  }
+  const relatedLinks = buildRelatedLinks();
+
+  const serviceJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: config.h1,
+    serviceType: profile.serviceType || 'Клининговые услуги',
+    areaServed: { '@type': 'City', name: 'Москва' },
+    provider: { '@type': 'Organization', name: 'K-lining', url: 'https://k-lining.ru' },
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'RUB',
+      lowPrice: '2500',
+      highPrice: '30000',
+      url: `https://k-lining.ru/${params.slug}`
+    }
+  };
 
   const StickyPromo = nextDynamic(() => import('@/components/ui/StickyPromo'), { ssr: false });
 
@@ -188,7 +349,7 @@ export default function MarketingLandingPage({ params }: { params: { slug: strin
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900">{config.h1}</h1>
           <p className="text-xl text-gray-600">{config.description}</p>
           <div className="flex flex-col sm:flex-row gap-3">
-            <Link href={config.primaryHref} className="btn-primary px-8 py-4 text-lg">{config.primaryText}</Link>
+            <OpenWizardButton className="btn-primary px-8 py-4 text-lg" ctaId={`landing_primary_${params.slug}`}>{config.primaryText}</OpenWizardButton>
             {config.secondaryHref && config.secondaryText && (
               <Link href={config.secondaryHref} className="btn-secondary px-8 py-4 text-lg">{config.secondaryText}</Link>
             )}
@@ -227,6 +388,33 @@ export default function MarketingLandingPage({ params }: { params: { slug: strin
           </div>
         )}
 
+        {/* Уникальные блоки под запрос */}
+        {profile.features.length > 0 && (
+          <div className="bg-white rounded-xl shadow p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">Что входит</h3>
+            <ul className="list-disc pl-5 text-gray-700 space-y-1">
+              {profile.features.map((f) => (
+                <li key={f}>{f}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {profile.price.length > 0 && (
+          <div className="bg-white rounded-xl shadow p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">Ориентиры по цене</h3>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {profile.price.map((p) => (
+                <div key={p.label} className="flex items-center justify-between rounded-lg border border-gray-200 px-3 py-2">
+                  <span className="text-gray-700">{p.label}</span>
+                  <span className="font-semibold text-gray-900">{p.price}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-gray-500 mt-2">Итог зависит от площади, состояния и сложности. Точный расчёт — за 10–15 минут.</p>
+          </div>
+        )}
+
         {/* Похожие улицы */}
         {config.cluster === 'улицы' && similar.length > 0 && (
           <div className="bg-white rounded-xl shadow p-6">
@@ -244,22 +432,30 @@ export default function MarketingLandingPage({ params }: { params: { slug: strin
             </div>
           </div>
         )}
+
+        {/* Похожие услуги и страницы — для всех кластеров */}
+        {relatedLinks.length > 0 && (
+          <div className="bg-white rounded-xl shadow p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">Смотрите также</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {relatedLinks.map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className="block rounded-lg border border-gray-200 p-3 text-sm text-gray-700 hover:border-primary-300 hover:text-primary-700"
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
-      {serviceJsonLd && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
-      )}
-      {/* FAQ JSON-LD для уличных страниц */}
-      {config.cluster === 'улицы' && (
-        <FAQSchema
-          items={[
-            { question: 'Можно вызвать на сегодня?', answer: 'Да, работаем 24/7. Выезд за 60–120 минут.' },
-            { question: 'Как считается цена?', answer: 'Зависит от метража и состояния. Смета за 10–15 минут.' },
-            { question: 'Оплата и гарантия?', answer: 'Оплата после выполнения. Даем гарантию качества.' },
-          ]}
-        />
-      )}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
+      {/* FAQ JSON-LD — для всех лендингов */}
+      <FAQSchema items={profile.faq} />
       {/* Sticky CTA для конверсии */}
-      <StickyPromo enabled={config.cluster === 'улицы'} />
+      <StickyPromo enabled={true} />
     </section>
   );
 }

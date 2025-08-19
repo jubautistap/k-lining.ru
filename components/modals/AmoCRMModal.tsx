@@ -144,12 +144,13 @@ export default function AmoCRMModal() {
         aria-labelledby="amocrm-modal-title"
         tabIndex={-1}
         ref={dialogRef}
-        className="bg-white rounded-2xl shadow-xl w-full max-w-xl"
+        className="bg-white rounded-2xl shadow-2xl ring-1 ring-gray-200 w-full max-w-xl"
         onClick={(e) => e.stopPropagation()}
         style={{ paddingTop: 'max(env(safe-area-inset-top), 0px)' }}
       >
         {/* Header */}
         <div className="relative p-6 pb-3">
+          <div className="absolute inset-x-0 top-0 h-1 rounded-t-2xl bg-gradient-to-r from-primary-500 to-blue-700" />
           <button
             onClick={closeModal}
             aria-label="Закрыть"
@@ -161,12 +162,12 @@ export default function AmoCRMModal() {
           <div className="text-center">
             <div className="relative mx-auto mb-4">
               {step === 3 ? (
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto z-10 relative">
-                  <Phone className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto z-10 relative">
+                  <Phone className="w-6 h-6 text-primary-600" />
                 </div>
               ) : (
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto z-10 relative">
-                  <Sparkles className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto z-10 relative">
+                  <Sparkles className="w-6 h-6 text-primary-600" />
                 </div>
               )}
               <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center pointer-events-none z-0">
@@ -195,7 +196,7 @@ export default function AmoCRMModal() {
           {/* Steps indicator */}
           <div className="mb-4 flex items-center justify-center gap-2 text-xs">
             {[1,2,3].map((s) => (
-              <div key={s} className={`h-1.5 w-16 rounded-full ${s <= step ? 'bg-blue-600' : 'bg-gray-200'}`} />
+              <div key={s} className={`h-1.5 w-16 rounded-full ${s <= step ? 'bg-primary-600' : 'bg-gray-200'}`} />
             ))}
           </div>
 
@@ -214,11 +215,11 @@ export default function AmoCRMModal() {
                       key={id}
                       type="button"
                       onClick={() => setPropertyType(id)}
-                      className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${propertyType===id?'border-blue-600 bg-blue-50':'border-gray-300 hover:border-gray-400'}`}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${propertyType===id?'border-primary-600 bg-primary-50':'border-gray-300 hover:border-gray-400'}`}
                     >
-                      <Icon className="w-4 h-4" />
+                      <Icon className="w-4 h-4 text-primary-600" />
                       <span className="text-sm">{name}</span>
-                      {propertyType === id && <Check className="w-4 h-4 text-blue-600 ml-auto" />}
+                      {propertyType === id && <Check className="w-4 h-4 text-primary-600 ml-auto" />}
                     </button>
                   ))}
                 </div>
@@ -238,9 +239,9 @@ export default function AmoCRMModal() {
                       key={id}
                       type="button"
                       onClick={() => setCleaningType(id)}
-                      className={`px-3 py-2 rounded-lg border text-sm ${cleaningType===id?'border-blue-600 bg-blue-50':'border-gray-300 hover:border-gray-400'}`}
+                      className={`px-3 py-2 rounded-lg border text-sm ${cleaningType===id?'border-primary-600 bg-primary-50':'border-gray-300 hover:border-gray-400'}`}
                     >
-                      {label} {cleaningType===id && <Check className="inline w-4 h-4 text-blue-600 ml-1" />}
+                      {label} {cleaningType===id && <Check className="inline w-4 h-4 text-primary-600 ml-1" />}
                     </button>
                   ))}
                 </div>
@@ -252,7 +253,7 @@ export default function AmoCRMModal() {
                 </button>
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                  className="inline-flex items-center gap-2 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700"
                   onClick={() => { setStep(2); track('wizard_next', { step: 1, propertyType, cleaningType }); }}
                   data-cta="wizard_next_1"
                 >
@@ -273,7 +274,7 @@ export default function AmoCRMModal() {
                     max={1000}
                     value={area}
                     onChange={(e) => setArea(Math.max(15, Math.min(1000, parseInt(e.target.value) || 15)))}
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500"
                   />
                 </div>
                 {(cleaningType === 'general' || cleaningType === 'postRenovation') && (
@@ -285,7 +286,7 @@ export default function AmoCRMModal() {
                       max={200}
                       value={windowsCount}
                       onChange={(e) => setWindowsCount(Math.max(0, Math.min(200, parseInt(e.target.value) || 0)))}
-                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500"
                     />
                   </div>
                 )}
@@ -302,7 +303,7 @@ export default function AmoCRMModal() {
                 </button>
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                  className="inline-flex items-center gap-2 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700"
                   onClick={() => { setStep(3); track('wizard_next', { step: 2, area, windowsCount, total: quote.totalPrice }); }}
                   data-cta="wizard_next_2"
                 >
@@ -335,7 +336,7 @@ export default function AmoCRMModal() {
                     <input
                       {...register('phone')}
                       type="tel"
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
                         errors.phone ? 'border-red-500' : 'border-gray-300'
                       }`}
                       placeholder="+7 (999) 123-45-67"
@@ -352,7 +353,7 @@ export default function AmoCRMModal() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="inline-flex items-center gap-2 bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="inline-flex items-center gap-2 bg-primary-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                       data-cta="wizard_submit"
                     >
                       {isSubmitting ? (
