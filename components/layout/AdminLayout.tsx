@@ -122,7 +122,7 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
       <motion.div
         initial={false}
         className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out
-          ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-[300px]'} lg:translate-x-0 lg:relative lg:inset-0`}
+          ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-[300px]'} lg:translate-x-0`}
         style={{ willChange: 'transform' }}
       >
         <div className="flex flex-col h-full">
