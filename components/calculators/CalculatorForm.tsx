@@ -215,7 +215,7 @@ export default function CalculatorForm({
           {/* Срочно */}
           <label className="cursor-pointer">
             <input type="checkbox" checked={urgent} onChange={(e) => setUrgent && setUrgent(e.target.checked)} className="peer sr-only" />
-            <div className="flex items-center gap-3 p-4 rounded-2xl border-2 border-gray-200 hover:border-amber-300 transition-all">
+            <div className="flex items-center gap-3 p-4 rounded-2xl border-2 border-gray-200 hover:border-amber-300 transition-all peer-checked:border-amber-400 peer-checked:bg-amber-50">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-100 to-rose-100 text-amber-700 ring-1 ring-amber-200 flex items-center justify-center peer-checked:from-amber-200 peer-checked:to-rose-200 peer-checked:text-amber-800 peer-checked:ring-amber-300">
                 <AlarmClock className="w-5 h-5" />
               </div>
@@ -223,16 +223,13 @@ export default function CalculatorForm({
                 <div className="font-medium">Срочно</div>
                 <div className="text-xs text-gray-500">+20%</div>
               </div>
-              <div className="ml-auto inline-flex h-6 w-10 items-center rounded-full bg-gray-200 transition-colors peer-checked:bg-amber-400">
-                <span className="inline-block h-5 w-5 translate-x-1 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-4" />
-              </div>
             </div>
           </label>
 
           {/* Ночь */}
           <label className="cursor-pointer">
             <input type="checkbox" checked={night} onChange={(e) => setNight && setNight(e.target.checked)} className="peer sr-only" />
-            <div className="flex items-center gap-3 p-4 rounded-2xl border-2 border-gray-200 hover:border-indigo-300 transition-all">
+            <div className="flex items-center gap-3 p-4 rounded-2xl border-2 border-gray-200 hover:border-indigo-300 transition-all peer-checked:border-indigo-400 peer-checked:bg-indigo-50">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-100 to-blue-100 text-indigo-700 ring-1 ring-indigo-200 flex items-center justify-center peer-checked:from-indigo-200 peer-checked:to-blue-200 peer-checked:text-indigo-800 peer-checked:ring-indigo-300">
                 <MoonStar className="w-5 h-5" />
               </div>
@@ -240,25 +237,19 @@ export default function CalculatorForm({
                 <div className="font-medium">Ночная работа</div>
                 <div className="text-xs text-gray-500">+15%</div>
               </div>
-              <div className="ml-auto inline-flex h-6 w-10 items-center rounded-full bg-gray-200 transition-colors peer-checked:bg-indigo-400">
-                <span className="inline-block h-5 w-5 translate-x-1 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-4" />
-              </div>
             </div>
           </label>
 
           {/* Сложный доступ */}
           <label className="cursor-pointer">
             <input type="checkbox" checked={outside} onChange={(e) => setOutside && setOutside(e.target.checked)} className="peer sr-only" />
-            <div className="flex items-center gap-3 p-4 rounded-2xl border-2 border-gray-200 hover:border-emerald-300 transition-all">
+            <div className="flex items-center gap-3 p-4 rounded-2xl border-2 border-gray-200 hover:border-emerald-300 transition-all peer-checked:border-emerald-400 peer-checked:bg-emerald-50">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-100 to-teal-100 text-emerald-700 ring-1 ring-emerald-200 flex items-center justify-center peer-checked:from-emerald-200 peer-checked:to-teal-200 peer-checked:text-emerald-800 peer-checked:ring-emerald-300">
                 <Mountain className="w-5 h-5" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="font-medium">Сложный доступ</div>
                 <div className="text-xs text-gray-500">+15%</div>
-              </div>
-              <div className="ml-auto inline-flex h-6 w-10 items-center rounded-full bg-gray-200 transition-colors peer-checked:bg-emerald-400">
-                <span className="inline-block h-5 w-5 translate-x-1 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-4" />
               </div>
             </div>
           </label>

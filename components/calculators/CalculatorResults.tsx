@@ -95,7 +95,7 @@ export default function CalculatorResults({
               )}
               {breakdown.extrasFactor !== 1 && (
                 <div className="flex justify-between">
-                  <span>Надбавки:</span>
+                  <span>Надбавки (опционально):</span>
                   <span>×{breakdown.extrasFactor.toFixed(2)}</span>
                 </div>
               )}
