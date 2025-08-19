@@ -72,7 +72,7 @@ export default function CalculatorForm({
       {/* Тип недвижимости */}
       <div>
         <h3 className="text-lg font-semibold text-gray-900 mb-3">Тип недвижимости</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))' }}>
           {propertyTypes.map((type) => {
             const Icon = type.icon;
             return (
@@ -174,7 +174,7 @@ export default function CalculatorForm({
       {/* Тип уборки */}
       <div>
         <h3 className="text-lg font-semibold text-gray-900 mb-3">Тип уборки</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))' }}>
           {cleaningTypes.map((type) => (
             <button
               key={type.id}
