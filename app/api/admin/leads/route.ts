@@ -23,9 +23,10 @@ const dbToUiStatus: Record<string, string> = {
   LOST: 'cancelled',
 };
 
+// Разрешаем создание лида без телефона для внешних переходов (WA/TG clicks)
 const leadSchema = z.object({
-  name: z.string().min(1, 'Имя обязательно'),
-  phone: z.string().min(10, 'Телефон обязателен'),
+  name: z.string().optional(),
+  phone: z.string().optional(),
   email: z.string().email().optional(),
   service: z.string().optional(),
   message: z.string().optional(),
@@ -157,15 +158,25 @@ export async function POST(request: NextRequest) {
     await apiRateLimit.check(10, ip);
 
     const body = await request.json();
-    const { name, phone, email, service, message, utm, referrer, page } = leadSchema.parse(body);
+    const parsed = leadSchema.parse(body);
+    // Санитизация и дефолты для кликов без телефона
+    const safeName = (parsed.name && parsed.name.trim()) ? parsed.name.trim() : 'Клиент (внешний канал)';
+    const digits = (parsed.phone || '').replace(/\D/g, '');
+    const safePhone = digits.length >= 10 ? digits : 'unknown';
+    const email = parsed.email;
+    const service = parsed.service;
+    const message = parsed.message;
+    const utm = parsed.utm;
+    const referrer = parsed.referrer;
+    const page = parsed.page;
 
     let newLead: any;
     try {
       const utmObj = utm || {};
       newLead = await prisma.lead.create({
         data: {
-          name,
-          phone,
+          name: safeName,
+          phone: safePhone,
           email: email || null,
           service: service || '',
           message: message || null,
