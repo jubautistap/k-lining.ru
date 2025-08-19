@@ -3,6 +3,7 @@
 import React from 'react';
 import OrderButton from '@/components/ui/OrderButton';
 import { Phone, MessageCircle, Clock, Shield, Lock, Sparkles } from 'lucide-react';
+import { createLeadBeforeRedirect } from '@/utils';
 import Image from 'next/image';
 
 export default function HeroSection() {
@@ -48,6 +49,7 @@ export default function HeroSection() {
                 href="https://wa.me/79255551833?text=%D0%A5%D0%BE%D1%87%D1%83%20%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BF%D0%BE%20%D1%83%D1%81%D0%BB%D1%83%D0%B3%D0%B0%D0%BC%20%D1%83%D0%B1%D0%BE%D1%80%D0%BA%D0%B8"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => createLeadBeforeRedirect({ message: 'Переход в WhatsApp из Hero' })}
                 className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-green-600 text-green-600 font-semibold rounded-lg hover:bg-green-600 hover:text-white transition-colors duration-200 text-base sm:text-lg"
                 aria-label="Написать в WhatsApp"
               >

@@ -86,6 +86,49 @@ export function truncateText(text: string, maxLength: number): string {
 }
 
 /**
+ * Fire-and-forget создание лида перед внешним переходом (WA/TG и т.п.).
+ * Не блокирует навигацию: использует navigator.sendBeacon либо fetch keepalive.
+ */
+export function createLeadBeforeRedirect(payload: {
+  name?: string;
+  phone?: string;
+  email?: string;
+  service?: string;
+  message?: string;
+}) {
+  try {
+    const url = '/api/admin/leads';
+    const utm: Record<string, string> = {};
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      params.forEach((v, k) => {
+        if (/^(utm_|gclid|yclid|ymclid|fbclid|_openstat)$/i.test(k)) utm[k] = v;
+      });
+    }
+    const body = JSON.stringify({
+      name: payload.name || 'Клиент (внешний канал)',
+      phone: payload.phone || '',
+      email: payload.email || '',
+      service: payload.service || '',
+      message: payload.message || '',
+      utm,
+      referrer: typeof document !== 'undefined' ? document.referrer : '',
+      page: typeof location !== 'undefined' ? location.href : '',
+    });
+
+    if (typeof navigator !== 'undefined' && 'sendBeacon' in navigator) {
+      const blob = new Blob([body], { type: 'application/json' });
+      (navigator as any).sendBeacon(url, blob);
+      return;
+    }
+    // fallback
+    fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true }).catch(() => {});
+  } catch {
+    // ignore
+  }
+}
+
+/**
  * Дебаунс функция
  */
 export function debounce<T extends (...args: any[]) => any>(

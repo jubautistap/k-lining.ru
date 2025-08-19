@@ -109,6 +109,9 @@ export default function AmoCRMModal() {
     const url = channel === 'whatsapp'
       ? `https://wa.me/79255551833?text=${message}`
       : `https://t.me/k_liningru?text=${message}`;
+    try {
+      import('@/utils').then(m => m.createLeadBeforeRedirect({ message: `Переход в ${channel === 'whatsapp' ? 'WhatsApp' : 'Telegram'} (модалка)` }));
+    } catch {}
     track('contact_click', { channel, source: 'amocrm_modal' });
     window.open(url, '_blank', 'noopener,noreferrer');
     closeModal();

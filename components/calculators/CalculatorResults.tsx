@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Phone, MessageCircle, Calculator, RotateCcw } from 'lucide-react';
+import { createLeadBeforeRedirect } from '@/utils';
 import { useAmoCRM } from '../providers/AmoCRMProvider';
 
 interface CalculationResult {
@@ -138,6 +139,7 @@ export default function CalculatorResults({
               href="https://wa.me/79255551833?text=%D0%A5%D0%BE%D1%87%D1%83%20%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BF%D0%BE%20%D1%83%D1%81%D0%BB%D1%83%D0%B3%D0%B0%D0%BC%20%D1%83%D0%B1%D0%BE%D1%80%D0%BA%D0%B8"
               target="_blank"
               rel="noopener"
+              onClick={() => createLeadBeforeRedirect({ message: 'Переход в WhatsApp из калькулятора' })}
               className="flex items-center justify-center space-x-2 bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200"
             >
               <MessageCircle className="w-4 h-4" />
