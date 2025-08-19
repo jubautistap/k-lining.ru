@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Home, Building, Store, Calculator } from 'lucide-react';
+import { Home, Building, Store, Calculator, Zap, Moon, Move } from 'lucide-react';
 
 interface CalculatorFormProps {
   propertyType: 'apartment' | 'house' | 'office' | 'commercial';
@@ -12,6 +12,14 @@ interface CalculatorFormProps {
   setCustomArea: (area: string) => void;
   cleaningType: 'maintenance' | 'general' | 'postRenovation' | 'eco' | 'vip';
   setCleaningType: (type: 'maintenance' | 'general' | 'postRenovation' | 'eco' | 'vip') => void;
+  windowsCount?: number;
+  setWindowsCount?: (count: number) => void;
+  urgent?: boolean;
+  setUrgent?: (v: boolean) => void;
+  night?: boolean;
+  setNight?: (v: boolean) => void;
+  outside?: boolean;
+  setOutside?: (v: boolean) => void;
 }
 
 const propertyTypes = [
@@ -37,7 +45,15 @@ export default function CalculatorForm({
   customArea,
   setCustomArea,
   cleaningType,
-  setCleaningType
+  setCleaningType,
+  windowsCount = 0,
+  setWindowsCount,
+  urgent = false,
+  setUrgent,
+  night = false,
+  setNight,
+  outside = false,
+  setOutside
 }: CalculatorFormProps) {
   const handleAreaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -52,10 +68,10 @@ export default function CalculatorForm({
   const presetAreas = [30, 50, 70, 100, 150, 200];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Тип недвижимости */}
       <div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Тип недвижимости</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-3">Тип недвижимости</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {propertyTypes.map((type) => {
             const Icon = type.icon;
@@ -63,15 +79,21 @@ export default function CalculatorForm({
               <button
                 key={type.id}
                 onClick={() => setPropertyType(type.id as any)}
-                className={`p-4 rounded-lg border-2 transition-all duration-200 text-left ${
+                className={`p-4 rounded-xl border-2 transition-all duration-200 text-left hover:shadow-sm ${
                   propertyType === type.id
-                    ? 'border-primary-600 bg-primary-50 text-primary-700'
+                    ? 'border-primary-600 bg-primary-50 text-primary-700 ring-2 ring-primary-100'
                     : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50'
                 }`}
               >
-                <Icon className="w-6 h-6 mb-2 text-primary-600" />
-                <div className="font-medium text-sm">{type.name}</div>
-                <div className="text-xs text-gray-500">{type.description}</div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
+                    <Icon className="w-5 h-5 text-primary-600" />
+                  </div>
+                  <div>
+                    <div className="font-medium text-sm">{type.name}</div>
+                    <div className="text-xs text-gray-500">{type.description}</div>
+                  </div>
+                </div>
               </button>
             );
           })}
@@ -80,7 +102,7 @@ export default function CalculatorForm({
 
       {/* Площадь */}
       <div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Площадь помещения (м²)</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-3">Площадь помещения (м²)</h3>
         
         {/* Быстрый выбор */}
         <div className="grid grid-cols-3 md:grid-cols-6 gap-2 mb-4">
@@ -91,7 +113,7 @@ export default function CalculatorForm({
                 setArea(presetArea);
                 setCustomArea(presetArea.toString());
               }}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-3 py-2 rounded-full text-sm font-medium transition-colors ${
                 area === presetArea
                   ? 'bg-primary-600 text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -103,35 +125,63 @@ export default function CalculatorForm({
         </div>
 
         {/* Кастомный ввод */}
-        <div className="relative">
-          <Calculator className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-          <input
-            type="number"
-            value={customArea}
-            onChange={handleAreaChange}
-            placeholder="Введите площадь"
-            min="1"
-            max="1000"
-            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-          />
+        <div>
+          <div className="relative flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                const current = parseInt(customArea) || area;
+                const next = Math.max(1, Math.min(1000, current - 5));
+                setArea(next);
+                setCustomArea(String(next));
+              }}
+              className="px-3 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50"
+            >
+              −5
+            </button>
+            <div className="relative flex-1">
+              <Calculator className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="number"
+                value={customArea}
+                onChange={handleAreaChange}
+                placeholder="Введите площадь"
+                min="1"
+                max="1000"
+                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-500">м²</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                const current = parseInt(customArea) || area;
+                const next = Math.max(1, Math.min(1000, current + 5));
+                setArea(next);
+                setCustomArea(String(next));
+              }}
+              className="px-3 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50"
+            >
+              +5
+            </button>
+          </div>
+          <p className="text-sm text-gray-500 mt-2">
+            Текущая площадь: <span className="font-medium">{area} м²</span>
+          </p>
         </div>
-        
-        <p className="text-sm text-gray-500 mt-2">
-          Текущая площадь: <span className="font-medium">{area} м²</span>
-        </p>
       </div>
 
       {/* Тип уборки */}
       <div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Тип уборки</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-3">Тип уборки</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {cleaningTypes.map((type) => (
             <button
               key={type.id}
               onClick={() => setCleaningType(type.id as any)}
-              className={`p-4 rounded-lg border-2 transition-all duration-200 text-left ${
+              className={`p-4 rounded-xl border-2 transition-all duration-200 text-left hover:shadow-sm ${
                 cleaningType === type.id
-                  ? 'border-primary-600 bg-primary-50 text-primary-700'
+                  ? 'border-primary-600 bg-primary-50 text-primary-700 ring-2 ring-primary-100'
                   : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50'
               }`}
             >
@@ -139,6 +189,59 @@ export default function CalculatorForm({
               <div className="text-sm text-gray-500">{type.description}</div>
             </button>
           ))}
+        </div>
+      </div>
+
+      {/* Окна (для некоторых типов уборки) */}
+      {(cleaningType === 'general' || cleaningType === 'postRenovation') && (
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Количество окон (створок)</h3>
+          <input
+            type="number"
+            min={0}
+            max={200}
+            value={windowsCount}
+            onChange={(e) => setWindowsCount && setWindowsCount(Math.max(0, Math.min(200, parseInt(e.target.value) || 0)))}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          />
+          <p className="text-xs text-gray-500 mt-1">Стоимость за створку учитывается автоматически.</p>
+        </div>
+      )}
+
+      {/* Надбавки */}
+      <div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-3">Надбавки</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <label className="flex items-center space-x-3 p-3 rounded-xl border-2 border-gray-200 hover:border-primary-300 cursor-pointer transition-colors">
+            <input type="checkbox" checked={urgent} onChange={(e) => setUrgent && setUrgent(e.target.checked)} className="text-primary-600 rounded" />
+            <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center">
+              <Zap className="w-4 h-4 text-orange-600" />
+            </div>
+            <div>
+              <div className="font-medium">Срочно</div>
+              <div className="text-xs text-gray-500">+20%</div>
+            </div>
+          </label>
+          <label className="flex items-center space-x-3 p-3 rounded-xl border-2 border-gray-200 hover:border-primary-300 cursor-pointer transition-colors">
+            <input type="checkbox" checked={night} onChange={(e) => setNight && setNight(e.target.checked)} className="text-primary-600 rounded" />
+            <div className="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center">
+              <Moon className="w-4 h-4 text-indigo-600" />
+            </div>
+            <div>
+              <div className="font-medium">Ночь</div>
+              <div className="text-xs text-gray-500">+15%</div>
+            </div>
+          </label>
+          <label className="flex items-center space-x-3 p-3 rounded-xl border-2 border-gray-200 hover:border-primary-300 cursor-pointer transition-colors">
+            <input type="checkbox" checked={outside} onChange={(e) => setOutside && setOutside(e.target.checked)} className="text-primary-600 rounded" />
+            <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
+              <Move className="w-4 h-4 text-emerald-600" />
+            </div>
+            <div>
+              <div className="font-medium">Сложный доступ</div>
+              <div className="text-xs text-gray-500">+15%</div>
+            </div>
+          </label>
         </div>
       </div>
     </div>

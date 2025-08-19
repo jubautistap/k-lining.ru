@@ -61,11 +61,13 @@ export default function CalculatorResults({
           )}
 
           {/* Итоговая цена */}
-          <div className="flex justify-between items-center p-6 bg-primary-600 rounded-lg text-white">
-            <span className="text-xl font-medium">Итого:</span>
-            <span className="text-3xl font-bold">
-              {animatedTotal.toLocaleString()} ₽
-            </span>
+          <div className="p-4 bg-white rounded-lg border border-primary-200">
+            <div className="flex justify-between items-center">
+              <span className="text-gray-700 font-medium">Итого к оплате:</span>
+              <span className="text-3xl font-extrabold text-primary-700">
+                {animatedTotal.toLocaleString()} ₽
+              </span>
+            </div>
           </div>
         </div>
 
@@ -78,6 +80,12 @@ export default function CalculatorResults({
                 <span>Базовая ставка:</span>
                 <span>{breakdown.base.toLocaleString()} ₽</span>
               </div>
+              {breakdown.windows > 0 && (
+                <div className="flex justify-between">
+                  <span>Окна:</span>
+                  <span>+{breakdown.windows.toLocaleString()} ₽</span>
+                </div>
+              )}
               {breakdown.windows > 0 && (
                 <div className="flex justify-between">
                   <span>Окна:</span>
@@ -112,7 +120,7 @@ export default function CalculatorResults({
         <div className="mt-8 space-y-3">
           <button
             onClick={openModal}
-            className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+            className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-4 px-6 rounded-xl transition-colors duration-200 shadow-lg hover:shadow-xl"
           >
             Заказать уборку
           </button>
@@ -139,7 +147,7 @@ export default function CalculatorResults({
 
           <button
             onClick={onReset}
-            className="w-full flex items-center justify-center space-x-2 text-gray-600 hover:text-gray-800 font-medium py-3 px-4 rounded-lg border border-gray-300 hover:border-gray-400 transition-colors duration-200"
+            className="w-full flex items-center justify-center space-x-2 text-gray-600 hover:text-gray-800 font-medium py-3 px-4 rounded-xl border border-gray-300 hover:border-gray-400 transition-colors duration-200"
           >
             <RotateCcw className="w-4 h-4" />
             <span>Пересчитать</span>

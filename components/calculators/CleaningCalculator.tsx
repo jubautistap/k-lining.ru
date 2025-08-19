@@ -17,6 +17,14 @@ export default function CleaningCalculator() {
     setCustomArea,
     cleaningType,
     setCleaningType,
+    windowsCount,
+    setWindowsCount,
+    urgent,
+    setUrgent,
+    night,
+    setNight,
+    outside,
+    setOutside,
     additionalServices,
     setAdditionalServices,
     result,
@@ -57,6 +65,14 @@ export default function CleaningCalculator() {
                   setCustomArea={setCustomArea}
                   cleaningType={cleaningType}
                   setCleaningType={setCleaningType}
+                  windowsCount={windowsCount}
+                  setWindowsCount={setWindowsCount}
+                  urgent={urgent}
+                  setUrgent={setUrgent}
+                  night={night}
+                  setNight={setNight}
+                  outside={outside}
+                  setOutside={setOutside}
                 />
               </div>
 

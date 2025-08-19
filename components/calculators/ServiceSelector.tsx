@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Home, Shield, Building, Search } from 'lucide-react';
+import { Home, Shield, Building, Search, Check } from 'lucide-react';
 
 interface ServiceSelectorProps {
   additionalServices: string[];
@@ -79,28 +79,24 @@ export default function ServiceSelector({
               <button
                 key={service.id}
                 onClick={() => handleServiceToggle(service.id)}
-                className={`p-4 rounded-lg border-2 transition-all duration-200 text-left ${
+                className={`p-4 rounded-xl border-2 transition-all duration-200 text-left hover:shadow-sm ${
                   isSelected
-                    ? 'border-primary-600 bg-primary-50 text-primary-700'
+                    ? 'border-primary-600 bg-primary-50 text-primary-700 ring-2 ring-primary-100'
                     : 'border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50'
                 }`}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-start space-x-3">
-                    <Icon className="w-5 h-5 mt-0.5 text-primary-600 flex-shrink-0" />
+                    <div className="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center mt-0.5">
+                      <Icon className="w-4 h-4 text-primary-600" />
+                    </div>
                     <div>
                       <div className="font-medium text-sm">{service.name}</div>
                       <div className="text-xs text-gray-500">{service.price} ₽</div>
                     </div>
                   </div>
-                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                    isSelected
-                      ? 'border-primary-600 bg-primary-600'
-                      : 'border-gray-300'
-                  }`}>
-                    {isSelected && (
-                      <div className="w-2 h-2 bg-white rounded-full" />
-                    )}
+                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${isSelected ? 'border-primary-600 bg-primary-600 text-white' : 'border-gray-300 text-transparent'}`}>
+                    <Check className="w-4 h-4" />
                   </div>
                 </div>
               </button>

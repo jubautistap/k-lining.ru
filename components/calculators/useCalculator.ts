@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useDebounce } from '@/hooks/usePerformance';
+import { calculateQuote, type PropertyType, type CleaningType } from './calcUtils';
 
 interface CalculationResult {
   basePrice: number;
@@ -17,11 +18,17 @@ interface Breakdown {
 }
 
 export function useCalculator() {
-  const [propertyType, setPropertyType] = useState<'apartment' | 'house' | 'office' | 'commercial'>('apartment');
+  const [propertyType, setPropertyType] = useState<PropertyType>('apartment');
   const [area, setArea] = useState<number>(50);
   const [customArea, setCustomArea] = useState<string>('50');
-  const [cleaningType, setCleaningType] = useState<'maintenance' | 'general' | 'postRenovation' | 'eco' | 'vip'>('maintenance');
+  const [cleaningType, setCleaningType] = useState<CleaningType>('maintenance');
   const [additionalServices, setAdditionalServices] = useState<string[]>([]);
+  const [windowsCount, setWindowsCount] = useState<number>(0);
+  const [urgent, setUrgent] = useState<boolean>(false);
+  const [night, setNight] = useState<boolean>(false);
+  const [outside, setOutside] = useState<boolean>(false);
+  const [isNewClient, setIsNewClient] = useState<boolean>(false);
+  const [bundle, setBundle] = useState<boolean>(false);
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [servicesSearch, setServicesSearch] = useState<string>('');
   const [animatedTotal, setAnimatedTotal] = useState<number>(0);
@@ -62,7 +69,6 @@ export function useCalculator() {
   }), []);
 
   const MIN_ORDER = 6000;
-  const RATE_POINT: 'min' | 'mid' | 'max' = 'mid';
 
   // Дополнительные услуги
   const additionalServicesList = useMemo(() => [
@@ -78,20 +84,8 @@ export function useCalculator() {
     { id: 'wardrobe', name: 'Уборка шкафов', price: 1500, icon: 'Building' }
   ], []);
 
-  // Расчет базовой цены
-  const calculateBasePrice = useCallback(() => {
-    const rate = RATES[propertyType][cleaningType][RATE_POINT];
-    return Math.max(rate * area, MIN_ORDER);
-  }, [propertyType, cleaningType, area, RATES]);
-
-  // Расчет цены за окна
-  const calculateWindowsPrice = useCallback(() => {
-    // Упрощенная логика - можно расширить
-    return 0;
-  }, []);
-
-  // Расчет дополнительных услуг
-  const calculateAdditionalServicesPrice = useCallback(() => {
+  // Сумма по выбранным доп. услугам
+  const calculateExtrasTotal = useCallback(() => {
     return additionalServices.reduce((total, serviceId) => {
       const service = additionalServicesList.find(s => s.id === serviceId);
       return total + (service?.price || 0);
@@ -107,65 +101,63 @@ export function useCalculator() {
     return `${hours} часов`;
   }, [area]);
 
-  // Основной расчет
+  // Основной расчет (как на админке: используем общий движок расчёта)
   const calculateResult = useCallback(() => {
-    const basePrice = calculateBasePrice();
-    const windowsPrice = calculateWindowsPrice();
-    const additionalPrice = calculateAdditionalServicesPrice();
-    
-    let totalPrice = basePrice + windowsPrice + additionalPrice;
-    
-    // Применяем минимальный заказ
-    totalPrice = Math.max(totalPrice, MIN_ORDER);
-    
-    // Округляем до 10
-    totalPrice = Math.ceil(totalPrice / 10) * 10;
+    const extrasTotal = calculateExtrasTotal();
+    const quote = calculateQuote({
+      area,
+      propertyType,
+      cleaningType,
+      windowsCount,
+      extrasTotal,
+      urgent,
+      night,
+      outside,
+      isNewClient,
+      bundle
+    });
 
-    const result: CalculationResult = {
-      basePrice: basePrice + windowsPrice,
-      additionalServices: additionalPrice,
-      totalPrice,
-      duration: calculateDuration(),
+    const nextResult: CalculationResult = {
+      basePrice: quote.basePrice + quote.windowsPrice,
+      additionalServices: quote.extrasTotal,
+      totalPrice: quote.totalPrice,
+      duration: quote.duration,
       services: additionalServices
     };
 
-    const breakdown: Breakdown = {
-      base: basePrice,
-      windows: windowsPrice,
-      extrasFactor: 1, // Упрощено
-      discountFactor: 1 // Упрощено
-    };
+    setResult(nextResult);
+    setBreakdown({
+      base: quote.breakdown.base,
+      windows: quote.breakdown.windows,
+      extrasFactor: quote.breakdown.extrasFactor,
+      discountFactor: quote.breakdown.discountFactor
+    });
 
-    setResult(result);
-    setBreakdown(breakdown);
-    prevTotalRef.current = animatedTotal;
-    
-    // Анимация итоговой суммы
     const startValue = prevTotalRef.current;
-    const endValue = totalPrice;
-    const duration = 1000;
+    const endValue = quote.totalPrice;
+    const animDuration = 1000;
     const startTime = Date.now();
-
     const animate = () => {
       const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
+      const progress = Math.min(elapsed / animDuration, 1);
       const currentValue = startValue + (endValue - startValue) * progress;
-      
       setAnimatedTotal(Math.round(currentValue));
-      
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
+      if (progress < 1) requestAnimationFrame(animate);
     };
-
     requestAnimationFrame(animate);
+    prevTotalRef.current = quote.totalPrice;
   }, [
-    additionalServices, 
-    calculateBasePrice, 
-    calculateWindowsPrice, 
-    calculateAdditionalServicesPrice, 
-    calculateDuration, 
-    animatedTotal
+    area,
+    propertyType,
+    cleaningType,
+    windowsCount,
+    urgent,
+    night,
+    outside,
+    isNewClient,
+    bundle,
+    additionalServices,
+    calculateExtrasTotal
   ]);
 
   // Debounced расчет
@@ -178,7 +170,7 @@ export function useCalculator() {
     } else {
       didInitRef.current = true;
     }
-  }, [propertyType, cleaningType, area, additionalServices, debouncedCalculate]);
+  }, [propertyType, cleaningType, area, additionalServices, windowsCount, urgent, night, outside, isNewClient, bundle, debouncedCalculate]);
 
   // Сброс калькулятора
   const resetCalculator = useCallback(() => {
@@ -205,6 +197,18 @@ export function useCalculator() {
     setCleaningType,
     additionalServices,
     setAdditionalServices,
+    windowsCount,
+    setWindowsCount,
+    urgent,
+    setUrgent,
+    night,
+    setNight,
+    outside,
+    setOutside,
+    isNewClient,
+    setIsNewClient,
+    bundle,
+    setBundle,
     result,
     servicesSearch,
     setServicesSearch,
