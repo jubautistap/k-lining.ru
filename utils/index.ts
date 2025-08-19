@@ -105,16 +105,17 @@ export function createLeadBeforeRedirect(payload: {
         if (/^(utm_|gclid|yclid|ymclid|fbclid|_openstat)$/i.test(k)) utm[k] = v;
       });
     }
-    const body = JSON.stringify({
+    const data: Record<string, any> = {
       name: payload.name || 'Клиент (внешний канал)',
-      phone: payload.phone || '',
-      email: payload.email || '',
-      service: payload.service || '',
-      message: payload.message || '',
       utm,
       referrer: typeof document !== 'undefined' ? document.referrer : '',
       page: typeof location !== 'undefined' ? location.href : '',
-    });
+    };
+    if (payload.phone) data.phone = payload.phone;
+    if (payload.email && payload.email.includes('@')) data.email = payload.email;
+    if (payload.service) data.service = payload.service;
+    if (payload.message) data.message = payload.message;
+    const body = JSON.stringify(data);
 
     if (typeof navigator !== 'undefined' && 'sendBeacon' in navigator) {
       const blob = new Blob([body], { type: 'application/json' });

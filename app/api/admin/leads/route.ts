@@ -283,6 +283,7 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.warn('Lead validation failed:', error.flatten());
       return NextResponse.json(
         { error: 'Validation failed', details: error.errors },
         { status: 400 }
