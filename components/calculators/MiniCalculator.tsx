@@ -18,11 +18,15 @@ export default function MiniCalculator(props: MiniCalculatorProps) {
   const { openModal } = useAmoCRM();
   const [area, setArea] = useState<number>(defaultArea);
   const [windows, setWindows] = useState<number>(windowsCount);
+  const [areaText, setAreaText] = useState<string>(String(defaultArea));
+  const [windowsText, setWindowsText] = useState<string>(windowsCount > 0 ? String(windowsCount) : '');
   const quote = useMemo(() => calculateQuote({ area, propertyType, cleaningType, windowsCount: windows }), [area, propertyType, cleaningType, windows]);
 
   useEffect(() => {
     setArea(defaultArea);
     setWindows(windowsCount);
+    setAreaText(String(defaultArea));
+    setWindowsText(windowsCount > 0 ? String(windowsCount) : '');
   }, [defaultArea, windowsCount]);
 
   return (
@@ -32,24 +36,47 @@ export default function MiniCalculator(props: MiniCalculatorProps) {
         <div className="flex-1">
           <label className="block text-xs text-gray-600 mb-1">Площадь, м²</label>
           <input
-            type="number"
-            min={15}
-            max={500}
-            value={area}
-            onChange={(e) => setArea(Math.max(15, Math.min(500, parseInt(e.target.value) || 15)))}
-            className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            value={areaText}
+            onChange={(e) => {
+              const digits = e.target.value.replace(/[^\d]/g, '');
+              setAreaText(digits);
+            }}
+            onBlur={() => {
+              const raw = areaText.replace(/[^\d]/g, '');
+              const parsed = raw ? parseInt(raw, 10) : NaN;
+              const clamped = Math.max(15, Math.min(500, isNaN(parsed) ? defaultArea : parsed));
+              setArea(clamped);
+              setAreaText(String(clamped));
+            }}
+            className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500"
+            placeholder="50"
           />
         </div>
         {cleaningType === 'postRenovation' || cleaningType === 'general' ? (
           <div>
             <label className="block text-xs text-gray-600 mb-1">Окон, створок</label>
             <input
-              type="number"
-              min={0}
-              max={200}
-              value={windows}
-              onChange={(e) => setWindows(Math.max(0, Math.min(200, parseInt(e.target.value) || 0)))}
-              className="w-24 px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              value={windowsText}
+              onChange={(e) => {
+                const digits = e.target.value.replace(/[^\d]/g, '');
+                setWindowsText(digits);
+              }}
+              onFocus={(e) => { if (windowsText === '0') setWindowsText(''); (e.target as HTMLInputElement).select(); }}
+              onBlur={() => {
+                const raw = windowsText.replace(/[^\d]/g, '');
+                const parsed = raw ? parseInt(raw, 10) : 0;
+                const clamped = Math.max(0, Math.min(200, parsed));
+                setWindows(clamped);
+                setWindowsText(clamped === 0 ? '' : String(clamped));
+              }}
+              className="w-24 px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500"
+              placeholder="0"
             />
           </div>
         ) : null}

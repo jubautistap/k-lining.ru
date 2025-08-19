@@ -271,24 +271,50 @@ export default function AmoCRMModal() {
                 <div>
                   <label className="block text-xs text-gray-600 mb-1">Площадь, м²</label>
                   <input
-                    type="number"
-                    min={15}
-                    max={1000}
-                    value={area}
-                    onChange={(e) => setArea(Math.max(15, Math.min(1000, parseInt(e.target.value) || 15)))}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    value={String(area)}
+                    onChange={(e) => {
+                      const digits = e.target.value.replace(/[^\d]/g, '');
+                      // не клампим в onChange, только держим число или пусто
+                      if (digits === '') { setArea(NaN as unknown as number); return; }
+                      setArea(parseInt(digits, 10));
+                    }}
+                    onBlur={(e) => {
+                      const raw = e.currentTarget.value.replace(/[^\d]/g, '');
+                      const parsed = raw ? parseInt(raw, 10) : NaN;
+                      const clamped = Math.max(15, Math.min(1000, isNaN(parsed) ? 50 : parsed));
+                      setArea(clamped);
+                      e.currentTarget.value = String(clamped);
+                    }}
                     className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500"
+                    placeholder="50"
                   />
                 </div>
                 {(cleaningType === 'general' || cleaningType === 'postRenovation') && (
                   <div>
                     <label className="block text-xs text-gray-600 mb-1">Окон, створок</label>
                     <input
-                      type="number"
-                      min={0}
-                      max={200}
-                      value={windowsCount}
-                      onChange={(e) => setWindowsCount(Math.max(0, Math.min(200, parseInt(e.target.value) || 0)))}
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      value={windowsCount === 0 ? '' : String(windowsCount)}
+                      onChange={(e) => {
+                        const digits = e.target.value.replace(/[^\d]/g, '');
+                        if (digits === '') { setWindowsCount(0); return; }
+                        setWindowsCount(parseInt(digits, 10));
+                      }}
+                      onFocus={(e) => { if (e.currentTarget.value === '0') e.currentTarget.value = ''; e.currentTarget.select(); }}
+                      onBlur={(e) => {
+                        const raw = e.currentTarget.value.replace(/[^\d]/g, '');
+                        const parsed = raw ? parseInt(raw, 10) : 0;
+                        const clamped = Math.max(0, Math.min(200, parsed));
+                        setWindowsCount(clamped);
+                        e.currentTarget.value = clamped === 0 ? '' : String(clamped);
+                      }}
                       className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500"
+                      placeholder="0"
                     />
                   </div>
                 )}
