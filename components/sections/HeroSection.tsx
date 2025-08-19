@@ -2,14 +2,12 @@
 
 import React from 'react';
 import OrderButton from '@/components/ui/OrderButton';
-import { Phone, MessageCircle, Clock, Shield, Lock, Sparkles } from 'lucide-react';
-import { createLeadBeforeRedirect } from '@/utils';
+import { Phone, Clock, Shield, Lock, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import MiniCalculator from '@/components/calculators/MiniCalculator';
 import { useAmoCRM } from '@/components/providers/AmoCRMProvider';
 
 export default function HeroSection() {
-  const YM_ID = Number(process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID) || 103567092;
   const { openModal } = useAmoCRM();
   return (
     <section className="section-padding bg-gradient-to-br from-primary-50 via-white to-secondary-50">
@@ -48,49 +46,6 @@ export default function HeroSection() {
                 >
                   Заказать уборку
                 </OrderButton>
-                
-                <a
-                  href="tel:+79255551833"
-                  className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-primary-600 text-primary-600 font-semibold rounded-lg hover:bg-primary-600 hover:text-white transition-colors duration-200 text-base sm:text-lg"
-                  aria-label="Позвонить по телефону +7 (925) 555-18-33"
-                  data-cta="hero_phone"
-                  onClick={() => {
-                    try {
-                      if (typeof window !== 'undefined' && (window as any).ym) {
-                        (window as any).ym(YM_ID, 'reachGoal', 'phone_click', { position: 'hero' });
-                      }
-                      if (typeof window !== 'undefined' && (window as any).gtag) {
-                        (window as any).gtag('event', 'phone_click', { position: 'hero' });
-                      }
-                    } catch {}
-                  }}
-                >
-                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  +7 (925) 555-18-33
-                </a>
-
-                <a
-                  href="https://wa.me/79255551833?text=%D0%A5%D0%BE%D1%87%D1%83%20%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BF%D0%BE%20%D1%83%D1%81%D0%BB%D1%83%D0%B3%D0%B0%D0%BC%20%D1%83%D0%B1%D0%BE%D1%80%D0%BA%D0%B8"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => {
-                    try {
-                      if (typeof window !== 'undefined' && (window as any).ym) {
-                        (window as any).ym(YM_ID, 'reachGoal', 'whatsapp_click', { position: 'hero' });
-                      }
-                      if (typeof window !== 'undefined' && (window as any).gtag) {
-                        (window as any).gtag('event', 'whatsapp_click', { position: 'hero' });
-                      }
-                    } catch {}
-                    createLeadBeforeRedirect({ message: 'Переход в WhatsApp из Hero' });
-                  }}
-                  className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-green-600 text-green-600 font-semibold rounded-lg hover:bg-green-600 hover:text-white transition-colors duration-200 text-base sm:text-lg"
-                  aria-label="Написать в WhatsApp"
-                  data-cta="hero_whatsapp"
-                >
-                  <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  WhatsApp
-                </a>
               </div>
             </div>
 

@@ -184,7 +184,7 @@ export default function AmoCRMModal() {
               {step === 2 && 'Площадь и окна — чтобы рассчитать цену'}
               {step === 3 && 'Перезвоним в течение 5 минут'}
             </p>
-            <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-pink-500 to-amber-500 shadow">
+            <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-white text-sm font-semibold bg-gradient-to-r from-primary-600 to-blue-600 shadow">
               <Percent className="w-4 h-4" />
               <span>Скидка −10% на первый заказ</span>
             </div>
@@ -194,10 +194,12 @@ export default function AmoCRMModal() {
         {/* Body */}
         <div className="px-6 pb-6">
           {/* Steps indicator */}
-          <div className="mb-4 flex items-center justify-center gap-2 text-xs">
-            {[1,2,3].map((s) => (
-              <div key={s} className={`h-1.5 w-16 rounded-full ${s <= step ? 'bg-primary-600' : 'bg-gray-200'}`} />
-            ))}
+          <div className="mb-5">
+            <div className="flex items-center justify-center gap-2 text-xs">
+              {[1,2,3].map((s) => (
+                <div key={s} className={`h-1.5 w-16 rounded-full ${s <= step ? 'bg-primary-600' : 'bg-gray-200'}`} />
+              ))}
+            </div>
           </div>
 
           {step === 1 && (
@@ -215,7 +217,7 @@ export default function AmoCRMModal() {
                       key={id}
                       type="button"
                       onClick={() => setPropertyType(id)}
-                      className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${propertyType===id?'border-primary-600 bg-primary-50':'border-gray-300 hover:border-gray-400'}`}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-colors ${propertyType===id?'border-primary-600 bg-primary-50 shadow-sm':'border-gray-300 hover:border-gray-400'}`}
                     >
                       <Icon className="w-4 h-4 text-primary-600" />
                       <span className="text-sm">{name}</span>
@@ -239,7 +241,7 @@ export default function AmoCRMModal() {
                       key={id}
                       type="button"
                       onClick={() => setCleaningType(id)}
-                      className={`px-3 py-2 rounded-lg border text-sm ${cleaningType===id?'border-primary-600 bg-primary-50':'border-gray-300 hover:border-gray-400'}`}
+                      className={`px-3 py-2 rounded-lg border text-sm transition-colors ${cleaningType===id?'border-primary-600 bg-primary-50 shadow-sm':'border-gray-300 hover:border-gray-400'}`}
                     >
                       {label} {cleaningType===id && <Check className="inline w-4 h-4 text-primary-600 ml-1" />}
                     </button>
@@ -316,7 +318,7 @@ export default function AmoCRMModal() {
           {step === 3 && (
             <div>
               {/* Summary */}
-              <div className="mb-4 rounded-lg bg-gray-50 border p-3 text-sm text-gray-800">
+              <div className="mb-4 rounded-lg bg-gray-50 border p-3 text-sm text-gray-800 shadow-sm">
                 <div className="flex flex-wrap gap-2 mb-1">
                   <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white border text-gray-700"><Home className="w-4 h-4" /> {propertyType}</span>
                   <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white border text-gray-700">{cleaningType}</span>
@@ -398,6 +400,7 @@ export default function AmoCRMModal() {
                     <span>Telegram</span>
                   </button>
                 </div>
+                <p className="mt-3 text-[11px] text-gray-400 text-center">Отправляя заявку, вы соглашаетесь с политикой конфиденциальности и офертой.</p>
               </div>
 
               {/* Trust indicators */}
