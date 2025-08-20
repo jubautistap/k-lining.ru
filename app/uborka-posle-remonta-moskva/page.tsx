@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import OpenWizardButton from '@/components/ui/OpenWizardButton';
 
 export const metadata: Metadata = {
   title: 'Уборка квартиры после ремонта — Москва | K-lining 24/7',
@@ -34,8 +35,8 @@ export default function PostRenovationCleaningMoscowPage() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900">Уборка после ремонта в Москве</h1>
           <p className="text-xl text-gray-600">Удалим строительную пыль, следы краски и цемента. Промоем окна и тщательно очистим все поверхности.</p>
           <div className="flex flex-col sm:flex-row gap-3">
-            <Link href="/calculator" className="btn-primary px-8 py-4 text-lg">Рассчитать стоимость</Link>
-            <Link href="/contacts" className="btn-secondary px-8 py-4 text-lg">Заказать уборку</Link>
+            <Link href="/calculator" className="btn-secondary px-8 py-4 text-lg">Рассчитать стоимость</Link>
+            <OpenWizardButton className="btn-primary px-8 py-4 text-lg" ctaId="post_renovation_msk_cta">Заказать уборку</OpenWizardButton>
           </div>
         </header>
 

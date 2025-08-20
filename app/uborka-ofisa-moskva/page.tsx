@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import OpenWizardButton from '@/components/ui/OpenWizardButton';
 
 export const metadata: Metadata = {
   title: 'Уборка офиса в Москве — ежедневная, генеральная | K-lining',
@@ -34,7 +35,7 @@ export default function OfficeCleaningMoscowPage() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900">Уборка офиса в Москве</h1>
           <p className="text-xl text-gray-600">Ежедневная, генеральная, после переезда. Договор, отчётность, ответственный менеджер.</p>
           <div className="flex flex-col sm:flex-row gap-3">
-            <Link href="/contacts" className="btn-primary px-8 py-4 text-lg">Запросить коммерческое</Link>
+            <OpenWizardButton className="btn-primary px-8 py-4 text-lg" ctaId="uborka_ofisa_msk_cta">Запросить коммерческое</OpenWizardButton>
             <Link href="/services/office-cleaning" className="btn-secondary px-8 py-4 text-lg">Подробнее</Link>
           </div>
         </header>

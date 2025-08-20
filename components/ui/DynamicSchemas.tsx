@@ -2,6 +2,7 @@
 
 import React, { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
+import landings from '@/data/seo-landings.json';
 
 /**
  * Вставляет минимально необходимые JSON-LD схемы по типу страницы.
@@ -68,16 +69,6 @@ export default function DynamicSchemas() {
         //   reviewCount: '312'
         // }
       };
-    } else if (pathname.startsWith('/uborka-')) {
-      // Маркетинговые лендинги под услуги: WebPage + Service
-      specificSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'WebPage',
-        name: decodeURIComponent(pathname.replace(/\//g, ' ').trim()),
-        url: `${origin}${pathname}`,
-        inLanguage: 'ru-RU',
-        dateModified: new Date().toISOString().split('T')[0],
-      };
     } else if (pathname.startsWith('/blog/')) {
       specificSchema = {
         '@context': 'https://schema.org',
@@ -101,6 +92,21 @@ export default function DynamicSchemas() {
         name: 'Цены на клининг',
         url: `${origin}/prices`,
       };
+    } else {
+      // Топ‑левел лендинги из seo-landings.json → WebPage JSON-LD
+      const partsTop = pathname.split('/').filter(Boolean);
+      if (partsTop.length === 1 && (landings as Record<string, any>)[partsTop[0]]) {
+        const cfg = (landings as Record<string, any>)[partsTop[0]] || {};
+        specificSchema = {
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: cfg.h1 || cfg.title || decodeURIComponent(partsTop[0].replace(/-/g, ' ')),
+          url: `${origin}${pathname}`,
+          inLanguage: 'ru-RU',
+          description: cfg.description || 'Клининговые услуги в Москве',
+          dateModified: new Date().toISOString().split('T')[0],
+        };
+      }
     }
 
     return {
