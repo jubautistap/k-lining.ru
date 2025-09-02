@@ -5,6 +5,7 @@ import CalculatorForm from './CalculatorForm';
 import ServiceSelector from './ServiceSelector';
 import CalculatorResults from './CalculatorResults';
 import { useCalculator } from './useCalculator';
+import CalculatorErrorBoundary from '@/components/CalculatorErrorBoundary';
 
 export default function CleaningCalculator() {
   const {
@@ -38,7 +39,8 @@ export default function CleaningCalculator() {
   } = useCalculator();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+    <CalculatorErrorBoundary calculatorType="main">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
       <div className="container-custom">
         <div className="max-w-6xl mx-auto">
           {/* Заголовок */}
@@ -137,6 +139,7 @@ export default function CleaningCalculator() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </CalculatorErrorBoundary>
   );
 } 

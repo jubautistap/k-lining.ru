@@ -6,38 +6,29 @@ import WhyChooseUsSection from '@/components/sections/WhyChooseUsSection';
 import CaseStudiesSection from '@/components/sections/CaseStudiesSection';
 import LoftCentersCaseSection from '@/components/sections/LoftCentersCaseSection';
 
-// Динамические импорты для ленивой загрузки
-// (убрали ProcessSection с главной)
-
-const PricingSection = dynamic(() => import('@/components/sections/PricingSection'), {
-  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
-  ssr: true,
-});
-
+// Критическая оптимизация: ленивая загрузка всех некритичных компонентов
 const CleaningCalculator = dynamic(() => import('@/components/calculators/CleaningCalculator'), {
-  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
-  ssr: false,
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse rounded-lg" />,
+  ssr: false, // Калькулятор не нужен для SEO
 });
 
 const ContactSection = dynamic(() => import('@/components/sections/ContactSection'), {
-  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
-  ssr: true,
-});
-
-const SEOContentSection = dynamic(() => import('@/components/sections/SEOContentSection'), {
-  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse rounded-lg" />,
   ssr: true,
 });
 
 const PopularServicesSection = dynamic(() => import('@/components/sections/PopularServicesSection'), {
-  loading: () => <div className="h-80 bg-gray-100 animate-pulse" />,
+  loading: () => <div className="h-80 bg-gray-100 animate-pulse rounded-lg" />,
   ssr: true,
 });
 
+// Модальные окна и промо - только клиентская загрузка
 const AmoCRMModal = dynamic(() => import('@/components/modals/AmoCRMModal'), {
-  ssr: false, // Отключаем SSR для модального окна
+  ssr: false,
 });
-const StickyPromo = dynamic(() => import('@/components/ui/StickyPromo'), { ssr: false });
+const StickyPromo = dynamic(() => import('@/components/ui/StickyPromo'), { 
+  ssr: false 
+});
 
 export const metadata: Metadata = {
   title: 'Уборка квартир и офисов в Москве 24/7 — мин. заказ 6 000 ₽ | K-lining',

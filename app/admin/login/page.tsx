@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/components/providers/AuthProvider';
 import { toast } from 'react-hot-toast';
+import FormErrorBoundary from '@/components/FormErrorBoundary';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -33,17 +34,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Вход в админку
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            K-lining Pro
-          </p>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+    <FormErrorBoundary formType="auth">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+              Вход в админку
+            </h2>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              K-lining Pro
+            </p>
+          </div>
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="email" className="sr-only">
@@ -93,5 +95,6 @@ export default function LoginPage() {
         </form>
       </div>
     </div>
+    </FormErrorBoundary>
   );
 } 

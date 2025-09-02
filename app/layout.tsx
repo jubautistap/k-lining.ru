@@ -5,6 +5,7 @@ import LazyProviders from '@/components/providers/LazyProviders';
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import SiteChrome from '@/components/providers/SiteChrome';
+import GlobalErrorHandlers from '@/components/providers/GlobalErrorHandlers';
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -99,11 +100,21 @@ export default function RootLayout({
     <html lang="ru" suppressHydrationWarning>
       <head>
         
-        <link rel="preconnect" href="https://mc.yandex.ru" />
-        <link rel="preconnect" href="https://mc.webvisor.org" />
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        {/* Критичные resource hints для максимальной скорости */}
+        <link rel="preload" as="image" href="/og-image.webp" fetchPriority="high" />
+        
+        {/* Preconnect для критичных внешних ресурсов */}
+        <link rel="preconnect" href="https://mc.yandex.ru" crossOrigin="" />
+        <link rel="preconnect" href="https://mc.webvisor.org" crossOrigin="" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
+        <link rel="preconnect" href="https://metrika.yandex.ru" crossOrigin="" />
+        <link rel="preconnect" href="https://analytics.google.com" crossOrigin="" />
+        
+        {/* DNS prefetch для быстрого разрешения доменов */}
         <link rel="dns-prefetch" href="//mc.yandex.ru" />
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
         <link rel="shortcut icon" href="/favicon.ico?v=2" />
         <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
         <link rel="icon" type="image/png" href="/favicon-32x32.png?v=2" sizes="32x32" />
@@ -124,64 +135,45 @@ export default function RootLayout({
         
         
         
-        {/* Критический CSS инлайн для устранения блокирующих запросов (web.dev optimized) */}
+        {/* Критический CSS для максимальной скорости загрузки */}
         <style
           dangerouslySetInnerHTML={{
             __html: `
-              /* Критический CSS для первого экрана */
-              body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
-              .header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: white; }
+              /* Критический CSS - только самое необходимое */
+              body { margin: 0; font-family: Inter, system-ui, sans-serif; line-height: 1.6; }
               .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-              .loading { background: #f3f4f6; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-              @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
               
-              /* Предотвращение CLS */
-              img { max-width: 100%; height: auto; }
-              .image-container { position: relative; overflow: hidden; }
+              /* Оптимизированный loading skeleton */
+              .loading { 
+                background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+                background-size: 200% 100%;
+                animation: loading 1.5s infinite;
+              }
+              @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
               
-              /* Критический CSS для LCP */
+              /* Предотвращение CLS - критично */
+              img { max-width: 100%; height: auto; display: block; }
+              
+              /* Критический CSS для LCP оптимизации */
               .hero-title { 
-                font-size: 2rem; /* меньше на мобильных */
+                font-size: clamp(1.75rem, 5vw, 3.5rem);
                 font-weight: 700; 
                 line-height: 1.15; 
                 color: #111827; 
-                margin: 0; 
-                word-break: normal;
-                overflow-wrap: anywhere; /* безопасный перенос длинных слов */
-              }
-              @media (min-width: 640px) { .hero-title { font-size: 2.25rem; } }
-              @media (min-width: 768px) { .hero-title { font-size: 2.75rem; } }
-              @media (min-width: 1024px) { .hero-title { font-size: 3.25rem; } }
-              
-              /* CSS градиент для быстрого отображения */
-              .hero-gradient {
-                background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);
-                opacity: 0.8;
+                margin: 0;
+                font-display: swap;
               }
               
-              /* Красивый градиент для hero секции */
+              /* Быстрый градиент без дорогих calc */
               .hero-visual {
-                background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 25%, #1e40af 50%, #1e3a8a 75%, #1e293b 100%);
-                position: relative;
-                overflow: hidden;
-              }
-              .hero-visual::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: radial-gradient(circle at 30% 70%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
-                            radial-gradient(circle at 70% 30%, rgba(30, 64, 175, 0.3) 0%, transparent 50%);
-                animation: pulse 4s ease-in-out infinite;
-              }
-              @keyframes pulse {
-                0%, 100% { opacity: 0.7; }
-                50% { opacity: 1; }
+                background: linear-gradient(135deg, #dbeafe 0%, #bbf7d0 100%);
+                aspect-ratio: 3/2;
+                border-radius: 12px;
               }
               
-              /* Убраны кастомные @font-face: используем next/font Inter */
+              /* Container для быстрой отрисовки */
+              .container-custom { max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
+              @media (min-width: 640px) { .container-custom { padding: 0 1.5rem; } }
             `
           }}
         />
@@ -262,6 +254,7 @@ export default function RootLayout({
         `}</Script>
       </head>
       <body className={`${inter.className} ${inter.variable} overflow-x-hidden`} suppressHydrationWarning>
+        <GlobalErrorHandlers />
         <LazyProviders>
           <SiteChrome>
             {children}
@@ -270,6 +263,8 @@ export default function RootLayout({
 
         {/* SPA-hit для роутинга */}
         <YandexMetrika />
+        
+        
         {/* Noscript fallback */}
         <noscript>
           <div>
@@ -288,6 +283,23 @@ export default function RootLayout({
             allow_google_signals: false,
             allow_ad_personalization_signals: false
           });
+        `}</Script>
+
+        {/* Service Worker для агрессивного кэширования */}
+        <Script id="sw-register" strategy="afterInteractive">{`
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/sw.js')
+                .then((reg) => {
+                  console.log('SW зарегистрирован');
+                  // Очистка кэша раз в день
+                  setInterval(() => {
+                    reg.active?.postMessage('CLEAN_CACHE');
+                  }, 24 * 60 * 60 * 1000);
+                })
+                .catch((err) => console.warn('SW ошибка:', err));
+            });
+          }
         `}</Script>
 
         {/* LocalBusiness / Organization с полным адресом и контактами */}

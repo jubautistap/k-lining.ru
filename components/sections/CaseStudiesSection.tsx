@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import ProgressiveImage from '@/components/ui/ProgressiveImage';
 
 export default function CaseStudiesSection() {
   const cases = [
@@ -38,13 +38,25 @@ export default function CaseStudiesSection() {
                 <div>
                   <div className="text-sm text-gray-500 mb-2">До</div>
                   <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-gray-100">
-                    <Image src={c.before} alt={`${c.title} — до`} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                    <ProgressiveImage 
+                      src={c.before} 
+                      alt={`${c.title} — до`} 
+                      fill 
+                      className="object-cover" 
+                      sizes="(max-width: 1024px) 100vw, 50vw" 
+                    />
                   </div>
                 </div>
                 <div>
                   <div className="text-sm text-gray-500 mb-2">После</div>
                   <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-gray-100">
-                    <Image src={c.after} alt={`${c.title} — после`} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                    <ProgressiveImage 
+                      src={c.after} 
+                      alt={`${c.title} — после`} 
+                      fill 
+                      className="object-cover" 
+                      sizes="(max-width: 1024px) 100vw, 50vw" 
+                    />
                   </div>
                 </div>
               </div>

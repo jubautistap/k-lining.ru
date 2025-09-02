@@ -13,12 +13,12 @@ const nextConfig = {
         hostname: 'localhost',
       },
     ],
-    // Добавляем поддержку локальных изображений
+    // Агрессивная оптимизация изображений
     unoptimized: false,
     formats: ['image/webp', 'image/avif'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    minimumCacheTTL: 604800, // 7 дней кэширования
     // Безопаснее не позволять любые внешние SVG как изображения
     dangerouslyAllowSVG: false,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;", // Только для SVG изображений
@@ -35,20 +35,53 @@ const nextConfig = {
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
   webpack: (config, { dev, isServer }) => {
-    // Оптимизация для production
+    // Критическая оптимизация bundle size
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
         chunks: 'all',
+        maxSize: 150000, // Максимум 150KB на chunk
         cacheGroups: {
+          // React и Next.js в отдельный chunk
+          react: {
+            test: /[\\/]node_modules[\\/](react|react-dom|next)[\\/]/,
+            name: 'react',
+            chunks: 'all',
+            priority: 40,
+          },
+          // UI библиотеки отдельно
+          ui: {
+            test: /[\\/]node_modules[\\/](lucide-react|framer-motion)[\\/]/,
+            name: 'ui',
+            chunks: 'all', 
+            priority: 30,
+          },
+          // Админские компоненты в отдельный chunk
+          admin: {
+            test: /[\\/](app[\\/]admin|components[\\/].*[Aa]dmin|lib[\\/]auth)[\\/]/,
+            name: 'admin',
+            chunks: 'all',
+            priority: 25,
+          },
+          // Prisma и DB отдельно (только для админки)
+          prisma: {
+            test: /[\\/]node_modules[\\/](@prisma|prisma)[\\/]/,
+            name: 'prisma',
+            chunks: 'all',
+            priority: 20,
+          },
+          // Остальные vendor библиотеки
           vendor: {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendors',
             chunks: 'all',
+            priority: 10,
           },
+          // Общий код приложения
           common: {
             name: 'common',
             minChunks: 2,
             chunks: 'all',
+            priority: 5,
             enforce: true,
           },
         },

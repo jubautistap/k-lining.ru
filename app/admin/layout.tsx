@@ -1,9 +1,19 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useAuthContext } from '@/components/providers/AuthProvider';
 import { useRouter, usePathname } from 'next/navigation';
-import AdminLayout from '@/components/layout/AdminLayout';
+import dynamic from 'next/dynamic';
+import ErrorBoundary from '@/components/ErrorBoundary';
+
+const AdminLayout = dynamic(() => import('@/components/layout/AdminLayout'), {
+  loading: () => (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+    </div>
+  ),
+  ssr: false
+});
 
 export default function AdminLayoutWrapper({
   children,
@@ -96,31 +106,33 @@ export default function AdminLayoutWrapper({
   }
 
   return (
-    <div id="__admin_root" className="lg:overflow-x-hidden">
-      <AdminLayout user={user || undefined}>{children}</AdminLayout>
-      {/* Скрываем react-hot-toast для админки и убираем любые верхние отступы */}
-      <style jsx global>{`
-        /* Стабилизируем раскладку ТОЛЬКО на страницах админки */
-        html, body { margin: 0 !important; padding: 0 !important; }
-        html, body { scroll-behavior: auto !important; }
-        html { overflow-anchor: none; }
-        #__admin_root { display: flex; flex-direction: column; min-height: 100vh; }
-        #__admin_root > * { flex: 0 0 auto; }
-        #_rht_toaster { display: none !important; }
-        /* Жёсткий ресет любых верхних отступов у первого блока */
-        #__admin_root main { padding-top: 0 !important; margin-top: 0 !important; min-height: 0 !important; }
-        #__admin_root main > *:first-child { margin-top: 0 !important; padding-top: 0 !important; }
-        #__admin_root main > * { scroll-margin-top: 0 !important; }
-        /* Ресет utility-классов верхнего отступа/паддинга Tailwind (только в админке) */
-        #__admin_root [class^="pt-"],
-        #__admin_root [class*=" pt-"] { padding-top: 0 !important; }
-        #__admin_root [class^="mt-"],
-        #__admin_root [class*=" mt-"] { margin-top: 0 !important; }
-        /* На десктопе исключаем липкий хедер для предотвращения скачка */
-        @media (min-width: 1024px) {
-          #__admin_root header.sticky { position: static !important; }
-        }
-      `}</style>
-    </div>
+    <ErrorBoundary name="Админ панель" level="page">
+      <div id="__admin_root" className="lg:overflow-x-hidden">
+        <AdminLayout user={user || undefined}>{children}</AdminLayout>
+        {/* Скрываем react-hot-toast для админки и убираем любые верхние отступы */}
+        <style jsx global>{`
+          /* Стабилизируем раскладку ТОЛЬКО на страницах админки */
+          html, body { margin: 0 !important; padding: 0 !important; }
+          html, body { scroll-behavior: auto !important; }
+          html { overflow-anchor: none; }
+          #__admin_root { display: flex; flex-direction: column; min-height: 100vh; }
+          #__admin_root > * { flex: 0 0 auto; }
+          #_rht_toaster { display: none !important; }
+          /* Жёсткий ресет любых верхних отступов у первого блока */
+          #__admin_root main { padding-top: 0 !important; margin-top: 0 !important; min-height: 0 !important; }
+          #__admin_root main > *:first-child { margin-top: 0 !important; padding-top: 0 !important; }
+          #__admin_root main > * { scroll-margin-top: 0 !important; }
+          /* Ресет utility-классов верхнего отступа/паддинга Tailwind (только в админке) */
+          #__admin_root [class^="pt-"],
+          #__admin_root [class*=" pt-"] { padding-top: 0 !important; }
+          #__admin_root [class^="mt-"],
+          #__admin_root [class*=" mt-"] { margin-top: 0 !important; }
+          /* На десктопе исключаем липкий хедер для предотвращения скачка */
+          @media (min-width: 1024px) {
+            #__admin_root header.sticky { position: static !important; }
+          }
+        `}</style>
+      </div>
+    </ErrorBoundary>
   );
 } 
