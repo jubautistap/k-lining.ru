@@ -104,7 +104,6 @@ export default function ExportTools({
         throw new Error('Failed to create order');
       }
     } catch (error) {
-      console.error('Error creating order:', error);
       alert('Ошибка при создании заказа');
     } finally {
       setIsCreatingOrder(false);

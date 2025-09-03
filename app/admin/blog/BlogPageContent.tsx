@@ -61,7 +61,7 @@ export default function AdminBlogPage() {
         setPosts(data.posts);
       }
     } catch (error) {
-      console.error('Error loading posts:', error);
+      // Error loading posts
     }
   };
 
@@ -83,7 +83,7 @@ export default function AdminBlogPage() {
         setEditingPost(null);
       }
     } catch (error) {
-      console.error('Error saving post:', error);
+      // Error saving post
     }
   };
 
@@ -101,7 +101,6 @@ export default function AdminBlogPage() {
       if (!res.ok) throw new Error(data.error || 'upload failed');
       onUrl(data.url);
     } catch (e) {
-      console.error('Upload failed', e);
       alert('Ошибка загрузки изображения');
     }
   };
@@ -120,7 +119,7 @@ export default function AdminBlogPage() {
         await loadPosts();
       }
     } catch (error) {
-      console.error('Error deleting post:', error);
+      // Error deleting post
     }
   };
 
@@ -150,7 +149,7 @@ export default function AdminBlogPage() {
         });
       }
     } catch (error) {
-      console.error('Error adding post:', error);
+      // Error adding post
     }
   };
 

@@ -81,7 +81,7 @@ export default function AdminLeadsPage() {
         setLeads(data.leads);
       }
     } catch (error) {
-      console.error('Error loading leads:', error);
+      // Error loading leads
     } finally {
       setIsLoading(false);
     }
@@ -126,7 +126,7 @@ export default function AdminLeadsPage() {
         await loadLeads();
       }
     } catch (error) {
-      console.error('Error updating lead status:', error);
+      // Error updating lead status
     }
   };
 
@@ -142,7 +142,7 @@ export default function AdminLeadsPage() {
         await loadLeads();
       }
     } catch (error) {
-      console.error('Error deleting lead:', error);
+      // Error deleting lead
     }
   };
 

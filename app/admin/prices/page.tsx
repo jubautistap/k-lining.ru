@@ -72,7 +72,7 @@ export default function AdminPricesPage() {
         }
       }
     } catch (error) {
-      console.error('Error loading prices:', error);
+      // Error loading prices
     }
   };
 
@@ -94,7 +94,7 @@ export default function AdminPricesPage() {
         setEditingPrice(null);
       }
     } catch (error) {
-      console.error('Error saving price:', error);
+      // Error saving price
     }
   };
 
@@ -112,7 +112,7 @@ export default function AdminPricesPage() {
         await loadPrices();
       }
     } catch (error) {
-      console.error('Error deleting price:', error);
+      // Error deleting price
     }
   };
 
@@ -140,7 +140,7 @@ export default function AdminPricesPage() {
         });
       }
     } catch (error) {
-      console.error('Error adding price:', error);
+      // Error adding price
     }
   };
 

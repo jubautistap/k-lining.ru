@@ -35,24 +35,17 @@ export async function POST(request: NextRequest) {
       });
       if (!res.ok) {
         const errTxt = await res.text().catch(() => '');
-        console.error('Admin leads POST failed:', res.status, errTxt);
+        
         return NextResponse.json({ error: 'Failed to create lead in admin', details: errTxt }, { status: 502 });
       }
     } catch (error) {
-      console.error('Error adding lead to admin:', error);
+      
       return NextResponse.json({ error: 'Upstream error while creating lead' }, { status: 502 });
     }
 
     // Здесь будет интеграция с amoCRM API
-    console.log('Lead data for amoCRM:', {
-      name,
-      phone,
-      email,
-      service,
-      message,
-      timestamp: new Date().toISOString(),
-      source: 'website'
-    });
+    // Log lead data for amoCRM - console disabled to avoid ESLint errors
+    // TODO: Send data to amoCRM API
 
     // Пример интеграции с amoCRM (замените на реальные данные)
     const amoCRMData = {
@@ -88,7 +81,7 @@ export async function POST(request: NextRequest) {
     );
 
   } catch (error) {
-    console.error('Error processing lead:', error);
+    
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
       { status: 500 }

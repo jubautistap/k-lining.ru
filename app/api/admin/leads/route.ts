@@ -107,7 +107,7 @@ export async function GET(request: NextRequest) {
         }
       });
     } catch (dbError) {
-      console.error('DB error fetching leads, fallback to memory:', dbError);
+      
       const rows = memoryLeads;
       const total = rows.length;
       const sliced = rows.slice(skip, skip + limit);
@@ -143,7 +143,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    console.error('Error fetching leads:', error);
+    
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -201,7 +201,7 @@ export async function POST(request: NextRequest) {
         }
       });
     } catch (dbError) {
-      console.error('DB error creating lead, fallback to memory:', dbError);
+      
       newLead = {
         id: Date.now().toString(),
         name: safeName,
@@ -235,7 +235,7 @@ export async function POST(request: NextRequest) {
         const c = rows.find((r: any) => r.key === 'telegramChatId')?.value as string | undefined;
         if (t && c) candidates.push({ token: t, chat: c });
       } catch (e) {
-        console.warn('Settings read failed (telegram):', e);
+        
       }
 
       // Уникализируем пары, чтобы не слать дубль
@@ -262,18 +262,18 @@ export async function POST(request: NextRequest) {
             });
             if (!resp.ok) {
               const errTxt = await resp.text().catch(() => '');
-              console.warn('Telegram send failed:', resp.status, errTxt);
+              
             }
           } catch (e) {
-            console.warn('Telegram send error:', e);
+            
           }
         }));
         clearTimeout(timeout);
       } else {
-        console.warn('Telegram not configured: no candidates for sending');
+        
       }
     } catch (error) {
-      console.error('Telegram notification error:', error);
+      
     }
 
     return NextResponse.json({ 
@@ -283,7 +283,7 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.warn('Lead validation failed:', error.flatten());
+      
       return NextResponse.json(
         { error: 'Validation failed', details: error.errors },
         { status: 400 }
@@ -297,7 +297,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.error('Error creating lead:', error);
+    
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

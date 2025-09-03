@@ -601,7 +601,6 @@ export default function CalculatorPage() {
                               alert(`Ошибка оформления: ${data.error || 'неизвестно'}`);
                             }
                           } catch (err) {
-                            console.error(err);
                             alert('Ошибка сети при оформлении заказа');
                           }
                         }}

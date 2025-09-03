@@ -84,7 +84,7 @@ export default function AdminSettingsPage() {
         setSettings(data.settings);
       }
     } catch (error) {
-      console.error('Error loading settings:', error);
+      // Settings loading failed, using defaults
     }
   };
 
@@ -103,7 +103,6 @@ export default function AdminSettingsPage() {
         alert('Ошибка при сохранении настроек');
       }
     } catch (error) {
-      console.error('Error saving settings:', error);
       alert('Ошибка при сохранении настроек');
     } finally {
       setIsLoading(false);
@@ -156,7 +155,6 @@ export default function AdminSettingsPage() {
         alert(`Ошибка отправки: ${err.error || 'неизвестно'}`);
       }
     } catch (error) {
-      console.error('Error testing telegram:', error);
       alert('Ошибка отправки тестового сообщения');
     }
   };

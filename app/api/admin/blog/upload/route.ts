@@ -47,7 +47,6 @@ export async function POST(request: NextRequest) {
     const url = `/uploads/blog/${filename}`;
     return NextResponse.json({ success: true, url });
   } catch (e) {
-    console.error('Upload error:', e);
     return NextResponse.json({ error: 'upload failed' }, { status: 500 });
   }
 }

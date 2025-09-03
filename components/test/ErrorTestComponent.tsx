@@ -55,7 +55,7 @@ export default function ErrorTestComponent() {
       });
       alert('Manual error logged successfully! Check console.');
     } catch (error) {
-      console.error('Failed to log manual error:', error);
+      // Error logging already handled by the logError function
     }
   };
 

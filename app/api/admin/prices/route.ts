@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error creating price:', error);
+    
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
       { status: 500 }
@@ -104,7 +104,7 @@ export async function PUT(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error updating price:', error);
+    
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
       { status: 500 }

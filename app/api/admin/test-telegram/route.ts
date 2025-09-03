@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
         });
       } catch (e) {
         // если БД недоступна — игнорируем, тест по телеге не должен падать
-        console.warn('Test lead creation failed:', e);
+        
       }
     }
 
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Telegram test error:', error);
+    
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
       { status: 500 }

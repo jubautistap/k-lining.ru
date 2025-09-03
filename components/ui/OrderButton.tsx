@@ -53,7 +53,7 @@ export default function OrderButton({
         });
       }
     } catch (error) {
-      console.warn('Ошибка отслеживания события:', error);
+      // Analytics tracking failed, continue silently
     }
     
     // Вызываем пользовательский обработчик
@@ -66,7 +66,7 @@ export default function OrderButton({
     try {
       router.push(href || '/contacts');
     } catch (navError) {
-      console.warn('Ошибка навигации по кнопке заказа:', navError);
+      // Navigation failed, user can try again
     }
   };
 

@@ -43,7 +43,7 @@ export function useAuth() {
         credentials: 'include',
       });
     } catch (error) {
-      console.error('Logout error:', error);
+      
     } finally {
       resetAuthState();
       if (pathname?.startsWith('/admin') && pathname !== '/admin/login') {
@@ -80,7 +80,7 @@ export function useAuth() {
         resetAuthState();
       }
     } catch (error) {
-      console.error('Token refresh error:', error);
+      
       resetAuthState();
     }
   }, [resetAuthState]);
@@ -111,7 +111,7 @@ export function useAuth() {
         return { success: false, error: error.error };
       }
     } catch (error) {
-      console.error('Login error:', error);
+      
       return { success: false, error: 'Network error' };
     }
   }, []);
@@ -140,7 +140,7 @@ export function useAuth() {
           await refreshToken();
         }
       } catch (error) {
-        console.error('Auth check error:', error);
+        
         setAuthState(prev => ({ ...prev, isLoading: false }));
       }
     };

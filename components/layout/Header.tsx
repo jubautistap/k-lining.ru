@@ -98,9 +98,11 @@ export default function Header() {
             <a 
               href="tel:+79255551833" 
               className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium whitespace-nowrap text-sm xl:text-base"
+              title="+7 (925) 555-18-33"
             >
               <Phone className="w-4 h-4" />
               <span className="hidden xl:inline">+7 (925) 555-18-33</span>
+              <span className="xl:hidden text-xs">+7 (925) 555-18-33</span>
             </a>         
             <button
               onClick={handleModalOpen}

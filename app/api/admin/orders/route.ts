@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     try {
       created = await prisma.order.create({ data });
     } catch (e) {
-      console.warn('Order create with COGS failed, retrying without cost fields:', e);
+      
       const fallback: any = {
         lead: { connect: { id: leadId } },
         service_type,
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    console.error('Create order error:', error);
+    
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

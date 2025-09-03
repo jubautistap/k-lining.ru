@@ -1353,7 +1353,6 @@ export default function AdminCalculator() {
                           alert(`Ошибка: ${data.error || res.status}`);
                         }
                       } catch (e) {
-                        console.error(e);
                         alert('Ошибка сети при закрытии лида');
                       }
                     }}
@@ -1384,7 +1383,6 @@ export default function AdminCalculator() {
                           alert(`Ошибка создания лида: ${data.error || res.status}`);
                         }
                       } catch (e) {
-                        console.error(e);
                         alert('Ошибка сети при создании лида');
                       }
                     }}

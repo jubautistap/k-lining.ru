@@ -291,13 +291,14 @@ export default function RootLayout({
             window.addEventListener('load', () => {
               navigator.serviceWorker.register('/sw.js')
                 .then((reg) => {
-                  console.log('SW зарегистрирован');
                   // Очистка кэша раз в день
                   setInterval(() => {
                     reg.active?.postMessage('CLEAN_CACHE');
                   }, 24 * 60 * 60 * 1000);
                 })
-                .catch((err) => console.warn('SW ошибка:', err));
+                .catch(() => {
+                  // Service worker registration failed, continue without it
+                });
             });
           }
         `}</Script>

@@ -93,7 +93,7 @@ export default function AmoCRMProvider({ children }: { children: React.ReactNode
       // Закрываем модальное окно после успешной отправки
       closeModal();
     } catch (error) {
-      console.error('Error submitting lead:', error);
+      // Lead submission failed, error will be handled by calling component
       throw error;
     }
   };

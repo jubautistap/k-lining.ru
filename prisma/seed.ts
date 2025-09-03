@@ -19,7 +19,7 @@ async function main() {
     },
   });
   
-  console.log('✅ Создан администратор:', admin.email);
+  
   
   // Создать менеджера
   const managerPasswordHash = await AuthService.hashPassword('manager123');
@@ -36,7 +36,7 @@ async function main() {
     },
   });
   
-  console.log('✅ Создан менеджер:', manager.email);
+  
   
   // Создать настройки
   const settings = [
@@ -56,7 +56,7 @@ async function main() {
     });
   }
   
-  console.log('✅ Созданы настройки:', settings.length);
+  
   
   // Создать тестовые лиды
   const testLeads = [
@@ -95,16 +95,16 @@ async function main() {
     await prisma.lead.create({ data: lead });
   }
   
-  console.log('✅ Созданы тестовые лиды:', testLeads.length);
   
-  console.log('\n🎉 Seed данные успешно созданы!');
-  console.log('📧 Админ: admin@k-lining.ru / admin123');
-  console.log('📧 Менеджер: manager@k-lining.ru / manager123');
+  
+  
+  
+  
 }
 
 main()
   .catch((e) => {
-    console.error('❌ Ошибка seed данных:', e);
+    
     process.exit(1);
   })
   .finally(async () => {

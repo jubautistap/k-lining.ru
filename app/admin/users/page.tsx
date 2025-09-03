@@ -161,7 +161,7 @@ export default function UsersPage() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Статус
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
                   Последний вход
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -177,21 +177,27 @@ export default function UsersPage() {
                   animate={{ opacity: 1 }}
                   className="hover:bg-gray-50"
                 >
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center min-w-0">
+                      <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
                         <User className="w-4 h-4 text-primary-600" />
                       </div>
-                      <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{user.name}</div>
-                        <div className="text-sm text-gray-500">{user.email}</div>
+                      <div className="ml-4 min-w-0">
+                        <div className="text-sm font-medium text-gray-900 truncate">{user.name}</div>
+                        <div className="text-sm text-gray-500 truncate">{user.email}</div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getRoleColor(user.role)}`}>
-                      {user.role === 'admin' ? 'Администратор' : 
-                       user.role === 'manager' ? 'Менеджер' : 'Редактор'}
+                      <span className="hidden sm:inline">
+                        {user.role === 'admin' ? 'Администратор' : 
+                         user.role === 'manager' ? 'Менеджер' : 'Редактор'}
+                      </span>
+                      <span className="sm:hidden">
+                        {user.role === 'admin' ? 'Админ' : 
+                         user.role === 'manager' ? 'Менедж.' : 'Ред.'}
+                      </span>
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -199,7 +205,7 @@ export default function UsersPage() {
                       {user.status === 'active' ? 'Активен' : 'Неактивен'}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden md:table-cell">
                     {user.lastLogin}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">

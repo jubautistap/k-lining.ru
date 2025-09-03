@@ -141,7 +141,8 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
             </div>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="lg:hidden text-gray-500 hover:text-gray-700"
+              className="lg:hidden text-gray-500 hover:text-gray-700 min-h-[44px] min-w-[44px] flex items-center justify-center"
+              aria-label="Закрыть меню"
             >
               <X className="w-5 h-5" />
             </button>
@@ -158,7 +159,7 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                  className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors min-h-[44px] ${
                     isActive 
                       ? 'bg-primary-50 text-primary-700 border-r-2 border-primary-600' 
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
@@ -177,7 +178,7 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
           <div className="p-4 border-t border-gray-200">
             <button
               onClick={handleLogout}
-              className="flex items-center space-x-3 w-full px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+              className="flex items-center space-x-3 w-full px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors min-h-[44px]"
             >
               <LogOut className="w-5 h-5" />
               <span>Выйти</span>
@@ -193,7 +194,8 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
           <div className="flex items-center justify-between px-4 py-3">
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="text-gray-600 hover:text-gray-900 lg:hidden"
+              className="text-gray-600 hover:text-gray-900 lg:hidden min-h-[44px] min-w-[44px] flex items-center justify-center"
+              aria-label="Открыть меню"
             >
               <Menu className="w-6 h-6" />
             </button>

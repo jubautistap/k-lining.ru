@@ -52,7 +52,7 @@ export default function AmoCRMModal() {
         });
       }
     } catch (error) {
-      console.warn('Ошибка отслеживания:', error);
+      // Analytics tracking failed, continue silently
     }
   };
 
@@ -114,7 +114,6 @@ export default function AmoCRMModal() {
       reset();
       closeModal();
     } catch (error) {
-      console.error('Ошибка отправки заявки:', error);
       toast.error('Произошла ошибка. Попробуйте еще раз.');
     } finally {
       setIsSubmitting(false);

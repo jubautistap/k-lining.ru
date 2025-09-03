@@ -54,7 +54,7 @@ export default function ContactSection() {
           });
         }
       } catch (error) {
-        console.warn('Ошибка отслеживания события формы:', error);
+        // Analytics tracking failed, continue silently
       }
 
       // Отправка данных на сервер
@@ -76,7 +76,6 @@ export default function ContactSection() {
         throw new Error('Ошибка отправки');
       }
     } catch (error) {
-      console.error('Ошибка отправки формы:', error);
       toast.error('Произошла ошибка при отправке. Попробуйте позже.');
     } finally {
       setIsSubmitting(false);

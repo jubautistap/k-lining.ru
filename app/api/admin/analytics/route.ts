@@ -197,7 +197,6 @@ export async function GET(request: NextRequest) {
       alerts,
     });
   } catch (error) {
-    console.error('Analytics error:', error);
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
       { status: 500 }

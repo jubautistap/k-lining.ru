@@ -46,7 +46,6 @@ export async function DELETE(
     });
 
   } catch (error) {
-    console.error('Error deleting post:', error);
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
       { status: 500 }

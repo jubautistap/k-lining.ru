@@ -44,7 +44,6 @@ export async function PATCH(
     if (anyErr?.code === 'P2025') {
       return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
     }
-    console.error('Error updating lead:', error);
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
       { status: 500 }
@@ -63,7 +62,6 @@ export async function DELETE(
     return NextResponse.json({ success: true, message: 'Заявка удалена', lead: deleted });
 
   } catch (error) {
-    console.error('Error deleting lead:', error);
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
       { status: 500 }

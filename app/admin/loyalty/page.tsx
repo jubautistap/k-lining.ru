@@ -332,10 +332,10 @@ export default function LoyaltyPage() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Заказы
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">
                     Сумма
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
                     Последний заказ
                   </th>
                 </tr>
@@ -348,14 +348,14 @@ export default function LoyaltyPage() {
                     animate={{ opacity: 1 }}
                     className="hover:bg-gray-50"
                   >
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center min-w-0">
+                        <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
                           <Users className="w-4 h-4 text-primary-600" />
                         </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">{customer.name}</div>
-                          <div className="text-sm text-gray-500">{customer.email}</div>
+                        <div className="ml-4 min-w-0">
+                          <div className="text-sm font-medium text-gray-900 truncate">{customer.name}</div>
+                          <div className="text-sm text-gray-500 truncate">{customer.email}</div>
                         </div>
                       </div>
                     </td>
@@ -370,10 +370,10 @@ export default function LoyaltyPage() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {customer.totalOrders}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 hidden lg:table-cell">
                       {customer.totalSpent.toLocaleString()} ₽
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden md:table-cell">
                       {customer.lastOrder}
                     </td>
                   </motion.tr>

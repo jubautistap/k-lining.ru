@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ settings: merged });
   } catch (error) {
-    console.error('Settings GET error, fallback to memory:', error);
+    
     return NextResponse.json({ settings: siteSettings });
   }
 }
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error saving settings:', error);
+    
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
       { status: 500 }

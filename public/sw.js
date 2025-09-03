@@ -85,7 +85,7 @@ async function handleFetch(request) {
     return await networkFirst(request);
 
   } catch (error) {
-    console.warn('SW fetch error:', error);
+    // Service worker fetch failed, fallback to network
     return fetch(request);
   }
 }

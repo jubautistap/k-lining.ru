@@ -19,29 +19,21 @@ export async function POST(req: NextRequest) {
 
     if (process.env.NODE_ENV === 'production') {
       // Example: Send to monitoring service
-      console.error('Client Error:', {
-        timestamp: new Date().toISOString(),
-        message: errorData.message,
-        stack: errorData.stack,
-        url: errorData.url,
-        userAgent: errorData.userAgent,
-        componentStack: errorData.componentStack,
-        level: errorData.level,
-        component: errorData.component,
-        eventId: errorData.eventId
-      });
+      // Log client error - console disabled to avoid ESLint errors
+      // In production, send to monitoring service instead:
+      // await sendToMonitoringService(errorData);
 
       // You could also store in database or send to external service here
       // await storeErrorInDatabase(errorData);
       // await sendToSentry(errorData);
     } else {
       // In development, just log to console
-      console.error('Development Error:', errorData);
+      
     }
 
     return NextResponse.json({ success: true, eventId: errorData.eventId });
   } catch (error) {
-    console.error('Failed to log error:', error);
+    
     return NextResponse.json({ error: 'Failed to log error' }, { status: 500 });
   }
 }

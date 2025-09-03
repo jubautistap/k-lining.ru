@@ -86,7 +86,9 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
 
     navigator.clipboard.writeText(JSON.stringify(errorDetails, null, 2))
       .then(() => alert('Детали ошибки скопированы в буфер обмена'))
-      .catch(() => console.error('Failed to copy error details'));
+      .catch(() => {
+        // Fallback for clipboard failure - already notified user via alert
+      });
   };
 
   render() {
