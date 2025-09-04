@@ -33,6 +33,7 @@ module.exports = {
   autoLastmod: true,
   // предпочтительные расширения locales уже в путях, поэтому alternateRefs не нужен
   sitemapSize: 5000,
+  // SEO лендинги теперь с правильными метаданными
   additionalPaths: async (config) => {
     try {
       const fs = require('fs');

@@ -6,8 +6,8 @@ import StructuredData from '@/components/seo/StructuredData';
 import ReviewSchema from '@/components/ui/ReviewSchema';
 
 export const metadata: Metadata = {
-  title: 'Химчистка мебели в Москве — цены и заказ | K-lining 24/7',
-  description: 'Химчистка мебели в Москве: диваны, кресла, матрасы на дому. Удаление пятен и запахов, быстрая сушка. Безопасно для детей ⭐',
+  title: 'Химчистка мебели в Москве 24/7 — диваны, кресла, ковры | K-lining',
+  description: 'Химчистка мебели в Москве 24/7: диваны от 3500₽, кресла от 2500₽, ковры от 2500₽. Выезд на дом, эко-средства, быстрая сушка ⭐',
   keywords: 'химчистка мебели москва, химчистка дивана москва, чистка ковров москва',
   alternates: { canonical: 'https://k-lining.ru/himchistka-mebeli-moskva' },
   openGraph: {

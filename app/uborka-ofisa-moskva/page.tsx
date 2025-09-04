@@ -5,7 +5,7 @@ import OpenWizardButton from '@/components/ui/OpenWizardButton';
 import ReviewSchema from '@/components/ui/ReviewSchema';
 
 export const metadata: Metadata = {
-  title: 'Уборка офиса в Москве — ежедневная, генеральная | K-lining',
+  title: 'Уборка офисов в Москве 24/7 — коммерческий клининг | K-lining',
   description: 'Уборка офиса в Москве: ежедневная, генеральная, дезинфекция. Профессиональные бригады, документооборот, гибкий график 24/7 ⭐',
   keywords: 'уборка офиса москва, клининг офисов москва, ежедневная уборка офиса',
   alternates: { canonical: 'https://k-lining.ru/uborka-ofisa-moskva' },

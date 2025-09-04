@@ -6,8 +6,8 @@ import StructuredData from '@/components/seo/StructuredData';
 import ReviewSchema from '@/components/ui/ReviewSchema';
 
 export const metadata: Metadata = {
-  title: 'Уборка квартиры в Москве — цены и заказ | K-lining 24/7',
-  description: 'Уборка квартиры в Москве от 3500₽: поддерживающая, генеральная, после ремонта. Выезд 24/7, честные цены без доплат. Рассчитать ⭐',
+  title: 'Уборка квартир Москва 24/7 — профессиональный клининг | K-lining',
+  description: 'Уборка квартир в Москве 24/7: генеральная от 6000₽, поддерживающая от 3500₽, после ремонта от 8000₽. Гарантия качества, выезд за 2 часа ⭐',
   keywords: 'уборка квартиры москва, клининг квартиры москва, поддерживающая уборка, генеральная уборка, уборка после ремонта',
   alternates: { canonical: 'https://k-lining.ru/uborka-kvartiry-moskva' },
   openGraph: {
