@@ -30,70 +30,128 @@ export default function MiniCalculator(props: MiniCalculatorProps) {
   }, [defaultArea, windowsCount]);
 
   return (
-    <div className={`rounded-2xl bg-white/90 backdrop-blur p-4 text-gray-900 shadow-xl ${className || ''}`}>
-      <div className="text-sm text-gray-500 mb-2">Быстрый расчёт</div>
-      <div className="flex items-end gap-3">
-        <div className="flex-1">
-          <label className="block text-xs text-gray-600 mb-1">Площадь, м²</label>
-          <input
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            value={areaText}
-            onChange={(e) => {
-              const digits = e.target.value.replace(/[^\d]/g, '');
-              setAreaText(digits);
-            }}
-            onBlur={() => {
-              const raw = areaText.replace(/[^\d]/g, '');
-              const parsed = raw ? parseInt(raw, 10) : NaN;
-              const clamped = Math.max(15, Math.min(500, isNaN(parsed) ? defaultArea : parsed));
-              setArea(clamped);
-              setAreaText(String(clamped));
-            }}
-            className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500"
-            placeholder="50"
-          />
-        </div>
-        {cleaningType === 'postRenovation' || cleaningType === 'general' ? (
-          <div>
-            <label className="block text-xs text-gray-600 mb-1">Окон, створок</label>
+    <div className={`rounded-2xl bg-gradient-to-br from-white to-primary-50 border-2 border-primary-100 p-6 text-gray-900 shadow-2xl ${className || ''}`}>
+      {/* Header */}
+      <div className="text-center mb-4">
+        <div className="text-lg font-bold text-primary-700 mb-1">💰 Узнайте стоимость за 30 секунд</div>
+        <div className="text-sm text-gray-600">Без звонков и долгих расчётов</div>
+      </div>
+
+      {/* Calculator */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div className="md:col-span-1">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            🏠 Площадь помещения
+          </label>
+          <div className="relative">
             <input
               type="text"
               inputMode="numeric"
               pattern="[0-9]*"
-              value={windowsText}
+              value={areaText}
               onChange={(e) => {
                 const digits = e.target.value.replace(/[^\d]/g, '');
-                setWindowsText(digits);
+                setAreaText(digits);
               }}
-              onFocus={(e) => { if (windowsText === '0') setWindowsText(''); (e.target as HTMLInputElement).select(); }}
               onBlur={() => {
-                const raw = windowsText.replace(/[^\d]/g, '');
-                const parsed = raw ? parseInt(raw, 10) : 0;
-                const clamped = Math.max(0, Math.min(200, parsed));
-                setWindows(clamped);
-                setWindowsText(clamped === 0 ? '' : String(clamped));
+                const raw = areaText.replace(/[^\d]/g, '');
+                const parsed = raw ? parseInt(raw, 10) : NaN;
+                const clamped = Math.max(15, Math.min(500, isNaN(parsed) ? defaultArea : parsed));
+                setArea(clamped);
+                setAreaText(String(clamped));
               }}
-              className="w-24 px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500"
-              placeholder="0"
+              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-200 text-lg font-semibold text-center"
+              placeholder="50"
             />
+            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">м²</span>
+          </div>
+        </div>
+        
+        {cleaningType === 'postRenovation' || cleaningType === 'general' ? (
+          <div className="md:col-span-1">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              🪟 Количество окон
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                value={windowsText}
+                onChange={(e) => {
+                  const digits = e.target.value.replace(/[^\d]/g, '');
+                  setWindowsText(digits);
+                }}
+                onFocus={(e) => { if (windowsText === '0') setWindowsText(''); (e.target as HTMLInputElement).select(); }}
+                onBlur={() => {
+                  const raw = windowsText.replace(/[^\d]/g, '');
+                  const parsed = raw ? parseInt(raw, 10) : 0;
+                  const clamped = Math.max(0, Math.min(200, parsed));
+                  setWindows(clamped);
+                  setWindowsText(clamped === 0 ? '' : String(clamped));
+                }}
+                className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary-400 focus:ring-2 focus:ring-primary-200 text-lg font-semibold text-center"
+                placeholder="0"
+              />
+              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">шт</span>
+            </div>
           </div>
         ) : null}
-        <div className="text-right ml-auto">
-          <div className="text-xs text-gray-500">Итого</div>
-          <div className="text-2xl font-bold">{quote.totalPrice.toLocaleString()} ₽</div>
-          <div className="text-[11px] text-gray-500">мин. заказ {MIN_ORDER.toLocaleString()} ₽</div>
+        
+        <div className="md:col-span-1 flex flex-col justify-center">
+          <div className="bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl p-4 text-center">
+            <div className="text-sm opacity-90 mb-1">Стоимость работ</div>
+            <div className="text-3xl font-bold">{quote.totalPrice.toLocaleString()} ₽</div>
+            <div className="text-xs opacity-80">минимум {MIN_ORDER.toLocaleString()} ₽</div>
+          </div>
         </div>
       </div>
-      <button
-        onClick={openModal}
-        className="mt-3 w-full inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 text-white py-3 font-semibold hover:bg-blue-700"
-        type="button"
-      >
-        <Phone className="w-4 h-4" /> Заказать сейчас <ArrowRight className="w-4 h-4" />
-      </button>
-      <div className="text-[11px] text-gray-500 mt-1">Цена предварительная, без учёта сложности</div>
+
+      {/* Benefits */}
+      <div className="grid grid-cols-3 gap-2 mb-4 text-xs text-center">
+        <div className="bg-white/60 rounded-lg p-2">
+          <div className="text-green-600 font-semibold">✓ Без доплат</div>
+          <div className="text-gray-600">Фиксированная цена</div>
+        </div>
+        <div className="bg-white/60 rounded-lg p-2">
+          <div className="text-green-600 font-semibold">✓ За 2 часа</div>
+          <div className="text-gray-600">Быстрый выезд</div>
+        </div>
+        <div className="bg-white/60 rounded-lg p-2">
+          <div className="text-green-600 font-semibold">✓ Гарантия</div>
+          <div className="text-gray-600">30 дней</div>
+        </div>
+      </div>
+
+      {/* CTA Buttons */}
+      <div className="space-y-3">
+        <button
+          onClick={openModal}
+          className="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white py-4 px-6 rounded-xl font-bold text-lg hover:from-primary-700 hover:to-primary-800 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+          type="button"
+        >
+          <Phone className="w-5 h-5" /> 
+          Заказать уборку сейчас
+          <ArrowRight className="w-5 h-5" />
+        </button>
+        
+        <button
+          onClick={openModal}
+          className="w-full bg-white border-2 border-primary-300 text-primary-700 py-3 px-6 rounded-xl font-semibold hover:bg-primary-50 transition-colors flex items-center justify-center gap-2"
+          type="button"
+        >
+          💬 Уточнить детали по WhatsApp
+        </button>
+      </div>
+
+      <div className="text-center mt-3">
+        <div className="text-xs text-gray-500">
+          * Окончательную цену озвучим после осмотра объекта
+        </div>
+        <div className="text-xs text-primary-600 font-medium">
+          🔒 Оплата только после выполнения работ
+        </div>
+      </div>
     </div>
   );
 }

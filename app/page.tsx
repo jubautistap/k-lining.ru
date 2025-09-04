@@ -5,6 +5,9 @@ import ServicesSection from '@/components/sections/ServicesSection';
 import WhyChooseUsSection from '@/components/sections/WhyChooseUsSection';
 import CaseStudiesSection from '@/components/sections/CaseStudiesSection';
 import LoftCentersCaseSection from '@/components/sections/LoftCentersCaseSection';
+import TestimonialsSection from '@/components/sections/TestimonialsSection';
+import TrustSection from '@/components/sections/TrustSection';
+import TeamSection from '@/components/sections/TeamSection';
 import ReviewSchema from '@/components/ui/ReviewSchema';
 
 // Критическая оптимизация: ленивая загрузка всех некритичных компонентов
@@ -140,6 +143,12 @@ export default function HomePage() {
           <CleaningCalculator />
         </div>
       </section>
+      <WhyChooseUsSection />
+      <CaseStudiesSection />
+      <TestimonialsSection />
+      <TrustSection />
+      <TeamSection />
+      <LoftCentersCaseSection />
       {/* Quick internal links to boost crawl/indexation */}
       <section className="py-8">
         <div className="container-custom">
@@ -165,9 +174,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <WhyChooseUsSection />
-      <CaseStudiesSection />
-      <LoftCentersCaseSection />
       {/* Убрали дублирующий калькулятор снизу */}
       <ContactSection />
       <StickyPromo enabled={true} />
