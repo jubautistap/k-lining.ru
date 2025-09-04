@@ -1,14 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
+import ReviewSchema from '@/components/ui/ReviewSchema';
 import { CheckCircle, Shield, Clock, Users, Star, Zap, Sofa } from 'lucide-react';
 import type { Metadata } from 'next';
-import FAQSchema from '@/components/ui/FAQSchema';
+import FAQSchema, { ServiceFAQ } from '@/components/ui/FAQSchema';
 import RelatedServicesSection from '@/components/sections/RelatedServicesSection';
+import { getServiceConfig } from '@/lib/seo/service-data';
+import StructuredData from '@/components/seo/StructuredData';
+import RelatedServices from '@/components/ui/RelatedServices';
+import Breadcrumbs, { BREADCRUMB_TEMPLATES } from '@/components/ui/Breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'Химчистка мебели в Москве на дому — от 1 000 ₽ | K-lining',
-  description: 'Профессиональная химчистка мебели на дому: диваны, кресла, матрасы, ковры. Безопасные средства, быстрая сушка. Работаем 24/7. Цены от 1 000 ₽.',
+  description: 'Химчистка мебели в Москве от 1000₽: диваны, кресла, матрасы на дому. Безопасная химия, быстрая сушка за 2-4 часа. Заказать ⭐',
+  keywords: 'химчистка мебели москва, чистка дивана, мягкая мебель',
   openGraph: {
     title: 'Химчистка мебели — диваны, кресла, матрасы, ковры',
     description: 'Профессиональная химчистка мебели на дому в Москве. Честные цены, выезд в день обращения.',
@@ -22,16 +28,30 @@ export const metadata: Metadata = {
 };
 
 export default function FurnitureDryCleaningPage() {
+  const serviceConfig = getServiceConfig('furniture-dry-cleaning');
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Хлебные крошки для быстрых ссылок */}
-      <div className="container-custom pt-6">
-        <BreadcrumbSchema 
-          items={[
-            { name: 'Услуги', url: '/services' },
-            { name: 'Химчистка мебели', url: '/services/furniture-dry-cleaning' }
-          ]} 
+    <>
+      {/* Enhanced Service Schema with duration, category, and detailed offerings */}
+      {serviceConfig && (
+        <StructuredData 
+          type="Service" 
+          data={serviceConfig}
         />
+      )}
+
+      {/* Reviews Schema for rich snippets */}
+      <ReviewSchema />
+
+      {/* Service-specific FAQ Schema */}
+      <ServiceFAQ 
+        serviceType="furniture-dry-cleaning"
+        displayFAQ={false}
+      />
+      
+      <div className="min-h-screen bg-gray-50">
+      {/* Хлебные крошки для быстрых ссылок */}
+      <div className="container-custom py-4">
+        <Breadcrumbs items={BREADCRUMB_TEMPLATES.services('Химчистка мебели')} />
       </div>
       
       {/* Hero Section */}
@@ -204,8 +224,9 @@ export default function FurnitureDryCleaningPage() {
         ]}
       />
 
-      {/* Перелинковка на смежные услуги */}
-      <RelatedServicesSection currentService="/services/furniture-dry-cleaning" />
-    </div>
+      {/* Связанные услуги */}
+      <RelatedServices currentService="furniture-dry-cleaning" />
+      </div>
+    </>
   );
 } 

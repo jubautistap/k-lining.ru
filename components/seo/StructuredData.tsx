@@ -43,7 +43,7 @@ const generateLocalBusiness = (additionalData?: any) => ({
   ...additionalData
 });
 
-// Генератор Service схемы
+// Генератор Service схемы с расширенными данными
 const generateService = (serviceData: any) => ({
   "@context": "https://schema.org",
   "@type": "Service",
@@ -55,11 +55,33 @@ const generateService = (serviceData: any) => ({
   },
   areaServed: COMPANY_DATA.areaServed,
   serviceType: serviceData.serviceType || "Клининговые услуги",
+  category: serviceData.category || "Клининговые услуги",
+  duration: serviceData.duration || "PT2H", // По умолчанию 2 часа
+  availableChannel: {
+    "@type": "ServiceChannel",
+    serviceUrl: COMPANY_DATA.url,
+    servicePhone: COMPANY_DATA.phone,
+    availableLanguage: "ru"
+  },
+  hoursAvailable: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    opens: "00:00",
+    closes: "23:59"
+  },
   offers: serviceData.offers || {
     "@type": "Offer",
     priceCurrency: "RUB", 
     price: serviceData.startingPrice || "6000",
-    description: `${serviceData.name} от ${serviceData.startingPrice || 6000}₽`
+    description: `${serviceData.name} от ${serviceData.startingPrice || 6000}₽`,
+    eligibleRegion: {
+      "@type": "City",
+      name: "Москва",
+      containedInPlace: {
+        "@type": "Country",
+        name: "Россия"
+      }
+    }
   },
   ...serviceData
 });

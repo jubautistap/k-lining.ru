@@ -5,6 +5,7 @@ import ServicesSection from '@/components/sections/ServicesSection';
 import WhyChooseUsSection from '@/components/sections/WhyChooseUsSection';
 import CaseStudiesSection from '@/components/sections/CaseStudiesSection';
 import LoftCentersCaseSection from '@/components/sections/LoftCentersCaseSection';
+import ReviewSchema from '@/components/ui/ReviewSchema';
 
 // Критическая оптимизация: ленивая загрузка всех некритичных компонентов
 const CleaningCalculator = dynamic(() => import('@/components/calculators/CleaningCalculator'), {
@@ -32,8 +33,8 @@ const StickyPromo = dynamic(() => import('@/components/ui/StickyPromo'), {
 
 export const metadata: Metadata = {
   title: 'Уборка квартир и офисов в Москве 24/7 — мин. заказ 6 000 ₽ | K-lining',
-  description: 'Уборка квартир Москва, уборка офисов, генеральная уборка, уборка после ремонта, химчистка мебели, мытьё окон. Профессиональная клининговая компания в Москве и МО. Работаем 24/7. Бесплатная консультация. Прозрачные цены.',
-  keywords: 'уборка квартир москва, уборка квартиры москва цена, клининговая компания москва, уборка офисов москва, генеральная уборка москва, уборка после ремонта москва, химчистка мебели москва, мытьё окон москва, клининг 24/7 москва, профессиональная уборка, химчистка дивана на дому',
+  description: 'Клининговые услуги в Москве от 3500₽: уборка квартир, офисов, химчистка мебели. K-lining работает 24/7, выезд за 2 часа. Заказать ⭐',
+  keywords: 'уборка квартир москва, клининг цена, генеральная уборка, химчистка мебели, мытьё окон',
   openGraph: {
     title: 'Профессиональная уборка квартир и офисов в Москве - K-lining 24/7',
     description: 'Профессиональная уборка квартир и офисов в Москве ⭐ Клининговая компания K-lining ⭐ Химчистка мебели, мытьё окон, генеральная уборка ⭐ Работаем 24/7 ⭐ Минимальный заказ — 6,000₽ ⭐ Выезд в любой район Москвы и МО',
@@ -75,6 +76,9 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
+      {/* Reviews Schema для rich snippets */}
+      <ReviewSchema />
+      
       {/* FAQ Schema для rich snippets */}
       <script
         type="application/ld+json"

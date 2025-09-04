@@ -3,14 +3,20 @@ import Link from 'next/link';
 import OpenWizardButton from '@/components/ui/OpenWizardButton';
 import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
+import ReviewSchema from '@/components/ui/ReviewSchema';
 import RelatedServicesSection from '@/components/sections/RelatedServicesSection';
-import FAQSchema from '@/components/ui/FAQSchema';
+import FAQSchema, { ServiceFAQ } from '@/components/ui/FAQSchema';
+import { getServiceConfig } from '@/lib/seo/service-data';
+import StructuredData from '@/components/seo/StructuredData';
+import RelatedServices from '@/components/ui/RelatedServices';
+import Breadcrumbs, { BREADCRUMB_TEMPLATES } from '@/components/ui/Breadcrumbs';
 import { CheckCircle, Shield, Clock, Users, Star, Zap, Square } from 'lucide-react';
 import MiniCalculator from '@/components/calculators/MiniCalculator';
 
 export const metadata: Metadata = {
   title: 'Мытьё окон в Москве — от 600 ₽ за створку, безопасно и без разводов | K-lining',
-  description: 'Профессиональное мытьё окон в квартирах, домах и офисах. Полировка стекла, рам и подоконников. Работаем 24/7, выезд в день обращения. Тариф — от 600 ₽ за створку.',
+  description: 'Мытьё окон в Москве от 600₽ за створку: квартиры, офисы, витражи. Безопасно, без разводов, экология. Выезд в день заказа 24/7 ⭐',
+  keywords: 'мытье окон москва, чистка окон, оконный сервис',
   openGraph: {
     title: 'Мытьё окон — профессионально, быстро, без разводов',
     description: 'Мытьё окон и витражей в Москве. Балконы, лоджии, высотные работы. Честные цены — от 600 ₽ за створку.',
@@ -28,16 +34,30 @@ export const metadata: Metadata = {
 };
 
 export default function WindowCleaningPage() {
+  const serviceConfig = getServiceConfig('window-cleaning');
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Хлебные крошки для быстрых ссылок */}
-      <div className="container mx-auto px-4 pt-6">
-        <BreadcrumbSchema
-          items={[
-            { name: 'Услуги', url: '/services' },
-            { name: 'Мытьё окон', url: '/services/window-cleaning' },
-          ]}
+    <>
+      {/* Enhanced Service Schema with duration, category, and detailed offerings */}
+      {serviceConfig && (
+        <StructuredData 
+          type="Service" 
+          data={serviceConfig}
         />
+      )}
+
+      {/* Reviews Schema for rich snippets */}
+      <ReviewSchema />
+
+      {/* Service-specific FAQ Schema */}
+      <ServiceFAQ 
+        serviceType="window-cleaning"
+        displayFAQ={false}
+      />
+      
+      <div className="min-h-screen bg-gray-50">
+      {/* Хлебные крошки для быстрых ссылок */}
+      <div className="container-custom py-4">
+        <Breadcrumbs items={BREADCRUMB_TEMPLATES.services('Мытье окон')} />
       </div>
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-cyan-600 to-cyan-800 text-white py-20">
@@ -195,8 +215,9 @@ export default function WindowCleaningPage() {
         ]}
       />
 
-      {/* Перелинковка на смежные услуги */}
-      <RelatedServicesSection currentService="/services/window-cleaning" />
-    </div>
+      {/* Связанные услуги */}
+      <RelatedServices currentService="window-cleaning" />
+      </div>
+    </>
   );
 } 

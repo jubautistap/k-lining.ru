@@ -2,10 +2,11 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import OpenWizardButton from '@/components/ui/OpenWizardButton';
+import ReviewSchema from '@/components/ui/ReviewSchema';
 
 export const metadata: Metadata = {
   title: 'Уборка офиса в Москве — ежедневная, генеральная | K-lining',
-  description: 'Клининг офисов в Москве: ежедневная и генеральная уборка, профессиональные бригады, документы и договор. Гибкий график.',
+  description: 'Уборка офиса в Москве: ежедневная, генеральная, дезинфекция. Профессиональные бригады, документооборот, гибкий график 24/7 ⭐',
   keywords: 'уборка офиса москва, клининг офисов москва, ежедневная уборка офиса',
   alternates: { canonical: 'https://k-lining.ru/uborka-ofisa-moskva' },
   openGraph: {
@@ -19,7 +20,11 @@ export const metadata: Metadata = {
 
 export default function OfficeCleaningMoscowPage() {
   return (
-    <section className="section-padding bg-gradient-to-br from-gray-50 to-white">
+    <>
+      {/* Reviews Schema for rich snippets */}
+      <ReviewSchema />
+      
+      <section className="section-padding bg-gradient-to-br from-gray-50 to-white">
       <div className="container-custom space-y-8">
         <nav className="text-sm text-gray-500">
           <ol className="flex items-center space-x-2">
@@ -61,7 +66,8 @@ export default function OfficeCleaningMoscowPage() {
           </div>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }
 

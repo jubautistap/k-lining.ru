@@ -53,43 +53,56 @@ module.exports = {
     }
   },
   transform: async (config, path) => {
-    // Настройка приоритетов для разных страниц
+    // Настройка приоритетов для разных типов страниц
     let priority = 0.7;
     let changefreq = 'weekly';
 
-    // Главная страница
+    // Главная страница - максимальный приоритет
     if (path === '/') {
       priority = 1.0;
       changefreq = 'daily';
     }
     
-    // Страницы услуг
-    if (path.includes('/services') || path.includes('/prices')) {
+    // Основные страницы услуг - очень высокий приоритет
+    else if (
+      path.startsWith('/services/') ||
+      path === '/uborka-kvartiry-moskva' ||
+      path === '/uborka-ofisa-moskva' ||
+      path === '/uborka-posle-remonta-moskva' ||
+      path === '/himchistka-mebeli-moskva' ||
+      path === '/myte-okon-moskva'
+    ) {
       priority = 0.9;
       changefreq = 'weekly';
     }
     
-    // Блог
-    if (path.includes('/blog')) {
+    // Важные статические страницы
+    else if (['/services', '/prices', '/contacts', '/about', '/calculator'].includes(path)) {
+      priority = 0.8;
+      changefreq = 'weekly';
+    }
+    
+    // SEO лендинги и региональные страницы
+    else if (path === '/klining-cena-moskva' || path.startsWith('/districts/')) {
       priority = 0.8;
       changefreq = 'monthly';
     }
     
-    // Районы
-    if (path.includes('/districts')) {
-      priority = 0.7;
+    // Блог - средний приоритет, периодические обновления
+    else if (path.startsWith('/blog/') || path === '/blog') {
+      priority = 0.6;
       changefreq = 'monthly';
     }
     
-    // Контакты и о нас
-    if (path.includes('/contacts') || path.includes('/about')) {
-      priority = 0.8;
+    // FAQ, политики, прочие служебные страницы
+    else if (['/faq', '/privacy', '/terms', '/careers'].includes(path)) {
+      priority = 0.5;
       changefreq = 'monthly';
     }
     
-    // FAQ
-    if (path.includes('/faq')) {
-      priority = 0.8;
+    // Остальные страницы - базовый приоритет
+    else {
+      priority = 0.5;
       changefreq = 'monthly';
     }
 
@@ -97,7 +110,15 @@ module.exports = {
       loc: path,
       changefreq,
       priority,
-      lastmod: new Date().toISOString(), // Актуальная дата
+      lastmod: new Date().toISOString(),
+      
+      // Альтернативные языки для международной SEO (готовность к масштабированию)
+      alternateRefs: [
+        {
+          href: `https://k-lining.ru${path}`,
+          hreflang: 'ru-RU',
+        },
+      ],
     };
   },
 }; 

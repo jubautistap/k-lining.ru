@@ -1,17 +1,22 @@
 import React from 'react';
 import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
+import ReviewSchema from '@/components/ui/ReviewSchema';
 import RelatedServicesSection from '@/components/sections/RelatedServicesSection';
-import FAQSchema from '@/components/ui/FAQSchema';
+import FAQSchema, { ServiceFAQ } from '@/components/ui/FAQSchema';
 import Link from 'next/link';
 import OpenWizardButton from '@/components/ui/OpenWizardButton';
+import { getServiceConfig } from '@/lib/seo/service-data';
+import StructuredData from '@/components/seo/StructuredData';
+import RelatedServices from '@/components/ui/RelatedServices';
+import Breadcrumbs, { BREADCRUMB_TEMPLATES } from '@/components/ui/Breadcrumbs';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
 import MiniCalculator from '@/components/calculators/MiniCalculator';
 
 export const metadata: Metadata = {
   title: 'Уборка домов и коттеджей в Москве — от 5 000 ₽, гарантия | K-lining',
-  description: 'Профессиональная уборка частных домов, коттеджей и таунхаусов в Москве и МО. Уборка после ремонта, поддерживающая уборка. Гарантия качества, выезд в день заказа. Цены от 5000₽.',
-  keywords: 'уборка домов Москва, уборка коттеджей, уборка таунхаусов, уборка дач, клининг домов, уборка частного дома, уборка после ремонта дома, поддерживающая уборка дома',
+  description: 'Уборка домов в Москве от 5000₽: коттеджи, таунхаусы, дачи. Профессиональная команда, эко-средства, выезд в МО. Гарантия качества ⭐',
+  keywords: 'уборка домов москва, уборка коттеджей, клининг домов',
   openGraph: {
     title: 'Уборка домов в Москве: коттеджи, таунхаусы, дачи',
     description: 'Профессиональная уборка частных домов, коттеджей и таунхаусов в Москве и МО.',
@@ -27,6 +32,7 @@ export const metadata: Metadata = {
 };
 
 export default function HouseCleaningPage() {
+  const serviceConfig = getServiceConfig('house-cleaning');
   const services = [
     {
       title: 'Уборка коттеджей',
@@ -142,12 +148,28 @@ export default function HouseCleaningPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Хлебные крошки для быстрых ссылок */}
-      <div className="container-custom pt-6">
-        <BreadcrumbSchema 
-          items={[{ name: 'Услуги', url: '/services' }, { name: 'Уборка домов', url: '/services/house-cleaning' }]} 
+    <>
+      {/* Enhanced Service Schema with duration, category, and detailed offerings */}
+      {serviceConfig && (
+        <StructuredData 
+          type="Service" 
+          data={serviceConfig}
         />
+      )}
+
+      {/* Reviews Schema for rich snippets */}
+      <ReviewSchema />
+
+      {/* Service-specific FAQ Schema */}
+      <ServiceFAQ 
+        serviceType="house-cleaning"
+        displayFAQ={false}
+      />
+      
+      <div className="min-h-screen bg-gray-50">
+      {/* Хлебные крошки для быстрых ссылок */}
+      <div className="container-custom py-4">
+        <Breadcrumbs items={BREADCRUMB_TEMPLATES.services('Уборка домов')} />
       </div>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary-600 to-primary-700 text-white py-20">
@@ -305,8 +327,9 @@ export default function HouseCleaningPage() {
         ]}
       />
 
-      {/* Перелинковка на смежные услуги */}
-      <RelatedServicesSection currentService="/services/house-cleaning" />
-    </div>
+      {/* Связанные услуги */}
+      <RelatedServices currentService="house-cleaning" />
+      </div>
+    </>
   );
 } 

@@ -3,10 +3,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import OpenWizardButton from '@/components/ui/OpenWizardButton';
 import StructuredData from '@/components/seo/StructuredData';
+import ReviewSchema from '@/components/ui/ReviewSchema';
 
 export const metadata: Metadata = {
   title: 'Уборка квартиры в Москве — цены и заказ | K-lining 24/7',
-  description: 'Профессиональная уборка квартир в Москве и МО. Поддерживающая, генеральная, после ремонта. Работаем 24/7. Честные цены, выезд в день обращения.',
+  description: 'Уборка квартиры в Москве от 3500₽: поддерживающая, генеральная, после ремонта. Выезд 24/7, честные цены без доплат. Рассчитать ⭐',
   keywords: 'уборка квартиры москва, клининг квартиры москва, поддерживающая уборка, генеральная уборка, уборка после ремонта',
   alternates: { canonical: 'https://k-lining.ru/uborka-kvartiry-moskva' },
   openGraph: {
@@ -21,6 +22,9 @@ export const metadata: Metadata = {
 export default function ApartmentCleaningMoscowPage() {
   return (
     <>
+      {/* Reviews Schema for rich snippets */}
+      <ReviewSchema />
+      
       {/* Structured Data для лендинга */}
       <StructuredData 
         type="Article"

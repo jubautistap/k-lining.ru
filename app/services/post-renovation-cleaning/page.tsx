@@ -3,14 +3,20 @@ import Link from 'next/link';
 import OpenWizardButton from '@/components/ui/OpenWizardButton';
 import { Metadata } from 'next';
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
+import ReviewSchema from '@/components/ui/ReviewSchema';
 import RelatedServicesSection from '@/components/sections/RelatedServicesSection';
-import FAQSchema from '@/components/ui/FAQSchema';
+import FAQSchema, { ServiceFAQ } from '@/components/ui/FAQSchema';
+import { getServiceConfig } from '@/lib/seo/service-data';
+import StructuredData from '@/components/seo/StructuredData';
+import RelatedServices from '@/components/ui/RelatedServices';
+import Breadcrumbs, { BREADCRUMB_TEMPLATES } from '@/components/ui/Breadcrumbs';
 import { CheckCircle, Shield, Clock, Users, Star, Zap, Hammer } from 'lucide-react';
 import MiniCalculator from '@/components/calculators/MiniCalculator';
 
 export const metadata: Metadata = {
   title: 'Уборка после ремонта в Москве — от 8 000 ₽, выезд сегодня | K-lining',
-  description: 'Профессиональная уборка после ремонта: удаление строительной пыли, мытьё окон, финишная очистка. Быстрый выезд, работаем 24/7. Честные цены от 8 000 ₽.',
+  description: 'Уборка после ремонта в Москве от 8000₽: удаление пыли, мытьё окон, финишная очистка. Выезд сегодня, работаем 24/7. Звоните ☎',
+  keywords: 'уборка после ремонта, строительная уборка, клининг новостройки',
   openGraph: {
     title: 'Уборка после ремонта — профессионально, быстро, без пыли',
     description: 'Комплексная послеремонтная уборка в Москве. Удаляем пыль, мусор, следы краски и клея. Выезд сегодня.',
@@ -28,16 +34,30 @@ export const metadata: Metadata = {
 };
 
 export default function PostRenovationCleaningPage() {
+  const serviceConfig = getServiceConfig('post-renovation-cleaning');
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Хлебные крошки для быстрых ссылок */}
-      <div className="container mx-auto px-4 pt-6">
-        <BreadcrumbSchema
-          items={[
-            { name: 'Услуги', url: '/services' },
-            { name: 'Уборка после ремонта', url: '/services/post-renovation-cleaning' },
-          ]}
+    <>
+      {/* Enhanced Service Schema with duration, category, and detailed offerings */}
+      {serviceConfig && (
+        <StructuredData 
+          type="Service" 
+          data={serviceConfig}
         />
+      )}
+
+      {/* Reviews Schema for rich snippets */}
+      <ReviewSchema />
+
+      {/* Service-specific FAQ Schema */}
+      <ServiceFAQ 
+        serviceType="post-renovation-cleaning"
+        displayFAQ={false}
+      />
+      
+      <div className="min-h-screen bg-gray-50">
+      {/* Хлебные крошки для быстрых ссылок */}
+      <div className="container-custom py-4">
+        <Breadcrumbs items={BREADCRUMB_TEMPLATES.services('Уборка после ремонта')} />
       </div>
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-orange-600 to-orange-800 text-white py-20">
@@ -199,8 +219,9 @@ export default function PostRenovationCleaningPage() {
         ]}
       />
 
-      {/* Перелинковка на смежные услуги */}
-      <RelatedServicesSection currentService="/services/post-renovation-cleaning" />
-    </div>
+      {/* Связанные услуги */}
+      <RelatedServices currentService="post-renovation-cleaning" />
+      </div>
+    </>
   );
 } 

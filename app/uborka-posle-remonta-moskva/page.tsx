@@ -2,10 +2,11 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import OpenWizardButton from '@/components/ui/OpenWizardButton';
+import ReviewSchema from '@/components/ui/ReviewSchema';
 
 export const metadata: Metadata = {
   title: 'Уборка квартиры после ремонта — Москва | K-lining 24/7',
-  description: 'Глубокая уборка после ремонта в Москве: удаление строительной пыли, мойка окон, чистка поверхностей. Быстро, безопасно, с гарантией.',
+  description: 'Уборка после ремонта в Москве: удаление строительной пыли, мойка окон, финишная очистка. Быстро, безопасно, с гарантией качества ⭐',
   keywords: 'уборка после ремонта москва, послестроительная уборка, клининг после ремонта',
   alternates: { canonical: 'https://k-lining.ru/uborka-posle-remonta-moskva' },
   openGraph: {
@@ -19,7 +20,11 @@ export const metadata: Metadata = {
 
 export default function PostRenovationCleaningMoscowPage() {
   return (
-    <section className="section-padding bg-gradient-to-br from-gray-50 to-white">
+    <>
+      {/* Reviews Schema for rich snippets */}
+      <ReviewSchema />
+      
+      <section className="section-padding bg-gradient-to-br from-gray-50 to-white">
       <div className="container-custom space-y-8">
         <nav className="text-sm text-gray-500">
           <ol className="flex items-center space-x-2">
@@ -65,7 +70,8 @@ export default function PostRenovationCleaningMoscowPage() {
           <p className="text-gray-700">Подробная информация в основной услуге: <Link href="/services/post-renovation-cleaning" className="text-primary-600 underline">Уборка после ремонта</Link>.</p>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }
 

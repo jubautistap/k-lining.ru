@@ -2,12 +2,18 @@ import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
+import ReviewSchema from '@/components/ui/ReviewSchema';
+import { ServiceFAQ } from '@/components/ui/FAQSchema';
+import { getServiceConfig } from '@/lib/seo/service-data';
+import StructuredData from '@/components/seo/StructuredData';
+import RelatedServices from '@/components/ui/RelatedServices';
+import Breadcrumbs, { BREADCRUMB_TEMPLATES } from '@/components/ui/Breadcrumbs';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Уборка офисов в Москве — ежедневная/генеральная, КП за 10 мин | K-lining',
-  description: 'Профессиональная уборка офисов и коммерческих помещений в Москве. Ежедневная уборка, генеральная уборка, уборка после ремонта. Дезинфекция, мытьё окон. Услуги от 5 000₽. Мин. заказ — 6 000 ₽.',
-  keywords: 'уборка офисов Москва, клининг офисов, уборка коммерческих помещений, ежедневная уборка офиса, генеральная уборка офиса, дезинфекция офиса, мытье окон в офисе',
+  description: 'Уборка офисов в Москве от 5000₽: ежедневная, генеральная, дезинфекция. Работаем 24/7, профессиональные средства. КП за 10 минут ☎',
+  keywords: 'уборка офисов москва, клининг офиса, корпоративная уборка',
   openGraph: {
     title: 'Уборка офисов в Москве: коммерческие помещения, ежедневная уборка',
     description: 'Профессиональная уборка офисов и коммерческих помещений в Москве.',
@@ -23,6 +29,7 @@ export const metadata: Metadata = {
 };
 
 export default function OfficeCleaningPage() {
+  const serviceConfig = getServiceConfig('office-cleaning');
   const services = [
     {
       title: 'Ежедневная уборка офиса',
@@ -138,16 +145,29 @@ export default function OfficeCleaningPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Хлебные крошки для быстрых ссылок */}
-      <div className="container-custom pt-6">
-        <BreadcrumbSchema 
-          items={[
-            { name: 'Услуги', url: '/services' },
-            { name: 'Уборка офисов', url: '/services/office-cleaning' }
-          ]} 
+    <>
+      {/* Enhanced Service Schema with duration, category, and detailed offerings */}
+      {serviceConfig && (
+        <StructuredData 
+          type="Service" 
+          data={serviceConfig}
         />
-      </div>
+      )}
+
+      {/* Reviews Schema for rich snippets */}
+      <ReviewSchema />
+
+      {/* Service-specific FAQ Schema */}
+      <ServiceFAQ 
+        serviceType="office-cleaning"
+        displayFAQ={false}
+      />
+      
+      <div className="min-h-screen bg-gray-50">
+        {/* Хлебные крошки для быстрых ссылок */}
+        <div className="container-custom py-4">
+          <Breadcrumbs items={BREADCRUMB_TEMPLATES.services('Уборка офисов')} />
+        </div>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary-600 to-primary-700 text-white py-20">
         <div className="container-custom">
@@ -306,6 +326,10 @@ export default function OfficeCleaningPage() {
           </div>
         </div>
       </section>
-    </div>
+
+      {/* Связанные услуги */}
+      <RelatedServices currentService="office-cleaning" />
+      </div>
+    </>
   );
 } 

@@ -3,10 +3,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import OpenWizardButton from '@/components/ui/OpenWizardButton';
 import StructuredData from '@/components/seo/StructuredData';
+import ReviewSchema from '@/components/ui/ReviewSchema';
 
 export const metadata: Metadata = {
   title: 'Химчистка мебели в Москве — цены и заказ | K-lining 24/7',
-  description: 'Профессиональная химчистка мебели в Москве: диваны, кресла, стулья, матрасы. Удаление пятен и запахов. Быстро и безопасно.',
+  description: 'Химчистка мебели в Москве: диваны, кресла, матрасы на дому. Удаление пятен и запахов, быстрая сушка. Безопасно для детей ⭐',
   keywords: 'химчистка мебели москва, химчистка дивана москва, чистка ковров москва',
   alternates: { canonical: 'https://k-lining.ru/himchistka-mebeli-moskva' },
   openGraph: {
@@ -21,6 +22,9 @@ export const metadata: Metadata = {
 export default function FurnitureDryCleaningMoscowPage() {
   return (
     <>
+      {/* Reviews Schema for rich snippets */}
+      <ReviewSchema />
+      
       {/* Structured Data для химчистки мебели */}
       <StructuredData 
         type="Service"

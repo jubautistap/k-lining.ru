@@ -2,12 +2,18 @@ import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
+import ReviewSchema from '@/components/ui/ReviewSchema';
+import { ServiceFAQ } from '@/components/ui/FAQSchema';
+import { getServiceConfig } from '@/lib/seo/service-data';
+import StructuredData from '@/components/seo/StructuredData';
+import RelatedServices from '@/components/ui/RelatedServices';
+import Breadcrumbs, { BREADCRUMB_TEMPLATES } from '@/components/ui/Breadcrumbs';
 import { CheckCircle, Clock, Shield, Users, Star, Zap, Phone, Calculator } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Уборка квартир в Москве — мин. заказ 6 000 ₽ | K-lining',
-  description: 'Профессиональная уборка квартир в Москве и МО. Генеральная уборка, уборка после ремонта, поддерживающая уборка. Гарантия качества, выезд в день заказа. Минимальная стоимость заказа — 6 000 ₽.',
-  keywords: 'уборка квартир Москва, генеральная уборка квартиры, уборка после ремонта, поддерживающая уборка, клининг квартир, уборка квартиры цена, эко уборка квартиры, VIP уборка квартиры',
+  description: 'Уборка квартир в Москве от 6000₽: генеральная, поддерживающая, после ремонта. Эко-средства, гарантия качества, выезд за 2 часа. Заказать ⭐',
+  keywords: 'уборка квартир москва, генеральная уборка, клининг цена',
   openGraph: {
     title: 'Уборка квартир в Москве: генеральная, после ремонта, поддерживающая',
     description: 'Профессиональная уборка квартир в Москве и МО. Генеральная уборка, уборка после ремонта, поддерживающая уборка.',
@@ -23,87 +29,25 @@ export const metadata: Metadata = {
 };
 
 export default function ApartmentCleaningPage() {
+  const serviceConfig = getServiceConfig('apartment-cleaning');
+
   return (
     <>
-      {/* Service Schema для локального SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "name": "Уборка квартир в Москве",
-            "description": "Профессиональная уборка квартир в Москве и МО. Генеральная уборка, уборка после ремонта, поддерживающая уборка. Гарантия качества, выезд в день заказа.",
-            "provider": {
-              "@type": "LocalBusiness",
-              "name": "K-lining",
-              "url": "https://k-lining.ru",
-              "telephone": "+7-925-555-18-33",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "ул. Бакунинская, 69, стр. 1",
-                "addressLocality": "Москва",
-                "postalCode": "105082",
-                "addressCountry": "RU"
-              }
-            },
-            "areaServed": {
-              "@type": "City",
-              "name": "Москва"
-            },
-            "offers": [
-              {
-                "@type": "Offer",
-                "name": "Генеральная уборка квартиры",
-                "description": "Комплексная уборка всех помещений с тщательной очисткой труднодоступных мест",
-                "priceRange": "от 6000₽",
-                "priceCurrency": "RUB"
-              },
-              {
-                "@type": "Offer", 
-                "name": "Уборка после ремонта",
-                "description": "Специализированная уборка после строительных и ремонтных работ",
-                "priceRange": "от 7000₽",
-                "priceCurrency": "RUB"
-              },
-              {
-                "@type": "Offer",
-                "name": "Поддерживающая уборка",
-                "description": "Регулярная уборка для поддержания чистоты в квартире",
-                "priceRange": "от 6000₽", 
-                "priceCurrency": "RUB"
-              }
-            ],
-            "category": "Клининговые услуги",
-            "hasOfferCatalog": {
-              "@type": "OfferCatalog",
-              "name": "Услуги по уборке квартир",
-              "itemListElement": [
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Генеральная уборка квартиры"
-                  }
-                },
-                {
-                  "@type": "Offer", 
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Уборка после ремонта"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service", 
-                    "name": "Поддерживающая уборка"
-                  }
-                }
-              ]
-            }
-          })
-        }}
+      {/* Enhanced Service Schema with duration, category, and detailed offerings */}
+      {serviceConfig && (
+        <StructuredData 
+          type="Service" 
+          data={serviceConfig}
+        />
+      )}
+
+      {/* Reviews Schema for rich snippets */}
+      <ReviewSchema />
+
+      {/* Service-specific FAQ Schema */}
+      <ServiceFAQ 
+        serviceType="apartment-cleaning"
+        displayFAQ={false}
       />
 
       <ApartmentCleaningContent />
@@ -229,13 +173,8 @@ function ApartmentCleaningContent() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Хлебные крошки для быстрых ссылок */}
-      <div className="container-custom pt-6">
-        <BreadcrumbSchema 
-          items={[
-            { name: 'Услуги', url: '/services' },
-            { name: 'Уборка квартир', url: '/services/apartment-cleaning' }
-          ]} 
-        />
+      <div className="container-custom py-4">
+        <Breadcrumbs items={BREADCRUMB_TEMPLATES.services('Уборка квартир')} />
       </div>
       
       {/* Hero Section */}
@@ -397,7 +336,8 @@ function ApartmentCleaningContent() {
         </div>
       </section>
 
-      {/* Автоперелинковка будет добавлена глобально через SiteChrome */}
+      {/* Связанные услуги */}
+      <RelatedServices currentService="apartment-cleaning" />
     </div>
   );
 } 
