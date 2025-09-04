@@ -201,7 +201,7 @@ export default function CaseStudiesSection() {
                     </div>
                   </div>
                   <blockquote className="text-gray-700 italic">
-                    "{caseItem.clientReview}"
+                    &ldquo;{caseItem.clientReview}&rdquo;
                   </blockquote>
                 </div>
               </div>

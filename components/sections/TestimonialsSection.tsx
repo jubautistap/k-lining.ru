@@ -3,7 +3,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
-import Image from 'next/image';
 
 interface Testimonial {
   id: number;
@@ -137,7 +136,7 @@ export default function TestimonialsSection() {
 
               {/* Review Text */}
               <blockquote className="text-gray-700 leading-relaxed mb-4">
-                "{testimonial.text}"
+                &ldquo;{testimonial.text}&rdquo;
               </blockquote>
 
               {/* Before/After Images (если есть) */}

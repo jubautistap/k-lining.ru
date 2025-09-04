@@ -3,7 +3,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Award, Users, FileText, CheckCircle, Clock } from 'lucide-react';
-import Image from 'next/image';
 
 export default function TrustSection() {
   const trustElements = [
@@ -114,7 +113,7 @@ export default function TrustSection() {
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {certifications.map((cert, index) => (
+            {certifications.map((cert) => (
               <div key={cert.name} className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
                   <CheckCircle className="w-6 h-6 text-green-600" />
