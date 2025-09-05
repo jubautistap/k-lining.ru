@@ -163,7 +163,7 @@ export default function FurnitureDryCleaningPage() {
                 </div>
                 <div className="mt-6 p-4 bg-purple-50 rounded-lg">
                   <p className="text-sm text-purple-800">
-                    💡 Цена зависит от размера, материала и степени загрязнения
+                    Цена зависит от размера, материала и степени загрязнения
                   </p>
                 </div>
               </div>

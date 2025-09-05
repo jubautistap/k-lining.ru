@@ -270,7 +270,7 @@ export default function PricingSection() {
         <div className="text-center mt-16">
           <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl p-8 border border-primary-100">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              💡 Важно знать
+              Важно знать
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-4xl mx-auto">
               <div className="space-y-3">

@@ -155,7 +155,7 @@ export default function OfficeCleaningMoscow247Page() {
             </p>
 
             <div className="flex items-center space-x-6 text-sm text-gray-500 mb-8">
-              <span>📅 16 января 2025</span>
+              <span>16 января 2025</span>
               <span>⏱ 9 минут чтения</span>
               <span>🏢 Для бизнеса</span>
             </div>

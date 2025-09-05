@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import OpenWizardButton from '@/components/ui/OpenWizardButton';
-import { CheckCircle, Shield, Clock, Users, Star, Zap } from 'lucide-react';
+import { CheckCircle, Shield, Clock, Users, Star, Zap, Home, Building, Building2, Sparkles, Droplets, Waves } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
 const ProcessSection = dynamic(() => import('@/components/sections/ProcessSection'), {
@@ -11,12 +11,26 @@ const ProcessSection = dynamic(() => import('@/components/sections/ProcessSectio
   ssr: true,
 });
 
+const getIcon = (iconName: string) => {
+  const iconProps = { className: "w-10 h-10 text-primary-600" };
+  
+  switch(iconName) {
+    case 'Home': return <Home {...iconProps} />;
+    case 'Building': return <Building {...iconProps} />;
+    case 'Building2': return <Building2 {...iconProps} />;
+    case 'Droplets': return <Droplets {...iconProps} />;
+    case 'Waves': return <Waves {...iconProps} />;
+    case 'Sparkles': return <Sparkles {...iconProps} />;
+    default: return <Sparkles {...iconProps} />;
+  }
+};
+
 export default function ServicesPage() {
   const services = [
     {
       title: 'Уборка квартир',
       description: 'Комплексная уборка квартир любой сложности',
-      icon: '🏠',
+      icon: 'Home',
       features: [
         'Генеральная уборка',
         'После ремонта',
@@ -30,7 +44,7 @@ export default function ServicesPage() {
     {
       title: 'Уборка домов',
       description: 'Профессиональная уборка частных домов и коттеджей',
-      icon: '🏡',
+      icon: 'Building',
       features: [
         'Коттеджи',
         'Таунхаусы',
@@ -43,7 +57,7 @@ export default function ServicesPage() {
     {
       title: 'Уборка офисов',
       description: 'Клининг коммерческих помещений и офисов',
-      icon: '🏢',
+      icon: 'Building2',
       features: [
         'Генеральная уборка',
         'Ежедневная уборка',
@@ -56,7 +70,7 @@ export default function ServicesPage() {
     {
       title: 'Мытье окон',
       description: 'Профессиональное мытье окон и витражей',
-      icon: '🪟',
+      icon: 'Droplets',
       features: [
         'Мытье окон в квартире',
         'Мытье балконов',
@@ -69,7 +83,7 @@ export default function ServicesPage() {
     {
       title: 'Химчистка',
       description: 'Профессиональная химчистка мебели и текстиля',
-      icon: '🧽',
+      icon: 'Waves',
       features: [
         'Диванов',
         'Мягкой мебели',
@@ -83,7 +97,7 @@ export default function ServicesPage() {
     {
       title: 'Дополнительные услуги',
       description: 'Специализированные услуги клининга',
-      icon: '✨',
+      icon: 'Sparkles',
       features: [
         'Уборка санузлов',
         'Уборка кухни',
@@ -175,7 +189,7 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <div key={index} className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow">
-                <div className="text-4xl mb-4">{service.icon}</div>
+                <div className="mb-4">{getIcon(service.icon)}</div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">{service.title}</h3>
                 <p className="text-gray-600 mb-6">{service.description}</p>
                 

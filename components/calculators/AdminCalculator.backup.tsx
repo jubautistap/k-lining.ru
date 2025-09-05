@@ -293,7 +293,7 @@ export default function AdminCalculator() {
       name: 'Экспресс уборка', 
       description: 'Быстрая уборка за 2-3 часа',
       multiplier: 1.3, // +30%
-      icon: '⚡'
+      icon: '🔥'
     },
     { 
       id: 'night', 

@@ -84,9 +84,9 @@ export default function BlogPostPage() {
               Как правильно убирать после ремонта
             </h1>
             <div className="flex items-center space-x-4 text-gray-500 mb-6">
-              <span>📅 15 января 2025</span>
-              <span>⏱️ 5 мин чтения</span>
-              <span>👁️ 1,247 просмотров</span>
+              <span>15 января 2025</span>
+              <span>5 мин чтения</span>
+              <span>1,247 просмотров</span>
             </div>
             <p className="text-xl text-gray-600 leading-relaxed">
               Ремонт завершен, но помещение выглядит как после бомбардировки? 
@@ -98,7 +98,7 @@ export default function BlogPostPage() {
           {/* Featured Image Placeholder */}
           <div className="bg-gradient-to-br from-primary-100 to-secondary-100 rounded-2xl p-12 text-center mb-8">
             <div className="w-32 h-32 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span className="text-white text-4xl">🏗️</span>
+              <span className="text-white text-4xl"></span>
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               Уборка после ремонта
@@ -190,7 +190,7 @@ export default function BlogPostPage() {
 
               <div className="bg-primary-50 rounded-xl p-6 my-8">
                 <h3 className="text-xl font-bold text-primary-900 mb-4">
-                  💡 Важно помнить
+                  Важно помнить
                 </h3>
                 <ul className="space-y-2 text-primary-800">
                   <li>• Не торопитесь — качественная уборка требует времени</li>

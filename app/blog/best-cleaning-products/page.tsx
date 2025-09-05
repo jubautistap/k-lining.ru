@@ -133,9 +133,9 @@ export default function BestCleaningProductsPage() {
               Топ-10 профессиональных средств для уборки
             </h1>
             <div className="flex items-center space-x-4 text-gray-500 mb-6">
-              <span>📅 10 января 2025</span>
-              <span>⏱️ 7 мин чтения</span>
-              <span>👁️ 2,156 просмотров</span>
+              <span>10 января 2025</span>
+              <span>7 мин чтения</span>
+              <span>2,156 просмотров</span>
             </div>
             <p className="text-xl text-gray-600 leading-relaxed">
               Какие средства действительно работают, а какие — пустая трата денег? 
@@ -244,7 +244,7 @@ export default function BestCleaningProductsPage() {
 
                 <div className="bg-primary-50 rounded-xl p-6 my-8">
                   <h3 className="text-xl font-bold text-primary-900 mb-4">
-                    💡 Профессиональный совет
+                    Профессиональный совет
                   </h3>
                   <p className="text-primary-800">
                     Лучше купить одно качественное средство, чем пять дешевых. 

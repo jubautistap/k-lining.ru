@@ -136,7 +136,7 @@ export default function ApartmentCleaningPriceMoscowPage() {
           <div className="max-w-4xl mx-auto mb-12">
             <div className="mb-6">
               <span className="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium">
-                💰 Цены и тарифы
+                Цены и тарифы
               </span>
             </div>
             
@@ -150,9 +150,9 @@ export default function ApartmentCleaningPriceMoscowPage() {
             </p>
 
             <div className="flex items-center space-x-6 text-sm text-gray-500 mb-8">
-              <span>📅 16 января 2025</span>
+              <span>16 января 2025</span>
               <span>⏱ 11 минут чтения</span>
-              <span>💰 Обновлено сегодня</span>
+              <span>Обновлено сегодня</span>
             </div>
           </div>
 
@@ -396,7 +396,7 @@ export default function ApartmentCleaningPriceMoscowPage() {
                       Работаем круглосуточно, даём гарантию качества.
                     </p>
                     <div className="text-lg font-semibold text-primary-600 mb-4">
-                      ⚡ Уборка 1-комнатной от 2,500₽ ⚡
+                      Уборка 1-комнатной от 2,500₽
                     </div>
                     <div className="flex flex-col sm:flex-row gap-4">
                       <Link href="/calculator" className="btn-primary inline-flex items-center">

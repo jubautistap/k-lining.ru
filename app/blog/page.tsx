@@ -197,17 +197,17 @@ export default function BlogPage() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { name: 'Советы', icon: '💡', count: 8 },
-              { name: 'Химчистка', icon: '🧽', count: 5 },
-              { name: 'Уборка после ремонта', icon: '🏗️', count: 3 },
-              { name: 'Мытье окон', icon: '🪟', count: 4 },
-              { name: 'Офисная уборка', icon: '🏢', count: 6 },
-              { name: 'Эко-уборка', icon: '🌱', count: 4 },
-              { name: 'Инструменты', icon: '🛠️', count: 7 },
-              { name: 'Средства', icon: '🧴', count: 9 }
+              { name: 'Советы', icon: null, count: 8 },
+              { name: 'Химчистка', icon: null, count: 5 },
+              { name: 'Уборка после ремонта', icon: null, count: 3 },
+              { name: 'Мытье окон', icon: null, count: 4 },
+              { name: 'Офисная уборка', icon: null, count: 6 },
+              { name: 'Эко-уборка', icon: null, count: 4 },
+              { name: 'Инструменты', icon: null, count: 7 },
+              { name: 'Средства', icon: null, count: 9 }
             ].map(category => (
               <div key={category.name} className="text-center p-4 bg-gray-50 rounded-lg hover:bg-primary-50 transition-colors cursor-pointer">
-                <div className="text-2xl mb-2">{category.icon}</div>
+                {category.icon && <div className="text-2xl mb-2">{category.icon}</div>}
                 <div className="font-medium text-gray-900 mb-1">{category.name}</div>
                 <div className="text-sm text-gray-500">{category.count} статей</div>
               </div>

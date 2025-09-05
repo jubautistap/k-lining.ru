@@ -33,7 +33,7 @@ export default function MiniCalculator(props: MiniCalculatorProps) {
     <div className={`rounded-2xl bg-gradient-to-br from-white to-primary-50 border-2 border-primary-100 p-6 text-gray-900 shadow-2xl ${className || ''}`}>
       {/* Header */}
       <div className="text-center mb-4">
-        <div className="text-lg font-bold text-primary-700 mb-1">💰 Узнайте стоимость за 30 секунд</div>
+        <div className="text-lg font-bold text-primary-700 mb-1">Узнайте стоимость за 30 секунд</div>
         <div className="text-sm text-gray-600">Без звонков и долгих расчётов</div>
       </div>
 

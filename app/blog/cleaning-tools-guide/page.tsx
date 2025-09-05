@@ -81,9 +81,9 @@ export default function CleaningToolsGuidePage() {
             Профессиональные инструменты для уборки
           </h1>
           <div className="flex items-center space-x-4 text-gray-500 mb-6">
-            <span>📅 12 января 2025</span>
-            <span>⏱️ 7 мин чтения</span>
-            <span>👁️ 1,567 просмотров</span>
+            <span>12 января 2025</span>
+            <span>7 мин чтения</span>
+            <span>1,567 просмотров</span>
           </div>
           <p className="text-xl text-gray-600 leading-relaxed">
             Качественные инструменты — залог эффективной уборки. Мы расскажем о лучшем 
@@ -268,7 +268,7 @@ export default function CleaningToolsGuidePage() {
 
               <div className="bg-primary-50 rounded-xl p-6 my-8">
                 <h3 className="text-xl font-bold text-primary-900 mb-4">
-                  🛠️ Важно помнить
+                  Важно помнить
                 </h3>
                 <ul className="space-y-2 text-primary-800">
                   <li>• Качественные инструменты окупаются эффективностью</li>

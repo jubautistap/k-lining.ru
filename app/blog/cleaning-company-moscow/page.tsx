@@ -129,7 +129,7 @@ export default function CleaningCompanyMoscowPage() {
             </p>
 
             <div className="flex items-center space-x-6 text-sm text-gray-500 mb-8">
-              <span>📅 16 января 2025</span>
+              <span>16 января 2025</span>
               <span>⏱ 10 минут чтения</span>
               <span>👁 Обновлено сегодня</span>
             </div>

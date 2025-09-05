@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { CreditCard, FileText, Target } from 'lucide-react';
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema';
 import PricingSection from '@/components/sections/PricingSection';
 
@@ -72,7 +73,7 @@ export default function PricesPage() {
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="text-center p-6 bg-white rounded-xl shadow-lg">
             <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">💳</span>
+              <CreditCard className="w-6 h-6 text-primary-600" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Оплата после уборки
@@ -84,7 +85,7 @@ export default function PricesPage() {
 
           <div className="text-center p-6 bg-white rounded-xl shadow-lg">
             <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">📋</span>
+              <FileText className="w-6 h-6 text-primary-600" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Работаем по договору
@@ -96,7 +97,7 @@ export default function PricesPage() {
 
           <div className="text-center p-6 bg-white rounded-xl shadow-lg">
             <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">🎯</span>
+              <Target className="w-6 h-6 text-primary-600" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Индивидуальный подход

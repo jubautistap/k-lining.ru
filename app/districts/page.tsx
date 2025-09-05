@@ -87,7 +87,7 @@ export default function DistrictsPage() {
         <div className="max-w-4xl mx-auto mb-16 text-center">
           <div className="mb-6">
             <span className="inline-block bg-primary-100 text-primary-800 px-4 py-2 rounded-full text-sm font-medium">
-              🗺️ География услуг
+              География услуг
             </span>
           </div>
           
@@ -110,7 +110,7 @@ export default function DistrictsPage() {
               🚗 Быстрая подача
             </div>
             <div className="bg-blue-50 px-4 py-2 rounded-lg text-blue-800">
-              ⏰ Работаем 24/7
+               Работаем 24/7
             </div>
           </div>
         </div>

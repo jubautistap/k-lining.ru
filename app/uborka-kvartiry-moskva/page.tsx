@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Zap, Shield, DollarSign } from 'lucide-react';
 import OpenWizardButton from '@/components/ui/OpenWizardButton';
 import StructuredData from '@/components/seo/StructuredData';
 import ReviewSchema from '@/components/ui/ReviewSchema';
@@ -181,7 +182,7 @@ export default function ApartmentCleaningMoscowPage() {
 
             <div className="bg-white rounded-xl shadow-lg p-6">
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-2xl">✨</span>
+                <span className="text-2xl"></span>
               </div>
               <h3 className="text-xl font-semibold mb-3">Генеральная уборка</h3>
               <p className="text-gray-600 mb-4">
@@ -244,7 +245,7 @@ export default function ApartmentCleaningMoscowPage() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold mb-4 text-blue-600">🍽️ Кухня</h3>
+                <h3 className="text-xl font-semibold mb-4 text-blue-600">Кухня</h3>
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-start space-x-2">
                     <span className="text-green-500 mt-1">✓</span>
@@ -296,7 +297,7 @@ export default function ApartmentCleaningMoscowPage() {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold mb-4 text-blue-600">🗑️ Дополнительно</h3>
+                <h3 className="text-xl font-semibold mb-4 text-blue-600">Дополнительно</h3>
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-start space-x-2">
                     <span className="text-green-500 mt-1">✓</span>
@@ -326,7 +327,7 @@ export default function ApartmentCleaningMoscowPage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">⚡</span>
+                  <Zap className="w-8 h-8 text-blue-600" />
                 </div>
                 <h3 className="font-semibold mb-2">Быстрый выезд</h3>
                 <p className="text-gray-600 text-sm">Работаем 24/7. Срочный выезд в течение 2-4 часов</p>
@@ -334,7 +335,7 @@ export default function ApartmentCleaningMoscowPage() {
               
               <div className="text-center">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">🛡️</span>
+                  <Shield className="w-8 h-8 text-green-600" />
                 </div>
                 <h3 className="font-semibold mb-2">Гарантия качества</h3>
                 <p className="text-gray-600 text-sm">Не устраивает результат — переделаем бесплатно</p>
@@ -342,7 +343,7 @@ export default function ApartmentCleaningMoscowPage() {
               
               <div className="text-center">
                 <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">💰</span>
+                  <DollarSign className="w-8 h-8 text-orange-600" />
                 </div>
                 <h3 className="font-semibold mb-2">Честные цены</h3>
                 <p className="text-gray-600 text-sm">Никаких скрытых доплат. Цена не изменится</p>

@@ -159,7 +159,7 @@ export default function CalculatorResults({
 
       {/* Важная информация */}
       <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-        <h4 className="font-semibold text-amber-800 mb-2">💡 Важно знать</h4>
+        <h4 className="font-semibold text-amber-800 mb-2">Важно знать</h4>
         <ul className="text-sm text-amber-700 space-y-1">
           <li>• Минимальный заказ: 6,000 ₽</li>
           <li>• Цены зависят от площади и состояния помещения</li>

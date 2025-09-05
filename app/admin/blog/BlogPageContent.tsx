@@ -363,7 +363,7 @@ export default function AdminBlogPage() {
                               <Tag className="w-3 h-3" />
                               <span>{post.category}</span>
                             </div>
-                            <span>⏱️ {post.readTime}</span>
+                            <span>{post.readTime}</span>
                           </div>
                           
                           {post.tags.length > 0 && (

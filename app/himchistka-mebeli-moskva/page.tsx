@@ -104,7 +104,7 @@ export default function FurnitureDryCleaningMoscowPage() {
             
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-xl font-semibold mb-4 text-blue-600">🛋️ Мягкая мебель</h3>
+                <h3 className="text-xl font-semibold mb-4 text-blue-600">Мягкая мебель</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center py-2 border-b border-gray-200">
                     <span>Кресло (1-местное)</span>
@@ -176,7 +176,7 @@ export default function FurnitureDryCleaningMoscowPage() {
           <section className="grid md:grid-cols-3 gap-8">
             <div className="bg-white rounded-xl shadow-lg p-6">
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-2xl">🧪</span>
+                <span className="text-2xl"></span>
               </div>
               <h3 className="text-xl font-semibold mb-3">Экстракционная чистка</h3>
               <p className="text-gray-600 mb-4">
@@ -235,7 +235,7 @@ export default function FurnitureDryCleaningMoscowPage() {
 
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <span className="text-3xl">🖊️</span>
+                  <span className="text-3xl"></span>
                 </div>
                 <h4 className="font-semibold mb-2">Краски и чернила</h4>
                 <p className="text-sm text-gray-600">Ручки, фломастеры, акварель, гуашь</p>
