@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
             ? { utm_source: { contains: sourceFilter, mode: 'insensitive' } }
             : {}),
         },
-        select: { created_at: true, status: true, utm_source: true, service_type: true },
+        select: { created_at: true, status: true, utm_source: true },
       }),
       prisma.order.findMany({
         where: {
@@ -81,15 +81,7 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    for (const l of leads as any[]) {
-        const key = (l.service_type as string) || 'Услуга';
-        if (serviceMap.has(key)) {
-            const prev = serviceMap.get(key)!;
-            serviceMap.set(key, { ...prev, leads: prev.leads + 1 });
-        } else {
-            serviceMap.set(key, { count: 0, revenue: 0, leads: 1, profit: 0 });
-        }
-    }
+    // Нет сервиса на лидах в текущей выборке — пропускаем распределение лидов по услугам
 
     const topServices = Array.from(serviceMap.entries())
       .map(([name, v]) => ({ 
