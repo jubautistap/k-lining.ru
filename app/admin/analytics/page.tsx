@@ -265,7 +265,8 @@ export default function AdminAnalyticsPage() {
                   </div>
                   <div className="text-right">
                     <p className="font-semibold text-gray-900">{service.revenue.toLocaleString()} ₽</p>
-                    <p className="text-xs text-gray-500">{((service.count / analytics.totalLeads) * 100).toFixed(1)}%</p>
+                    <p className="text-xs text-green-500">Прибыль: {service.profit.toLocaleString()} ₽</p>
+                    <p className="text-xs text-gray-500">{((service.count / analytics.totalLeads) * 100).toFixed(1)}% | CR: {service.conversion}%</p>
                   </div>
                 </div>
               ))}

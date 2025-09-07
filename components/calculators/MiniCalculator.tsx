@@ -3,7 +3,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { Phone, ArrowRight } from 'lucide-react';
 import { useAmoCRM } from '@/components/providers/AmoCRMProvider';
-import { calculateQuote, pickRate, MIN_ORDER, type PropertyType, type CleaningType } from './calcUtils';
+import { calculateQuote, MIN_ORDER, type PropertyType, type CleaningType } from './calcUtils';
 
 type MiniCalculatorProps = {
   defaultArea: number;

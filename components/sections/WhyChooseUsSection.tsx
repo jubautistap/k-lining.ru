@@ -17,12 +17,12 @@ export default function WhyChooseUsSection() {
     },
     {
       icon: Zap,
-      title: 'Быстро и качественно',
+      title: 'Быстрый результат',
       description: 'Средняя уборка занимает 2-4 часа. Результат виден сразу.',
     },
     {
       icon: Users,
-      title: 'Профессиональная команда',
+      title: 'Опытные клинеры',
       description: 'Опытные клинеры с собственным инвентарем и химией.',
     },
     {
@@ -34,30 +34,7 @@ export default function WhyChooseUsSection() {
       icon: Heart,
       title: 'Индивидуальный подход',
       description: 'Учитываем ваши пожелания и особенности помещения.',
-    }
-  ];
-
-  const stats = [
-    {
-      number: '24/7',
-      label: 'Поддержка клиентов',
-      icon: Clock
     },
-    {
-      number: '0₽',
-      label: 'Скрытых доплат',
-      icon: Shield
-    },
-    {
-      number: '2-4ч',
-      label: 'Среднее время уборки',
-      icon: Zap
-    },
-    {
-      number: '100%',
-      label: 'Гарантия качества',
-      icon: CheckCircle
-    }
   ];
 
   return (
@@ -72,10 +49,11 @@ export default function WhyChooseUsSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Почему выбирают нас
+            Почему выбирают K-lining
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Компания молодая, команда опытная — делаем <strong>качественно и прозрачно</strong>.
+            Мы честно говорим: делаем уборку <strong>быстро, качественно и профессионально</strong>. 
+            Никаких лишних обещаний — только реальная работа.
           </p>
         </motion.div>
 
@@ -103,23 +81,19 @@ export default function WhyChooseUsSection() {
           ))}
         </div>
 
-        {/* Stats Section удален по запросу */}
-
-        {/* Honest Message */}
+        {/* Final CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 1.2 }}
-          className="text-center mt-16"
+          className="text-center"
         >
-          <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl p-8 border border-primary-100">
-            <div className="flex items-center justify-center mb-4">
-              <Award className="w-8 h-8 text-primary-600 mr-3" />
-              <h3 className="text-2xl font-bold text-gray-900">
-                Честность — наш принцип
-              </h3>
-            </div>
+          <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl p-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <Award className="w-8 h-8 text-primary-600 inline-block mr-2" />
+              Наш подход
+            </h3>
             <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Мы не обещаем лишнего. Делаем работу качественно, фиксируем цену заранее и отвечаем за результат.
             </p>
@@ -128,4 +102,4 @@ export default function WhyChooseUsSection() {
       </div>
     </section>
   );
-} 
+}

@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import OrderButton from '@/components/ui/OrderButton';
 import { Phone, Clock, Shield, Lock, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import MiniCalculator from '@/components/calculators/MiniCalculator';

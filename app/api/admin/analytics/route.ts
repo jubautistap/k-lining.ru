@@ -66,14 +66,37 @@ export async function GET(request: NextRequest) {
     const conversionRate = totalLeads ? Math.round((bookedOrders.length / totalLeads) * 100) : 0;
 
     // 3) Топ услуг
-    const serviceMap = new Map<string, { count: number; revenue: number }>();
+    const serviceMap = new Map<string, { count: number; revenue: number; leads: number; profit: number }>();
     for (const o of bookedOrders) {
       const key = o.service_type || 'Услуга';
-      const prev = serviceMap.get(key) || { count: 0, revenue: 0 };
-      serviceMap.set(key, { count: prev.count + 1, revenue: prev.revenue + (o.price || 0) });
+      const prev = serviceMap.get(key) || { count: 0, revenue: 0, leads: 0, profit: 0 };
+      const profit = o.price - (o.cost_labor || 0) - (o.cost_materials || 0) - (o.cost_transport || 0) - (o.cost_overhead || 0);
+      serviceMap.set(key, { 
+        count: prev.count + 1, 
+        revenue: prev.revenue + (o.price || 0), 
+        leads: prev.leads, 
+        profit: prev.profit + profit 
+      });
     }
+
+    for (const l of leads) {
+        const key = l.service_type || 'Услуга';
+        if (serviceMap.has(key)) {
+            const prev = serviceMap.get(key)!;
+            serviceMap.set(key, { ...prev, leads: prev.leads + 1 });
+        } else {
+            serviceMap.set(key, { count: 0, revenue: 0, leads: 1, profit: 0 });
+        }
+    }
+
     const topServices = Array.from(serviceMap.entries())
-      .map(([name, v]) => ({ name, count: v.count, revenue: v.revenue }))
+      .map(([name, v]) => ({ 
+        name, 
+        count: v.count, 
+        revenue: v.revenue, 
+        profit: v.profit,
+        conversion: v.leads > 0 ? Math.round((v.count / v.leads) * 100) : 0 
+      }))
       .sort((a, b) => b.revenue - a.revenue)
       .slice(0, 10);
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Home, Building, Sparkles, Sun, Shield, Check } from 'lucide-react';
+import { Home, Building, Sparkles, Sun, Shield } from 'lucide-react';
 import Link from 'next/link';
 import OpenWizardButton from '@/components/ui/OpenWizardButton';
 
