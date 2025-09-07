@@ -71,7 +71,7 @@ export function ToastContainer({ toasts, removeToast }: ToastContainerProps) {
           //   exit={{ opacity: 0, y: 20, scale: 0.9 }}
           //   transition={{ duration: 0.3 }}
           // >
-            <Toast {...toast} onClose={removeToast} />
+            <Toast key={toast.id} {...toast} onClose={removeToast} />
           // </motion.div>
         ))}
       {/* </AnimatePresence> */}
