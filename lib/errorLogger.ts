@@ -16,11 +16,10 @@ interface ErrorService {
 
 // Console logger for development - disabled to avoid ESLint errors
 class ConsoleErrorService implements ErrorService {
-  async logError(data: ErrorLogData): Promise<void> {
+  async logError(): Promise<void> {
     // Console logging disabled to avoid ESLint no-console rule violations
     // In production, errors are logged via RemoteErrorService or other services
     // For development debugging, enable console statements temporarily if needed
-    void data; // Suppress unused parameter warning
   }
 }
 
@@ -36,22 +35,20 @@ class RemoteErrorService implements ErrorService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: data.error.message,
-          stack: data.error.stack,
-          name: data.error.name,
-          timestamp: data.timestamp,
-          url: data.url,
-          userAgent: data.userAgent,
-          userId: data.userId,
-          sessionId: data.sessionId,
-          context: data.context,
-          componentStack: data.errorInfo?.componentStack,
+          ...data,
+          error: {
+            message: data.error.message,
+            stack: data.error.stack,
+            name: data.error.name,
+          },
+          errorInfo: {
+            componentStack: data.errorInfo?.componentStack,
+          },
         }),
       });
-    } catch (logError) {
+    } catch (err) {
       // Fallback - console logging disabled to avoid ESLint errors
       // Remote logging failed, but avoiding console.error to prevent build issues
-      new ConsoleErrorService().logError(data);
     }
   }
 }
