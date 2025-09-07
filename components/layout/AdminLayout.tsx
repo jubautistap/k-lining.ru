@@ -159,7 +159,7 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors min-h-[44px] ${
+                  className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors min-h-[44px] focus-visible ${
                     isActive 
                       ? 'bg-primary-50 text-primary-700 border-r-2 border-primary-600' 
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
@@ -179,6 +179,7 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
             <button
               onClick={handleLogout}
               className="flex items-center space-x-3 w-full px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors min-h-[44px]"
+              aria-label="Выйти из аккаунта"
             >
               <LogOut className="w-5 h-5" />
               <span>Выйти</span>

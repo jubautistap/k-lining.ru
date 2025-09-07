@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireManager } from '@/lib/auth/middleware';
 import { v4 as uuidv4 } from 'uuid';
 import { PRICING_RATES, RATE_POINT } from '@/data/pricing';
+import { z } from 'zod';
 
 // In-memory стор цен (инициализируется из тарифов калькулятора)
 const prices: Array<{ id: string; service: string; type: string; price: number; description: string; isActive: boolean; }> = [];
@@ -22,6 +23,23 @@ if (prices.length === 0) {
   });
 }
 
+const priceSchema = z.object({
+  service: z.string().min(1, 'Не все обязательные поля заполнены'),
+  type: z.string().min(1, 'Не все обязательные поля заполнены'),
+  price: z.number().min(0, 'Цена не может быть отрицательной'),
+  description: z.string().optional(),
+  isActive: z.boolean().optional(),
+});
+
+const priceUpdateSchema = z.object({
+  id: z.string(),
+  service: z.string().min(1, 'Не все обязательные поля заполнены').optional(),
+  type: z.string().min(1, 'Не все обязательные поля заполнены').optional(),
+  price: z.number().min(0, 'Цена не может быть отрицательной').optional(),
+  description: z.string().optional(),
+  isActive: z.boolean().optional(),
+});
+
 export async function GET(request: NextRequest) {
   const auth = await requireManager(request);
   if (auth) return auth;
@@ -34,21 +52,13 @@ export async function POST(request: NextRequest) {
     if (auth) return auth;
     const body = await request.json();
     
-    // Валидация
-    if (!body.service || !body.type || !body.price) {
-      return NextResponse.json(
-        { error: 'Не все обязательные поля заполнены' },
-        { status: 400 }
-      );
-    }
+    const parsed = priceSchema.parse(body);
 
     const newPrice = {
       id: uuidv4(),
-      service: body.service,
-      type: body.type,
-      price: Number(body.price),
-      description: body.description || '',
-      isActive: body.isActive !== undefined ? body.isActive : true
+      ...parsed,
+      description: parsed.description || '',
+      isActive: parsed.isActive !== undefined ? parsed.isActive : true
     };
 
     prices.push(newPrice);
@@ -59,7 +69,12 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { success: false, message: 'Ошибка валидации данных', errors: error.errors },
+        { status: 400 }
+      );
+    }
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
       { status: 500 }
@@ -73,14 +88,9 @@ export async function PUT(request: NextRequest) {
     if (auth) return auth;
     const body = await request.json();
     
-    if (!body.id) {
-      return NextResponse.json(
-        { error: 'ID услуги обязателен' },
-        { status: 400 }
-      );
-    }
+    const parsed = priceUpdateSchema.parse(body);
 
-    const priceIndex = prices.findIndex(p => p.id === body.id);
+    const priceIndex = prices.findIndex(p => p.id === parsed.id);
     if (priceIndex === -1) {
       return NextResponse.json(
         { error: 'Услуга не найдена' },
@@ -91,11 +101,7 @@ export async function PUT(request: NextRequest) {
     // Обновляем цену
     prices[priceIndex] = {
       ...prices[priceIndex],
-      service: body.service || prices[priceIndex].service,
-      type: body.type || prices[priceIndex].type,
-      price: Number(body.price) || prices[priceIndex].price,
-      description: body.description || prices[priceIndex].description,
-      isActive: body.isActive !== undefined ? body.isActive : prices[priceIndex].isActive
+      ...parsed,
     };
 
     return NextResponse.json({ 
@@ -104,10 +110,15 @@ export async function PUT(request: NextRequest) {
     });
 
   } catch (error) {
-    
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { success: false, message: 'Ошибка валидации данных', errors: error.errors },
+        { status: 400 }
+      );
+    }
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
       { status: 500 }
     );
   }
-} 
+}

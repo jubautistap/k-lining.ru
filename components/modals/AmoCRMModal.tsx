@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
 import { calculateQuote, MIN_ORDER, type PropertyType, type CleaningType } from '@/components/calculators/calcUtils';
+import FormErrorBoundary from '@/components/FormErrorBoundary';
 
 const formSchema = z.object({
   phone: z.string().min(10, 'Введите корректный номер телефона'),
@@ -341,75 +342,76 @@ export default function AmoCRMModal() {
           )}
 
           {step === 3 && (
-            <div>
-              {/* Summary */}
-              <div className="mb-4 rounded-lg bg-gray-50 border p-3 text-sm text-gray-800 shadow-sm">
-                <div className="flex flex-wrap gap-2 mb-1">
-                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white border text-gray-700"><Home className="w-4 h-4" /> {propertyType}</span>
-                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white border text-gray-700">{cleaningType}</span>
-                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white border text-gray-700">{area} м²</span>
-                  {(cleaningType === 'general' || cleaningType === 'postRenovation') && (
-                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white border text-gray-700">окна: {windowsCount}</span>
-                  )}
-                </div>
-                <div className="font-semibold">Предварительно: {quote.totalPrice.toLocaleString()} ₽</div>
-                <div className="text-xs text-gray-500">Цена зависит от сложности и состояния. Точное предложение подтвердим по звонку.</div>
-              </div>
-
-              {/* Contact form */}
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="space-y-4">
-                  <div>
-                    <input
-                      {...register('phone')}
-                      type="tel"
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
-                        errors.phone ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      placeholder="+7 (999) 123-45-67"
-                    />
-                    {errors.phone && (
-                      <p className="mt-1 text-xs text-red-600">{errors.phone.message}</p>
+            <FormErrorBoundary formType="order">
+              <div>
+                {/* Summary */}
+                <div className="mb-4 rounded-lg bg-gray-50 border p-3 text-sm text-gray-800 shadow-sm">
+                  <div className="flex flex-wrap gap-2 mb-1">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white border text-gray-700"><Home className="w-4 h-4" /> {propertyType}</span>
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white border text-gray-700">{cleaningType}</span>
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white border text-gray-700">{area} м²</span>
+                    {(cleaningType === 'general' || cleaningType === 'postRenovation') && (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white border text-gray-700">окна: {windowsCount}</span>
                     )}
                   </div>
-
-                  <div className="flex items-center justify-between">
-                    <button type="button" className="inline-flex items-center gap-2 text-gray-600 px-3 py-2" onClick={() => setStep(2)}>
-                      <ArrowLeft className="w-4 h-4" /> Назад
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="inline-flex items-center gap-2 bg-primary-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                      data-cta="wizard_submit"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          <span>Отправляем...</span>
-                        </>
-                      ) : (
-                        <>
-                          <Phone className="w-4 h-4" />
-                          <span>Заказать звонок</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
+                  <div className="font-semibold">Предварительно: {quote.totalPrice.toLocaleString()} ₽</div>
+                  <div className="text-xs text-gray-500">Цена зависит от сложности и состояния. Точное предложение подтвердим по звонку.</div>
                 </div>
-              </form>
 
-              {/* Alternative contact methods */}
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <p className="text-center text-xs text-gray-500 mb-3">Или свяжитесь с нами напрямую:</p>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => handleExternal('whatsapp')}
-                    className="flex items-center justify-center space-x-2 bg-green-500 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors"
-                    data-cta="wizard_whatsapp"
-                  >
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                {/* Contact form */}
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="space-y-4">
+                    <div>
+                      <input
+                        {...register('phone')}
+                        type="tel"
+                        className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                          errors.phone ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="+7 (999) 123-45-67"
+                      />
+                      {errors.phone && (
+                        <p className="mt-1 text-xs text-red-600">{errors.phone.message}</p>
+                      )}
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <button type="button" className="inline-flex items-center gap-2 text-gray-600 px-3 py-2" onClick={() => setStep(2)}>
+                        <ArrowLeft className="w-4 h-4" /> Назад
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="inline-flex items-center gap-2 bg-primary-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        data-cta="wizard_submit"
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            <span>Отправляем...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Phone className="w-4 h-4" />
+                            <span>Заказать звонок</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </form>
+
+                {/* Alternative contact methods */}
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <p className="text-center text-xs text-gray-500 mb-3">Или свяжитесь с нами напрямую:</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => handleExternal('whatsapp')}
+                      className="flex items-center justify-center space-x-2 bg-green-500 text-white py-2 px-3 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors"
+                      data-cta="wizard_whatsapp"
+                    >
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
                     </svg>
                     <span>WhatsApp</span>
                   </button>
@@ -442,6 +444,7 @@ export default function AmoCRMModal() {
                 </div>
               </div>
             </div>
+            </FormErrorBoundary>
           )}
         </div>
       </div>

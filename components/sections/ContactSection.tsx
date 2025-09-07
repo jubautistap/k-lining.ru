@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
+import FormErrorBoundary from '@/components/FormErrorBoundary';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Имя должно содержать минимум 2 символа'),
@@ -162,95 +163,97 @@ export default function ContactSection() {
 
             {/* Форма */}
             <div className="bg-white p-6 rounded-lg shadow-lg">
-              <form onSubmit={handleSubmit(onSubmit)} data-form-type="contact">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2">
-                    <input id="wantDiscount" type="checkbox" className="w-4 h-4" {...register('wantDiscount')}/>
-                    <label htmlFor="wantDiscount" className="text-sm text-gray-700">Хочу скидку −10% на первый заказ</label>
-                  </div>
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                      Имя *
-                    </label>
-                    <input
-                      {...register('name')}
-                      type="text"
-                      id="name"
-                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
-                        errors.name ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      placeholder="Ваше имя"
-                    />
-                    {errors.name && (
-                      <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
-                    )}
-                  </div>
+              <FormErrorBoundary formType="contact">
+                <form onSubmit={handleSubmit(onSubmit)} data-form-type="contact">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <input id="wantDiscount" type="checkbox" className="w-4 h-4" {...register('wantDiscount')}/>
+                      <label htmlFor="wantDiscount" className="text-sm text-gray-700">Хочу скидку −10% на первый заказ</label>
+                    </div>
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                        Имя *
+                      </label>
+                      <input
+                        {...register('name')}
+                        type="text"
+                        id="name"
+                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                          errors.name ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="Ваше имя"
+                      />
+                      {errors.name && (
+                        <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+                      )}
+                    </div>
 
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                      Телефон *
-                    </label>
-                    <input
-                      {...register('phone')}
-                      type="tel"
-                      id="phone"
-                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
-                        errors.phone ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      placeholder="+7 (999) 123-45-67"
-                    />
-                    {errors.phone && (
-                      <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
-                    )}
-                  </div>
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                        Телефон *
+                      </label>
+                      <input
+                        {...register('phone')}
+                        type="tel"
+                        id="phone"
+                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                          errors.phone ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="+7 (999) 123-45-67"
+                      />
+                      {errors.phone && (
+                        <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
+                      )}
+                    </div>
 
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                      Email
-                    </label>
-                    <input
-                      {...register('email')}
-                      type="email"
-                      id="email"
-                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
-                        errors.email ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      placeholder="your@email.com"
-                    />
-                    {errors.email && (
-                      <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-                    )}
-                  </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                        Email
+                      </label>
+                      <input
+                        {...register('email')}
+                        type="email"
+                        id="email"
+                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                          errors.email ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="your@email.com"
+                      />
+                      {errors.email && (
+                        <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+                      )}
+                    </div>
 
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                      Сообщение *
-                    </label>
-                    <textarea
-                      {...register('message')}
-                      id="message"
-                      rows={4}
-                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
-                        errors.message ? 'border-red-500' : 'border-gray-300'
-                      }`}
-                      placeholder="Опишите вашу задачу..."
-                    />
-                    {errors.message && (
-                      <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
-                    )}
-                  </div>
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                        Сообщение *
+                      </label>
+                      <textarea
+                        {...register('message')}
+                        id="message"
+                        rows={4}
+                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                          errors.message ? 'border-red-500' : 'border-gray-300'
+                        }`}
+                        placeholder="Опишите вашу задачу..."
+                      />
+                      {errors.message && (
+                        <p className="mt-1 text-sm text-red-600">{errors.message.message}</p>
+                      )}
+                    </div>
 
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isSubmitting ? 'Отправляем...' : 'Отправить заявку'}
-                  </motion.button>
-                </div>
-              </form>
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? 'Отправляем...' : 'Отправить заявку'}
+                    </motion.button>
+                  </div>
+                </form>
+              </FormErrorBoundary>
             </div>
           </div>
         </motion.div>

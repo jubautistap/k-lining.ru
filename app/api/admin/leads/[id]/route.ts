@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireManager } from '@/lib/auth/middleware';
 import { prisma } from '@/lib/prisma';
+import { z } from 'zod';
 
 const uiToDbStatus: Record<string, string> = {
   new: 'NEW',
@@ -10,6 +11,11 @@ const uiToDbStatus: Record<string, string> = {
   cancelled: 'LOST',
 };
 
+const leadUpdateSchema = z.object({
+  status: z.string().optional(),
+  price: z.number().optional(),
+});
+
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -18,7 +24,8 @@ export async function PATCH(
     const auth = await requireManager(request);
     if (auth) return auth;
     const body = await request.json().catch(() => ({}));
-    const { status, price } = body as { status?: string; price?: number };
+    const parsed = leadUpdateSchema.parse(body);
+    const { status, price } = parsed;
 
     const data: any = {};
     if (status) {
@@ -39,6 +46,12 @@ export async function PATCH(
     return NextResponse.json({ success: true, lead: updated });
 
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { success: false, message: 'Ошибка валидации данных', errors: error.errors },
+        { status: 400 }
+      );
+    }
     // Обрабатываем "record not found" как 404, а не 500
     const anyErr = error as any;
     if (anyErr?.code === 'P2025') {

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireEditor } from '@/lib/auth/middleware';
 import { v4 as uuidv4 } from 'uuid';
 import blogIndex from '@/data/blog-index';
+import { z } from 'zod';
 
 // In-memory объединённый стор для админки: карта slug -> пост
 // Контент для публичных страниц хранится в файловой системе (app/blog/[slug]).
@@ -23,6 +24,31 @@ for (const idx of blogIndex) {
   });
 }
 
+const blogSchema = z.object({
+  title: z.string().min(1, 'Заголовок обязателен'),
+  content: z.string().min(1, 'Содержание обязательно'),
+  slug: z.string().optional(),
+  excerpt: z.string().optional(),
+  category: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  readTime: z.string().optional(),
+  image: z.string().optional(),
+  isPublished: z.boolean().optional(),
+});
+
+const blogUpdateSchema = z.object({
+  id: z.string(),
+  title: z.string().min(1, 'Заголовок обязателен').optional(),
+  content: z.string().min(1, 'Содержание обязательно').optional(),
+  slug: z.string().optional(),
+  excerpt: z.string().optional(),
+  category: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  readTime: z.string().optional(),
+  image: z.string().optional(),
+  isPublished: z.boolean().optional(),
+});
+
 export async function GET(request: NextRequest) {
   const auth = await requireEditor(request);
   if (auth) return auth;
@@ -35,15 +61,9 @@ export async function POST(request: NextRequest) {
     if (auth) return auth;
     const body = await request.json();
     
-    // Валидация
-    if (!body.title || !body.content) {
-      return NextResponse.json(
-        { error: 'Заголовок и содержание обязательны' },
-        { status: 400 }
-      );
-    }
+    const parsed = blogSchema.parse(body);
 
-    const slug = (body.slug || body.title || '').toLowerCase()
+    const slug = (parsed.slug || parsed.title || '').toLowerCase()
       .replace(/[^а-яa-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
@@ -51,15 +71,15 @@ export async function POST(request: NextRequest) {
 
     const newPost = {
       id: slug || uuidv4(),
-      title: body.title,
-      excerpt: body.excerpt || '',
-      content: body.content || '',
-      category: body.category || 'Общее',
-      tags: body.tags || [],
+      title: parsed.title,
+      excerpt: parsed.excerpt || '',
+      content: parsed.content || '',
+      category: parsed.category || 'Общее',
+      tags: parsed.tags || [],
       date: new Date().toISOString(),
-      readTime: body.readTime || '5 мин',
-      image: body.image || '',
-      isPublished: body.isPublished || false,
+      readTime: parsed.readTime || '5 мин',
+      image: parsed.image || '',
+      isPublished: parsed.isPublished || false,
       slug: slug || undefined
     } as any;
 
@@ -71,6 +91,12 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { success: false, message: 'Ошибка валидации данных', errors: error.errors },
+        { status: 400 }
+      );
+    }
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
       { status: 500 }
@@ -84,14 +110,9 @@ export async function PUT(request: NextRequest) {
     if (auth) return auth;
     const body = await request.json();
     
-    if (!body.id) {
-      return NextResponse.json(
-        { error: 'ID статьи обязателен' },
-        { status: 400 }
-      );
-    }
+    const parsed = blogUpdateSchema.parse(body);
 
-    const existing = memoryPosts.get(body.id);
+    const existing = memoryPosts.get(parsed.id);
     if (!existing) {
       return NextResponse.json(
         { error: 'Статья не найдена' },
@@ -101,17 +122,9 @@ export async function PUT(request: NextRequest) {
 
     const updated = {
       ...existing,
-      title: body.title ?? existing.title,
-      excerpt: body.excerpt ?? existing.excerpt,
-      content: body.content ?? existing.content,
-      category: body.category ?? existing.category,
-      tags: body.tags ?? existing.tags,
-      readTime: body.readTime ?? existing.readTime,
-      image: body.image ?? existing.image,
-      isPublished: typeof body.isPublished === 'boolean' ? body.isPublished : existing.isPublished,
-      slug: body.slug ?? existing.slug,
+      ...parsed,
     };
-    memoryPosts.set(body.id, updated);
+    memoryPosts.set(parsed.id, updated);
 
     return NextResponse.json({ 
       success: true, 
@@ -119,6 +132,12 @@ export async function PUT(request: NextRequest) {
     });
 
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { success: false, message: 'Ошибка валидации данных', errors: error.errors },
+        { status: 400 }
+      );
+    }
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
       { status: 500 }

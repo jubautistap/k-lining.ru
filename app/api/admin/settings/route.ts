@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin } from '@/lib/auth/middleware';
+import { z } from 'zod';
 
 // Временное хранилище настроек (в реальном проекте - база данных)
 let siteSettings = {
@@ -32,6 +33,27 @@ let siteSettings = {
       whatsapp: 'https://wa.me/79255551833',
   vk: 'https://vk.com/kliningpro'
 };
+
+const settingsSchema = z.object({
+  phone: z.string().optional(),
+  email: z.string().email().optional().or(z.literal('')),
+  address: z.string().optional(),
+  siteTitle: z.string().optional(),
+  siteDescription: z.string().optional(),
+  googleAnalyticsId: z.string().optional(),
+  yandexMetrikaId: z.string().optional(),
+  telegramBotToken: z.string().optional(),
+  telegramChatId: z.string().optional(),
+  amocrmDomain: z.string().optional(),
+  amocrmClientId: z.string().optional(),
+  amocrmClientSecret: z.string().optional(),
+  showContactForm: z.boolean().optional(),
+  showCalculator: z.boolean().optional(),
+  showModal: z.boolean().optional(),
+  telegram: z.string().optional(),
+  whatsapp: z.string().optional(),
+  vk: z.string().optional(),
+});
 
 export async function GET(request: NextRequest) {
   try {
@@ -65,14 +87,16 @@ export async function POST(request: NextRequest) {
     if (auth) return auth;
     const body = await request.json();
     
+    const parsed = settingsSchema.parse(body);
+
     // Обновляем настройки
     siteSettings = {
       ...siteSettings,
-      ...body
+      ...parsed
     };
 
     // Сохраняем каждую настройку по ключу в БД (upsert)
-    const entries = Object.entries(body) as Array<[string, string | number | boolean]>;
+    const entries = Object.entries(parsed) as Array<[string, string | number | boolean]>;
     await Promise.all(
       entries.map(async ([key, val]) => {
         const value = String(val);
@@ -90,7 +114,12 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { success: false, message: 'Ошибка валидации данных', errors: error.errors },
+        { status: 400 }
+      );
+    }
     return NextResponse.json(
       { error: 'Внутренняя ошибка сервера' },
       { status: 500 }
