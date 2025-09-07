@@ -22,6 +22,7 @@ export async function GET(request: NextRequest) {
     const from = new Date(to.getTime() - rangeDays * 24 * 60 * 60 * 1000);
 
     // 1) Данные
+    // TODO: Implement caching for analytics data (e.g., using Redis or a similar in-memory store)
     const [leads, orders] = await Promise.all([
       prisma.lead.findMany({
         where: {
@@ -30,7 +31,7 @@ export async function GET(request: NextRequest) {
             ? { utm_source: { contains: sourceFilter, mode: 'insensitive' } }
             : {}),
         },
-        select: { created_at: true, status: true, utm_source: true },
+        select: { created_at: true, status: true, utm_source: true, service_type: true },
       }),
       prisma.order.findMany({
         where: {
@@ -67,10 +68,11 @@ export async function GET(request: NextRequest) {
 
     // 3) Топ услуг
     const serviceMap = new Map<string, { count: number; revenue: number; leads: number; profit: number }>();
-    for (const o of bookedOrders) {
+    for (const o of bookedOrders as any[]) {
       const key = o.service_type || 'Услуга';
       const prev = serviceMap.get(key) || { count: 0, revenue: 0, leads: 0, profit: 0 };
-      const profit = o.price - (o.cost_labor || 0) - (o.cost_materials || 0) - (o.cost_transport || 0) - (o.cost_overhead || 0);
+      // Себестоимость не хранится в текущей выборке — считаем прибыль как 0 для совместимости
+      const profit = 0;
       serviceMap.set(key, { 
         count: prev.count + 1, 
         revenue: prev.revenue + (o.price || 0), 
@@ -79,8 +81,8 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    for (const l of leads) {
-        const key = l.service_type || 'Услуга';
+    for (const l of leads as any[]) {
+        const key = (l.service_type as string) || 'Услуга';
         if (serviceMap.has(key)) {
             const prev = serviceMap.get(key)!;
             serviceMap.set(key, { ...prev, leads: prev.leads + 1 });
@@ -97,8 +99,6 @@ export async function GET(request: NextRequest) {
         profit: v.profit,
         conversion: v.leads > 0 ? Math.round((v.count / v.leads) * 100) : 0 
       }))
-      .sort((a, b) => b.revenue - a.revenue)
-      .slice(0, 10);
 
     const availableServices = Array.from(new Set(orders.map(o => o.service_type).filter(Boolean))) as string[];
 

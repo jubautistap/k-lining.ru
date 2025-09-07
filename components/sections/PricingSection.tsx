@@ -1,7 +1,13 @@
 'use client';
 
 import React from 'react';
-import { Check, Star, Home, Building, Sparkles, CheckCircle, CreditCard, FileText, Target } from 'lucide-react';
-import { useAmoCRM } from '@/components/providers/AmoCRMProvider';
 
-// ... (rest of the file)
+export default function PricingSection() {
+  return (
+    <section className="py-12">
+      <div className="container-custom">
+        <div className="text-center text-gray-500">Секция цен в разработке</div>
+      </div>
+    </section>
+  );
+}
