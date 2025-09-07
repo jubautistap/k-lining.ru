@@ -159,11 +159,12 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
+                  aria-label={item.title}
                   className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors min-h-[44px] focus-visible ${
                     isActive 
                       ? 'bg-primary-50 text-primary-700 border-r-2 border-primary-600' 
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  }`}
+                  }`}}
                 >
                   <div className={`w-8 h-8 ${item.color} rounded-lg flex items-center justify-center`}>
                     <Icon className="w-4 h-4 text-white" />
