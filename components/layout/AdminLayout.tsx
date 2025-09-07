@@ -164,7 +164,7 @@ export default function AdminLayout({ children, user }: AdminLayoutProps) {
                     isActive 
                       ? 'bg-primary-50 text-primary-700 border-r-2 border-primary-600' 
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  }`}}
+                  }`}
                 >
                   <div className={`w-8 h-8 ${item.color} rounded-lg flex items-center justify-center`}>
                     <Icon className="w-4 h-4 text-white" />
