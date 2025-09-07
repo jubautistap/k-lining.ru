@@ -129,6 +129,7 @@ export default function MiniCalculator(props: MiniCalculatorProps) {
           onClick={openModal}
           className="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white py-4 px-6 rounded-xl font-bold text-lg hover:from-primary-700 hover:to-primary-800 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
           type="button"
+          aria-label="Заказать уборку сейчас"
         >
           <Phone className="w-5 h-5" /> 
           Заказать уборку сейчас
@@ -139,6 +140,7 @@ export default function MiniCalculator(props: MiniCalculatorProps) {
           onClick={openModal}
           className="w-full bg-white border-2 border-primary-300 text-primary-700 py-3 px-6 rounded-xl font-semibold hover:bg-primary-50 transition-colors flex items-center justify-center gap-2"
           type="button"
+          aria-label="Уточнить детали по WhatsApp"
         >
           💬 Уточнить детали по WhatsApp
         </button>
